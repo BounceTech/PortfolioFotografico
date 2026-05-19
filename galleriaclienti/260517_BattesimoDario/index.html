@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Luigi Mastroianni — Selezione Foto</title>
+<title>Luigi — Selezione Foto</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -314,7 +314,7 @@ header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);displ
 
 <script>
 var CONFIG = {
-  cliente:  'Luigi Mastroianni',
+  cliente:  'Luigi',
   sessione: '',
   whatsapp: '393348493876',
   storage:  '260517_BattesimoDario',
@@ -457,21 +457,38 @@ document.addEventListener('mousemove', function(e) {
 });
 document.addEventListener('mouseup', function() { zmDragOK = false; });
 
-// Pinch-to-zoom touch
+// Pinch-to-zoom + Pan touch
 (function(){
-  var wrap = document.getElementById('lb-img-wrap');
-  var t0dist = 0;
-  var t0idx  = 0;
+  var wrap    = document.getElementById('lb-img-wrap');
+  var t0dist  = 0;
+  var t0idx   = 0;
+  var panSX   = 0;
+  var panSY   = 0;
+  var panStartX = 0;
+  var panStartY = 0;
+  var isPanning = false;
+
   wrap.addEventListener('touchstart', function(e) {
     if (e.touches.length === 2) {
+      // Pinch start
+      isPanning = false;
       var dx = e.touches[0].clientX - e.touches[1].clientX;
       var dy = e.touches[0].clientY - e.touches[1].clientY;
       t0dist = Math.sqrt(dx*dx + dy*dy);
       t0idx  = zmIdx;
+    } else if (e.touches.length === 1 && zmIdx > 0) {
+      // Pan start (solo se zoomed)
+      isPanning  = true;
+      panStartX  = e.touches[0].clientX;
+      panStartY  = e.touches[0].clientY;
+      panSX      = zmPanX;
+      panSY      = zmPanY;
     }
   }, { passive: true });
+
   wrap.addEventListener('touchmove', function(e) {
     if (e.touches.length === 2) {
+      // Pinch move
       e.preventDefault();
       var dx   = e.touches[0].clientX - e.touches[1].clientX;
       var dy   = e.touches[0].clientY - e.touches[1].clientY;
@@ -479,9 +496,23 @@ document.addEventListener('mouseup', function() { zmDragOK = false; });
       var ratio = dist / t0dist;
       var newIdx = t0idx + (ratio > 1.3 ? 1 : ratio < 0.7 ? -1 : 0);
       newIdx = Math.max(0, Math.min(ZM_STEPS.length - 1, newIdx));
-      if (newIdx !== zmIdx) { zmIdx = newIdx; if (zmIdx===0){zmPanX=0;zmPanY=0;} applyZoom(); }
+      if (newIdx !== zmIdx) {
+        zmIdx = newIdx;
+        if (zmIdx === 0) { zmPanX = 0; zmPanY = 0; }
+        applyZoom();
+      }
+    } else if (e.touches.length === 1 && isPanning && zmIdx > 0) {
+      // Pan move
+      e.preventDefault();
+      zmPanX = panSX + (e.touches[0].clientX - panStartX);
+      zmPanY = panSY + (e.touches[0].clientY - panStartY);
+      applyZoom();
     }
   }, { passive: false });
+
+  wrap.addEventListener('touchend', function(e) {
+    if (e.touches.length === 0) isPanning = false;
+  }, { passive: true });
 })();
 
 // Reset zoom al cambio foto
@@ -560,6 +591,7 @@ document.addEventListener('keydown',function(e){
     moved=false;
   },{passive:true});
   lb.addEventListener('touchmove',function(e){
+    if(zmIdx > 0) return; // zoom attivo: ignora swipe
     var dx=e.touches[0].clientX-startX;
     var dy=e.touches[0].clientY-startY;
     if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>8){
@@ -568,6 +600,7 @@ document.addEventListener('keydown',function(e){
     }
   },{passive:false});
   lb.addEventListener('touchend',function(e){
+    if(zmIdx > 0) return; // zoom attivo: ignora swipe
     if(!moved) return;
     var dx=e.changedTouches[0].clientX-startX;
     if(Math.abs(dx)>50) navLb(dx<0?1:-1);
