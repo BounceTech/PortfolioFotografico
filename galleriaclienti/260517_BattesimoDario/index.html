@@ -13,33 +13,35 @@
   --radius:10px;--trans:180ms cubic-bezier(.16,1,.3,1);
 }
 body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;min-height:100dvh}
-/* header */
-header{padding:2rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.logo{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.hinfo h1{font-size:1.25rem;font-weight:600;color:var(--text)}
-.hinfo p{font-size:.8rem;color:var(--muted);margin-top:.2rem}
-.hstats{display:flex;gap:1rem;font-size:.8rem}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.4rem .8rem;text-align:center}
-.stat-n{font-size:1.1rem;font-weight:700;color:var(--accent)}
-.stat-l{color:var(--muted);font-size:.7rem;margin-top:.1rem}
-/* istruzioni */
-.instructions{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin:1.5rem;padding:1rem 1.25rem;font-size:.85rem;color:var(--muted);line-height:1.6}
+
+/* ── HEADER ── */
+header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.logo{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hinfo h1{font-size:1.1rem;font-weight:600}
+.hstats{display:flex;gap:.75rem;font-size:.8rem}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.35rem .75rem;text-align:center}
+.stat-n{font-size:1rem;font-weight:700;color:var(--accent)}
+.stat-l{color:var(--muted);font-size:.65rem;margin-top:.1rem}
+
+/* ── ISTRUZIONI ── */
+.instructions{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin:1.25rem 1.5rem;padding:.9rem 1.1rem;font-size:.82rem;color:var(--muted);line-height:1.6}
 .instructions b{color:var(--text)}
-/* griglia */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:0 1.5rem 2rem}
+
+/* ── GRIGLIA ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:0 1.5rem 6rem}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform var(--trans),box-shadow var(--trans)}
 .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
 .thumb-wrap{position:relative;aspect-ratio:3/2;overflow:hidden;cursor:zoom-in;background:#0a0a0a}
 .thumb{width:100%;height:100%;object-fit:cover;transition:transform var(--trans)}
 .thumb:hover{transform:scale(1.03)}
-.badge{position:absolute;top:8px;right:8px;padding:.25rem .55rem;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.05em;opacity:0;transition:opacity var(--trans)}
+.badge{position:absolute;top:8px;right:8px;padding:.22rem .5rem;border-radius:20px;font-size:.65rem;font-weight:700;letter-spacing:.04em;opacity:0;transition:opacity var(--trans)}
 .badge.show{opacity:1}
 .badge-yes{background:#2d6139;color:#7fffaa}
 .badge-no{background:#612d2d;color:#ffaaaa}
-.card-body{padding:.75rem}
-.fname{font-size:.7rem;color:var(--muted);margin-bottom:.6rem;word-break:break-all}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.6rem}
-.btn{padding:.5rem;border:none;border-radius:6px;font-size:.8rem;font-weight:600;cursor:pointer;transition:background var(--trans),transform var(--trans)}
+.card-body{padding:.65rem}
+.fname{font-size:.65rem;color:var(--muted);margin-bottom:.5rem;word-break:break-all}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;margin-bottom:.5rem}
+.btn{padding:.45rem;border:none;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;transition:background var(--trans),transform var(--trans)}
 .btn:active{transform:scale(.97)}
 .btn-yes{background:var(--yes);color:#fff}
 .btn-yes:hover{background:var(--yes-h)}
@@ -47,39 +49,90 @@ header{padding:2rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:fl
 .btn-no{background:var(--no);color:#fff}
 .btn-no:hover{background:var(--no-h)}
 .btn-no.active{background:#e05555;box-shadow:0 0 0 2px #ffaaaa55}
-.note{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.75rem;padding:.4rem .6rem;resize:none;font-family:inherit;transition:border-color var(--trans)}
+.note{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.72rem;padding:.35rem .55rem;resize:none;font-family:inherit;transition:border-color var(--trans)}
 .note:focus{outline:none;border-color:var(--accent)}
-/* fab */
-.fab{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--accent);color:#111;border:none;border-radius:50px;padding:.75rem 1.4rem;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(200,169,110,.35);transition:background var(--trans),transform var(--trans);z-index:100}
+
+/* ── FAB ── */
+.fab{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--accent);color:#111;border:none;border-radius:50px;padding:.7rem 1.3rem;font-size:.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(200,169,110,.35);transition:background var(--trans),transform var(--trans);z-index:100}
 .fab:hover{background:var(--accent2);transform:translateY(-2px)}
-/* modal */
+
+/* ── MODAL ── */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity var(--trans)}
 .modal.on{opacity:1;pointer-events:all}
-.mbox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;max-width:520px;width:90%;max-height:80vh;overflow-y:auto}
-.mbox h2{font-size:1.1rem;margin-bottom:.5rem;color:var(--accent)}
-.mbox p{font-size:.82rem;color:var(--muted);margin-bottom:1.25rem}
-.mlist{font-size:.8rem;color:var(--text);line-height:1.8;margin-bottom:1.25rem;white-space:pre-wrap;word-break:break-all}
-.macts{display:flex;gap:.75rem;flex-wrap:wrap}
-.mbtn{flex:1;padding:.65rem 1rem;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:background var(--trans)}
-.mbtn-wa{background:#25d366;color:#fff}
-.mbtn-wa:hover{background:#1da851}
-.mbtn-copy{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
-.mbtn-copy:hover{background:var(--border)}
-.mbtn-close{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
-.mbtn-close:hover{background:var(--border)}
-/* lightbox */
-.lb{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center}
+.mbox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;max-width:520px;width:90%;max-height:80vh;overflow-y:auto}
+.mbox h2{font-size:1.05rem;margin-bottom:.4rem;color:var(--accent)}
+.mbox p{font-size:.8rem;color:var(--muted);margin-bottom:1rem}
+.mlist{font-size:.78rem;color:var(--text);line-height:1.8;margin-bottom:1.1rem;white-space:pre-wrap;word-break:break-all}
+.macts{display:flex;gap:.65rem;flex-wrap:wrap}
+.mbtn{flex:1;padding:.6rem .9rem;border:none;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background var(--trans)}
+.mbtn-wa{background:#25d366;color:#fff}.mbtn-wa:hover{background:#1da851}
+.mbtn-copy{background:var(--surface2);color:var(--text);border:1px solid var(--border)}.mbtn-copy:hover{background:var(--border)}
+.mbtn-close{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}.mbtn-close:hover{background:var(--border)}
+
+/* ── LIGHTBOX ── */
+.lb{
+  position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:300;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  touch-action:pan-y;
+}
 .lb.on{display:flex}
-.lb img{max-width:92vw;max-height:82vh;object-fit:contain;border-radius:6px}
-.lb-meta{margin-top:.75rem;font-size:.75rem;color:var(--muted)}
-.lb-nav{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1.6rem;padding:.5rem 1rem;cursor:pointer;border-radius:8px;transition:background var(--trans)}
-.lb-nav:hover{background:rgba(255,255,255,.18)}
-.lb-prev{left:1rem}.lb-next{right:1rem}
-.lb-close{position:fixed;top:1rem;right:1rem;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1.2rem;padding:.4rem .8rem;cursor:pointer;border-radius:8px}
+
+/* immagine con transizione slide */
+.lb-img-wrap{
+  position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.lb-img-wrap img{
+  max-width:90vw;max-height:72vh;object-fit:contain;border-radius:6px;
+  transition:transform .22s cubic-bezier(.16,1,.3,1),opacity .18s;
+  will-change:transform;
+  user-select:none;-webkit-user-drag:none;
+}
+
+/* barra superiore */
+.lb-top{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1rem;gap:.5rem;
+}
+.lb-counter{font-size:.78rem;color:var(--muted)}
+.lb-fname{font-size:.75rem;color:var(--muted);flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-close-btn{background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1rem;padding:.35rem .7rem;cursor:pointer;border-radius:8px;transition:background var(--trans)}
+.lb-close-btn:hover{background:rgba(255,255,255,.18)}
+
+/* barra inferiore: voto + navigazione */
+.lb-bottom{
+  width:100%;display:flex;align-items:center;justify-content:center;
+  padding:.9rem 1rem 1.25rem;gap:.75rem;
+}
+.lb-nav-btn{
+  background:rgba(255,255,255,.07);border:none;color:#fff;
+  font-size:1.4rem;padding:.5rem .9rem;cursor:pointer;border-radius:10px;
+  transition:background var(--trans);flex-shrink:0;
+}
+.lb-nav-btn:hover{background:rgba(255,255,255,.18)}
+.lb-vote-btns{display:flex;gap:.6rem;flex:1;max-width:340px}
+.lb-btn-yes,.lb-btn-no{
+  flex:1;padding:.7rem;border:none;border-radius:10px;
+  font-size:1rem;font-weight:700;cursor:pointer;
+  transition:background var(--trans),transform var(--trans),box-shadow var(--trans);
+}
+.lb-btn-yes:active,.lb-btn-no:active{transform:scale(.95)}
+.lb-btn-yes{background:var(--yes);color:#fff}
+.lb-btn-yes:hover{background:var(--yes-h)}
+.lb-btn-yes.active{background:#4caf70;box-shadow:0 0 0 3px #7fffaa55}
+.lb-btn-no{background:var(--no);color:#fff}
+.lb-btn-no:hover{background:var(--no-h)}
+.lb-btn-no.active{background:#e05555;box-shadow:0 0 0 3px #ffaaaa55}
+
+/* swipe hint su mobile */
+.lb-hint{font-size:.65rem;color:var(--muted);position:absolute;bottom:.35rem;left:50%;transform:translateX(-50%);opacity:.5;pointer-events:none}
+
 @media(max-width:500px){
   header{flex-direction:column;align-items:flex-start}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;padding:0 .75rem 5rem}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px;padding:0 .75rem 5rem}
   .fab{bottom:1rem;right:1rem}
+  .lb-img-wrap img{max-width:95vw;max-height:65vh}
+  .lb-bottom{padding:.75rem .5rem 1rem;gap:.4rem}
+  .lb-nav-btn{font-size:1.1rem;padding:.45rem .65rem}
 }
 </style>
 </head>
@@ -88,9 +141,7 @@ header{padding:2rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:fl
 <header>
   <div>
     <div class="logo">Mattia Buoli · Fotografia</div>
-    <div class="hinfo">
-      <h1 id="titolo"></h1>
-    </div>
+    <h1 class="hinfo" id="titolo"></h1>
   </div>
   <div class="hstats">
     <div class="stat"><div class="stat-n" id="cnt-tot">0</div><div class="stat-l">Foto</div></div>
@@ -100,15 +151,37 @@ header{padding:2rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:fl
 </header>
 
 <div class="instructions">
-  <b>Come funziona:</b> Guarda ogni foto e clicca <b>✓ Sì</b> per tenerla o <b>✗ No</b> per scartarla.
-  Puoi ingrandire ogni foto cliccandoci sopra. Aggiungi un commento se vuoi.
-  La selezione viene salvata automaticamente — puoi chiudere e riaprire quando vuoi.
-  Quando hai finito, clicca <b>Invia Selezione</b>.
+  <b>Come funziona:</b> Clicca una foto per vederla a schermo intero e votarla con <b>✓ Sì</b> / <b>✗ No</b>.
+  Puoi scorrere tra le foto con le frecce o con lo <b>swipe</b> (telefono).
+  La selezione viene salvata automaticamente. Quando hai finito clicca <b>Invia Selezione</b>.
 </div>
 
 <div class="grid" id="grid"></div>
 
 <button class="fab" onclick="openModal()">Invia Selezione →</button>
+
+<!-- Lightbox -->
+<div class="lb" id="lb">
+  <div class="lb-top">
+    <span class="lb-counter" id="lb-counter"></span>
+    <span class="lb-fname" id="lb-fname"></span>
+    <button class="lb-close-btn" onclick="closeLb()">✕ Chiudi</button>
+  </div>
+
+  <div class="lb-img-wrap" id="lb-img-wrap">
+    <img id="lb-img" src="" alt="" draggable="false">
+  </div>
+
+  <div class="lb-bottom">
+    <button class="lb-nav-btn" onclick="navLb(-1)">‹</button>
+    <div class="lb-vote-btns">
+      <button class="lb-btn-yes" id="lb-btn-yes" onclick="lbVote('yes')">✓ Sì</button>
+      <button class="lb-btn-no"  id="lb-btn-no"  onclick="lbVote('no')">✗ No</button>
+    </div>
+    <button class="lb-nav-btn" onclick="navLb(1)">›</button>
+  </div>
+  <span class="lb-hint" id="lb-hint"></span>
+</div>
 
 <!-- Modal riepilogo -->
 <div class="modal" id="modal">
@@ -124,97 +197,77 @@ header{padding:2rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:fl
   </div>
 </div>
 
-<!-- Lightbox -->
-<div class="lb" id="lb">
-  <button class="lb-close" onclick="closeLb()">✕</button>
-  <button class="lb-nav lb-prev" onclick="navLb(-1)">‹</button>
-  <img id="lb-img" src="" alt="">
-  <div class="lb-meta" id="lb-meta"></div>
-  <button class="lb-nav lb-next" onclick="navLb(1)">›</button>
-</div>
-
 <script>
 var CONFIG = {
-  cliente:    'Luigi Mastroianni',
-  sessione:   '',
-  whatsapp:   '393348493876',
-  storage:    '260517_BattesimoDario',
-  foto:       [{"id": "PIC03405", "file": "PIC03405.jpg", "original_name": "PIC03405.JPG"}, {"id": "PIC03406", "file": "PIC03406.jpg", "original_name": "PIC03406.JPG"}, {"id": "PIC03407", "file": "PIC03407.jpg", "original_name": "PIC03407.JPG"}, {"id": "PIC03408", "file": "PIC03408.jpg", "original_name": "PIC03408.JPG"}, {"id": "PIC03409", "file": "PIC03409.jpg", "original_name": "PIC03409.JPG"}, {"id": "PIC03410", "file": "PIC03410.jpg", "original_name": "PIC03410.JPG"}, {"id": "PIC03411", "file": "PIC03411.jpg", "original_name": "PIC03411.JPG"}, {"id": "PIC03412", "file": "PIC03412.jpg", "original_name": "PIC03412.JPG"}, {"id": "PIC03413", "file": "PIC03413.jpg", "original_name": "PIC03413.JPG"}, {"id": "PIC03414", "file": "PIC03414.jpg", "original_name": "PIC03414.JPG"}, {"id": "PIC03415", "file": "PIC03415.jpg", "original_name": "PIC03415.JPG"}, {"id": "PIC03416", "file": "PIC03416.jpg", "original_name": "PIC03416.JPG"}, {"id": "PIC03417", "file": "PIC03417.jpg", "original_name": "PIC03417.JPG"}, {"id": "PIC03418", "file": "PIC03418.jpg", "original_name": "PIC03418.JPG"}, {"id": "PIC03419", "file": "PIC03419.jpg", "original_name": "PIC03419.JPG"}, {"id": "PIC03420", "file": "PIC03420.jpg", "original_name": "PIC03420.JPG"}, {"id": "PIC03421", "file": "PIC03421.jpg", "original_name": "PIC03421.JPG"}, {"id": "PIC03422", "file": "PIC03422.jpg", "original_name": "PIC03422.JPG"}, {"id": "PIC03423", "file": "PIC03423.jpg", "original_name": "PIC03423.JPG"}, {"id": "PIC03424", "file": "PIC03424.jpg", "original_name": "PIC03424.JPG"}, {"id": "PIC03425", "file": "PIC03425.jpg", "original_name": "PIC03425.JPG"}, {"id": "PIC03426", "file": "PIC03426.jpg", "original_name": "PIC03426.JPG"}, {"id": "PIC03427", "file": "PIC03427.jpg", "original_name": "PIC03427.JPG"}, {"id": "PIC03428", "file": "PIC03428.jpg", "original_name": "PIC03428.JPG"}, {"id": "PIC03429", "file": "PIC03429.jpg", "original_name": "PIC03429.JPG"}, {"id": "PIC03430", "file": "PIC03430.jpg", "original_name": "PIC03430.JPG"}, {"id": "PIC03431", "file": "PIC03431.jpg", "original_name": "PIC03431.JPG"}, {"id": "PIC03432", "file": "PIC03432.jpg", "original_name": "PIC03432.JPG"}, {"id": "PIC03433", "file": "PIC03433.jpg", "original_name": "PIC03433.JPG"}, {"id": "PIC03434", "file": "PIC03434.jpg", "original_name": "PIC03434.JPG"}, {"id": "PIC03435", "file": "PIC03435.jpg", "original_name": "PIC03435.JPG"}, {"id": "PIC03436", "file": "PIC03436.jpg", "original_name": "PIC03436.JPG"}, {"id": "PIC03437", "file": "PIC03437.jpg", "original_name": "PIC03437.JPG"}, {"id": "PIC03438", "file": "PIC03438.jpg", "original_name": "PIC03438.JPG"}, {"id": "PIC03439", "file": "PIC03439.jpg", "original_name": "PIC03439.JPG"}, {"id": "PIC03440", "file": "PIC03440.jpg", "original_name": "PIC03440.JPG"}, {"id": "PIC03441", "file": "PIC03441.jpg", "original_name": "PIC03441.JPG"}, {"id": "PIC03442", "file": "PIC03442.jpg", "original_name": "PIC03442.JPG"}, {"id": "PIC03443", "file": "PIC03443.jpg", "original_name": "PIC03443.JPG"}, {"id": "PIC03444", "file": "PIC03444.jpg", "original_name": "PIC03444.JPG"}, {"id": "PIC03445", "file": "PIC03445.jpg", "original_name": "PIC03445.JPG"}, {"id": "PIC03446", "file": "PIC03446.jpg", "original_name": "PIC03446.JPG"}, {"id": "PIC03447", "file": "PIC03447.jpg", "original_name": "PIC03447.JPG"}, {"id": "PIC03448", "file": "PIC03448.jpg", "original_name": "PIC03448.JPG"}, {"id": "PIC03449", "file": "PIC03449.jpg", "original_name": "PIC03449.JPG"}, {"id": "PIC03450", "file": "PIC03450.jpg", "original_name": "PIC03450.JPG"}, {"id": "PIC03451", "file": "PIC03451.jpg", "original_name": "PIC03451.JPG"}, {"id": "PIC03452", "file": "PIC03452.jpg", "original_name": "PIC03452.JPG"}, {"id": "PIC03453", "file": "PIC03453.jpg", "original_name": "PIC03453.JPG"}, {"id": "PIC03454", "file": "PIC03454.jpg", "original_name": "PIC03454.JPG"}, {"id": "PIC03455", "file": "PIC03455.jpg", "original_name": "PIC03455.JPG"}, {"id": "PIC03456", "file": "PIC03456.jpg", "original_name": "PIC03456.JPG"}, {"id": "PIC03457", "file": "PIC03457.jpg", "original_name": "PIC03457.JPG"}, {"id": "PIC03458", "file": "PIC03458.jpg", "original_name": "PIC03458.JPG"}, {"id": "PIC03459", "file": "PIC03459.jpg", "original_name": "PIC03459.JPG"}, {"id": "PIC03460", "file": "PIC03460.jpg", "original_name": "PIC03460.JPG"}, {"id": "PIC03461", "file": "PIC03461.jpg", "original_name": "PIC03461.JPG"}, {"id": "PIC03462", "file": "PIC03462.jpg", "original_name": "PIC03462.JPG"}, {"id": "PIC03463", "file": "PIC03463.jpg", "original_name": "PIC03463.JPG"}, {"id": "PIC03464", "file": "PIC03464.jpg", "original_name": "PIC03464.JPG"}, {"id": "PIC03465", "file": "PIC03465.jpg", "original_name": "PIC03465.JPG"}, {"id": "PIC03466", "file": "PIC03466.jpg", "original_name": "PIC03466.JPG"}, {"id": "PIC03467", "file": "PIC03467.jpg", "original_name": "PIC03467.JPG"}, {"id": "PIC03468", "file": "PIC03468.jpg", "original_name": "PIC03468.JPG"}, {"id": "PIC03469", "file": "PIC03469.jpg", "original_name": "PIC03469.JPG"}, {"id": "PIC03470", "file": "PIC03470.jpg", "original_name": "PIC03470.JPG"}, {"id": "PIC03471", "file": "PIC03471.jpg", "original_name": "PIC03471.JPG"}, {"id": "PIC03472", "file": "PIC03472.jpg", "original_name": "PIC03472.JPG"}, {"id": "PIC03473", "file": "PIC03473.jpg", "original_name": "PIC03473.JPG"}, {"id": "PIC03474", "file": "PIC03474.jpg", "original_name": "PIC03474.JPG"}, {"id": "PIC03475", "file": "PIC03475.jpg", "original_name": "PIC03475.JPG"}, {"id": "PIC03476", "file": "PIC03476.jpg", "original_name": "PIC03476.JPG"}, {"id": "PIC03477", "file": "PIC03477.jpg", "original_name": "PIC03477.JPG"}, {"id": "PIC03478", "file": "PIC03478.jpg", "original_name": "PIC03478.JPG"}, {"id": "PIC03479", "file": "PIC03479.jpg", "original_name": "PIC03479.JPG"}, {"id": "PIC03480", "file": "PIC03480.jpg", "original_name": "PIC03480.JPG"}, {"id": "PIC03481", "file": "PIC03481.jpg", "original_name": "PIC03481.JPG"}, {"id": "PIC03482", "file": "PIC03482.jpg", "original_name": "PIC03482.JPG"}, {"id": "PIC03483", "file": "PIC03483.jpg", "original_name": "PIC03483.JPG"}, {"id": "PIC03484", "file": "PIC03484.jpg", "original_name": "PIC03484.JPG"}, {"id": "PIC03485", "file": "PIC03485.jpg", "original_name": "PIC03485.JPG"}, {"id": "PIC03486", "file": "PIC03486.jpg", "original_name": "PIC03486.JPG"}, {"id": "PIC03487", "file": "PIC03487.jpg", "original_name": "PIC03487.JPG"}, {"id": "PIC03488", "file": "PIC03488.jpg", "original_name": "PIC03488.JPG"}, {"id": "PIC03489", "file": "PIC03489.jpg", "original_name": "PIC03489.JPG"}, {"id": "PIC03490", "file": "PIC03490.jpg", "original_name": "PIC03490.JPG"}, {"id": "PIC03491", "file": "PIC03491.jpg", "original_name": "PIC03491.JPG"}, {"id": "PIC03492", "file": "PIC03492.jpg", "original_name": "PIC03492.JPG"}, {"id": "PIC03493", "file": "PIC03493.jpg", "original_name": "PIC03493.JPG"}, {"id": "PIC03494", "file": "PIC03494.jpg", "original_name": "PIC03494.JPG"}, {"id": "PIC03495", "file": "PIC03495.jpg", "original_name": "PIC03495.JPG"}, {"id": "PIC03496", "file": "PIC03496.jpg", "original_name": "PIC03496.JPG"}, {"id": "PIC03497", "file": "PIC03497.jpg", "original_name": "PIC03497.JPG"}, {"id": "PIC03498", "file": "PIC03498.jpg", "original_name": "PIC03498.JPG"}, {"id": "PIC03499", "file": "PIC03499.jpg", "original_name": "PIC03499.JPG"}, {"id": "PIC03500", "file": "PIC03500.jpg", "original_name": "PIC03500.JPG"}, {"id": "PIC03501", "file": "PIC03501.jpg", "original_name": "PIC03501.JPG"}, {"id": "PIC03502", "file": "PIC03502.jpg", "original_name": "PIC03502.JPG"}, {"id": "PIC03503", "file": "PIC03503.jpg", "original_name": "PIC03503.JPG"}, {"id": "PIC03504", "file": "PIC03504.jpg", "original_name": "PIC03504.JPG"}, {"id": "PIC03505", "file": "PIC03505.jpg", "original_name": "PIC03505.JPG"}, {"id": "PIC03506", "file": "PIC03506.jpg", "original_name": "PIC03506.JPG"}, {"id": "PIC03507", "file": "PIC03507.jpg", "original_name": "PIC03507.JPG"}, {"id": "PIC03508", "file": "PIC03508.jpg", "original_name": "PIC03508.JPG"}, {"id": "PIC03509", "file": "PIC03509.jpg", "original_name": "PIC03509.JPG"}, {"id": "PIC03510", "file": "PIC03510.jpg", "original_name": "PIC03510.JPG"}, {"id": "PIC03511", "file": "PIC03511.jpg", "original_name": "PIC03511.JPG"}, {"id": "PIC03512", "file": "PIC03512.jpg", "original_name": "PIC03512.JPG"}, {"id": "PIC03513", "file": "PIC03513.jpg", "original_name": "PIC03513.JPG"}, {"id": "PIC03514", "file": "PIC03514.jpg", "original_name": "PIC03514.JPG"}, {"id": "PIC03515", "file": "PIC03515.jpg", "original_name": "PIC03515.JPG"}, {"id": "PIC03516", "file": "PIC03516.jpg", "original_name": "PIC03516.JPG"}, {"id": "PIC03517", "file": "PIC03517.jpg", "original_name": "PIC03517.JPG"}, {"id": "PIC03518", "file": "PIC03518.jpg", "original_name": "PIC03518.JPG"}, {"id": "PIC03519", "file": "PIC03519.jpg", "original_name": "PIC03519.JPG"}, {"id": "PIC03520", "file": "PIC03520.jpg", "original_name": "PIC03520.JPG"}, {"id": "PIC03521", "file": "PIC03521.jpg", "original_name": "PIC03521.JPG"}, {"id": "PIC03522", "file": "PIC03522.jpg", "original_name": "PIC03522.JPG"}, {"id": "PIC03523", "file": "PIC03523.jpg", "original_name": "PIC03523.JPG"}, {"id": "PIC03524", "file": "PIC03524.jpg", "original_name": "PIC03524.JPG"}, {"id": "PIC03525", "file": "PIC03525.jpg", "original_name": "PIC03525.JPG"}, {"id": "PIC03526", "file": "PIC03526.jpg", "original_name": "PIC03526.JPG"}, {"id": "PIC03527", "file": "PIC03527.jpg", "original_name": "PIC03527.JPG"}, {"id": "PIC03528", "file": "PIC03528.jpg", "original_name": "PIC03528.JPG"}, {"id": "PIC03529", "file": "PIC03529.jpg", "original_name": "PIC03529.JPG"}, {"id": "PIC03530", "file": "PIC03530.jpg", "original_name": "PIC03530.JPG"}, {"id": "PIC03531", "file": "PIC03531.jpg", "original_name": "PIC03531.JPG"}, {"id": "PIC03532", "file": "PIC03532.jpg", "original_name": "PIC03532.JPG"}, {"id": "PIC03533", "file": "PIC03533.jpg", "original_name": "PIC03533.JPG"}, {"id": "PIC03534", "file": "PIC03534.jpg", "original_name": "PIC03534.JPG"}, {"id": "PIC03535", "file": "PIC03535.jpg", "original_name": "PIC03535.JPG"}, {"id": "PIC03536", "file": "PIC03536.jpg", "original_name": "PIC03536.JPG"}, {"id": "PIC03537", "file": "PIC03537.jpg", "original_name": "PIC03537.JPG"}, {"id": "PIC03538", "file": "PIC03538.jpg", "original_name": "PIC03538.JPG"}, {"id": "PIC03539", "file": "PIC03539.jpg", "original_name": "PIC03539.JPG"}, {"id": "PIC03540", "file": "PIC03540.jpg", "original_name": "PIC03540.JPG"}, {"id": "PIC03541", "file": "PIC03541.jpg", "original_name": "PIC03541.JPG"}, {"id": "PIC03542", "file": "PIC03542.jpg", "original_name": "PIC03542.JPG"}, {"id": "PIC03543", "file": "PIC03543.jpg", "original_name": "PIC03543.JPG"}, {"id": "PIC03544", "file": "PIC03544.jpg", "original_name": "PIC03544.JPG"}, {"id": "PIC03545", "file": "PIC03545.jpg", "original_name": "PIC03545.JPG"}, {"id": "PIC03546", "file": "PIC03546.jpg", "original_name": "PIC03546.JPG"}, {"id": "PIC03547", "file": "PIC03547.jpg", "original_name": "PIC03547.JPG"}, {"id": "PIC03548", "file": "PIC03548.jpg", "original_name": "PIC03548.JPG"}, {"id": "PIC03549", "file": "PIC03549.jpg", "original_name": "PIC03549.JPG"}, {"id": "PIC03550", "file": "PIC03550.jpg", "original_name": "PIC03550.JPG"}, {"id": "PIC03551", "file": "PIC03551.jpg", "original_name": "PIC03551.JPG"}, {"id": "PIC03552", "file": "PIC03552.jpg", "original_name": "PIC03552.JPG"}, {"id": "PIC03553", "file": "PIC03553.jpg", "original_name": "PIC03553.JPG"}, {"id": "PIC03554", "file": "PIC03554.jpg", "original_name": "PIC03554.JPG"}, {"id": "PIC03555", "file": "PIC03555.jpg", "original_name": "PIC03555.JPG"}, {"id": "PIC03556", "file": "PIC03556.jpg", "original_name": "PIC03556.JPG"}, {"id": "PIC03557", "file": "PIC03557.jpg", "original_name": "PIC03557.JPG"}, {"id": "PIC03558", "file": "PIC03558.jpg", "original_name": "PIC03558.JPG"}, {"id": "PIC03559", "file": "PIC03559.jpg", "original_name": "PIC03559.JPG"}, {"id": "PIC03560", "file": "PIC03560.jpg", "original_name": "PIC03560.JPG"}, {"id": "PIC03561", "file": "PIC03561.jpg", "original_name": "PIC03561.JPG"}, {"id": "PIC03562", "file": "PIC03562.jpg", "original_name": "PIC03562.JPG"}, {"id": "PIC03563", "file": "PIC03563.jpg", "original_name": "PIC03563.JPG"}, {"id": "PIC03564", "file": "PIC03564.jpg", "original_name": "PIC03564.JPG"}, {"id": "PIC03565", "file": "PIC03565.jpg", "original_name": "PIC03565.JPG"}, {"id": "PIC03566", "file": "PIC03566.jpg", "original_name": "PIC03566.JPG"}, {"id": "PIC03567", "file": "PIC03567.jpg", "original_name": "PIC03567.JPG"}, {"id": "PIC03568", "file": "PIC03568.jpg", "original_name": "PIC03568.JPG"}, {"id": "PIC03569", "file": "PIC03569.jpg", "original_name": "PIC03569.JPG"}, {"id": "PIC03570", "file": "PIC03570.jpg", "original_name": "PIC03570.JPG"}, {"id": "PIC03571", "file": "PIC03571.jpg", "original_name": "PIC03571.JPG"}, {"id": "PIC03572", "file": "PIC03572.jpg", "original_name": "PIC03572.JPG"}, {"id": "PIC03573", "file": "PIC03573.jpg", "original_name": "PIC03573.JPG"}, {"id": "PIC03574", "file": "PIC03574.jpg", "original_name": "PIC03574.JPG"}, {"id": "PIC03575", "file": "PIC03575.jpg", "original_name": "PIC03575.JPG"}, {"id": "PIC03576", "file": "PIC03576.jpg", "original_name": "PIC03576.JPG"}, {"id": "PIC03577", "file": "PIC03577.jpg", "original_name": "PIC03577.JPG"}, {"id": "PIC03578", "file": "PIC03578.jpg", "original_name": "PIC03578.JPG"}, {"id": "PIC03579", "file": "PIC03579.jpg", "original_name": "PIC03579.JPG"}, {"id": "PIC03580", "file": "PIC03580.jpg", "original_name": "PIC03580.JPG"}, {"id": "PIC03581", "file": "PIC03581.jpg", "original_name": "PIC03581.JPG"}, {"id": "PIC03582", "file": "PIC03582.jpg", "original_name": "PIC03582.JPG"}, {"id": "PIC03583", "file": "PIC03583.jpg", "original_name": "PIC03583.JPG"}, {"id": "PIC03585", "file": "PIC03585.jpg", "original_name": "PIC03585.JPG"}, {"id": "PIC03586", "file": "PIC03586.jpg", "original_name": "PIC03586.JPG"}, {"id": "PIC03587", "file": "PIC03587.jpg", "original_name": "PIC03587.JPG"}, {"id": "PIC03588", "file": "PIC03588.jpg", "original_name": "PIC03588.JPG"}, {"id": "PIC03589", "file": "PIC03589.jpg", "original_name": "PIC03589.JPG"}, {"id": "PIC03590", "file": "PIC03590.jpg", "original_name": "PIC03590.JPG"}, {"id": "PIC03591", "file": "PIC03591.jpg", "original_name": "PIC03591.JPG"}, {"id": "PIC03592", "file": "PIC03592.jpg", "original_name": "PIC03592.JPG"}, {"id": "PIC03593", "file": "PIC03593.jpg", "original_name": "PIC03593.JPG"}, {"id": "PIC03594", "file": "PIC03594.jpg", "original_name": "PIC03594.JPG"}, {"id": "PIC03595", "file": "PIC03595.jpg", "original_name": "PIC03595.JPG"}, {"id": "PIC03596", "file": "PIC03596.jpg", "original_name": "PIC03596.JPG"}, {"id": "PIC03597", "file": "PIC03597.jpg", "original_name": "PIC03597.JPG"}, {"id": "PIC03598", "file": "PIC03598.jpg", "original_name": "PIC03598.JPG"}, {"id": "PIC03599", "file": "PIC03599.jpg", "original_name": "PIC03599.JPG"}, {"id": "PIC03600", "file": "PIC03600.jpg", "original_name": "PIC03600.JPG"}, {"id": "PIC03601", "file": "PIC03601.jpg", "original_name": "PIC03601.JPG"}, {"id": "PIC03602", "file": "PIC03602.jpg", "original_name": "PIC03602.JPG"}, {"id": "PIC03603", "file": "PIC03603.jpg", "original_name": "PIC03603.JPG"}, {"id": "PIC03604", "file": "PIC03604.jpg", "original_name": "PIC03604.JPG"}, {"id": "PIC03605", "file": "PIC03605.jpg", "original_name": "PIC03605.JPG"}, {"id": "PIC03606", "file": "PIC03606.jpg", "original_name": "PIC03606.JPG"}, {"id": "PIC03607", "file": "PIC03607.jpg", "original_name": "PIC03607.JPG"}, {"id": "PIC03608", "file": "PIC03608.jpg", "original_name": "PIC03608.JPG"}, {"id": "PIC03609", "file": "PIC03609.jpg", "original_name": "PIC03609.JPG"}, {"id": "PIC03610", "file": "PIC03610.jpg", "original_name": "PIC03610.JPG"}, {"id": "PIC03611", "file": "PIC03611.jpg", "original_name": "PIC03611.JPG"}, {"id": "PIC03612", "file": "PIC03612.jpg", "original_name": "PIC03612.JPG"}, {"id": "PIC03613", "file": "PIC03613.jpg", "original_name": "PIC03613.JPG"}, {"id": "PIC03614", "file": "PIC03614.jpg", "original_name": "PIC03614.JPG"}, {"id": "PIC03615", "file": "PIC03615.jpg", "original_name": "PIC03615.JPG"}, {"id": "PIC03616", "file": "PIC03616.jpg", "original_name": "PIC03616.JPG"}, {"id": "PIC03617", "file": "PIC03617.jpg", "original_name": "PIC03617.JPG"}, {"id": "PIC03618", "file": "PIC03618.jpg", "original_name": "PIC03618.JPG"}, {"id": "PIC03619", "file": "PIC03619.jpg", "original_name": "PIC03619.JPG"}, {"id": "PIC03620", "file": "PIC03620.jpg", "original_name": "PIC03620.JPG"}, {"id": "PIC03621", "file": "PIC03621.jpg", "original_name": "PIC03621.JPG"}, {"id": "PIC03622", "file": "PIC03622.jpg", "original_name": "PIC03622.JPG"}, {"id": "PIC03623", "file": "PIC03623.jpg", "original_name": "PIC03623.JPG"}, {"id": "PIC03624", "file": "PIC03624.jpg", "original_name": "PIC03624.JPG"}, {"id": "PIC03625", "file": "PIC03625.jpg", "original_name": "PIC03625.JPG"}, {"id": "PIC03626", "file": "PIC03626.jpg", "original_name": "PIC03626.JPG"}, {"id": "PIC03627", "file": "PIC03627.jpg", "original_name": "PIC03627.JPG"}, {"id": "PIC03628", "file": "PIC03628.jpg", "original_name": "PIC03628.JPG"}, {"id": "PIC03629", "file": "PIC03629.jpg", "original_name": "PIC03629.JPG"}, {"id": "PIC03630", "file": "PIC03630.jpg", "original_name": "PIC03630.JPG"}, {"id": "PIC03631", "file": "PIC03631.jpg", "original_name": "PIC03631.JPG"}, {"id": "PIC03632", "file": "PIC03632.jpg", "original_name": "PIC03632.JPG"}, {"id": "PIC03633", "file": "PIC03633.jpg", "original_name": "PIC03633.JPG"}, {"id": "PIC03634", "file": "PIC03634.jpg", "original_name": "PIC03634.JPG"}, {"id": "PIC03635", "file": "PIC03635.jpg", "original_name": "PIC03635.JPG"}, {"id": "PIC03636", "file": "PIC03636.jpg", "original_name": "PIC03636.JPG"}, {"id": "PIC03637", "file": "PIC03637.jpg", "original_name": "PIC03637.JPG"}, {"id": "PIC03638", "file": "PIC03638.jpg", "original_name": "PIC03638.JPG"}, {"id": "PIC03639", "file": "PIC03639.jpg", "original_name": "PIC03639.JPG"}, {"id": "PIC03640", "file": "PIC03640.jpg", "original_name": "PIC03640.JPG"}, {"id": "PIC03641", "file": "PIC03641.jpg", "original_name": "PIC03641.JPG"}, {"id": "PIC03642", "file": "PIC03642.jpg", "original_name": "PIC03642.JPG"}, {"id": "PIC03643", "file": "PIC03643.jpg", "original_name": "PIC03643.JPG"}, {"id": "PIC03644", "file": "PIC03644.jpg", "original_name": "PIC03644.JPG"}, {"id": "PIC03645", "file": "PIC03645.jpg", "original_name": "PIC03645.JPG"}, {"id": "PIC03646", "file": "PIC03646.jpg", "original_name": "PIC03646.JPG"}, {"id": "PIC03647", "file": "PIC03647.jpg", "original_name": "PIC03647.JPG"}, {"id": "PIC03648", "file": "PIC03648.jpg", "original_name": "PIC03648.JPG"}, {"id": "PIC03649", "file": "PIC03649.jpg", "original_name": "PIC03649.JPG"}, {"id": "PIC03650", "file": "PIC03650.jpg", "original_name": "PIC03650.JPG"}, {"id": "PIC03651", "file": "PIC03651.jpg", "original_name": "PIC03651.JPG"}, {"id": "PIC03652", "file": "PIC03652.jpg", "original_name": "PIC03652.JPG"}, {"id": "PIC03653", "file": "PIC03653.jpg", "original_name": "PIC03653.JPG"}, {"id": "PIC03654", "file": "PIC03654.jpg", "original_name": "PIC03654.JPG"}, {"id": "PIC03655", "file": "PIC03655.jpg", "original_name": "PIC03655.JPG"}, {"id": "PIC03656", "file": "PIC03656.jpg", "original_name": "PIC03656.JPG"}, {"id": "PIC03657", "file": "PIC03657.jpg", "original_name": "PIC03657.JPG"}, {"id": "PIC03658", "file": "PIC03658.jpg", "original_name": "PIC03658.JPG"}, {"id": "PIC03659", "file": "PIC03659.jpg", "original_name": "PIC03659.JPG"}, {"id": "PIC03660", "file": "PIC03660.jpg", "original_name": "PIC03660.JPG"}, {"id": "PIC03661", "file": "PIC03661.jpg", "original_name": "PIC03661.JPG"}, {"id": "PIC03662", "file": "PIC03662.jpg", "original_name": "PIC03662.JPG"}, {"id": "PIC03663", "file": "PIC03663.jpg", "original_name": "PIC03663.JPG"}, {"id": "PIC03664", "file": "PIC03664.jpg", "original_name": "PIC03664.JPG"}, {"id": "PIC03665", "file": "PIC03665.jpg", "original_name": "PIC03665.JPG"}, {"id": "PIC03666", "file": "PIC03666.jpg", "original_name": "PIC03666.JPG"}, {"id": "PIC03667", "file": "PIC03667.jpg", "original_name": "PIC03667.JPG"}, {"id": "PIC03668", "file": "PIC03668.jpg", "original_name": "PIC03668.JPG"}, {"id": "PIC03669", "file": "PIC03669.jpg", "original_name": "PIC03669.JPG"}, {"id": "PIC03670", "file": "PIC03670.jpg", "original_name": "PIC03670.JPG"}, {"id": "PIC03671", "file": "PIC03671.jpg", "original_name": "PIC03671.JPG"}, {"id": "PIC03672", "file": "PIC03672.jpg", "original_name": "PIC03672.JPG"}, {"id": "PIC03673", "file": "PIC03673.jpg", "original_name": "PIC03673.JPG"}, {"id": "PIC03674", "file": "PIC03674.jpg", "original_name": "PIC03674.JPG"}, {"id": "PIC03675", "file": "PIC03675.jpg", "original_name": "PIC03675.JPG"}, {"id": "PIC03676", "file": "PIC03676.jpg", "original_name": "PIC03676.JPG"}, {"id": "PIC03677", "file": "PIC03677.jpg", "original_name": "PIC03677.JPG"}, {"id": "PIC03678", "file": "PIC03678.jpg", "original_name": "PIC03678.JPG"}, {"id": "PIC03679", "file": "PIC03679.jpg", "original_name": "PIC03679.JPG"}, {"id": "PIC03680", "file": "PIC03680.jpg", "original_name": "PIC03680.JPG"}, {"id": "PIC03681", "file": "PIC03681.jpg", "original_name": "PIC03681.JPG"}, {"id": "PIC03682", "file": "PIC03682.jpg", "original_name": "PIC03682.JPG"}, {"id": "PIC03683", "file": "PIC03683.jpg", "original_name": "PIC03683.JPG"}, {"id": "PIC03684", "file": "PIC03684.jpg", "original_name": "PIC03684.JPG"}, {"id": "PIC03685", "file": "PIC03685.jpg", "original_name": "PIC03685.JPG"}, {"id": "PIC03686", "file": "PIC03686.jpg", "original_name": "PIC03686.JPG"}, {"id": "PIC03687", "file": "PIC03687.jpg", "original_name": "PIC03687.JPG"}, {"id": "PIC03688", "file": "PIC03688.jpg", "original_name": "PIC03688.JPG"}, {"id": "PIC03689", "file": "PIC03689.jpg", "original_name": "PIC03689.JPG"}, {"id": "PIC03690", "file": "PIC03690.jpg", "original_name": "PIC03690.JPG"}, {"id": "PIC03691", "file": "PIC03691.jpg", "original_name": "PIC03691.JPG"}, {"id": "PIC03692", "file": "PIC03692.jpg", "original_name": "PIC03692.JPG"}, {"id": "PIC03693", "file": "PIC03693.jpg", "original_name": "PIC03693.JPG"}, {"id": "PIC03694", "file": "PIC03694.jpg", "original_name": "PIC03694.JPG"}, {"id": "PIC03695", "file": "PIC03695.jpg", "original_name": "PIC03695.JPG"}, {"id": "PIC03696", "file": "PIC03696.jpg", "original_name": "PIC03696.JPG"}, {"id": "PIC03697", "file": "PIC03697.jpg", "original_name": "PIC03697.JPG"}, {"id": "PIC03698", "file": "PIC03698.jpg", "original_name": "PIC03698.JPG"}, {"id": "PIC03699", "file": "PIC03699.jpg", "original_name": "PIC03699.JPG"}, {"id": "PIC03700", "file": "PIC03700.jpg", "original_name": "PIC03700.JPG"}, {"id": "PIC03701", "file": "PIC03701.jpg", "original_name": "PIC03701.JPG"}, {"id": "PIC03702", "file": "PIC03702.jpg", "original_name": "PIC03702.JPG"}, {"id": "PIC03703", "file": "PIC03703.jpg", "original_name": "PIC03703.JPG"}, {"id": "PIC03704", "file": "PIC03704.jpg", "original_name": "PIC03704.JPG"}, {"id": "PIC03705", "file": "PIC03705.jpg", "original_name": "PIC03705.JPG"}, {"id": "PIC03706", "file": "PIC03706.jpg", "original_name": "PIC03706.JPG"}, {"id": "PIC03707", "file": "PIC03707.jpg", "original_name": "PIC03707.JPG"}, {"id": "PIC03708", "file": "PIC03708.jpg", "original_name": "PIC03708.JPG"}, {"id": "PIC03709", "file": "PIC03709.jpg", "original_name": "PIC03709.JPG"}, {"id": "PIC03710", "file": "PIC03710.jpg", "original_name": "PIC03710.JPG"}, {"id": "PIC03711", "file": "PIC03711.jpg", "original_name": "PIC03711.JPG"}, {"id": "PIC03712", "file": "PIC03712.jpg", "original_name": "PIC03712.JPG"}, {"id": "PIC03713", "file": "PIC03713.jpg", "original_name": "PIC03713.JPG"}, {"id": "PIC03714", "file": "PIC03714.jpg", "original_name": "PIC03714.JPG"}, {"id": "PIC03715", "file": "PIC03715.jpg", "original_name": "PIC03715.JPG"}, {"id": "PIC03716", "file": "PIC03716.jpg", "original_name": "PIC03716.JPG"}, {"id": "PIC03717", "file": "PIC03717.jpg", "original_name": "PIC03717.JPG"}, {"id": "PIC03718", "file": "PIC03718.jpg", "original_name": "PIC03718.JPG"}, {"id": "PIC03719", "file": "PIC03719.jpg", "original_name": "PIC03719.JPG"}, {"id": "PIC03720", "file": "PIC03720.jpg", "original_name": "PIC03720.JPG"}, {"id": "PIC03721", "file": "PIC03721.jpg", "original_name": "PIC03721.JPG"}, {"id": "PIC03722", "file": "PIC03722.jpg", "original_name": "PIC03722.JPG"}, {"id": "PIC03723", "file": "PIC03723.jpg", "original_name": "PIC03723.JPG"}, {"id": "PIC03724", "file": "PIC03724.jpg", "original_name": "PIC03724.JPG"}, {"id": "PIC03725", "file": "PIC03725.jpg", "original_name": "PIC03725.JPG"}, {"id": "PIC03726", "file": "PIC03726.jpg", "original_name": "PIC03726.JPG"}, {"id": "PIC03727", "file": "PIC03727.jpg", "original_name": "PIC03727.JPG"}, {"id": "PIC03728", "file": "PIC03728.jpg", "original_name": "PIC03728.JPG"}, {"id": "PIC03729", "file": "PIC03729.jpg", "original_name": "PIC03729.JPG"}, {"id": "PIC03730", "file": "PIC03730.jpg", "original_name": "PIC03730.JPG"}, {"id": "PIC03731", "file": "PIC03731.jpg", "original_name": "PIC03731.JPG"}, {"id": "PIC03732", "file": "PIC03732.jpg", "original_name": "PIC03732.JPG"}, {"id": "PIC03733", "file": "PIC03733.jpg", "original_name": "PIC03733.JPG"}, {"id": "PIC03734", "file": "PIC03734.jpg", "original_name": "PIC03734.JPG"}, {"id": "PIC03735", "file": "PIC03735.jpg", "original_name": "PIC03735.JPG"}, {"id": "PIC03736", "file": "PIC03736.jpg", "original_name": "PIC03736.JPG"}, {"id": "PIC03737", "file": "PIC03737.jpg", "original_name": "PIC03737.JPG"}, {"id": "PIC03738", "file": "PIC03738.jpg", "original_name": "PIC03738.JPG"}, {"id": "PIC03739", "file": "PIC03739.jpg", "original_name": "PIC03739.JPG"}, {"id": "PIC03740", "file": "PIC03740.jpg", "original_name": "PIC03740.JPG"}, {"id": "PIC03741", "file": "PIC03741.jpg", "original_name": "PIC03741.JPG"}, {"id": "PIC03742", "file": "PIC03742.jpg", "original_name": "PIC03742.JPG"}, {"id": "PIC03743", "file": "PIC03743.jpg", "original_name": "PIC03743.JPG"}, {"id": "PIC03744", "file": "PIC03744.jpg", "original_name": "PIC03744.JPG"}, {"id": "PIC03745", "file": "PIC03745.jpg", "original_name": "PIC03745.JPG"}, {"id": "PIC03746", "file": "PIC03746.jpg", "original_name": "PIC03746.JPG"}, {"id": "PIC03747", "file": "PIC03747.jpg", "original_name": "PIC03747.JPG"}, {"id": "PIC03748", "file": "PIC03748.jpg", "original_name": "PIC03748.JPG"}, {"id": "PIC03749", "file": "PIC03749.jpg", "original_name": "PIC03749.JPG"}, {"id": "PIC03750", "file": "PIC03750.jpg", "original_name": "PIC03750.JPG"}, {"id": "PIC03751", "file": "PIC03751.jpg", "original_name": "PIC03751.JPG"}, {"id": "PIC03752", "file": "PIC03752.jpg", "original_name": "PIC03752.JPG"}, {"id": "PIC03753", "file": "PIC03753.jpg", "original_name": "PIC03753.JPG"}, {"id": "PIC03754", "file": "PIC03754.jpg", "original_name": "PIC03754.JPG"}, {"id": "PIC03755", "file": "PIC03755.jpg", "original_name": "PIC03755.JPG"}, {"id": "PIC03756", "file": "PIC03756.jpg", "original_name": "PIC03756.JPG"}, {"id": "PIC03757", "file": "PIC03757.jpg", "original_name": "PIC03757.JPG"}, {"id": "PIC03758", "file": "PIC03758.jpg", "original_name": "PIC03758.JPG"}, {"id": "PIC03759", "file": "PIC03759.jpg", "original_name": "PIC03759.JPG"}, {"id": "PIC03760", "file": "PIC03760.jpg", "original_name": "PIC03760.JPG"}, {"id": "PIC03761", "file": "PIC03761.jpg", "original_name": "PIC03761.JPG"}, {"id": "PIC03762", "file": "PIC03762.jpg", "original_name": "PIC03762.JPG"}, {"id": "PIC03763", "file": "PIC03763.jpg", "original_name": "PIC03763.JPG"}]
+  cliente:  'Luigi Mastroianni',
+  sessione: '',
+  whatsapp: '393348493876',
+  storage:  '260517_BattesimoDario',
+  foto:     [{"id": "PIC03405", "file": "PIC03405.jpg", "original_name": "PIC03405.JPG"}, {"id": "PIC03406", "file": "PIC03406.jpg", "original_name": "PIC03406.JPG"}, {"id": "PIC03407", "file": "PIC03407.jpg", "original_name": "PIC03407.JPG"}, {"id": "PIC03408", "file": "PIC03408.jpg", "original_name": "PIC03408.JPG"}, {"id": "PIC03409", "file": "PIC03409.jpg", "original_name": "PIC03409.JPG"}, {"id": "PIC03410", "file": "PIC03410.jpg", "original_name": "PIC03410.JPG"}, {"id": "PIC03411", "file": "PIC03411.jpg", "original_name": "PIC03411.JPG"}, {"id": "PIC03412", "file": "PIC03412.jpg", "original_name": "PIC03412.JPG"}, {"id": "PIC03413", "file": "PIC03413.jpg", "original_name": "PIC03413.JPG"}, {"id": "PIC03414", "file": "PIC03414.jpg", "original_name": "PIC03414.JPG"}, {"id": "PIC03415", "file": "PIC03415.jpg", "original_name": "PIC03415.JPG"}, {"id": "PIC03416", "file": "PIC03416.jpg", "original_name": "PIC03416.JPG"}, {"id": "PIC03417", "file": "PIC03417.jpg", "original_name": "PIC03417.JPG"}, {"id": "PIC03418", "file": "PIC03418.jpg", "original_name": "PIC03418.JPG"}, {"id": "PIC03419", "file": "PIC03419.jpg", "original_name": "PIC03419.JPG"}, {"id": "PIC03420", "file": "PIC03420.jpg", "original_name": "PIC03420.JPG"}, {"id": "PIC03421", "file": "PIC03421.jpg", "original_name": "PIC03421.JPG"}, {"id": "PIC03422", "file": "PIC03422.jpg", "original_name": "PIC03422.JPG"}, {"id": "PIC03423", "file": "PIC03423.jpg", "original_name": "PIC03423.JPG"}, {"id": "PIC03424", "file": "PIC03424.jpg", "original_name": "PIC03424.JPG"}, {"id": "PIC03425", "file": "PIC03425.jpg", "original_name": "PIC03425.JPG"}, {"id": "PIC03426", "file": "PIC03426.jpg", "original_name": "PIC03426.JPG"}, {"id": "PIC03427", "file": "PIC03427.jpg", "original_name": "PIC03427.JPG"}, {"id": "PIC03428", "file": "PIC03428.jpg", "original_name": "PIC03428.JPG"}, {"id": "PIC03429", "file": "PIC03429.jpg", "original_name": "PIC03429.JPG"}, {"id": "PIC03430", "file": "PIC03430.jpg", "original_name": "PIC03430.JPG"}, {"id": "PIC03431", "file": "PIC03431.jpg", "original_name": "PIC03431.JPG"}, {"id": "PIC03432", "file": "PIC03432.jpg", "original_name": "PIC03432.JPG"}, {"id": "PIC03433", "file": "PIC03433.jpg", "original_name": "PIC03433.JPG"}, {"id": "PIC03434", "file": "PIC03434.jpg", "original_name": "PIC03434.JPG"}, {"id": "PIC03435", "file": "PIC03435.jpg", "original_name": "PIC03435.JPG"}, {"id": "PIC03436", "file": "PIC03436.jpg", "original_name": "PIC03436.JPG"}, {"id": "PIC03437", "file": "PIC03437.jpg", "original_name": "PIC03437.JPG"}, {"id": "PIC03438", "file": "PIC03438.jpg", "original_name": "PIC03438.JPG"}, {"id": "PIC03439", "file": "PIC03439.jpg", "original_name": "PIC03439.JPG"}, {"id": "PIC03440", "file": "PIC03440.jpg", "original_name": "PIC03440.JPG"}, {"id": "PIC03441", "file": "PIC03441.jpg", "original_name": "PIC03441.JPG"}, {"id": "PIC03442", "file": "PIC03442.jpg", "original_name": "PIC03442.JPG"}, {"id": "PIC03443", "file": "PIC03443.jpg", "original_name": "PIC03443.JPG"}, {"id": "PIC03444", "file": "PIC03444.jpg", "original_name": "PIC03444.JPG"}, {"id": "PIC03445", "file": "PIC03445.jpg", "original_name": "PIC03445.JPG"}, {"id": "PIC03446", "file": "PIC03446.jpg", "original_name": "PIC03446.JPG"}, {"id": "PIC03447", "file": "PIC03447.jpg", "original_name": "PIC03447.JPG"}, {"id": "PIC03448", "file": "PIC03448.jpg", "original_name": "PIC03448.JPG"}, {"id": "PIC03449", "file": "PIC03449.jpg", "original_name": "PIC03449.JPG"}, {"id": "PIC03450", "file": "PIC03450.jpg", "original_name": "PIC03450.JPG"}, {"id": "PIC03451", "file": "PIC03451.jpg", "original_name": "PIC03451.JPG"}, {"id": "PIC03452", "file": "PIC03452.jpg", "original_name": "PIC03452.JPG"}, {"id": "PIC03453", "file": "PIC03453.jpg", "original_name": "PIC03453.JPG"}, {"id": "PIC03454", "file": "PIC03454.jpg", "original_name": "PIC03454.JPG"}, {"id": "PIC03455", "file": "PIC03455.jpg", "original_name": "PIC03455.JPG"}, {"id": "PIC03456", "file": "PIC03456.jpg", "original_name": "PIC03456.JPG"}, {"id": "PIC03457", "file": "PIC03457.jpg", "original_name": "PIC03457.JPG"}, {"id": "PIC03458", "file": "PIC03458.jpg", "original_name": "PIC03458.JPG"}, {"id": "PIC03459", "file": "PIC03459.jpg", "original_name": "PIC03459.JPG"}, {"id": "PIC03460", "file": "PIC03460.jpg", "original_name": "PIC03460.JPG"}, {"id": "PIC03461", "file": "PIC03461.jpg", "original_name": "PIC03461.JPG"}, {"id": "PIC03462", "file": "PIC03462.jpg", "original_name": "PIC03462.JPG"}, {"id": "PIC03463", "file": "PIC03463.jpg", "original_name": "PIC03463.JPG"}, {"id": "PIC03464", "file": "PIC03464.jpg", "original_name": "PIC03464.JPG"}, {"id": "PIC03465", "file": "PIC03465.jpg", "original_name": "PIC03465.JPG"}, {"id": "PIC03466", "file": "PIC03466.jpg", "original_name": "PIC03466.JPG"}, {"id": "PIC03467", "file": "PIC03467.jpg", "original_name": "PIC03467.JPG"}, {"id": "PIC03468", "file": "PIC03468.jpg", "original_name": "PIC03468.JPG"}, {"id": "PIC03469", "file": "PIC03469.jpg", "original_name": "PIC03469.JPG"}, {"id": "PIC03470", "file": "PIC03470.jpg", "original_name": "PIC03470.JPG"}, {"id": "PIC03471", "file": "PIC03471.jpg", "original_name": "PIC03471.JPG"}, {"id": "PIC03472", "file": "PIC03472.jpg", "original_name": "PIC03472.JPG"}, {"id": "PIC03473", "file": "PIC03473.jpg", "original_name": "PIC03473.JPG"}, {"id": "PIC03474", "file": "PIC03474.jpg", "original_name": "PIC03474.JPG"}, {"id": "PIC03475", "file": "PIC03475.jpg", "original_name": "PIC03475.JPG"}, {"id": "PIC03476", "file": "PIC03476.jpg", "original_name": "PIC03476.JPG"}, {"id": "PIC03477", "file": "PIC03477.jpg", "original_name": "PIC03477.JPG"}, {"id": "PIC03478", "file": "PIC03478.jpg", "original_name": "PIC03478.JPG"}, {"id": "PIC03479", "file": "PIC03479.jpg", "original_name": "PIC03479.JPG"}, {"id": "PIC03480", "file": "PIC03480.jpg", "original_name": "PIC03480.JPG"}, {"id": "PIC03481", "file": "PIC03481.jpg", "original_name": "PIC03481.JPG"}, {"id": "PIC03482", "file": "PIC03482.jpg", "original_name": "PIC03482.JPG"}, {"id": "PIC03483", "file": "PIC03483.jpg", "original_name": "PIC03483.JPG"}, {"id": "PIC03484", "file": "PIC03484.jpg", "original_name": "PIC03484.JPG"}, {"id": "PIC03485", "file": "PIC03485.jpg", "original_name": "PIC03485.JPG"}, {"id": "PIC03486", "file": "PIC03486.jpg", "original_name": "PIC03486.JPG"}, {"id": "PIC03487", "file": "PIC03487.jpg", "original_name": "PIC03487.JPG"}, {"id": "PIC03488", "file": "PIC03488.jpg", "original_name": "PIC03488.JPG"}, {"id": "PIC03489", "file": "PIC03489.jpg", "original_name": "PIC03489.JPG"}, {"id": "PIC03490", "file": "PIC03490.jpg", "original_name": "PIC03490.JPG"}, {"id": "PIC03491", "file": "PIC03491.jpg", "original_name": "PIC03491.JPG"}, {"id": "PIC03492", "file": "PIC03492.jpg", "original_name": "PIC03492.JPG"}, {"id": "PIC03493", "file": "PIC03493.jpg", "original_name": "PIC03493.JPG"}, {"id": "PIC03494", "file": "PIC03494.jpg", "original_name": "PIC03494.JPG"}, {"id": "PIC03495", "file": "PIC03495.jpg", "original_name": "PIC03495.JPG"}, {"id": "PIC03496", "file": "PIC03496.jpg", "original_name": "PIC03496.JPG"}, {"id": "PIC03497", "file": "PIC03497.jpg", "original_name": "PIC03497.JPG"}, {"id": "PIC03498", "file": "PIC03498.jpg", "original_name": "PIC03498.JPG"}, {"id": "PIC03499", "file": "PIC03499.jpg", "original_name": "PIC03499.JPG"}, {"id": "PIC03500", "file": "PIC03500.jpg", "original_name": "PIC03500.JPG"}, {"id": "PIC03501", "file": "PIC03501.jpg", "original_name": "PIC03501.JPG"}, {"id": "PIC03502", "file": "PIC03502.jpg", "original_name": "PIC03502.JPG"}, {"id": "PIC03503", "file": "PIC03503.jpg", "original_name": "PIC03503.JPG"}, {"id": "PIC03504", "file": "PIC03504.jpg", "original_name": "PIC03504.JPG"}, {"id": "PIC03505", "file": "PIC03505.jpg", "original_name": "PIC03505.JPG"}, {"id": "PIC03506", "file": "PIC03506.jpg", "original_name": "PIC03506.JPG"}, {"id": "PIC03507", "file": "PIC03507.jpg", "original_name": "PIC03507.JPG"}, {"id": "PIC03508", "file": "PIC03508.jpg", "original_name": "PIC03508.JPG"}, {"id": "PIC03509", "file": "PIC03509.jpg", "original_name": "PIC03509.JPG"}, {"id": "PIC03510", "file": "PIC03510.jpg", "original_name": "PIC03510.JPG"}, {"id": "PIC03511", "file": "PIC03511.jpg", "original_name": "PIC03511.JPG"}, {"id": "PIC03512", "file": "PIC03512.jpg", "original_name": "PIC03512.JPG"}, {"id": "PIC03513", "file": "PIC03513.jpg", "original_name": "PIC03513.JPG"}, {"id": "PIC03514", "file": "PIC03514.jpg", "original_name": "PIC03514.JPG"}, {"id": "PIC03515", "file": "PIC03515.jpg", "original_name": "PIC03515.JPG"}, {"id": "PIC03516", "file": "PIC03516.jpg", "original_name": "PIC03516.JPG"}, {"id": "PIC03517", "file": "PIC03517.jpg", "original_name": "PIC03517.JPG"}, {"id": "PIC03518", "file": "PIC03518.jpg", "original_name": "PIC03518.JPG"}, {"id": "PIC03519", "file": "PIC03519.jpg", "original_name": "PIC03519.JPG"}, {"id": "PIC03520", "file": "PIC03520.jpg", "original_name": "PIC03520.JPG"}, {"id": "PIC03521", "file": "PIC03521.jpg", "original_name": "PIC03521.JPG"}, {"id": "PIC03522", "file": "PIC03522.jpg", "original_name": "PIC03522.JPG"}, {"id": "PIC03523", "file": "PIC03523.jpg", "original_name": "PIC03523.JPG"}, {"id": "PIC03524", "file": "PIC03524.jpg", "original_name": "PIC03524.JPG"}, {"id": "PIC03525", "file": "PIC03525.jpg", "original_name": "PIC03525.JPG"}, {"id": "PIC03526", "file": "PIC03526.jpg", "original_name": "PIC03526.JPG"}, {"id": "PIC03527", "file": "PIC03527.jpg", "original_name": "PIC03527.JPG"}, {"id": "PIC03528", "file": "PIC03528.jpg", "original_name": "PIC03528.JPG"}, {"id": "PIC03529", "file": "PIC03529.jpg", "original_name": "PIC03529.JPG"}, {"id": "PIC03530", "file": "PIC03530.jpg", "original_name": "PIC03530.JPG"}, {"id": "PIC03531", "file": "PIC03531.jpg", "original_name": "PIC03531.JPG"}, {"id": "PIC03532", "file": "PIC03532.jpg", "original_name": "PIC03532.JPG"}, {"id": "PIC03533", "file": "PIC03533.jpg", "original_name": "PIC03533.JPG"}, {"id": "PIC03534", "file": "PIC03534.jpg", "original_name": "PIC03534.JPG"}, {"id": "PIC03535", "file": "PIC03535.jpg", "original_name": "PIC03535.JPG"}, {"id": "PIC03536", "file": "PIC03536.jpg", "original_name": "PIC03536.JPG"}, {"id": "PIC03537", "file": "PIC03537.jpg", "original_name": "PIC03537.JPG"}, {"id": "PIC03538", "file": "PIC03538.jpg", "original_name": "PIC03538.JPG"}, {"id": "PIC03539", "file": "PIC03539.jpg", "original_name": "PIC03539.JPG"}, {"id": "PIC03540", "file": "PIC03540.jpg", "original_name": "PIC03540.JPG"}, {"id": "PIC03541", "file": "PIC03541.jpg", "original_name": "PIC03541.JPG"}, {"id": "PIC03542", "file": "PIC03542.jpg", "original_name": "PIC03542.JPG"}, {"id": "PIC03543", "file": "PIC03543.jpg", "original_name": "PIC03543.JPG"}, {"id": "PIC03544", "file": "PIC03544.jpg", "original_name": "PIC03544.JPG"}, {"id": "PIC03545", "file": "PIC03545.jpg", "original_name": "PIC03545.JPG"}, {"id": "PIC03546", "file": "PIC03546.jpg", "original_name": "PIC03546.JPG"}, {"id": "PIC03547", "file": "PIC03547.jpg", "original_name": "PIC03547.JPG"}, {"id": "PIC03548", "file": "PIC03548.jpg", "original_name": "PIC03548.JPG"}, {"id": "PIC03549", "file": "PIC03549.jpg", "original_name": "PIC03549.JPG"}, {"id": "PIC03550", "file": "PIC03550.jpg", "original_name": "PIC03550.JPG"}, {"id": "PIC03551", "file": "PIC03551.jpg", "original_name": "PIC03551.JPG"}, {"id": "PIC03552", "file": "PIC03552.jpg", "original_name": "PIC03552.JPG"}, {"id": "PIC03553", "file": "PIC03553.jpg", "original_name": "PIC03553.JPG"}, {"id": "PIC03554", "file": "PIC03554.jpg", "original_name": "PIC03554.JPG"}, {"id": "PIC03555", "file": "PIC03555.jpg", "original_name": "PIC03555.JPG"}, {"id": "PIC03556", "file": "PIC03556.jpg", "original_name": "PIC03556.JPG"}, {"id": "PIC03557", "file": "PIC03557.jpg", "original_name": "PIC03557.JPG"}, {"id": "PIC03558", "file": "PIC03558.jpg", "original_name": "PIC03558.JPG"}, {"id": "PIC03559", "file": "PIC03559.jpg", "original_name": "PIC03559.JPG"}, {"id": "PIC03560", "file": "PIC03560.jpg", "original_name": "PIC03560.JPG"}, {"id": "PIC03561", "file": "PIC03561.jpg", "original_name": "PIC03561.JPG"}, {"id": "PIC03562", "file": "PIC03562.jpg", "original_name": "PIC03562.JPG"}, {"id": "PIC03563", "file": "PIC03563.jpg", "original_name": "PIC03563.JPG"}, {"id": "PIC03564", "file": "PIC03564.jpg", "original_name": "PIC03564.JPG"}, {"id": "PIC03565", "file": "PIC03565.jpg", "original_name": "PIC03565.JPG"}, {"id": "PIC03566", "file": "PIC03566.jpg", "original_name": "PIC03566.JPG"}, {"id": "PIC03567", "file": "PIC03567.jpg", "original_name": "PIC03567.JPG"}, {"id": "PIC03568", "file": "PIC03568.jpg", "original_name": "PIC03568.JPG"}, {"id": "PIC03569", "file": "PIC03569.jpg", "original_name": "PIC03569.JPG"}, {"id": "PIC03570", "file": "PIC03570.jpg", "original_name": "PIC03570.JPG"}, {"id": "PIC03571", "file": "PIC03571.jpg", "original_name": "PIC03571.JPG"}, {"id": "PIC03572", "file": "PIC03572.jpg", "original_name": "PIC03572.JPG"}, {"id": "PIC03573", "file": "PIC03573.jpg", "original_name": "PIC03573.JPG"}, {"id": "PIC03574", "file": "PIC03574.jpg", "original_name": "PIC03574.JPG"}, {"id": "PIC03575", "file": "PIC03575.jpg", "original_name": "PIC03575.JPG"}, {"id": "PIC03576", "file": "PIC03576.jpg", "original_name": "PIC03576.JPG"}, {"id": "PIC03577", "file": "PIC03577.jpg", "original_name": "PIC03577.JPG"}, {"id": "PIC03578", "file": "PIC03578.jpg", "original_name": "PIC03578.JPG"}, {"id": "PIC03579", "file": "PIC03579.jpg", "original_name": "PIC03579.JPG"}, {"id": "PIC03580", "file": "PIC03580.jpg", "original_name": "PIC03580.JPG"}, {"id": "PIC03581", "file": "PIC03581.jpg", "original_name": "PIC03581.JPG"}, {"id": "PIC03582", "file": "PIC03582.jpg", "original_name": "PIC03582.JPG"}, {"id": "PIC03583", "file": "PIC03583.jpg", "original_name": "PIC03583.JPG"}, {"id": "PIC03585", "file": "PIC03585.jpg", "original_name": "PIC03585.JPG"}, {"id": "PIC03586", "file": "PIC03586.jpg", "original_name": "PIC03586.JPG"}, {"id": "PIC03587", "file": "PIC03587.jpg", "original_name": "PIC03587.JPG"}, {"id": "PIC03588", "file": "PIC03588.jpg", "original_name": "PIC03588.JPG"}, {"id": "PIC03589", "file": "PIC03589.jpg", "original_name": "PIC03589.JPG"}, {"id": "PIC03590", "file": "PIC03590.jpg", "original_name": "PIC03590.JPG"}, {"id": "PIC03591", "file": "PIC03591.jpg", "original_name": "PIC03591.JPG"}, {"id": "PIC03592", "file": "PIC03592.jpg", "original_name": "PIC03592.JPG"}, {"id": "PIC03593", "file": "PIC03593.jpg", "original_name": "PIC03593.JPG"}, {"id": "PIC03594", "file": "PIC03594.jpg", "original_name": "PIC03594.JPG"}, {"id": "PIC03595", "file": "PIC03595.jpg", "original_name": "PIC03595.JPG"}, {"id": "PIC03596", "file": "PIC03596.jpg", "original_name": "PIC03596.JPG"}, {"id": "PIC03597", "file": "PIC03597.jpg", "original_name": "PIC03597.JPG"}, {"id": "PIC03598", "file": "PIC03598.jpg", "original_name": "PIC03598.JPG"}, {"id": "PIC03599", "file": "PIC03599.jpg", "original_name": "PIC03599.JPG"}, {"id": "PIC03600", "file": "PIC03600.jpg", "original_name": "PIC03600.JPG"}, {"id": "PIC03601", "file": "PIC03601.jpg", "original_name": "PIC03601.JPG"}, {"id": "PIC03602", "file": "PIC03602.jpg", "original_name": "PIC03602.JPG"}, {"id": "PIC03603", "file": "PIC03603.jpg", "original_name": "PIC03603.JPG"}, {"id": "PIC03604", "file": "PIC03604.jpg", "original_name": "PIC03604.JPG"}, {"id": "PIC03605", "file": "PIC03605.jpg", "original_name": "PIC03605.JPG"}, {"id": "PIC03606", "file": "PIC03606.jpg", "original_name": "PIC03606.JPG"}, {"id": "PIC03607", "file": "PIC03607.jpg", "original_name": "PIC03607.JPG"}, {"id": "PIC03608", "file": "PIC03608.jpg", "original_name": "PIC03608.JPG"}, {"id": "PIC03609", "file": "PIC03609.jpg", "original_name": "PIC03609.JPG"}, {"id": "PIC03610", "file": "PIC03610.jpg", "original_name": "PIC03610.JPG"}, {"id": "PIC03611", "file": "PIC03611.jpg", "original_name": "PIC03611.JPG"}, {"id": "PIC03612", "file": "PIC03612.jpg", "original_name": "PIC03612.JPG"}, {"id": "PIC03613", "file": "PIC03613.jpg", "original_name": "PIC03613.JPG"}, {"id": "PIC03614", "file": "PIC03614.jpg", "original_name": "PIC03614.JPG"}, {"id": "PIC03615", "file": "PIC03615.jpg", "original_name": "PIC03615.JPG"}, {"id": "PIC03616", "file": "PIC03616.jpg", "original_name": "PIC03616.JPG"}, {"id": "PIC03617", "file": "PIC03617.jpg", "original_name": "PIC03617.JPG"}, {"id": "PIC03618", "file": "PIC03618.jpg", "original_name": "PIC03618.JPG"}, {"id": "PIC03619", "file": "PIC03619.jpg", "original_name": "PIC03619.JPG"}, {"id": "PIC03620", "file": "PIC03620.jpg", "original_name": "PIC03620.JPG"}, {"id": "PIC03621", "file": "PIC03621.jpg", "original_name": "PIC03621.JPG"}, {"id": "PIC03622", "file": "PIC03622.jpg", "original_name": "PIC03622.JPG"}, {"id": "PIC03623", "file": "PIC03623.jpg", "original_name": "PIC03623.JPG"}, {"id": "PIC03624", "file": "PIC03624.jpg", "original_name": "PIC03624.JPG"}, {"id": "PIC03625", "file": "PIC03625.jpg", "original_name": "PIC03625.JPG"}, {"id": "PIC03626", "file": "PIC03626.jpg", "original_name": "PIC03626.JPG"}, {"id": "PIC03627", "file": "PIC03627.jpg", "original_name": "PIC03627.JPG"}, {"id": "PIC03628", "file": "PIC03628.jpg", "original_name": "PIC03628.JPG"}, {"id": "PIC03629", "file": "PIC03629.jpg", "original_name": "PIC03629.JPG"}, {"id": "PIC03630", "file": "PIC03630.jpg", "original_name": "PIC03630.JPG"}, {"id": "PIC03631", "file": "PIC03631.jpg", "original_name": "PIC03631.JPG"}, {"id": "PIC03632", "file": "PIC03632.jpg", "original_name": "PIC03632.JPG"}, {"id": "PIC03633", "file": "PIC03633.jpg", "original_name": "PIC03633.JPG"}, {"id": "PIC03634", "file": "PIC03634.jpg", "original_name": "PIC03634.JPG"}, {"id": "PIC03635", "file": "PIC03635.jpg", "original_name": "PIC03635.JPG"}, {"id": "PIC03636", "file": "PIC03636.jpg", "original_name": "PIC03636.JPG"}, {"id": "PIC03637", "file": "PIC03637.jpg", "original_name": "PIC03637.JPG"}, {"id": "PIC03638", "file": "PIC03638.jpg", "original_name": "PIC03638.JPG"}, {"id": "PIC03639", "file": "PIC03639.jpg", "original_name": "PIC03639.JPG"}, {"id": "PIC03640", "file": "PIC03640.jpg", "original_name": "PIC03640.JPG"}, {"id": "PIC03641", "file": "PIC03641.jpg", "original_name": "PIC03641.JPG"}, {"id": "PIC03642", "file": "PIC03642.jpg", "original_name": "PIC03642.JPG"}, {"id": "PIC03643", "file": "PIC03643.jpg", "original_name": "PIC03643.JPG"}, {"id": "PIC03644", "file": "PIC03644.jpg", "original_name": "PIC03644.JPG"}, {"id": "PIC03645", "file": "PIC03645.jpg", "original_name": "PIC03645.JPG"}, {"id": "PIC03646", "file": "PIC03646.jpg", "original_name": "PIC03646.JPG"}, {"id": "PIC03647", "file": "PIC03647.jpg", "original_name": "PIC03647.JPG"}, {"id": "PIC03648", "file": "PIC03648.jpg", "original_name": "PIC03648.JPG"}, {"id": "PIC03649", "file": "PIC03649.jpg", "original_name": "PIC03649.JPG"}, {"id": "PIC03650", "file": "PIC03650.jpg", "original_name": "PIC03650.JPG"}, {"id": "PIC03651", "file": "PIC03651.jpg", "original_name": "PIC03651.JPG"}, {"id": "PIC03652", "file": "PIC03652.jpg", "original_name": "PIC03652.JPG"}, {"id": "PIC03653", "file": "PIC03653.jpg", "original_name": "PIC03653.JPG"}, {"id": "PIC03654", "file": "PIC03654.jpg", "original_name": "PIC03654.JPG"}, {"id": "PIC03655", "file": "PIC03655.jpg", "original_name": "PIC03655.JPG"}, {"id": "PIC03656", "file": "PIC03656.jpg", "original_name": "PIC03656.JPG"}, {"id": "PIC03657", "file": "PIC03657.jpg", "original_name": "PIC03657.JPG"}, {"id": "PIC03658", "file": "PIC03658.jpg", "original_name": "PIC03658.JPG"}, {"id": "PIC03659", "file": "PIC03659.jpg", "original_name": "PIC03659.JPG"}, {"id": "PIC03660", "file": "PIC03660.jpg", "original_name": "PIC03660.JPG"}, {"id": "PIC03661", "file": "PIC03661.jpg", "original_name": "PIC03661.JPG"}, {"id": "PIC03662", "file": "PIC03662.jpg", "original_name": "PIC03662.JPG"}, {"id": "PIC03663", "file": "PIC03663.jpg", "original_name": "PIC03663.JPG"}, {"id": "PIC03664", "file": "PIC03664.jpg", "original_name": "PIC03664.JPG"}, {"id": "PIC03665", "file": "PIC03665.jpg", "original_name": "PIC03665.JPG"}, {"id": "PIC03666", "file": "PIC03666.jpg", "original_name": "PIC03666.JPG"}, {"id": "PIC03667", "file": "PIC03667.jpg", "original_name": "PIC03667.JPG"}, {"id": "PIC03668", "file": "PIC03668.jpg", "original_name": "PIC03668.JPG"}, {"id": "PIC03669", "file": "PIC03669.jpg", "original_name": "PIC03669.JPG"}, {"id": "PIC03670", "file": "PIC03670.jpg", "original_name": "PIC03670.JPG"}, {"id": "PIC03671", "file": "PIC03671.jpg", "original_name": "PIC03671.JPG"}, {"id": "PIC03672", "file": "PIC03672.jpg", "original_name": "PIC03672.JPG"}, {"id": "PIC03673", "file": "PIC03673.jpg", "original_name": "PIC03673.JPG"}, {"id": "PIC03674", "file": "PIC03674.jpg", "original_name": "PIC03674.JPG"}, {"id": "PIC03675", "file": "PIC03675.jpg", "original_name": "PIC03675.JPG"}, {"id": "PIC03676", "file": "PIC03676.jpg", "original_name": "PIC03676.JPG"}, {"id": "PIC03677", "file": "PIC03677.jpg", "original_name": "PIC03677.JPG"}, {"id": "PIC03678", "file": "PIC03678.jpg", "original_name": "PIC03678.JPG"}, {"id": "PIC03679", "file": "PIC03679.jpg", "original_name": "PIC03679.JPG"}, {"id": "PIC03680", "file": "PIC03680.jpg", "original_name": "PIC03680.JPG"}, {"id": "PIC03681", "file": "PIC03681.jpg", "original_name": "PIC03681.JPG"}, {"id": "PIC03682", "file": "PIC03682.jpg", "original_name": "PIC03682.JPG"}, {"id": "PIC03683", "file": "PIC03683.jpg", "original_name": "PIC03683.JPG"}, {"id": "PIC03684", "file": "PIC03684.jpg", "original_name": "PIC03684.JPG"}, {"id": "PIC03685", "file": "PIC03685.jpg", "original_name": "PIC03685.JPG"}, {"id": "PIC03686", "file": "PIC03686.jpg", "original_name": "PIC03686.JPG"}, {"id": "PIC03687", "file": "PIC03687.jpg", "original_name": "PIC03687.JPG"}, {"id": "PIC03688", "file": "PIC03688.jpg", "original_name": "PIC03688.JPG"}, {"id": "PIC03689", "file": "PIC03689.jpg", "original_name": "PIC03689.JPG"}, {"id": "PIC03690", "file": "PIC03690.jpg", "original_name": "PIC03690.JPG"}, {"id": "PIC03691", "file": "PIC03691.jpg", "original_name": "PIC03691.JPG"}, {"id": "PIC03692", "file": "PIC03692.jpg", "original_name": "PIC03692.JPG"}, {"id": "PIC03693", "file": "PIC03693.jpg", "original_name": "PIC03693.JPG"}, {"id": "PIC03694", "file": "PIC03694.jpg", "original_name": "PIC03694.JPG"}, {"id": "PIC03695", "file": "PIC03695.jpg", "original_name": "PIC03695.JPG"}, {"id": "PIC03696", "file": "PIC03696.jpg", "original_name": "PIC03696.JPG"}, {"id": "PIC03697", "file": "PIC03697.jpg", "original_name": "PIC03697.JPG"}, {"id": "PIC03698", "file": "PIC03698.jpg", "original_name": "PIC03698.JPG"}, {"id": "PIC03699", "file": "PIC03699.jpg", "original_name": "PIC03699.JPG"}, {"id": "PIC03700", "file": "PIC03700.jpg", "original_name": "PIC03700.JPG"}, {"id": "PIC03701", "file": "PIC03701.jpg", "original_name": "PIC03701.JPG"}, {"id": "PIC03702", "file": "PIC03702.jpg", "original_name": "PIC03702.JPG"}, {"id": "PIC03703", "file": "PIC03703.jpg", "original_name": "PIC03703.JPG"}, {"id": "PIC03704", "file": "PIC03704.jpg", "original_name": "PIC03704.JPG"}, {"id": "PIC03705", "file": "PIC03705.jpg", "original_name": "PIC03705.JPG"}, {"id": "PIC03706", "file": "PIC03706.jpg", "original_name": "PIC03706.JPG"}, {"id": "PIC03707", "file": "PIC03707.jpg", "original_name": "PIC03707.JPG"}, {"id": "PIC03708", "file": "PIC03708.jpg", "original_name": "PIC03708.JPG"}, {"id": "PIC03709", "file": "PIC03709.jpg", "original_name": "PIC03709.JPG"}, {"id": "PIC03710", "file": "PIC03710.jpg", "original_name": "PIC03710.JPG"}, {"id": "PIC03711", "file": "PIC03711.jpg", "original_name": "PIC03711.JPG"}, {"id": "PIC03712", "file": "PIC03712.jpg", "original_name": "PIC03712.JPG"}, {"id": "PIC03713", "file": "PIC03713.jpg", "original_name": "PIC03713.JPG"}, {"id": "PIC03714", "file": "PIC03714.jpg", "original_name": "PIC03714.JPG"}, {"id": "PIC03715", "file": "PIC03715.jpg", "original_name": "PIC03715.JPG"}, {"id": "PIC03716", "file": "PIC03716.jpg", "original_name": "PIC03716.JPG"}, {"id": "PIC03717", "file": "PIC03717.jpg", "original_name": "PIC03717.JPG"}, {"id": "PIC03718", "file": "PIC03718.jpg", "original_name": "PIC03718.JPG"}, {"id": "PIC03719", "file": "PIC03719.jpg", "original_name": "PIC03719.JPG"}, {"id": "PIC03720", "file": "PIC03720.jpg", "original_name": "PIC03720.JPG"}, {"id": "PIC03721", "file": "PIC03721.jpg", "original_name": "PIC03721.JPG"}, {"id": "PIC03722", "file": "PIC03722.jpg", "original_name": "PIC03722.JPG"}, {"id": "PIC03723", "file": "PIC03723.jpg", "original_name": "PIC03723.JPG"}, {"id": "PIC03724", "file": "PIC03724.jpg", "original_name": "PIC03724.JPG"}, {"id": "PIC03725", "file": "PIC03725.jpg", "original_name": "PIC03725.JPG"}, {"id": "PIC03726", "file": "PIC03726.jpg", "original_name": "PIC03726.JPG"}, {"id": "PIC03727", "file": "PIC03727.jpg", "original_name": "PIC03727.JPG"}, {"id": "PIC03728", "file": "PIC03728.jpg", "original_name": "PIC03728.JPG"}, {"id": "PIC03729", "file": "PIC03729.jpg", "original_name": "PIC03729.JPG"}, {"id": "PIC03730", "file": "PIC03730.jpg", "original_name": "PIC03730.JPG"}, {"id": "PIC03731", "file": "PIC03731.jpg", "original_name": "PIC03731.JPG"}, {"id": "PIC03732", "file": "PIC03732.jpg", "original_name": "PIC03732.JPG"}, {"id": "PIC03733", "file": "PIC03733.jpg", "original_name": "PIC03733.JPG"}, {"id": "PIC03734", "file": "PIC03734.jpg", "original_name": "PIC03734.JPG"}, {"id": "PIC03735", "file": "PIC03735.jpg", "original_name": "PIC03735.JPG"}, {"id": "PIC03736", "file": "PIC03736.jpg", "original_name": "PIC03736.JPG"}, {"id": "PIC03737", "file": "PIC03737.jpg", "original_name": "PIC03737.JPG"}, {"id": "PIC03738", "file": "PIC03738.jpg", "original_name": "PIC03738.JPG"}, {"id": "PIC03739", "file": "PIC03739.jpg", "original_name": "PIC03739.JPG"}, {"id": "PIC03740", "file": "PIC03740.jpg", "original_name": "PIC03740.JPG"}, {"id": "PIC03741", "file": "PIC03741.jpg", "original_name": "PIC03741.JPG"}, {"id": "PIC03742", "file": "PIC03742.jpg", "original_name": "PIC03742.JPG"}, {"id": "PIC03743", "file": "PIC03743.jpg", "original_name": "PIC03743.JPG"}, {"id": "PIC03744", "file": "PIC03744.jpg", "original_name": "PIC03744.JPG"}, {"id": "PIC03745", "file": "PIC03745.jpg", "original_name": "PIC03745.JPG"}, {"id": "PIC03746", "file": "PIC03746.jpg", "original_name": "PIC03746.JPG"}, {"id": "PIC03747", "file": "PIC03747.jpg", "original_name": "PIC03747.JPG"}, {"id": "PIC03748", "file": "PIC03748.jpg", "original_name": "PIC03748.JPG"}, {"id": "PIC03749", "file": "PIC03749.jpg", "original_name": "PIC03749.JPG"}, {"id": "PIC03750", "file": "PIC03750.jpg", "original_name": "PIC03750.JPG"}, {"id": "PIC03751", "file": "PIC03751.jpg", "original_name": "PIC03751.JPG"}, {"id": "PIC03752", "file": "PIC03752.jpg", "original_name": "PIC03752.JPG"}, {"id": "PIC03753", "file": "PIC03753.jpg", "original_name": "PIC03753.JPG"}, {"id": "PIC03754", "file": "PIC03754.jpg", "original_name": "PIC03754.JPG"}, {"id": "PIC03755", "file": "PIC03755.jpg", "original_name": "PIC03755.JPG"}, {"id": "PIC03756", "file": "PIC03756.jpg", "original_name": "PIC03756.JPG"}, {"id": "PIC03757", "file": "PIC03757.jpg", "original_name": "PIC03757.JPG"}, {"id": "PIC03758", "file": "PIC03758.jpg", "original_name": "PIC03758.JPG"}, {"id": "PIC03759", "file": "PIC03759.jpg", "original_name": "PIC03759.JPG"}, {"id": "PIC03760", "file": "PIC03760.jpg", "original_name": "PIC03760.JPG"}, {"id": "PIC03761", "file": "PIC03761.jpg", "original_name": "PIC03761.JPG"}, {"id": "PIC03762", "file": "PIC03762.jpg", "original_name": "PIC03762.JPG"}, {"id": "PIC03763", "file": "PIC03763.jpg", "original_name": "PIC03763.JPG"}]
 };
 
-var state = {};
-var lbIdx = 0;
+var state  = {};
+var lbIdx  = 0;
+var isTouch = ('ontouchstart' in window);
 
+// ── STATE ──────────────────────────────────────────────────────────────────
 function loadState() {
-  try {
-    var s = localStorage.getItem('sel_' + CONFIG.storage);
-    if (s) state = JSON.parse(s);
-  } catch(e) {}
-  CONFIG.foto.forEach(function(f) {
-    if (!state[f.id]) state[f.id] = {vote: null, note: ''};
-  });
+  try { var s=localStorage.getItem('sel_'+CONFIG.storage); if(s) state=JSON.parse(s); } catch(e){}
+  CONFIG.foto.forEach(function(f){ if(!state[f.id]) state[f.id]={vote:null,note:''}; });
 }
-
 function saveState() {
-  try { localStorage.setItem('sel_' + CONFIG.storage, JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem('sel_'+CONFIG.storage, JSON.stringify(state)); } catch(e){}
 }
-
 function updateStats() {
-  var yes = 0, no = 0;
-  CONFIG.foto.forEach(function(f) { if (state[f.id].vote==='yes') yes++; else if (state[f.id].vote==='no') no++; });
-  document.getElementById('cnt-tot').textContent = CONFIG.foto.length;
-  document.getElementById('cnt-yes').textContent = yes;
-  document.getElementById('cnt-no').textContent  = no;
+  var yes=0,no=0;
+  CONFIG.foto.forEach(function(f){ if(state[f.id].vote==='yes') yes++; else if(state[f.id].vote==='no') no++; });
+  document.getElementById('cnt-tot').textContent=CONFIG.foto.length;
+  document.getElementById('cnt-yes').textContent=yes;
+  document.getElementById('cnt-no').textContent=no;
 }
 
-function vote(id, v) {
-  state[id].vote = state[id].vote === v ? null : v;
-  saveState();
-  renderCard(id);
-  updateStats();
+// ── VOTE ───────────────────────────────────────────────────────────────────
+function vote(id,v) {
+  state[id].vote = state[id].vote===v ? null : v;
+  saveState(); renderCard(id); updateStats();
 }
+function setNote(id,val){ state[id].note=val; saveState(); }
 
-function setNote(id, val) {
-  state[id].note = val;
-  saveState();
-}
+// ── GRID ───────────────────────────────────────────────────────────────────
+function escHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function renderCard(id) {
-  var f   = CONFIG.foto.find(function(x){ return x.id===id; });
-  var s   = state[id];
-  var card = document.getElementById('card_'+id);
-  if (!card) return;
-  var badge = card.querySelector('.badge');
-  var byes  = card.querySelector('.btn-yes');
-  var bno   = card.querySelector('.btn-no');
-  badge.className = 'badge';
-  if (s.vote==='yes') { badge.className='badge badge-yes show'; badge.textContent='✓ Selezionata'; }
-  if (s.vote==='no')  { badge.className='badge badge-no show';  badge.textContent='✕ Scartata'; }
-  byes.className = 'btn btn-yes' + (s.vote==='yes' ? ' active' : '');
-  bno.className  = 'btn btn-no'  + (s.vote==='no'  ? ' active' : '');
+  var s=state[id];
+  var card=document.getElementById('card_'+id); if(!card) return;
+  var badge=card.querySelector('.badge');
+  var byes=card.querySelector('.btn-yes');
+  var bno=card.querySelector('.btn-no');
+  badge.className='badge';
+  if(s.vote==='yes'){badge.className='badge badge-yes show';badge.textContent='✓ Sì';}
+  if(s.vote==='no') {badge.className='badge badge-no show'; badge.textContent='✗ No';}
+  byes.className='btn btn-yes'+(s.vote==='yes'?' active':'');
+  bno.className ='btn btn-no' +(s.vote==='no' ?' active':'');
 }
 
 function buildGrid() {
-  document.getElementById('titolo').textContent = CONFIG.cliente;
-  var g = document.getElementById('grid');
-  g.innerHTML = '';
-  CONFIG.foto.forEach(function(f, idx) {
-    var s = state[f.id];
-    var d = document.createElement('div');
-    d.className = 'card';
-    d.id = 'card_'+f.id;
-    d.innerHTML =
-      '<div class="thumb-wrap">' +
-        '<img class="thumb" src="foto/'+f.file+'" alt="'+f.original_name+'" loading="lazy" onclick="openLb('+idx+')" width="400" height="300">' +
-        '<div class="badge"></div>' +
-      '</div>' +
-      '<div class="card-body">' +
-        '<div class="fname">'+f.original_name+'</div>' +
-        '<div class="btns">' +
-          '<button class="btn btn-yes" onclick="vote(\''+f.id+'\',\'yes\')">✓ Sì</button>' +
-          '<button class="btn btn-no"  onclick="vote(\''+f.id+'\',\'no\')">✕ No</button>' +
-        '</div>' +
-        '<textarea class="note" rows="2" placeholder="Commento opzionale..." onchange="setNote(\''+f.id+'\',this.value)">'+escHtml(s.note)+'</textarea>' +
+  document.getElementById('titolo').textContent=CONFIG.cliente;
+  var g=document.getElementById('grid'); g.innerHTML='';
+  CONFIG.foto.forEach(function(f,idx){
+    var s=state[f.id];
+    var d=document.createElement('div');
+    d.className='card'; d.id='card_'+f.id;
+    d.innerHTML=
+      '<div class="thumb-wrap">'+
+        '<img class="thumb" src="foto/'+f.file+'" alt="'+escHtml(f.original_name)+'" loading="lazy" onclick="openLb('+idx+')" width="400" height="300" draggable="false">'+
+        '<div class="badge"></div>'+
+      '</div>'+
+      '<div class="card-body">'+
+        '<div class="fname">'+escHtml(f.original_name)+'</div>'+
+        '<div class="btns">'+
+          '<button class="btn btn-yes" onclick="vote(\''+f.id+'\',\'yes\')">✓ Sì</button>'+
+          '<button class="btn btn-no"  onclick="vote(\''+f.id+'\',\'no\')">✗ No</button>'+
+        '</div>'+
+        '<textarea class="note" rows="2" placeholder="Commento opzionale..." onchange="setNote(\''+f.id+'\',this.value)">'+escHtml(s.note)+'</textarea>'+
       '</div>';
     g.appendChild(d);
     renderCard(f.id);
@@ -222,60 +275,126 @@ function buildGrid() {
   updateStats();
 }
 
-function escHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// ── LIGHTBOX ───────────────────────────────────────────────────────────────
+function openLb(idx){ lbIdx=idx; showLb(null); document.getElementById('lb').classList.add('on'); }
+function closeLb()  { document.getElementById('lb').classList.remove('on'); }
 
-// Lightbox
-function openLb(idx) { lbIdx=idx; showLb(); }
-function showLb() {
+function showLb(dir) {
   var f=CONFIG.foto[lbIdx];
-  document.getElementById('lb-img').src='foto/'+f.file;
-  document.getElementById('lb-meta').textContent=f.original_name+' ('+( lbIdx+1)+'/'+CONFIG.foto.length+')';
-  document.getElementById('lb').classList.add('on');
+  var s=state[f.id];
+  var img=document.getElementById('lb-img');
+  var wrap=document.getElementById('lb-img-wrap');
+
+  // slide animation
+  if(dir!==null){
+    img.style.transition='none';
+    img.style.transform='translateX('+(dir>0?'60px':'-60px')+')';
+    img.style.opacity='0';
+    setTimeout(function(){
+      img.src='foto/'+f.file;
+      img.alt=f.original_name;
+      img.style.transition='';
+      img.style.transform='translateX(0)';
+      img.style.opacity='1';
+    },60);
+  } else {
+    img.src='foto/'+f.file;
+    img.alt=f.original_name;
+    img.style.transform='translateX(0)';
+    img.style.opacity='1';
+  }
+
+  document.getElementById('lb-counter').textContent=(lbIdx+1)+' / '+CONFIG.foto.length;
+  document.getElementById('lb-fname').textContent=f.original_name;
+  document.getElementById('lb-hint').textContent=isTouch ? 'Scorri per cambiare foto' : '';
+  updateLbBtns(f.id);
 }
-function closeLb() { document.getElementById('lb').classList.remove('on'); }
-function navLb(d) { lbIdx=(lbIdx+d+CONFIG.foto.length)%CONFIG.foto.length; showLb(); }
+
+function updateLbBtns(id){
+  var v=state[id].vote;
+  document.getElementById('lb-btn-yes').className='lb-btn-yes'+(v==='yes'?' active':'');
+  document.getElementById('lb-btn-no').className ='lb-btn-no' +(v==='no' ?' active':'');
+}
+
+function navLb(d){
+  lbIdx=(lbIdx+d+CONFIG.foto.length)%CONFIG.foto.length;
+  showLb(d);
+}
+
+function lbVote(v){
+  var id=CONFIG.foto[lbIdx].id;
+  vote(id,v);         // aggiorna griglia + stats
+  updateLbBtns(id);   // aggiorna bottoni lightbox
+  // vai avanti dopo 500ms se era un voto nuovo
+  if(state[id].vote!==null){
+    setTimeout(function(){
+      if(lbIdx<CONFIG.foto.length-1) navLb(1);
+    },480);
+  }
+}
+
+// Tastiera
 document.addEventListener('keydown',function(e){
-  if (!document.getElementById('lb').classList.contains('on')) return;
-  if (e.key==='ArrowRight') navLb(1);
-  if (e.key==='ArrowLeft')  navLb(-1);
-  if (e.key==='Escape')     closeLb();
+  if(!document.getElementById('lb').classList.contains('on')) return;
+  if(e.key==='ArrowRight'||e.key==='l') navLb(1);
+  if(e.key==='ArrowLeft' ||e.key==='h') navLb(-1);
+  if(e.key==='y'||e.key==='Y') lbVote('yes');
+  if(e.key==='n'||e.key==='N') lbVote('no');
+  if(e.key==='Escape') closeLb();
 });
 
-// Modal
-function buildMsg() {
-  var yes=[], no=[], notes=[];
-  CONFIG.foto.forEach(function(f) {
+// Swipe touch
+(function(){
+  var lb=document.getElementById('lb');
+  var startX=0,startY=0,moved=false;
+  lb.addEventListener('touchstart',function(e){
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+    moved=false;
+  },{passive:true});
+  lb.addEventListener('touchmove',function(e){
+    var dx=e.touches[0].clientX-startX;
+    var dy=e.touches[0].clientY-startY;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>8){
+      moved=true;
+      e.preventDefault();
+    }
+  },{passive:false});
+  lb.addEventListener('touchend',function(e){
+    if(!moved) return;
+    var dx=e.changedTouches[0].clientX-startX;
+    if(Math.abs(dx)>50) navLb(dx<0?1:-1);
+  });
+})();
+
+// ── MODAL ──────────────────────────────────────────────────────────────────
+function buildMsg(){
+  var yes=[],no=[],notes=[];
+  CONFIG.foto.forEach(function(f){
     var v=state[f.id];
     var nome=f.original_name||f.file;
-    if (v.vote==='yes') yes.push(nome);
-    if (v.vote==='no')  no.push(nome);
-    if (v.note) notes.push(nome+': '+v.note);
+    if(v.vote==='yes') yes.push(nome);
+    if(v.vote==='no')  no.push(nome);
+    if(v.note) notes.push(nome+': '+v.note);
   });
   var msg='📸 *Selezione Foto — '+CONFIG.cliente+'*\n\n';
   msg+='✅ *SELEZIONATE* ('+yes.length+'): '+(yes.join(', ')||'—')+'\n\n';
   msg+='❌ *SCARTATE* ('+no.length+'): '+(no.join(', ')||'—');
-  if (notes.length) msg+='\n\n💬 *Note:*\n'+notes.join('\n');
+  if(notes.length) msg+='\n\n💬 *Note:*\n'+notes.join('\n');
   return msg;
 }
-function openModal() {
-  document.getElementById('mlist').textContent=buildMsg();
-  document.getElementById('modal').classList.add('on');
-}
-function closeModal() { document.getElementById('modal').classList.remove('on'); }
-function sendWA() {
-  var url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMsg());
-  window.open(url,'_blank');
-  closeModal();
-}
-function copyText() {
-  navigator.clipboard.writeText(buildMsg()).then(function() {
-    var btn=document.querySelector('.mbtn-copy');
-    btn.textContent='✓ Copiato!';
-    setTimeout(function(){ btn.textContent='📋 Copia testo'; },2000);
+function openModal(){ document.getElementById('mlist').textContent=buildMsg(); document.getElementById('modal').classList.add('on'); }
+function closeModal(){ document.getElementById('modal').classList.remove('on'); }
+function sendWA(){ window.open('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMsg()),'_blank'); closeModal(); }
+function copyText(){
+  navigator.clipboard.writeText(buildMsg()).then(function(){
+    var b=document.querySelector('.mbtn-copy');
+    b.textContent='✓ Copiato!';
+    setTimeout(function(){ b.textContent='📋 Copia testo'; },2000);
   });
 }
 
-// Init
+// ── INIT ───────────────────────────────────────────────────────────────────
 loadState();
 buildGrid();
 </script>
