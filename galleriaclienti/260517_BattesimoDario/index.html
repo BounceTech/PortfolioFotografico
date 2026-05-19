@@ -123,6 +123,19 @@ header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);displ
 .lb-btn-no:hover{background:var(--no-h)}
 .lb-btn-no.active{background:#e05555;box-shadow:0 0 0 3px #ffaaaa55}
 
+.instr-title{font-size:.88rem;font-weight:700;color:var(--accent);margin-bottom:.85rem;letter-spacing:.03em}
+.instr-steps{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.85rem}
+.instr-step{display:flex;align-items:flex-start;gap:.65rem;font-size:.82rem;color:var(--text);line-height:1.5}
+.instr-num{
+  min-width:22px;height:22px;border-radius:50%;
+  background:var(--accent);color:#111;
+  font-size:.7rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:.05rem;
+}
+.instr-tip{font-size:.78rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.75rem;line-height:1.5}
+.instr-tip b{color:var(--text)}
+
 /* swipe hint su mobile */
 .lb-hint{font-size:.65rem;color:var(--muted);position:absolute;bottom:.35rem;left:50%;transform:translateX(-50%);opacity:.5;pointer-events:none}
 
@@ -150,10 +163,8 @@ header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);displ
   </div>
 </header>
 
-<div class="instructions">
-  <b>Come funziona:</b> Clicca una foto per vederla a schermo intero e votarla con <b>✓ Sì</b> / <b>✗ No</b>.
-  Puoi scorrere tra le foto con le frecce o con lo <b>swipe</b> (telefono).
-  La selezione viene salvata automaticamente. Quando hai finito clicca <b>Invia Selezione</b>.
+<div class="instructions" id="instructions">
+  <!-- contenuto generato da JS in base al dispositivo -->
 </div>
 
 <div class="grid" id="grid"></div>
@@ -394,9 +405,44 @@ function copyText(){
   });
 }
 
+// ── ISTRUZIONI DINAMICHE ──────────────────────────────────────────────────
+function buildInstructions() {
+  var box = document.getElementById('instructions');
+  if (!box) return;
+  var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+  if (touch) {
+    box.innerHTML =
+      '<div class="instr-title">📱 Come usare dal telefono</div>' +
+      '<div class="instr-steps">' +
+        '<div class="instr-step"><span class="instr-num">1</span><span>Tocca una foto per aprirla a schermo intero</span></div>' +
+        '<div class="instr-step"><span class="instr-num">2</span><span>Premi <b>✓ Sì</b> per tenerla oppure <b>✗ No</b> per scartarla</span></div>' +
+        '<div class="instr-step"><span class="instr-num">3</span><span>Scorri a sinistra o destra con il dito per passare alla foto successiva</span></div>' +
+        '<div class="instr-step"><span class="instr-num">4</span><span>Puoi aggiungere un commento scritto sotto ogni foto</span></div>' +
+        '<div class="instr-step"><span class="instr-num">5</span><span>La selezione si salva da sola — puoi chiudere e riprendere quando vuoi</span></div>' +
+        '<div class="instr-step"><span class="instr-num">6</span><span>Quando hai finito, tocca il pulsante <b>Invia Selezione →</b> in basso a destra</span></div>' +
+      '</div>' +
+      '<div class="instr-tip">💡 <b>Suggerimento:</b> usa il WiFi per caricare le foto più velocemente</div>';
+  } else {
+    box.innerHTML =
+      '<div class="instr-title">💻 Come usare dal computer</div>' +
+      '<div class="instr-steps">' +
+        '<div class="instr-step"><span class="instr-num">1</span><span>Clicca su una foto per aprirla a schermo intero</span></div>' +
+        '<div class="instr-step"><span class="instr-num">2</span><span>Usa i tasti <b>←</b> e <b>→</b> della tastiera (o le frecce sullo schermo) per navigare</span></div>' +
+        '<div class="instr-step"><span class="instr-num">3</span><span>Premi <b>✓ Sì</b> per tenerla oppure <b>✗ No</b> per scartarla — o usa i tasti <b>Y</b> e <b>N</b></span></div>' +
+        '<div class="instr-step"><span class="instr-num">4</span><span>Premi <b>Esc</b> o il pulsante <b>✕ Chiudi</b> per tornare alla griglia</span></div>' +
+        '<div class="instr-step"><span class="instr-num">5</span><span>Puoi aggiungere un commento scritto sotto ogni foto</span></div>' +
+        '<div class="instr-step"><span class="instr-num">6</span><span>La selezione si salva da sola — puoi chiudere e riprendere quando vuoi</span></div>' +
+        '<div class="instr-step"><span class="instr-num">7</span><span>Quando hai finito, clicca il pulsante <b>Invia Selezione →</b> in basso a destra</span></div>' +
+      '</div>' +
+      '<div class="instr-tip">💡 <b>Suggerimento:</b> tieni il browser a schermo intero per vedere le foto al meglio</div>';
+  }
+}
+
 // ── INIT ───────────────────────────────────────────────────────────────────
 loadState();
 buildGrid();
+buildInstructions();
 </script>
 </body>
 </html>
