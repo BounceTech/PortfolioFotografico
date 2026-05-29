@@ -2,10 +2,9 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>260522_ByTiffany_MulinoDiOz — Selezione Foto</title>
 <style>
-/* ===== DESIGN TOKENS ===== */
 :root {
   --color-bg: #0a0a0a;
   --color-surface: #141414;
@@ -15,18 +14,14 @@
   --color-text-muted: #8a8a8a;
   --color-primary: #e8c97e;
   --color-primary-hover: #f0d89a;
-  --color-accent: rgba(232,201,126,0.12);
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-full: 9999px;
-  --shadow-card: 0 2px 8px rgba(0,0,0,0.4);
   --shadow-selected: 0 0 0 3px #e8c97e, 0 4px 20px rgba(232,201,126,0.25);
-  --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
   --transition: 180ms cubic-bezier(0.16,1,0.3,1);
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
 body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased}
@@ -42,15 +37,16 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 .login-card{
   background:var(--color-surface);border:1px solid var(--color-border);
   border-radius:var(--radius-lg);padding:2.5rem;
-  width:100%;max-width:380px;text-align:center;
-}
-.login-card h1{
-  font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.2rem);
-  font-weight:500;letter-spacing:.02em;margin-bottom:.5rem;color:#fff;
+  width:100%;max-width:400px;text-align:center;
 }
 .login-card .evento-subtitle{
-  font-size:.85rem;color:var(--color-text-muted);margin-bottom:2rem;
-  text-transform:uppercase;letter-spacing:.1em;
+  font-size:.75rem;color:var(--color-text-muted);margin-bottom:.75rem;
+  text-transform:uppercase;letter-spacing:.12em;
+}
+.login-card h1{
+  font-family:var(--font-body);font-size:clamp(1.3rem,4vw,1.9rem);
+  font-weight:700;letter-spacing:-.01em;margin-bottom:2rem;color:#fff;
+  word-break:break-word;hyphens:auto;line-height:1.2;
 }
 .login-input{
   width:100%;padding:.75rem 1rem;
@@ -62,138 +58,228 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 .login-input:focus{outline:none;border-color:var(--color-primary)}
 .btn-login{
   width:100%;padding:.8rem;background:var(--color-primary);
-  color:#0a0a0a;font-weight:600;font-size:.95rem;
-  border-radius:var(--radius-md);
+  color:#0a0a0a;font-weight:700;font-size:.95rem;
+  border-radius:var(--radius-md);letter-spacing:.02em;
   transition:background var(--transition),transform var(--transition);
 }
 .btn-login:hover{background:var(--color-primary-hover)}
 .btn-login:active{transform:scale(.98)}
-#login-error{
-  display:none;color:#e87e7e;font-size:.85rem;margin-top:.75rem;
-}
+#login-error{display:none;color:#e87e7e;font-size:.85rem;margin-top:.75rem}
 
-/* ===== GALLERIA ===== */
+/* ===== GALLERY SCREEN ===== */
 #gallery-screen{display:none}
 
-/* HEADER */
 .site-header{
   position:sticky;top:0;z-index:100;
   background:rgba(10,10,10,.92);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--color-border);
-  padding:.8rem 1.5rem;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.8rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
 }
-.header-left{min-width:0;}
+.header-left{min-width:0;flex:1}
 .header-left h1{
-  font-family:var(--font-display);font-size:clamp(1.1rem,2.5vw,1.5rem);
-  font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  color:#fff;
-}
-.header-left .data-evento{
-  font-size:.75rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.08em;
+  font-family:var(--font-body);font-size:clamp(.95rem,2vw,1.25rem);
+  font-weight:700;letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
 }
 
-/* COUNTER */
 .counter-pill{
-  display:flex;align-items:center;gap:.5rem;
+  display:flex;align-items:center;gap:.4rem;
   background:var(--color-surface-2);border:1px solid var(--color-border);
-  border-radius:var(--radius-full);padding:.35rem .9rem;
+  border-radius:var(--radius-full);padding:.3rem .85rem;
   white-space:nowrap;flex-shrink:0;
 }
-.counter-pill .count-num{
-  font-size:1.1rem;font-weight:700;color:var(--color-primary);
-  font-variant-numeric:tabular-nums;
-}
-.counter-pill .count-label{font-size:.75rem;color:var(--color-text-muted);}
-.counter-pill .count-max{font-size:.8rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums;}
-.counter-pill.at-limit .count-num{color:#e87e7e;}
+.counter-pill .count-num{font-size:1rem;font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums}
+.counter-pill .count-label{font-size:.72rem;color:var(--color-text-muted)}
+.counter-pill .count-max{font-size:.78rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+.counter-pill.at-limit .count-num{color:#e87e7e}
 
 .btn-invia{
-  padding:.5rem 1.1rem;background:var(--color-primary);color:#0a0a0a;
-  font-weight:600;font-size:.85rem;border-radius:var(--radius-full);
-  transition:background var(--transition),opacity var(--transition);
-  flex-shrink:0;
+  padding:.45rem 1rem;background:var(--color-primary);color:#0a0a0a;
+  font-weight:700;font-size:.82rem;border-radius:var(--radius-full);letter-spacing:.02em;
+  transition:background var(--transition),opacity var(--transition);flex-shrink:0;
 }
 .btn-invia:hover{background:var(--color-primary-hover)}
 .btn-invia:disabled{opacity:.35;cursor:not-allowed}
 
-/* GRIGLIA */
-.gallery-grid{
-  padding:1.5rem;
-  columns:4 200px;column-gap:.75rem;
+/* VIEW TOGGLE */
+.view-toggle{
+  display:flex;gap:.4rem;padding:.75rem 1.2rem .25rem;
 }
-@media(max-width:600px){.gallery-grid{padding:1rem;column-gap:.5rem}}
+.view-btn{
+  padding:.35rem .85rem;border-radius:var(--radius-full);font-size:.78rem;font-weight:600;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  color:var(--color-text-muted);letter-spacing:.03em;
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+}
+.view-btn.active{background:var(--color-primary);color:#0a0a0a;border-color:var(--color-primary)}
 
-/* CARD */
+/* ===== GRID VIEW ===== */
+#view-grid{padding:1rem 1.2rem 2rem}
+.gallery-grid{columns:4 180px;column-gap:.6rem}
+@media(max-width:600px){.gallery-grid{columns:2 140px;column-gap:.5rem}}
+
 .photo-card{
-  break-inside:avoid;margin-bottom:.75rem;
+  break-inside:avoid;margin-bottom:.6rem;
   position:relative;cursor:pointer;
   border-radius:var(--radius-md);overflow:hidden;
   border:2px solid transparent;
-  box-shadow:var(--shadow-card);
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
   transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);
 }
 .photo-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.5)}
-.photo-card.selected{
-  border-color:var(--color-primary);
-  box-shadow:var(--shadow-selected);
-}
-.photo-card img{
-  display:block;width:100%;height:auto;
-  pointer-events:none;user-select:none;
-}
+.photo-card.selected{border-color:var(--color-primary);box-shadow:var(--shadow-selected)}
+.photo-card img{display:block;width:100%;height:auto;pointer-events:none;user-select:none}
 
-/* WATERMARK */
+/* Watermark */
 .photo-card::after{
   content:'ANTEPRIMA';
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%) rotate(-30deg);
-  font-family:var(--font-display);
-  font-size:clamp(.9rem,3vw,1.4rem);
-  font-weight:600;letter-spacing:.2em;
-  color:rgba(255,255,255,0.22);
+  font-family:var(--font-body);font-size:clamp(.75rem,2.5vw,1.1rem);
+  font-weight:800;letter-spacing:.18em;
+  color:rgba(255,255,255,0.20);
   text-shadow:0 1px 3px rgba(0,0,0,.5);
-  pointer-events:none;user-select:none;
-  white-space:nowrap;
+  pointer-events:none;user-select:none;white-space:nowrap;
 }
 
-/* TICK di selezione */
 .photo-card .tick{
-  position:absolute;top:.5rem;right:.5rem;
-  width:26px;height:26px;border-radius:50%;
+  position:absolute;top:.45rem;right:.45rem;
+  width:24px;height:24px;border-radius:50%;
   background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:center;
-  transition:background var(--transition),border-color var(--transition);
-  pointer-events:none;
+  transition:background var(--transition),border-color var(--transition);pointer-events:none;
 }
-.photo-card.selected .tick{
-  background:var(--color-primary);border-color:var(--color-primary);
-}
-.tick svg{display:none;width:14px;height:14px;stroke:#0a0a0a;stroke-width:2.5}
+.photo-card.selected .tick{background:var(--color-primary);border-color:var(--color-primary)}
+.tick svg{display:none;width:12px;height:12px;stroke:#0a0a0a;stroke-width:3}
 .photo-card.selected .tick svg{display:block}
 
-/* COMMENTO */
-.comment-wrap{
-  display:none;padding:.5rem .6rem .6rem;
-  background:var(--color-surface-2);
-}
+.comment-wrap{display:none;padding:.45rem .55rem .55rem;background:var(--color-surface-2)}
 .photo-card.selected .comment-wrap{display:block}
+.comment-label{font-size:.68rem;color:var(--color-text-muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em}
 .comment-input{
-  width:100%;padding:.4rem .6rem;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:var(--radius-sm);
-  color:var(--color-text);font-size:.78rem;
+  width:100%;padding:.35rem .55rem;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--radius-sm);color:var(--color-text);font-size:.76rem;
   resize:none;font-family:var(--font-body);
   transition:border-color var(--transition);
 }
 .comment-input:focus{outline:none;border-color:var(--color-primary)}
-.comment-label{
-  font-size:.7rem;color:var(--color-text-muted);
-  margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em;
+
+/* ===== FULLSCREEN / TINDER VIEW ===== */
+#view-full{
+  display:none;
+  position:fixed;inset:0;z-index:50;
+  background:#000;
+  flex-direction:column;
+  touch-action:none;
+}
+#view-full.active{display:flex}
+
+.full-header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  padding:.75rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(0,0,0,.7) 0%,transparent 100%);
+}
+.full-header .full-title{
+  font-size:.85rem;font-weight:600;color:rgba(255,255,255,.8);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;
+}
+.full-close{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.1rem;flex-shrink:0;
+}
+.full-close:hover{background:rgba(255,255,255,.22)}
+
+/* Immagine centrale */
+.full-img-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+#full-img{
+  max-width:100%;max-height:100%;
+  object-fit:contain;
+  user-select:none;-webkit-user-drag:none;
+  will-change:transform;
+  transition:transform .12s ease;
+}
+/* Watermark fullscreen */
+.full-img-wrap::after{
+  content:'ANTEPRIMA';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-family:var(--font-body);font-size:clamp(1.2rem,5vw,2.5rem);
+  font-weight:800;letter-spacing:.2em;
+  color:rgba(255,255,255,0.13);
+  text-shadow:0 1px 4px rgba(0,0,0,.6);
+  pointer-events:none;user-select:none;white-space:nowrap;
 }
 
-/* MODAL INVIO */
+/* Indicatore swipe mobile */
+.swipe-hint{
+  position:absolute;bottom:6rem;left:0;right:0;
+  display:flex;justify-content:center;gap:2rem;
+  pointer-events:none;opacity:.5;
+}
+.swipe-hint span{font-size:.75rem;color:#fff;letter-spacing:.06em;text-transform:uppercase}
+
+/* Barre azioni fullscreen */
+.full-footer{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:1rem 1.5rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);
+  gap:1rem;
+}
+
+/* Bottoni PC (frecce laterali) */
+.full-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.3rem;
+  transition:background var(--transition);
+}
+.full-arrow:hover{background:rgba(255,255,255,.25)}
+#arrow-prev{left:.75rem}
+#arrow-next{right:.75rem}
+@media(max-width:700px){.full-arrow{display:none}}
+
+/* Bottone selezione fullscreen */
+.btn-full-sel{
+  flex:1;padding:.75rem;border-radius:var(--radius-md);
+  font-size:.92rem;font-weight:700;letter-spacing:.03em;
+  transition:background var(--transition),transform var(--transition);
+}
+.btn-full-sel:active{transform:scale(.97)}
+.btn-full-desel{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.btn-full-desel:hover{background:rgba(255,255,255,.18)}
+.btn-full-add{background:var(--color-primary);color:#0a0a0a}
+.btn-full-add:hover{background:var(--color-primary-hover)}
+
+.full-counter{
+  font-size:.8rem;color:rgba(255,255,255,.6);
+  white-space:nowrap;text-align:center;min-width:60px;
+}
+
+/* Dot navigator */
+.full-dots{
+  position:absolute;bottom:5.5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:.35rem;
+  pointer-events:none;
+}
+.full-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(255,255,255,.3);
+  transition:background var(--transition),transform var(--transition);
+}
+.full-dot.active{background:#fff;transform:scale(1.4)}
+
+/* ===== MODAL ===== */
 #modal-overlay{
   display:none;position:fixed;inset:0;z-index:200;
   background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
@@ -203,64 +289,51 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 .modal-box{
   background:var(--color-surface);border:1px solid var(--color-border);
   border-radius:var(--radius-lg);padding:2rem;
-  width:100%;max-width:480px;
-  max-height:90dvh;overflow-y:auto;
+  width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;
 }
-.modal-box h2{
-  font-family:var(--font-display);font-size:1.5rem;font-weight:500;
-  margin-bottom:.35rem;color:#fff;
-}
-.modal-box .modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
+.modal-box h2{font-family:var(--font-body);font-size:1.4rem;font-weight:700;margin-bottom:.35rem;color:#fff}
+.modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
 .modal-msg{
   background:var(--color-surface-2);border:1px solid var(--color-border);
   border-radius:var(--radius-md);padding:1rem;
-  font-size:.88rem;line-height:1.6;color:var(--color-text);
-  white-space:pre-wrap;word-break:break-word;
-  margin-bottom:1.25rem;
+  font-size:.88rem;line-height:1.7;color:var(--color-text);
+  white-space:pre-wrap;word-break:break-word;margin-bottom:1.25rem;
 }
 .modal-actions{display:flex;gap:.75rem;flex-wrap:wrap}
 .btn-copy{
   flex:1;padding:.7rem;background:var(--color-surface-2);
   border:1px solid var(--color-border);border-radius:var(--radius-md);
-  font-size:.9rem;font-weight:500;color:var(--color-text);
-  transition:background var(--transition),border-color var(--transition);
+  font-size:.9rem;font-weight:600;color:var(--color-text);
+  transition:background var(--transition);
 }
-.btn-copy:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
+.btn-copy:hover{background:rgba(255,255,255,.06)}
 .btn-wa{
   flex:1;padding:.7rem;background:#25D366;
-  border-radius:var(--radius-md);font-size:.9rem;
-  font-weight:600;color:#fff;
+  border-radius:var(--radius-md);font-size:.9rem;font-weight:700;color:#fff;
   transition:background var(--transition);
 }
 .btn-wa:hover{background:#1ebe5a}
 .btn-chiudi{
   width:100%;padding:.6rem;margin-top:.75rem;
   background:none;border:1px solid var(--color-border);
-  border-radius:var(--radius-md);color:var(--color-text-muted);
-  font-size:.85rem;transition:border-color var(--transition),color var(--transition);
+  border-radius:var(--radius-md);color:var(--color-text-muted);font-size:.85rem;
+  transition:border-color var(--transition),color var(--transition);
 }
 .btn-chiudi:hover{border-color:rgba(255,255,255,.3);color:var(--color-text)}
 
-/* LIMIT TOAST */
+/* TOAST */
 #toast{
   display:none;position:fixed;bottom:1.5rem;left:50%;
   transform:translateX(-50%);z-index:300;
-  background:#e87e7e;color:#fff;font-weight:600;
-  padding:.7rem 1.4rem;border-radius:var(--radius-full);
-  font-size:.88rem;box-shadow:0 4px 20px rgba(0,0,0,.4);
-  animation:toastIn .2s ease;
+  background:#e87e7e;color:#fff;font-weight:700;
+  padding:.65rem 1.3rem;border-radius:var(--radius-full);
+  font-size:.85rem;box-shadow:0 4px 20px rgba(0,0,0,.4);
 }
-@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-
-/* EMPTY STATE */
-.empty-state{
-  text-align:center;padding:6rem 2rem;color:var(--color-text-muted);
-}
-.empty-state h3{font-size:1.1rem;color:var(--color-text);margin-bottom:.5rem}
+#toast.success{background:#437a22}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -268,7 +341,7 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 <div id="login-screen">
   <div class="login-card">
     <div class="evento-subtitle">Selezione Foto</div>
-    <h1 id="login-title">260522_ByTiffany_MulinoDiOz</h1>
+    <h1>260522_ByTiffany_MulinoDiOz</h1>
     <form id="login-form" onsubmit="return doLogin(event)">
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra →</button>
@@ -280,22 +353,46 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 <!-- GALLERY -->
 <div id="gallery-screen">
   <header class="site-header">
-    <div class="header-left">
-      <h1>260522_ByTiffany_MulinoDiOz</h1>
-    </div>
+    <div class="header-left"><h1>260522_ByTiffany_MulinoDiOz</h1></div>
     <div class="counter-pill" id="counter-pill">
       <span class="count-num" id="sel-count">0</span>
-      <span class="count-label" id="sel-label">selezionate</span>
+      <span class="count-label">sel.</span>
       <span class="count-max" id="sel-max"></span>
     </div>
-    <button class="btn-invia" id="btn-invia" onclick="openModal()" disabled>
-      Invia selezione
-    </button>
+    <button class="btn-invia" id="btn-invia" onclick="openModal()" disabled>Invia</button>
   </header>
 
-  <main>
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbtn-grid" onclick="switchView('grid')">☰ Griglia</button>
+    <button class="view-btn" id="vbtn-full" onclick="switchView('full')">⊞ Sfoglia</button>
+  </div>
+
+  <div id="view-grid">
     <div class="gallery-grid" id="gallery-grid"></div>
-  </main>
+  </div>
+</div>
+
+<!-- FULLSCREEN VIEW -->
+<div id="view-full">
+  <div class="full-header">
+    <span class="full-title" id="full-title">260522_ByTiffany_MulinoDiOz</span>
+    <button class="full-close" onclick="switchView('grid')">✕</button>
+  </div>
+
+  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)">‹</button>
+  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)">›</button>
+
+  <div class="full-img-wrap" id="full-img-wrap">
+    <img id="full-img" src="" alt="">
+  </div>
+
+  <div class="full-dots" id="full-dots"></div>
+
+  <div class="full-footer">
+    <button class="btn-full-sel btn-full-desel" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
+    <span class="full-counter" id="full-counter">1 / 1</span>
+    <button class="btn-full-sel btn-full-add" id="btn-full-add" onclick="fullSelect()">✓ Seleziona</button>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -305,37 +402,34 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
     <p class="modal-subtitle">Copia il messaggio e inviamelo su WhatsApp.</p>
     <div class="modal-msg" id="modal-msg-text"></div>
     <div class="modal-actions">
-      <button class="btn-copy" onclick="copyMsg()">📋 Copia testo</button>
-      <button class="btn-wa" onclick="openWA()">📲 Apri WhatsApp</button>
+      <button class="btn-copy" onclick="copyMsg()">📋 Copia</button>
+      <button class="btn-wa" onclick="openWA()">📲 WhatsApp</button>
     </div>
     <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
-// ===== CONFIGURAZIONE (iniettata da genera.py) =====
 const CONFIG = {
   nomeEvento:   "260522_ByTiffany_MulinoDiOz",
-  maxSelezioni: 5,   // 0 = nessun limite
+  maxSelezioni: 3,
   whatsapp:     "393348493876",
   storageKey:   "260522_ByTiffany_MulinoDiOz",
   pwHash:       "MTIzNA==",
   foto:         [{"id": "PIC03856", "file": "PIC03856.jpg", "original_name": "PIC03856.jpg"}, {"id": "PIC03934", "file": "PIC03934.jpg", "original_name": "PIC03934.jpg"}, {"id": "PIC03982", "file": "PIC03982.jpg", "original_name": "PIC03982.jpg"}, {"id": "PIC04025", "file": "PIC04025.jpg", "original_name": "PIC04025.jpg"}, {"id": "PIC04096", "file": "PIC04096.jpg", "original_name": "PIC04096.jpg"}, {"id": "PIC04106", "file": "PIC04106.jpg", "original_name": "PIC04106.jpg"}, {"id": "PIC04110", "file": "PIC04110.jpg", "original_name": "PIC04110.jpg"}, {"id": "PIC04111", "file": "PIC04111.jpg", "original_name": "PIC04111.jpg"}, {"id": "PIC04117", "file": "PIC04117.jpg", "original_name": "PIC04117.jpg"}, {"id": "PIC04159", "file": "PIC04159.jpg", "original_name": "PIC04159.jpg"}, {"id": "PIC04216", "file": "PIC04216.jpg", "original_name": "PIC04216.jpg"}, {"id": "PIC04266", "file": "PIC04266.jpg", "original_name": "PIC04266.jpg"}, {"id": "PIC04273", "file": "PIC04273.jpg", "original_name": "PIC04273.jpg"}, {"id": "PIC04274", "file": "PIC04274.jpg", "original_name": "PIC04274.jpg"}, {"id": "PIC04303", "file": "PIC04303.jpg", "original_name": "PIC04303.jpg"}, {"id": "PIC04312", "file": "PIC04312.jpg", "original_name": "PIC04312.jpg"}, {"id": "PIC04324", "file": "PIC04324.jpg", "original_name": "PIC04324.jpg"}]
 };
 
-// ===== STATO =====
 const state = {
-  selections: {},   // { stemId: { file, original_name, comment } }
+  selections: {},
+  fullIdx: 0,
 };
 
 // ===== LOGIN =====
 function doLogin(e) {
   e.preventDefault();
-  const input = document.getElementById('pw-input').value;
-  const encoded = btoa(unescape(encodeURIComponent(input)));
+  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
   if (encoded === CONFIG.pwHash) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
@@ -348,146 +442,234 @@ function doLogin(e) {
   return false;
 }
 
-// ===== GALLERY =====
+// ===== BUILD GALLERY =====
 function buildGallery() {
   const grid = document.getElementById('gallery-grid');
-  if (!CONFIG.foto.length) {
-    grid.innerHTML = '<div class="empty-state"><h3>Nessuna foto disponibile</h3><p>Ricarica la pagina tra poco.</p></div>';
-    return;
-  }
-  CONFIG.foto.forEach(f => {
+  CONFIG.foto.forEach((f, i) => {
     const card = document.createElement('div');
     card.className = 'photo-card';
     card.dataset.id = f.id;
+    card.dataset.idx = i;
     card.innerHTML = `
       <img src="./foto/${f.file}" alt="${f.id}" loading="lazy">
-      <div class="tick">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polyline points="20 6 9 17 4 12" stroke="currentColor"/>
-        </svg>
-      </div>
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor"/></svg></div>
       <div class="comment-wrap">
-        <div class="comment-label">Nota / commento (opzionale)</div>
-        <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita..." 
-          oninput="updateComment('${f.id}', this.value)"></textarea>
-      </div>
-    `;
-    card.addEventListener('click', (e) => {
+        <div class="comment-label">Nota (opzionale)</div>
+        <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita…" oninput="updateComment('${f.id}',this.value)"></textarea>
+      </div>`;
+    card.addEventListener('click', e => {
       if (e.target.classList.contains('comment-input')) return;
-      toggleSelect(f.id, f.file, f.original_name, card);
+      toggleSelect(f.id, f.file, card);
     });
+    // Double click / long tap → apri fullscreen su quella foto
+    card.addEventListener('dblclick', () => openFull(i));
+    let longTap;
+    card.addEventListener('touchstart', () => { longTap = setTimeout(() => openFull(i), 500); }, {passive:true});
+    card.addEventListener('touchend', () => clearTimeout(longTap), {passive:true});
+    card.addEventListener('touchmove', () => clearTimeout(longTap), {passive:true});
     grid.appendChild(card);
   });
+  buildDots();
 }
 
-function toggleSelect(id, file, origName, card) {
-  const isSelected = !!state.selections[id];
-  const count = Object.keys(state.selections).length;
-
-  if (!isSelected) {
-    // Controlla limite
-    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
-      showToast(`Hai raggiunto il limite di ${CONFIG.maxSelezioni} foto.`);
-      return;
-    }
-    state.selections[id] = { file, original_name: origName, comment: '' };
-    card.classList.add('selected');
-  } else {
+// ===== SELEZIONE =====
+function toggleSelect(id, file, card) {
+  if (state.selections[id]) {
     delete state.selections[id];
     card.classList.remove('selected');
+  } else {
+    const count = Object.keys(state.selections).length;
+    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
+      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`); return;
+    }
+    state.selections[id] = { file, comment: '' };
+    card.classList.add('selected');
   }
   updateCounter();
+  updateFullFooter();
 }
 
 function updateComment(id, val) {
-  if (state.selections[id]) {
-    state.selections[id].comment = val.trim();
-  }
+  if (state.selections[id]) state.selections[id].comment = val.trim();
 }
 
 function updateCounter() {
   const count = Object.keys(state.selections).length;
-  const max   = CONFIG.maxSelezioni;
-
+  const max = CONFIG.maxSelezioni;
   document.getElementById('sel-count').textContent = count;
-  const pill = document.getElementById('counter-pill');
-  const maxEl = document.getElementById('sel-max');
-
-  if (max > 0) {
-    maxEl.textContent = `/ ${max}`;
-    pill.classList.toggle('at-limit', count >= max);
-  } else {
-    maxEl.textContent = '';
-    pill.classList.remove('at-limit');
-  }
-
+  document.getElementById('sel-max').textContent = max > 0 ? `/ ${max}` : '';
+  document.getElementById('counter-pill').classList.toggle('at-limit', max > 0 && count >= max);
   document.getElementById('btn-invia').disabled = count === 0;
 }
 
+// ===== VIEW SWITCH =====
+function switchView(v) {
+  const isGrid = v === 'grid';
+  document.getElementById('view-grid').style.display = isGrid ? 'block' : 'none';
+  document.getElementById('view-full').classList.toggle('active', !isGrid);
+  document.getElementById('vbtn-grid').classList.toggle('active', isGrid);
+  document.getElementById('vbtn-full').classList.toggle('active', !isGrid);
+  if (!isGrid) renderFull(state.fullIdx);
+}
+
+function openFull(idx) {
+  state.fullIdx = idx;
+  switchView('full');
+}
+
+// ===== FULLSCREEN =====
+function buildDots() {
+  const wrap = document.getElementById('full-dots');
+  const n = CONFIG.foto.length;
+  const show = n <= 40;
+  wrap.style.display = show ? 'flex' : 'none';
+  if (!show) return;
+  wrap.innerHTML = '';
+  CONFIG.foto.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'full-dot' + (i === 0 ? ' active' : '');
+    wrap.appendChild(d);
+  });
+}
+
+function updateDots(idx) {
+  document.querySelectorAll('.full-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function renderFull(idx) {
+  const f = CONFIG.foto[idx];
+  if (!f) return;
+  const img = document.getElementById('full-img');
+  img.src = `./foto/${f.file}`;
+  img.alt = f.id;
+  img.style.transform = 'none';
+  document.getElementById('full-counter').textContent = `${idx + 1} / ${CONFIG.foto.length}`;
+  updateDots(idx);
+  updateFullFooter();
+}
+
+function updateFullFooter() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const isSel = !!state.selections[f.id];
+  document.getElementById('btn-full-add').style.display   = isSel ? 'none' : 'flex';
+  document.getElementById('btn-full-desel').style.display = isSel ? 'flex' : 'none';
+}
+
+function fullNav(dir) {
+  const next = state.fullIdx + dir;
+  if (next < 0 || next >= CONFIG.foto.length) return;
+  state.fullIdx = next;
+  renderFull(next);
+}
+
+function fullSelect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const count = Object.keys(state.selections).length;
+  if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni && !state.selections[f.id]) {
+    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`); return;
+  }
+  state.selections[f.id] = { file: f.file, comment: '' };
+  // sync card in grid
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) card.classList.add('selected');
+  updateCounter();
+  updateFullFooter();
+  showToast('✓ Selezionata', true);
+  // avanza automaticamente
+  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 350);
+}
+
+function fullDeselect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  delete state.selections[f.id];
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) card.classList.remove('selected');
+  updateCounter();
+  updateFullFooter();
+}
+
+// ===== SWIPE (touch) =====
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let sx=0, sy=0, dragging=false, scale=1, lastDist=0;
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) { sx=e.touches[0].clientX; sy=e.touches[0].clientY; dragging=true; }
+    if (e.touches.length === 2) { lastDist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY); dragging=false; }
+  }, {passive:true});
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
+      scale = Math.min(Math.max(scale * (d/lastDist), 1), 4);
+      lastDist = d;
+      document.getElementById('full-img').style.transform = `scale(${scale})`;
+      e.preventDefault();
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', e => {
+    if (!dragging) { scale=1; document.getElementById('full-img').style.transform='scale(1)'; return; }
+    dragging=false;
+    if (scale > 1) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 40) return;
+    if (dx < 0) { // swipe sinistra → seleziona + avanza
+      fullSelect();
+    } else { // swipe destra → avanza senza selezionare
+      if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); }
+    }
+  }, {passive:true});
+})();
+
+// ===== TASTIERA (PC) =====
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') fullNav(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   fullNav(-1);
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fullSelect(); }
+  if (e.key === 'Escape') switchView('grid');
+});
+
 // ===== MESSAGGIO =====
 function buildMessage() {
-  const ids = Object.keys(state.selections);
   let msg = `${CONFIG.nomeEvento}\n\n`;
-
-  ids.forEach(id => {
-    const s = state.selections[id];
-    const nomeSenzaEst = id;   // già lo stem, niente .jpg
-    if (s.comment) {
-      msg += `${nomeSenzaEst} — ${s.comment}\n`;
-    } else {
-      msg += `${nomeSenzaEst}\n`;
-    }
+  Object.entries(state.selections).forEach(([id, s]) => {
+    msg += s.comment ? `${id} — ${s.comment}\n` : `${id}\n`;
   });
-
-  msg = msg.trimEnd();
-  return msg;
+  return msg.trimEnd();
 }
 
-// ===== MODAL =====
 function openModal() {
-  const msg = buildMessage();
-  document.getElementById('modal-msg-text').textContent = msg;
+  document.getElementById('modal-msg-text').textContent = buildMessage();
   document.getElementById('modal-overlay').classList.add('open');
 }
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function copyMsg() {
-  const text = document.getElementById('modal-msg-text').textContent;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => showToast('Copiato!'));
-  } else {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast('Copiato!');
-  }
+  const t = document.getElementById('modal-msg-text').textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', true));
+  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!',true); }
+}
+function openWA() {
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(document.getElementById('modal-msg-text').textContent)}`, '_blank');
 }
 
-function openWA() {
-  const text = document.getElementById('modal-msg-text').textContent;
-  const encoded = encodeURIComponent(text);
-  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encoded}`, '_blank');
-}
+document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
 // ===== TOAST =====
-let toastTimer = null;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2600);
+let _tt=null;
+function showToast(msg, success=false) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  t.className = success ? 'success' : '';
+  if(_tt) clearTimeout(_tt);
+  _tt=setTimeout(()=>{ t.style.display='none'; }, 2200);
 }
-
-// Chiudi modal su overlay click
-document.getElementById('modal-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
 </script>
 </body>
 </html>
