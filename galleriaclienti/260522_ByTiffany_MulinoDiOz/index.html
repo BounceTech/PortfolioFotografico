@@ -14,6 +14,10 @@
   --color-text-muted: #8a8a8a;
   --color-primary: #e8c97e;
   --color-primary-hover: #f0d89a;
+  --color-green: #3dbe6e;
+  --color-green-hover: #2fa85c;
+  --color-red: #e05c5c;
+  --color-red-hover: #c94444;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -45,9 +49,27 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 }
 .login-card h1{
   font-family:var(--font-body);font-size:clamp(1.3rem,4vw,1.9rem);
-  font-weight:700;letter-spacing:-.01em;margin-bottom:2rem;color:#fff;
+  font-weight:700;letter-spacing:-.01em;margin-bottom:1.5rem;color:#fff;
   word-break:break-word;hyphens:auto;line-height:1.2;
 }
+
+/* LEGENDA LOGIN */
+.legenda{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  text-align:left;margin-bottom:1.5rem;
+}
+.legenda-title{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--color-primary);margin-bottom:.65rem;
+}
+.legenda-row{
+  display:flex;align-items:flex-start;gap:.55rem;
+  font-size:.8rem;color:var(--color-text-muted);margin-bottom:.45rem;line-height:1.4;
+}
+.legenda-row:last-child{margin-bottom:0}
+.legenda-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem}
+
 .login-input{
   width:100%;padding:.75rem 1rem;
   background:var(--color-surface-2);border:1px solid var(--color-border);
@@ -78,11 +100,9 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 }
 .header-left{min-width:0;flex:1}
 .header-left h1{
-  font-family:var(--font-body);font-size:clamp(.95rem,2vw,1.25rem);
-  font-weight:700;letter-spacing:-.01em;
+  font-size:clamp(.9rem,2vw,1.2rem);font-weight:700;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
 }
-
 .counter-pill{
   display:flex;align-items:center;gap:.4rem;
   background:var(--color-surface-2);border:1px solid var(--color-border);
@@ -93,23 +113,20 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 .counter-pill .count-label{font-size:.72rem;color:var(--color-text-muted)}
 .counter-pill .count-max{font-size:.78rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
 .counter-pill.at-limit .count-num{color:#e87e7e}
-
 .btn-invia{
   padding:.45rem 1rem;background:var(--color-primary);color:#0a0a0a;
-  font-weight:700;font-size:.82rem;border-radius:var(--radius-full);letter-spacing:.02em;
+  font-weight:700;font-size:.82rem;border-radius:var(--radius-full);
   transition:background var(--transition),opacity var(--transition);flex-shrink:0;
 }
 .btn-invia:hover{background:var(--color-primary-hover)}
 .btn-invia:disabled{opacity:.35;cursor:not-allowed}
 
 /* VIEW TOGGLE */
-.view-toggle{
-  display:flex;gap:.4rem;padding:.75rem 1.2rem .25rem;
-}
+.view-toggle{display:flex;gap:.4rem;padding:.75rem 1.2rem .25rem}
 .view-btn{
   padding:.35rem .85rem;border-radius:var(--radius-full);font-size:.78rem;font-weight:600;
   background:var(--color-surface-2);border:1px solid var(--color-border);
-  color:var(--color-text-muted);letter-spacing:.03em;
+  color:var(--color-text-muted);
   transition:background var(--transition),color var(--transition),border-color var(--transition);
 }
 .view-btn.active{background:var(--color-primary);color:#0a0a0a;border-color:var(--color-primary)}
@@ -120,59 +137,45 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 @media(max-width:600px){.gallery-grid{columns:2 140px;column-gap:.5rem}}
 
 .photo-card{
-  break-inside:avoid;margin-bottom:.6rem;
-  position:relative;cursor:pointer;
-  border-radius:var(--radius-md);overflow:hidden;
-  border:2px solid transparent;
+  break-inside:avoid;margin-bottom:.6rem;position:relative;cursor:pointer;
+  border-radius:var(--radius-md);overflow:hidden;border:2px solid transparent;
   box-shadow:0 2px 8px rgba(0,0,0,.4);
   transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);
 }
 .photo-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.5)}
 .photo-card.selected{border-color:var(--color-primary);box-shadow:var(--shadow-selected)}
 .photo-card img{display:block;width:100%;height:auto;pointer-events:none;user-select:none}
-
-/* Watermark */
 .photo-card::after{
-  content:'ANTEPRIMA';
-  position:absolute;top:50%;left:50%;
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%) rotate(-30deg);
-  font-family:var(--font-body);font-size:clamp(.75rem,2.5vw,1.1rem);
-  font-weight:800;letter-spacing:.18em;
-  color:rgba(255,255,255,0.20);
-  text-shadow:0 1px 3px rgba(0,0,0,.5);
+  font-size:clamp(.7rem,2.2vw,1rem);font-weight:800;letter-spacing:.18em;
+  color:rgba(255,255,255,0.18);text-shadow:0 1px 3px rgba(0,0,0,.5);
   pointer-events:none;user-select:none;white-space:nowrap;
 }
-
 .photo-card .tick{
-  position:absolute;top:.45rem;right:.45rem;
-  width:24px;height:24px;border-radius:50%;
+  position:absolute;top:.45rem;right:.45rem;width:24px;height:24px;border-radius:50%;
   background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:center;
   transition:background var(--transition),border-color var(--transition);pointer-events:none;
 }
-.photo-card.selected .tick{background:var(--color-primary);border-color:var(--color-primary)}
-.tick svg{display:none;width:12px;height:12px;stroke:#0a0a0a;stroke-width:3}
+.photo-card.selected .tick{background:var(--color-green);border-color:var(--color-green)}
+.tick svg{display:none;width:12px;height:12px;stroke:#fff;stroke-width:3}
 .photo-card.selected .tick svg{display:block}
-
 .comment-wrap{display:none;padding:.45rem .55rem .55rem;background:var(--color-surface-2)}
 .photo-card.selected .comment-wrap{display:block}
 .comment-label{font-size:.68rem;color:var(--color-text-muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em}
 .comment-input{
-  width:100%;padding:.35rem .55rem;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
-  border-radius:var(--radius-sm);color:var(--color-text);font-size:.76rem;
-  resize:none;font-family:var(--font-body);
+  width:100%;padding:.35rem .55rem;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.76rem;resize:none;font-family:var(--font-body);
   transition:border-color var(--transition);
 }
 .comment-input:focus{outline:none;border-color:var(--color-primary)}
 
-/* ===== FULLSCREEN / TINDER VIEW ===== */
+/* ===== FULLSCREEN VIEW ===== */
 #view-full{
-  display:none;
-  position:fixed;inset:0;z-index:50;
-  background:#000;
-  flex-direction:column;
-  touch-action:none;
+  display:none;position:fixed;inset:0;z-index:50;
+  background:#000;flex-direction:column;touch-action:none;
 }
 #view-full.active{display:flex}
 
@@ -180,68 +183,52 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
   position:absolute;top:0;left:0;right:0;z-index:10;
   padding:.75rem 1rem;
   display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to bottom,rgba(0,0,0,.7) 0%,transparent 100%);
+  background:linear-gradient(to bottom,rgba(0,0,0,.75) 0%,transparent 100%);
+  gap:.5rem;
 }
 .full-header .full-title{
-  font-size:.85rem;font-weight:600;color:rgba(255,255,255,.8);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;
+  font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.full-counter-top{
+  font-size:.8rem;color:rgba(255,255,255,.5);
+  white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums;
 }
 .full-close{
-  width:36px;height:36px;border-radius:50%;
+  width:34px;height:34px;border-radius:50%;
   background:rgba(255,255,255,.12);
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:1.1rem;flex-shrink:0;
+  color:#fff;font-size:1rem;flex-shrink:0;
 }
 .full-close:hover{background:rgba(255,255,255,.22)}
 
 /* Immagine centrale */
 .full-img-wrap{
   flex:1;display:flex;align-items:center;justify-content:center;
-  overflow:hidden;position:relative;
+  overflow:hidden;position:relative;cursor:grab;
 }
+.full-img-wrap.grabbing{cursor:grabbing}
 #full-img{
-  max-width:100%;max-height:100%;
-  object-fit:contain;
+  max-width:100%;max-height:100%;object-fit:contain;
   user-select:none;-webkit-user-drag:none;
-  will-change:transform;
-  transition:transform .12s ease;
+  will-change:transform;transform-origin:center center;
+  transition:none;
 }
-/* Watermark fullscreen */
 .full-img-wrap::after{
-  content:'ANTEPRIMA';
-  position:absolute;top:50%;left:50%;
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%) rotate(-30deg);
-  font-family:var(--font-body);font-size:clamp(1.2rem,5vw,2.5rem);
-  font-weight:800;letter-spacing:.2em;
-  color:rgba(255,255,255,0.13);
-  text-shadow:0 1px 4px rgba(0,0,0,.6);
+  font-size:clamp(1rem,4vw,2rem);font-weight:800;letter-spacing:.2em;
+  color:rgba(255,255,255,0.10);text-shadow:0 1px 4px rgba(0,0,0,.6);
   pointer-events:none;user-select:none;white-space:nowrap;
 }
 
-/* Indicatore swipe mobile */
-.swipe-hint{
-  position:absolute;bottom:6rem;left:0;right:0;
-  display:flex;justify-content:center;gap:2rem;
-  pointer-events:none;opacity:.5;
-}
-.swipe-hint span{font-size:.75rem;color:#fff;letter-spacing:.06em;text-transform:uppercase}
-
-/* Barre azioni fullscreen */
-.full-footer{
-  position:absolute;bottom:0;left:0;right:0;z-index:10;
-  padding:1rem 1.5rem 2rem;
-  display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);
-  gap:1rem;
-}
-
-/* Bottoni PC (frecce laterali) */
+/* Frecce PC */
 .full-arrow{
   position:absolute;top:50%;transform:translateY(-50%);z-index:10;
-  width:48px;height:48px;border-radius:50%;
+  width:44px;height:44px;border-radius:50%;
   background:rgba(255,255,255,.12);
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:1.3rem;
+  color:#fff;font-size:1.4rem;
   transition:background var(--transition);
 }
 .full-arrow:hover{background:rgba(255,255,255,.25)}
@@ -249,34 +236,46 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 #arrow-next{right:.75rem}
 @media(max-width:700px){.full-arrow{display:none}}
 
-/* Bottone selezione fullscreen */
-.btn-full-sel{
-  flex:1;padding:.75rem;border-radius:var(--radius-md);
-  font-size:.92rem;font-weight:700;letter-spacing:.03em;
-  transition:background var(--transition),transform var(--transition);
+/* Zoom buttons PC */
+.zoom-btns{
+  position:absolute;bottom:7rem;right:1rem;z-index:10;
+  display:flex;flex-direction:column;gap:.4rem;
 }
-.btn-full-sel:active{transform:scale(.97)}
-.btn-full-desel{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.btn-full-desel:hover{background:rgba(255,255,255,.18)}
-.btn-full-add{background:var(--color-primary);color:#0a0a0a}
-.btn-full-add:hover{background:var(--color-primary-hover)}
+.zoom-btn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.13);color:#fff;
+  font-size:1.2rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition);
+}
+.zoom-btn:hover{background:rgba(255,255,255,.25)}
+@media(max-width:700px){.zoom-btns{display:none}}
 
-.full-counter{
-  font-size:.8rem;color:rgba(255,255,255,.6);
-  white-space:nowrap;text-align:center;min-width:60px;
+/* Footer azioni fullscreen */
+.full-footer{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:.9rem 1.2rem 2rem;
+  display:flex;align-items:center;justify-content:center;gap:.75rem;
+  background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);
 }
+.btn-full-action{
+  flex:1;max-width:200px;padding:.8rem;border-radius:var(--radius-md);
+  font-size:.95rem;font-weight:700;letter-spacing:.02em;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:background var(--transition),transform var(--transition),opacity var(--transition);
+}
+.btn-full-action:active{transform:scale(.97)}
+#btn-full-add{background:var(--color-green);color:#fff}
+#btn-full-add:hover{background:var(--color-green-hover)}
+#btn-full-desel{background:var(--color-red);color:#fff}
+#btn-full-desel:hover{background:var(--color-red-hover)}
 
 /* Dot navigator */
 .full-dots{
-  position:absolute;bottom:5.5rem;left:0;right:0;
-  display:flex;justify-content:center;gap:.35rem;
-  pointer-events:none;
+  position:absolute;bottom:5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:.35rem;pointer-events:none;
 }
-.full-dot{
-  width:5px;height:5px;border-radius:50%;
-  background:rgba(255,255,255,.3);
-  transition:background var(--transition),transform var(--transition);
-}
+.full-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:background var(--transition),transform var(--transition)}
 .full-dot.active{background:#fff;transform:scale(1.4)}
 
 /* ===== MODAL ===== */
@@ -291,7 +290,7 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
   border-radius:var(--radius-lg);padding:2rem;
   width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;
 }
-.modal-box h2{font-family:var(--font-body);font-size:1.4rem;font-weight:700;margin-bottom:.35rem;color:#fff}
+.modal-box h2{font-size:1.4rem;font-weight:700;margin-bottom:.35rem;color:#fff}
 .modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
 .modal-msg{
   background:var(--color-surface-2);border:1px solid var(--color-border);
@@ -325,11 +324,14 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 #toast{
   display:none;position:fixed;bottom:1.5rem;left:50%;
   transform:translateX(-50%);z-index:300;
-  background:#e87e7e;color:#fff;font-weight:700;
+  color:#fff;font-weight:700;
   padding:.65rem 1.3rem;border-radius:var(--radius-full);
   font-size:.85rem;box-shadow:0 4px 20px rgba(0,0,0,.4);
+  white-space:nowrap;
 }
-#toast.success{background:#437a22}
+#toast.error{background:var(--color-red)}
+#toast.success{background:var(--color-green)}
+#toast.info{background:#444}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -342,6 +344,15 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
   <div class="login-card">
     <div class="evento-subtitle">Selezione Foto</div>
     <h1>260522_ByTiffany_MulinoDiOz</h1>
+
+    <!-- LEGENDA -->
+    <div class="legenda">
+      <div class="legenda-title">Come funziona</div>
+      <div class="legenda-row"><span class="legenda-icon">📱</span><span>Da telefono: scorri le foto nella vista <strong>Sfoglia</strong>. Usa il tasto <strong style="color:#3dbe6e">verde</strong> per selezionare e il <strong style="color:#e05c5c">rosso</strong> per togliere.</span></div>
+      <div class="legenda-row"><span class="legenda-icon">💻</span><span>Da PC: clicca su una foto in griglia oppure apri <strong>Sfoglia</strong>. Puoi anche zoomare con i pulsanti + / −.</span></div>
+      <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong>: ti apparirà il messaggio già pronto da mandarmi su WhatsApp.</span></div>
+    </div>
+
     <form id="login-form" onsubmit="return doLogin(event)">
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra →</button>
@@ -372,26 +383,33 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
   </div>
 </div>
 
-<!-- FULLSCREEN VIEW -->
+<!-- FULLSCREEN -->
 <div id="view-full">
   <div class="full-header">
-    <span class="full-title" id="full-title">260522_ByTiffany_MulinoDiOz</span>
-    <button class="full-close" onclick="switchView('grid')">✕</button>
+    <span class="full-title">260522_ByTiffany_MulinoDiOz</span>
+    <span class="full-counter-top" id="full-counter-top">1 / 1</span>
+    <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
   </div>
 
-  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)">‹</button>
-  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)">›</button>
+  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)" title="Precedente">‹</button>
+  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)" title="Successiva">›</button>
 
   <div class="full-img-wrap" id="full-img-wrap">
     <img id="full-img" src="" alt="">
   </div>
 
+  <!-- Zoom buttons (solo PC) -->
+  <div class="zoom-btns">
+    <button class="zoom-btn" onclick="pcZoom(0.25)" title="Zoom in">+</button>
+    <button class="zoom-btn" onclick="pcZoom(-0.25)" title="Zoom out">−</button>
+    <button class="zoom-btn" onclick="pcZoom(0)" title="Reset zoom" style="font-size:.7rem;font-weight:800">1:1</button>
+  </div>
+
   <div class="full-dots" id="full-dots"></div>
 
   <div class="full-footer">
-    <button class="btn-full-sel btn-full-desel" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
-    <span class="full-counter" id="full-counter">1 / 1</span>
-    <button class="btn-full-sel btn-full-add" id="btn-full-add" onclick="fullSelect()">✓ Seleziona</button>
+    <button class="btn-full-action" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
+    <button class="btn-full-action" id="btn-full-add"   onclick="fullSelect()">✓ Seleziona</button>
   </div>
 </div>
 
@@ -403,7 +421,7 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
     <div class="modal-msg" id="modal-msg-text"></div>
     <div class="modal-actions">
       <button class="btn-copy" onclick="copyMsg()">📋 Copia</button>
-      <button class="btn-wa" onclick="openWA()">📲 WhatsApp</button>
+      <button class="btn-wa"   onclick="openWA()">📲 WhatsApp</button>
     </div>
     <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
   </div>
@@ -421,10 +439,7 @@ const CONFIG = {
   foto:         [{"id": "PIC03856", "file": "PIC03856.jpg", "original_name": "PIC03856.jpg"}, {"id": "PIC03934", "file": "PIC03934.jpg", "original_name": "PIC03934.jpg"}, {"id": "PIC03982", "file": "PIC03982.jpg", "original_name": "PIC03982.jpg"}, {"id": "PIC04025", "file": "PIC04025.jpg", "original_name": "PIC04025.jpg"}, {"id": "PIC04096", "file": "PIC04096.jpg", "original_name": "PIC04096.jpg"}, {"id": "PIC04106", "file": "PIC04106.jpg", "original_name": "PIC04106.jpg"}, {"id": "PIC04110", "file": "PIC04110.jpg", "original_name": "PIC04110.jpg"}, {"id": "PIC04111", "file": "PIC04111.jpg", "original_name": "PIC04111.jpg"}, {"id": "PIC04117", "file": "PIC04117.jpg", "original_name": "PIC04117.jpg"}, {"id": "PIC04159", "file": "PIC04159.jpg", "original_name": "PIC04159.jpg"}, {"id": "PIC04216", "file": "PIC04216.jpg", "original_name": "PIC04216.jpg"}, {"id": "PIC04266", "file": "PIC04266.jpg", "original_name": "PIC04266.jpg"}, {"id": "PIC04273", "file": "PIC04273.jpg", "original_name": "PIC04273.jpg"}, {"id": "PIC04274", "file": "PIC04274.jpg", "original_name": "PIC04274.jpg"}, {"id": "PIC04303", "file": "PIC04303.jpg", "original_name": "PIC04303.jpg"}, {"id": "PIC04312", "file": "PIC04312.jpg", "original_name": "PIC04312.jpg"}, {"id": "PIC04324", "file": "PIC04324.jpg", "original_name": "PIC04324.jpg"}]
 };
 
-const state = {
-  selections: {},
-  fullIdx: 0,
-};
+const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0 };
 
 // ===== LOGIN =====
 function doLogin(e) {
@@ -449,7 +464,6 @@ function buildGallery() {
     const card = document.createElement('div');
     card.className = 'photo-card';
     card.dataset.id = f.id;
-    card.dataset.idx = i;
     card.innerHTML = `
       <img src="./foto/${f.file}" alt="${f.id}" loading="lazy">
       <div class="tick"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor"/></svg></div>
@@ -461,12 +475,11 @@ function buildGallery() {
       if (e.target.classList.contains('comment-input')) return;
       toggleSelect(f.id, f.file, card);
     });
-    // Double click / long tap → apri fullscreen su quella foto
     card.addEventListener('dblclick', () => openFull(i));
-    let longTap;
-    card.addEventListener('touchstart', () => { longTap = setTimeout(() => openFull(i), 500); }, {passive:true});
-    card.addEventListener('touchend', () => clearTimeout(longTap), {passive:true});
-    card.addEventListener('touchmove', () => clearTimeout(longTap), {passive:true});
+    let lt;
+    card.addEventListener('touchstart', () => { lt = setTimeout(() => openFull(i), 500); }, {passive:true});
+    card.addEventListener('touchend',   () => clearTimeout(lt), {passive:true});
+    card.addEventListener('touchmove',  () => clearTimeout(lt), {passive:true});
     grid.appendChild(card);
   });
   buildDots();
@@ -480,7 +493,7 @@ function toggleSelect(id, file, card) {
   } else {
     const count = Object.keys(state.selections).length;
     if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
-      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`); return;
+      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
     }
     state.selections[id] = { file, comment: '' };
     card.classList.add('selected');
@@ -509,7 +522,7 @@ function switchView(v) {
   document.getElementById('view-full').classList.toggle('active', !isGrid);
   document.getElementById('vbtn-grid').classList.toggle('active', isGrid);
   document.getElementById('vbtn-full').classList.toggle('active', !isGrid);
-  if (!isGrid) renderFull(state.fullIdx);
+  if (!isGrid) { resetZoom(); renderFull(state.fullIdx); }
 }
 
 function openFull(idx) {
@@ -521,9 +534,7 @@ function openFull(idx) {
 function buildDots() {
   const wrap = document.getElementById('full-dots');
   const n = CONFIG.foto.length;
-  const show = n <= 40;
-  wrap.style.display = show ? 'flex' : 'none';
-  if (!show) return;
+  if (n > 40) { wrap.style.display = 'none'; return; }
   wrap.innerHTML = '';
   CONFIG.foto.forEach((_, i) => {
     const d = document.createElement('div');
@@ -536,14 +547,22 @@ function updateDots(idx) {
   document.querySelectorAll('.full-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
 }
 
+function resetZoom() {
+  state.zoom = 1; state.panX = 0; state.panY = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  document.getElementById('full-img').style.transform = `translate(${state.panX}px,${state.panY}px) scale(${state.zoom})`;
+}
+
 function renderFull(idx) {
   const f = CONFIG.foto[idx];
   if (!f) return;
-  const img = document.getElementById('full-img');
-  img.src = `./foto/${f.file}`;
-  img.alt = f.id;
-  img.style.transform = 'none';
-  document.getElementById('full-counter').textContent = `${idx + 1} / ${CONFIG.foto.length}`;
+  resetZoom();
+  document.getElementById('full-img').src = `./foto/${f.file}`;
+  document.getElementById('full-img').alt = f.id;
+  document.getElementById('full-counter-top').textContent = `${idx + 1} / ${CONFIG.foto.length}`;
   updateDots(idx);
   updateFullFooter();
 }
@@ -568,17 +587,15 @@ function fullSelect() {
   if (!f) return;
   const count = Object.keys(state.selections).length;
   if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni && !state.selections[f.id]) {
-    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`); return;
+    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
   }
   state.selections[f.id] = { file: f.file, comment: '' };
-  // sync card in grid
   const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
   if (card) card.classList.add('selected');
   updateCounter();
   updateFullFooter();
-  showToast('✓ Selezionata', true);
-  // avanza automaticamente
-  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 350);
+  showToast('✓ Selezionata', 'success');
+  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 300);
 }
 
 function fullDeselect() {
@@ -589,50 +606,104 @@ function fullDeselect() {
   if (card) card.classList.remove('selected');
   updateCounter();
   updateFullFooter();
+  showToast('Rimossa', 'info');
 }
 
-// ===== SWIPE (touch) =====
+// ===== ZOOM PC =====
+function pcZoom(delta) {
+  if (delta === 0) { resetZoom(); return; }
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}
+
+// Scroll wheel zoom (PC)
+document.getElementById('full-img-wrap').addEventListener('wheel', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  e.preventDefault();
+  const delta = e.deltaY < 0 ? 0.15 : -0.15;
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}, {passive: false});
+
+// Drag to pan (PC, when zoomed)
 (function(){
   const wrap = document.getElementById('full-img-wrap');
-  let sx=0, sy=0, dragging=false, scale=1, lastDist=0;
+  let dragging = false, startX, startY, startPanX, startPanY;
+  wrap.addEventListener('mousedown', e => {
+    if (state.zoom <= 1) return;
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    startPanX = state.panX; startPanY = state.panY;
+    wrap.classList.add('grabbing');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    state.panX = startPanX + (e.clientX - startX);
+    state.panY = startPanY + (e.clientY - startY);
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remove('grabbing'); });
+})();
+
+// ===== SWIPE TOUCH (solo navigazione + selezione via bottoni) =====
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let sx=0, sy=0, lastDist=0, pinching=false, startPanX=0, startPanY=0;
 
   wrap.addEventListener('touchstart', e => {
-    if (e.touches.length === 1) { sx=e.touches[0].clientX; sy=e.touches[0].clientY; dragging=true; }
-    if (e.touches.length === 2) { lastDist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY); dragging=false; }
+    if (e.touches.length === 2) {
+      pinching = true;
+      lastDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    } else if (e.touches.length === 1) {
+      pinching = false;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      startPanX = state.panX; startPanY = state.panY;
+    }
   }, {passive:true});
 
   wrap.addEventListener('touchmove', e => {
-    if (e.touches.length === 2) {
-      const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-      scale = Math.min(Math.max(scale * (d/lastDist), 1), 4);
+    if (e.touches.length === 2 && pinching) {
+      const d = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      state.zoom = Math.min(Math.max(state.zoom * (d / lastDist), 1), 4);
       lastDist = d;
-      document.getElementById('full-img').style.transform = `scale(${scale})`;
+      applyTransform();
+      e.preventDefault();
+    } else if (e.touches.length === 1 && state.zoom > 1) {
+      state.panX = startPanX + (e.touches[0].clientX - sx);
+      state.panY = startPanY + (e.touches[0].clientY - sy);
+      applyTransform();
       e.preventDefault();
     }
   }, {passive:false});
 
   wrap.addEventListener('touchend', e => {
-    if (!dragging) { scale=1; document.getElementById('full-img').style.transform='scale(1)'; return; }
-    dragging=false;
-    if (scale > 1) return;
+    if (pinching) { pinching = false; return; }
+    if (state.zoom > 1) return;
     const dx = e.changedTouches[0].clientX - sx;
     const dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 40) return;
-    if (dx < 0) { // swipe sinistra → seleziona + avanza
-      fullSelect();
-    } else { // swipe destra → avanza senza selezionare
-      if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); }
-    }
+    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 45) return;
+    // Swipe sinistra o destra = naviga soltanto
+    fullNav(dx < 0 ? 1 : -1);
   }, {passive:true});
 })();
 
-// ===== TASTIERA (PC) =====
+// ===== TASTIERA PC =====
 document.addEventListener('keydown', e => {
   if (!document.getElementById('view-full').classList.contains('active')) return;
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') fullNav(1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   fullNav(-1);
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fullSelect(); }
-  if (e.key === 'Escape') switchView('grid');
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); fullNav(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); fullNav(-1); }
+  if (e.key === 'Enter' || e.key === ' ')               { e.preventDefault(); fullSelect(); }
+  if (e.key === 'Escape')                               switchView('grid');
+  if (e.key === '+' || e.key === '=')                   pcZoom(0.25);
+  if (e.key === '-')                                    pcZoom(-0.25);
+  if (e.key === '0')                                    pcZoom(0);
 });
 
 // ===== MESSAGGIO =====
@@ -652,23 +723,21 @@ function closeModal() { document.getElementById('modal-overlay').classList.remov
 
 function copyMsg() {
   const t = document.getElementById('modal-msg-text').textContent;
-  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', true));
-  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!',true); }
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
+  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
 }
 function openWA() {
-  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(document.getElementById('modal-msg-text').textContent)}`, '_blank');
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
 }
-
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
 // ===== TOAST =====
-let _tt=null;
-function showToast(msg, success=false) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.style.display='block';
-  t.className = success ? 'success' : '';
-  if(_tt) clearTimeout(_tt);
-  _tt=setTimeout(()=>{ t.style.display='none'; }, 2200);
+let _tt = null;
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type; t.style.display = 'block';
+  if (_tt) clearTimeout(_tt);
+  _tt = setTimeout(() => { t.style.display = 'none'; }, 2200);
 }
 </script>
 </body>
