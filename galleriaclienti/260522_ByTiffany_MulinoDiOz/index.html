@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>260522_ByTiffany_MulinoDiOz — Selezione Foto</title>
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1e1e1e;
+  --color-border: rgba(255,255,255,0.08);
+  --color-text: #f0f0f0;
+  --color-text-muted: #8a8a8a;
+  --color-primary: #e8c97e;
+  --color-primary-hover: #f0d89a;
+  --color-accent: rgba(232,201,126,0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-selected: 0 0 0 3px #e8c97e, 0 4px 20px rgba(232,201,126,0.25);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --transition: 180ms cubic-bezier(0.16,1,0.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+
+/* ===== LOGIN ===== */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;padding:2rem;
+  background:linear-gradient(160deg,#0a0a0a 60%,#1a140a);
+}
+.login-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2.5rem;
+  width:100%;max-width:380px;text-align:center;
+}
+.login-card h1{
+  font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.2rem);
+  font-weight:500;letter-spacing:.02em;margin-bottom:.5rem;color:#fff;
+}
+.login-card .evento-subtitle{
+  font-size:.85rem;color:var(--color-text-muted);margin-bottom:2rem;
+  text-transform:uppercase;letter-spacing:.1em;
+}
+.login-input{
+  width:100%;padding:.75rem 1rem;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text);
+  font-size:1rem;margin-bottom:1rem;
+  transition:border-color var(--transition);
+}
+.login-input:focus{outline:none;border-color:var(--color-primary)}
+.btn-login{
+  width:100%;padding:.8rem;background:var(--color-primary);
+  color:#0a0a0a;font-weight:600;font-size:.95rem;
+  border-radius:var(--radius-md);
+  transition:background var(--transition),transform var(--transition);
+}
+.btn-login:hover{background:var(--color-primary-hover)}
+.btn-login:active{transform:scale(.98)}
+#login-error{
+  display:none;color:#e87e7e;font-size:.85rem;margin-top:.75rem;
+}
+
+/* ===== GALLERIA ===== */
+#gallery-screen{display:none}
+
+/* HEADER */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-border);
+  padding:.8rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.header-left{min-width:0;}
+.header-left h1{
+  font-family:var(--font-display);font-size:clamp(1.1rem,2.5vw,1.5rem);
+  font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:#fff;
+}
+.header-left .data-evento{
+  font-size:.75rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.08em;
+}
+
+/* COUNTER */
+.counter-pill{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-full);padding:.35rem .9rem;
+  white-space:nowrap;flex-shrink:0;
+}
+.counter-pill .count-num{
+  font-size:1.1rem;font-weight:700;color:var(--color-primary);
+  font-variant-numeric:tabular-nums;
+}
+.counter-pill .count-label{font-size:.75rem;color:var(--color-text-muted);}
+.counter-pill .count-max{font-size:.8rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums;}
+.counter-pill.at-limit .count-num{color:#e87e7e;}
+
+.btn-invia{
+  padding:.5rem 1.1rem;background:var(--color-primary);color:#0a0a0a;
+  font-weight:600;font-size:.85rem;border-radius:var(--radius-full);
+  transition:background var(--transition),opacity var(--transition);
+  flex-shrink:0;
+}
+.btn-invia:hover{background:var(--color-primary-hover)}
+.btn-invia:disabled{opacity:.35;cursor:not-allowed}
+
+/* GRIGLIA */
+.gallery-grid{
+  padding:1.5rem;
+  columns:4 200px;column-gap:.75rem;
+}
+@media(max-width:600px){.gallery-grid{padding:1rem;column-gap:.5rem}}
+
+/* CARD */
+.photo-card{
+  break-inside:avoid;margin-bottom:.75rem;
+  position:relative;cursor:pointer;
+  border-radius:var(--radius-md);overflow:hidden;
+  border:2px solid transparent;
+  box-shadow:var(--shadow-card);
+  transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);
+}
+.photo-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.photo-card.selected{
+  border-color:var(--color-primary);
+  box-shadow:var(--shadow-selected);
+}
+.photo-card img{
+  display:block;width:100%;height:auto;
+  pointer-events:none;user-select:none;
+}
+
+/* WATERMARK */
+.photo-card::after{
+  content:'ANTEPRIMA';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-family:var(--font-display);
+  font-size:clamp(.9rem,3vw,1.4rem);
+  font-weight:600;letter-spacing:.2em;
+  color:rgba(255,255,255,0.22);
+  text-shadow:0 1px 3px rgba(0,0,0,.5);
+  pointer-events:none;user-select:none;
+  white-space:nowrap;
+}
+
+/* TICK di selezione */
+.photo-card .tick{
+  position:absolute;top:.5rem;right:.5rem;
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);
+  pointer-events:none;
+}
+.photo-card.selected .tick{
+  background:var(--color-primary);border-color:var(--color-primary);
+}
+.tick svg{display:none;width:14px;height:14px;stroke:#0a0a0a;stroke-width:2.5}
+.photo-card.selected .tick svg{display:block}
+
+/* COMMENTO */
+.comment-wrap{
+  display:none;padding:.5rem .6rem .6rem;
+  background:var(--color-surface-2);
+}
+.photo-card.selected .comment-wrap{display:block}
+.comment-input{
+  width:100%;padding:.4rem .6rem;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.78rem;
+  resize:none;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.comment-input:focus{outline:none;border-color:var(--color-primary)}
+.comment-label{
+  font-size:.7rem;color:var(--color-text-muted);
+  margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em;
+}
+
+/* MODAL INVIO */
+#modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2rem;
+  width:100%;max-width:480px;
+  max-height:90dvh;overflow-y:auto;
+}
+.modal-box h2{
+  font-family:var(--font-display);font-size:1.5rem;font-weight:500;
+  margin-bottom:.35rem;color:#fff;
+}
+.modal-box .modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
+.modal-msg{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  font-size:.88rem;line-height:1.6;color:var(--color-text);
+  white-space:pre-wrap;word-break:break-word;
+  margin-bottom:1.25rem;
+}
+.modal-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-copy{
+  flex:1;padding:.7rem;background:var(--color-surface-2);
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:.9rem;font-weight:500;color:var(--color-text);
+  transition:background var(--transition),border-color var(--transition);
+}
+.btn-copy:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
+.btn-wa{
+  flex:1;padding:.7rem;background:#25D366;
+  border-radius:var(--radius-md);font-size:.9rem;
+  font-weight:600;color:#fff;
+  transition:background var(--transition);
+}
+.btn-wa:hover{background:#1ebe5a}
+.btn-chiudi{
+  width:100%;padding:.6rem;margin-top:.75rem;
+  background:none;border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text-muted);
+  font-size:.85rem;transition:border-color var(--transition),color var(--transition);
+}
+.btn-chiudi:hover{border-color:rgba(255,255,255,.3);color:var(--color-text)}
+
+/* LIMIT TOAST */
+#toast{
+  display:none;position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%);z-index:300;
+  background:#e87e7e;color:#fff;font-weight:600;
+  padding:.7rem 1.4rem;border-radius:var(--radius-full);
+  font-size:.88rem;box-shadow:0 4px 20px rgba(0,0,0,.4);
+  animation:toastIn .2s ease;
+}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* EMPTY STATE */
+.empty-state{
+  text-align:center;padding:6rem 2rem;color:var(--color-text-muted);
+}
+.empty-state h3{font-size:1.1rem;color:var(--color-text);margin-bottom:.5rem}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="evento-subtitle">Selezione Foto</div>
+    <h1 id="login-title">260522_ByTiffany_MulinoDiOz</h1>
+    <form id="login-form" onsubmit="return doLogin(event)">
+      <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-login" type="submit">Entra →</button>
+      <div id="login-error">Password errata. Riprova.</div>
+    </form>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery-screen">
+  <header class="site-header">
+    <div class="header-left">
+      <h1>260522_ByTiffany_MulinoDiOz</h1>
+    </div>
+    <div class="counter-pill" id="counter-pill">
+      <span class="count-num" id="sel-count">0</span>
+      <span class="count-label" id="sel-label">selezionate</span>
+      <span class="count-max" id="sel-max"></span>
+    </div>
+    <button class="btn-invia" id="btn-invia" onclick="openModal()" disabled>
+      Invia selezione
+    </button>
+  </header>
+
+  <main>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <h2>Riepilogo selezione</h2>
+    <p class="modal-subtitle">Copia il messaggio e inviamelo su WhatsApp.</p>
+    <div class="modal-msg" id="modal-msg-text"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" onclick="copyMsg()">📋 Copia testo</button>
+      <button class="btn-wa" onclick="openWA()">📲 Apri WhatsApp</button>
+    </div>
+    <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ===== CONFIGURAZIONE (iniettata da genera.py) =====
+const CONFIG = {
+  nomeEvento:   "260522_ByTiffany_MulinoDiOz",
+  maxSelezioni: 5,   // 0 = nessun limite
+  whatsapp:     "393348493876",
+  storageKey:   "260522_ByTiffany_MulinoDiOz",
+  pwHash:       "MTIzNA==",
+  foto:         [{"id": "PIC03856", "file": "PIC03856.jpg", "original_name": "PIC03856.jpg"}, {"id": "PIC03934", "file": "PIC03934.jpg", "original_name": "PIC03934.jpg"}, {"id": "PIC03982", "file": "PIC03982.jpg", "original_name": "PIC03982.jpg"}, {"id": "PIC04025", "file": "PIC04025.jpg", "original_name": "PIC04025.jpg"}, {"id": "PIC04096", "file": "PIC04096.jpg", "original_name": "PIC04096.jpg"}, {"id": "PIC04106", "file": "PIC04106.jpg", "original_name": "PIC04106.jpg"}, {"id": "PIC04110", "file": "PIC04110.jpg", "original_name": "PIC04110.jpg"}, {"id": "PIC04111", "file": "PIC04111.jpg", "original_name": "PIC04111.jpg"}, {"id": "PIC04117", "file": "PIC04117.jpg", "original_name": "PIC04117.jpg"}, {"id": "PIC04159", "file": "PIC04159.jpg", "original_name": "PIC04159.jpg"}, {"id": "PIC04216", "file": "PIC04216.jpg", "original_name": "PIC04216.jpg"}, {"id": "PIC04266", "file": "PIC04266.jpg", "original_name": "PIC04266.jpg"}, {"id": "PIC04273", "file": "PIC04273.jpg", "original_name": "PIC04273.jpg"}, {"id": "PIC04274", "file": "PIC04274.jpg", "original_name": "PIC04274.jpg"}, {"id": "PIC04303", "file": "PIC04303.jpg", "original_name": "PIC04303.jpg"}, {"id": "PIC04312", "file": "PIC04312.jpg", "original_name": "PIC04312.jpg"}, {"id": "PIC04324", "file": "PIC04324.jpg", "original_name": "PIC04324.jpg"}]
+};
+
+// ===== STATO =====
+const state = {
+  selections: {},   // { stemId: { file, original_name, comment } }
+};
+
+// ===== LOGIN =====
+function doLogin(e) {
+  e.preventDefault();
+  const input = document.getElementById('pw-input').value;
+  const encoded = btoa(unescape(encodeURIComponent(input)));
+  if (encoded === CONFIG.pwHash) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('gallery-screen').style.display = 'block';
+    buildGallery();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+  return false;
+}
+
+// ===== GALLERY =====
+function buildGallery() {
+  const grid = document.getElementById('gallery-grid');
+  if (!CONFIG.foto.length) {
+    grid.innerHTML = '<div class="empty-state"><h3>Nessuna foto disponibile</h3><p>Ricarica la pagina tra poco.</p></div>';
+    return;
+  }
+  CONFIG.foto.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.dataset.id = f.id;
+    card.innerHTML = `
+      <img src="./foto/${f.file}" alt="${f.id}" loading="lazy">
+      <div class="tick">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="20 6 9 17 4 12" stroke="currentColor"/>
+        </svg>
+      </div>
+      <div class="comment-wrap">
+        <div class="comment-label">Nota / commento (opzionale)</div>
+        <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita..." 
+          oninput="updateComment('${f.id}', this.value)"></textarea>
+      </div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('comment-input')) return;
+      toggleSelect(f.id, f.file, f.original_name, card);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function toggleSelect(id, file, origName, card) {
+  const isSelected = !!state.selections[id];
+  const count = Object.keys(state.selections).length;
+
+  if (!isSelected) {
+    // Controlla limite
+    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
+      showToast(`Hai raggiunto il limite di ${CONFIG.maxSelezioni} foto.`);
+      return;
+    }
+    state.selections[id] = { file, original_name: origName, comment: '' };
+    card.classList.add('selected');
+  } else {
+    delete state.selections[id];
+    card.classList.remove('selected');
+  }
+  updateCounter();
+}
+
+function updateComment(id, val) {
+  if (state.selections[id]) {
+    state.selections[id].comment = val.trim();
+  }
+}
+
+function updateCounter() {
+  const count = Object.keys(state.selections).length;
+  const max   = CONFIG.maxSelezioni;
+
+  document.getElementById('sel-count').textContent = count;
+  const pill = document.getElementById('counter-pill');
+  const maxEl = document.getElementById('sel-max');
+
+  if (max > 0) {
+    maxEl.textContent = `/ ${max}`;
+    pill.classList.toggle('at-limit', count >= max);
+  } else {
+    maxEl.textContent = '';
+    pill.classList.remove('at-limit');
+  }
+
+  document.getElementById('btn-invia').disabled = count === 0;
+}
+
+// ===== MESSAGGIO =====
+function buildMessage() {
+  const ids = Object.keys(state.selections);
+  let msg = `${CONFIG.nomeEvento}\n\n`;
+
+  ids.forEach(id => {
+    const s = state.selections[id];
+    const nomeSenzaEst = id;   // già lo stem, niente .jpg
+    if (s.comment) {
+      msg += `${nomeSenzaEst} — ${s.comment}\n`;
+    } else {
+      msg += `${nomeSenzaEst}\n`;
+    }
+  });
+
+  msg = msg.trimEnd();
+  return msg;
+}
+
+// ===== MODAL =====
+function openModal() {
+  const msg = buildMessage();
+  document.getElementById('modal-msg-text').textContent = msg;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function copyMsg() {
+  const text = document.getElementById('modal-msg-text').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('Copiato!'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('Copiato!');
+  }
+}
+
+function openWA() {
+  const text = document.getElementById('modal-msg-text').textContent;
+  const encoded = encodeURIComponent(text);
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encoded}`, '_blank');
+}
+
+// ===== TOAST =====
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2600);
+}
+
+// Chiudi modal su overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
