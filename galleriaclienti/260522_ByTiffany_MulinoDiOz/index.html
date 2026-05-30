@@ -28,8 +28,8 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
-body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%;height:auto}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none}
 button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 
 /* ===== LOGIN ===== */
@@ -68,6 +68,7 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
   font-size:.8rem;color:var(--color-text-muted);margin-bottom:.45rem;line-height:1.4;
 }
 .legenda-row:last-child{margin-bottom:0}
+.legenda-note{margin-top:.55rem;padding-top:.55rem;border-top:1px solid rgba(255,255,255,.08)}
 .legenda-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem}
 
 .login-input{
@@ -346,11 +347,19 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
     <h1>260522_ByTiffany_MulinoDiOz</h1>
 
     <!-- LEGENDA -->
-    <div class="legenda">
-      <div class="legenda-title">Come funziona</div>
-      <div class="legenda-row"><span class="legenda-icon">📱</span><span>Da telefono: scorri le foto nella vista <strong>Sfoglia</strong>. Usa il tasto <strong style="color:#3dbe6e">verde</strong> per selezionare e il <strong style="color:#e05c5c">rosso</strong> per togliere.</span></div>
-      <div class="legenda-row"><span class="legenda-icon">💻</span><span>Da PC: clicca su una foto in griglia oppure apri <strong>Sfoglia</strong>. Puoi anche zoomare con i pulsanti + / −.</span></div>
-      <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong>: ti apparirà il messaggio già pronto da mandarmi su WhatsApp.</span></div>
+    <div class="legenda" id="legenda-box">
+      <div class="legenda-title">Come selezionare</div>
+      <div id="legenda-mobile" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">📱</span><span>Apri <strong>Sfoglia</strong> per vedere una foto grande alla volta e scorri a destra o sinistra per cambiare immagine.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✅</span><span>Per confermare una foto usa il bottone <strong style="color:#3dbe6e">verde Seleziona</strong>. Per toglierla usa il bottone <strong style="color:#e05c5c">rosso Rimuovi</strong>.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong> per generare il messaggio finale.</span></div>
+      </div>
+      <div id="legenda-desktop" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">💻</span><span>Usa <strong>Griglia</strong> per vedere tutte le foto oppure <strong>Sfoglia</strong> per una visione grande.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">🔍</span><span>In <strong>Sfoglia</strong> puoi usare frecce laterali, zoom + / − e tastiera per muoverti più velocemente.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong> per preparare il messaggio già pronto.</span></div>
+      </div>
+      <div class="legenda-row legenda-note"><span class="legenda-icon">🛡️</span><span>Le anteprime sono protette e mostrate solo per la selezione.</span></div>
     </div>
 
     <form id="login-form" onsubmit="return doLogin(event)">
@@ -435,7 +444,7 @@ const CONFIG = {
   maxSelezioni: 0,
   whatsapp:     "393348493876",
   storageKey:   "260522_ByTiffany_MulinoDiOz",
-  pwHash:       "MQ==",
+  pwHash:       "MTIzNA==",
   foto:         [{"id": "PIC03856", "file": "PIC03856.jpg", "original_name": "PIC03856.jpg"}, {"id": "PIC03934", "file": "PIC03934.jpg", "original_name": "PIC03934.jpg"}, {"id": "PIC03982", "file": "PIC03982.jpg", "original_name": "PIC03982.jpg"}, {"id": "PIC04025", "file": "PIC04025.jpg", "original_name": "PIC04025.jpg"}, {"id": "PIC04096", "file": "PIC04096.jpg", "original_name": "PIC04096.jpg"}, {"id": "PIC04106", "file": "PIC04106.jpg", "original_name": "PIC04106.jpg"}, {"id": "PIC04110", "file": "PIC04110.jpg", "original_name": "PIC04110.jpg"}, {"id": "PIC04111", "file": "PIC04111.jpg", "original_name": "PIC04111.jpg"}, {"id": "PIC04117", "file": "PIC04117.jpg", "original_name": "PIC04117.jpg"}, {"id": "PIC04159", "file": "PIC04159.jpg", "original_name": "PIC04159.jpg"}, {"id": "PIC04216", "file": "PIC04216.jpg", "original_name": "PIC04216.jpg"}, {"id": "PIC04266", "file": "PIC04266.jpg", "original_name": "PIC04266.jpg"}, {"id": "PIC04273", "file": "PIC04273.jpg", "original_name": "PIC04273.jpg"}, {"id": "PIC04274", "file": "PIC04274.jpg", "original_name": "PIC04274.jpg"}, {"id": "PIC04303", "file": "PIC04303.jpg", "original_name": "PIC04303.jpg"}, {"id": "PIC04312", "file": "PIC04312.jpg", "original_name": "PIC04312.jpg"}, {"id": "PIC04324", "file": "PIC04324.jpg", "original_name": "PIC04324.jpg"}]
 };
 
@@ -739,6 +748,32 @@ function showToast(msg, type='info') {
   if (_tt) clearTimeout(_tt);
   _tt = setTimeout(() => { t.style.display = 'none'; }, 2200);
 }
+
+
+(function(){
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 820;
+  const mob = document.getElementById('legenda-mobile');
+  const desk = document.getElementById('legenda-desktop');
+  if (mob && desk) {
+    mob.style.display = isMobile ? 'block' : 'none';
+    desk.style.display = isMobile ? 'none' : 'block';
+  }
+})();
+
+// Best-effort protection against casual download/copy
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['c','s','u','p'].includes(k)) e.preventDefault();
+    if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k))) e.preventDefault();
+  });
+})();
+
 </script>
 </body>
 </html>
