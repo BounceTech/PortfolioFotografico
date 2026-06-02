@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>260601_ByTiffany_SanLorenzo — Selezione Foto</title>
+<style>
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1e1e1e;
+  --color-border: rgba(255,255,255,0.08);
+  --color-text: #f0f0f0;
+  --color-text-muted: #8a8a8a;
+  --color-primary: #e8c97e;
+  --color-primary-hover: #f0d89a;
+  --color-green: #3dbe6e;
+  --color-green-hover: #2fa85c;
+  --color-red: #e05c5c;
+  --color-red-hover: #c94444;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --shadow-selected: 0 0 0 3px #e8c97e, 0 4px 20px rgba(232,201,126,0.25);
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --transition: 180ms cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+
+/* ===== LOGIN ===== */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;padding:2rem;
+  background:linear-gradient(160deg,#0a0a0a 60%,#1a140a);
+}
+.login-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2.5rem;
+  width:100%;max-width:400px;text-align:center;
+}
+.login-card .evento-subtitle{
+  font-size:.75rem;color:var(--color-text-muted);margin-bottom:.75rem;
+  text-transform:uppercase;letter-spacing:.12em;
+}
+.login-card h1{
+  font-family:var(--font-body);font-size:clamp(1.3rem,4vw,1.9rem);
+  font-weight:700;letter-spacing:-.01em;margin-bottom:1.5rem;color:#fff;
+  word-break:break-word;hyphens:auto;line-height:1.2;
+}
+
+/* LEGENDA LOGIN */
+.legenda{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  text-align:left;margin-bottom:1.5rem;
+}
+.legenda-title{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--color-primary);margin-bottom:.65rem;
+}
+.legenda-row{
+  display:flex;align-items:flex-start;gap:.55rem;
+  font-size:.8rem;color:var(--color-text-muted);margin-bottom:.45rem;line-height:1.4;
+}
+.legenda-row:last-child{margin-bottom:0}
+.legenda-note{margin-top:.55rem;padding-top:.55rem;border-top:1px solid rgba(255,255,255,.08)}
+.legenda-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem}
+
+.login-input{
+  width:100%;padding:.75rem 1rem;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text);
+  font-size:1rem;margin-bottom:1rem;
+  transition:border-color var(--transition);
+}
+.login-input:focus{outline:none;border-color:var(--color-primary)}
+.btn-login{
+  width:100%;padding:.8rem;background:var(--color-primary);
+  color:#0a0a0a;font-weight:700;font-size:.95rem;
+  border-radius:var(--radius-md);letter-spacing:.02em;
+  transition:background var(--transition),transform var(--transition);
+}
+.btn-login:hover{background:var(--color-primary-hover)}
+.btn-login:active{transform:scale(.98)}
+#login-error{display:none;color:#e87e7e;font-size:.85rem;margin-top:.75rem}
+
+/* ===== GALLERY SCREEN ===== */
+#gallery-screen{display:none}
+
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-border);
+  padding:.8rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+}
+.header-left{min-width:0;flex:1}
+.header-left h1{
+  font-size:clamp(.9rem,2vw,1.2rem);font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
+}
+.counter-pill{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-full);padding:.3rem .85rem;
+  white-space:nowrap;flex-shrink:0;
+}
+.counter-pill .count-num{font-size:1rem;font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums}
+.counter-pill .count-label{font-size:.72rem;color:var(--color-text-muted)}
+.counter-pill .count-max{font-size:.78rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+.counter-pill.at-limit .count-num{color:#e87e7e}
+.btn-invia{
+  padding:.45rem 1rem;background:var(--color-primary);color:#0a0a0a;
+  font-weight:700;font-size:.82rem;border-radius:var(--radius-full);
+  transition:background var(--transition),opacity var(--transition);flex-shrink:0;
+}
+.btn-invia:hover{background:var(--color-primary-hover)}
+.btn-invia:disabled{opacity:.35;cursor:not-allowed}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:.4rem;padding:.75rem 1.2rem .25rem}
+.view-btn{
+  padding:.35rem .85rem;border-radius:var(--radius-full);font-size:.78rem;font-weight:600;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  color:var(--color-text-muted);
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+}
+.view-btn.active{background:var(--color-primary);color:#0a0a0a;border-color:var(--color-primary)}
+
+/* ===== GRID VIEW ===== */
+#view-grid{padding:1rem 1.2rem 2rem}
+.gallery-grid{columns:4 180px;column-gap:.6rem}
+@media(max-width:600px){.gallery-grid{columns:2 140px;column-gap:.5rem}}
+
+.photo-card{
+  break-inside:avoid;margin-bottom:.6rem;position:relative;cursor:pointer;
+  border-radius:var(--radius-md);overflow:hidden;border:2px solid transparent;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+  transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);
+}
+.photo-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.photo-card.selected{border-color:var(--color-primary);box-shadow:var(--shadow-selected)}
+.photo-card img{display:block;width:100%;height:auto;pointer-events:none;user-select:none}
+.photo-card::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:clamp(.7rem,2.2vw,1rem);font-weight:800;letter-spacing:.18em;
+  color:rgba(255,255,255,0.18);text-shadow:0 1px 3px rgba(0,0,0,.5);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.photo-card .tick{
+  position:absolute;top:.45rem;right:.45rem;width:24px;height:24px;border-radius:50%;
+  background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);pointer-events:none;
+}
+.photo-card.selected .tick{background:var(--color-green);border-color:var(--color-green)}
+.tick svg{display:none;width:12px;height:12px;stroke:#fff;stroke-width:3}
+.photo-card.selected .tick svg{display:block}
+.comment-wrap{display:none;padding:.45rem .55rem .55rem;background:var(--color-surface-2)}
+.photo-card.selected .comment-wrap{display:block}
+.comment-label{font-size:.68rem;color:var(--color-text-muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em}
+.comment-input{
+  width:100%;padding:.35rem .55rem;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.76rem;resize:none;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.comment-input:focus{outline:none;border-color:var(--color-primary)}
+
+/* ===== FULLSCREEN VIEW ===== */
+#view-full{
+  display:none;position:fixed;inset:0;z-index:50;
+  background:#000;flex-direction:column;touch-action:none;
+}
+#view-full.active{display:flex}
+
+.full-header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  padding:.75rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(0,0,0,.75) 0%,transparent 100%);
+  gap:.5rem;
+}
+.full-header .full-title{
+  font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.full-counter-top{
+  font-size:.8rem;color:rgba(255,255,255,.5);
+  white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums;
+}
+.full-close{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1rem;flex-shrink:0;
+}
+.full-close:hover{background:rgba(255,255,255,.22)}
+
+/* Immagine centrale */
+.full-img-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;cursor:grab;
+}
+.full-img-wrap.grabbing{cursor:grabbing}
+#full-img{
+  max-width:100%;max-height:100%;object-fit:contain;
+  user-select:none;-webkit-user-drag:none;
+  will-change:transform;transform-origin:center center;
+  transition:none;
+}
+.full-img-wrap::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:clamp(1rem,4vw,2rem);font-weight:800;letter-spacing:.2em;
+  color:rgba(255,255,255,0.10);text-shadow:0 1px 4px rgba(0,0,0,.6);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+
+/* Frecce PC */
+.full-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.4rem;
+  transition:background var(--transition);
+}
+.full-arrow:hover{background:rgba(255,255,255,.25)}
+#arrow-prev{left:.75rem}
+#arrow-next{right:.75rem}
+@media(max-width:700px){.full-arrow{display:none}}
+
+/* Zoom buttons PC */
+.zoom-btns{
+  position:absolute;bottom:7rem;right:1rem;z-index:10;
+  display:flex;flex-direction:column;gap:.4rem;
+}
+.zoom-btn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.13);color:#fff;
+  font-size:1.2rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition);
+}
+.zoom-btn:hover{background:rgba(255,255,255,.25)}
+@media(max-width:700px){.zoom-btns{display:none}}
+
+/* Footer azioni fullscreen */
+.full-footer{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:.9rem 1.2rem 2rem;
+  display:flex;align-items:center;justify-content:center;gap:.75rem;
+  background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);
+}
+.btn-full-action{
+  flex:1;max-width:200px;padding:.8rem;border-radius:var(--radius-md);
+  font-size:.95rem;font-weight:700;letter-spacing:.02em;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:background var(--transition),transform var(--transition),opacity var(--transition);
+}
+.btn-full-action:active{transform:scale(.97)}
+#btn-full-add{background:var(--color-green);color:#fff}
+#btn-full-add:hover{background:var(--color-green-hover)}
+#btn-full-desel{background:var(--color-red);color:#fff}
+#btn-full-desel:hover{background:var(--color-red-hover)}
+
+/* Dot navigator */
+.full-dots{
+  position:absolute;bottom:5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:.35rem;pointer-events:none;
+}
+.full-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:background var(--transition),transform var(--transition)}
+.full-dot.active{background:#fff;transform:scale(1.4)}
+
+/* ===== MODAL ===== */
+#modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2rem;
+  width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;
+}
+.modal-box h2{font-size:1.4rem;font-weight:700;margin-bottom:.35rem;color:#fff}
+.modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
+.modal-msg{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  font-size:.88rem;line-height:1.7;color:var(--color-text);
+  white-space:pre-wrap;word-break:break-word;margin-bottom:1.25rem;
+}
+.modal-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-copy{
+  flex:1;padding:.7rem;background:var(--color-surface-2);
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:.9rem;font-weight:600;color:var(--color-text);
+  transition:background var(--transition);
+}
+.btn-copy:hover{background:rgba(255,255,255,.06)}
+.btn-wa{
+  flex:1;padding:.7rem;background:#25D366;
+  border-radius:var(--radius-md);font-size:.9rem;font-weight:700;color:#fff;
+  transition:background var(--transition);
+}
+.btn-wa:hover{background:#1ebe5a}
+.btn-chiudi{
+  width:100%;padding:.6rem;margin-top:.75rem;
+  background:none;border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text-muted);font-size:.85rem;
+  transition:border-color var(--transition),color var(--transition);
+}
+.btn-chiudi:hover{border-color:rgba(255,255,255,.3);color:var(--color-text)}
+
+/* TOAST */
+#toast{
+  display:none;position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%);z-index:300;
+  color:#fff;font-weight:700;
+  padding:.65rem 1.3rem;border-radius:var(--radius-full);
+  font-size:.85rem;box-shadow:0 4px 20px rgba(0,0,0,.4);
+  white-space:nowrap;
+}
+#toast.error{background:var(--color-red)}
+#toast.success{background:var(--color-green)}
+#toast.info{background:#444}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="evento-subtitle">Selezione Foto</div>
+    <h1>260601_ByTiffany_SanLorenzo</h1>
+
+    <!-- LEGENDA -->
+    <div class="legenda" id="legenda-box">
+      <div class="legenda-title">Come selezionare</div>
+      <div id="legenda-mobile" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">📱</span><span>Apri <strong>Sfoglia</strong> per vedere una foto grande alla volta e scorri a destra o sinistra per cambiare immagine.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✅</span><span>Per confermare una foto usa il bottone <strong style="color:#3dbe6e">verde Seleziona</strong>. Per toglierla usa il bottone <strong style="color:#e05c5c">rosso Rimuovi</strong>.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong> per generare il messaggio finale.</span></div>
+      </div>
+      <div id="legenda-desktop" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">💻</span><span>Usa <strong>Griglia</strong> per vedere tutte le foto oppure <strong>Sfoglia</strong> per una visione grande.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">🔍</span><span>In <strong>Sfoglia</strong> puoi usare frecce laterali, zoom + / − e tastiera per muoverti più velocemente.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong> per preparare il messaggio già pronto.</span></div>
+      </div>
+      <div class="legenda-row legenda-note"><span class="legenda-icon">🛡️</span><span>Le anteprime sono protette e mostrate solo per la selezione.</span></div>
+    </div>
+
+    <form id="login-form" onsubmit="return doLogin(event)">
+      <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-login" type="submit">Entra →</button>
+      <div id="login-error">Password errata. Riprova.</div>
+    </form>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery-screen">
+  <header class="site-header">
+    <div class="header-left"><h1>260601_ByTiffany_SanLorenzo</h1></div>
+    <div class="counter-pill" id="counter-pill">
+      <span class="count-num" id="sel-count">0</span>
+      <span class="count-label">sel.</span>
+      <span class="count-max" id="sel-max"></span>
+    </div>
+    <button class="btn-invia" id="btn-invia" onclick="openModal()" disabled>Invia</button>
+  </header>
+
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbtn-grid" onclick="switchView('grid')">☰ Griglia</button>
+    <button class="view-btn" id="vbtn-full" onclick="switchView('full')">⊞ Sfoglia</button>
+  </div>
+
+  <div id="view-grid">
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div id="view-full">
+  <div class="full-header">
+    <span class="full-title">260601_ByTiffany_SanLorenzo</span>
+    <span class="full-counter-top" id="full-counter-top">1 / 1</span>
+    <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
+  </div>
+
+  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)" title="Precedente">‹</button>
+  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)" title="Successiva">›</button>
+
+  <div class="full-img-wrap" id="full-img-wrap">
+    <img id="full-img" src="" alt="">
+  </div>
+
+  <!-- Zoom buttons (solo PC) -->
+  <div class="zoom-btns">
+    <button class="zoom-btn" onclick="pcZoom(0.25)" title="Zoom in">+</button>
+    <button class="zoom-btn" onclick="pcZoom(-0.25)" title="Zoom out">−</button>
+    <button class="zoom-btn" onclick="pcZoom(0)" title="Reset zoom" style="font-size:.7rem;font-weight:800">1:1</button>
+  </div>
+
+  <div class="full-dots" id="full-dots"></div>
+
+  <div class="full-footer">
+    <button class="btn-full-action" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
+    <button class="btn-full-action" id="btn-full-add"   onclick="fullSelect()">✓ Seleziona</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <h2>Riepilogo selezione</h2>
+    <p class="modal-subtitle">Copia il messaggio e inviamelo su WhatsApp.</p>
+    <div class="modal-msg" id="modal-msg-text"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" onclick="copyMsg()">📋 Copia</button>
+      <button class="btn-wa"   onclick="openWA()">📲 WhatsApp</button>
+    </div>
+    <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const CONFIG = {
+  nomeEvento:   "260601_ByTiffany_SanLorenzo",
+  maxSelezioni: 20,
+  whatsapp:     "393348493876",
+  storageKey:   "260601_ByTiffany_SanLorenzo",
+  pwHash:       "VGlmZmFueS4x",
+  foto:         [{"id": "PIC04436", "file": "PIC04436.jpg", "original_name": "PIC04436.JPG"}, {"id": "PIC04437", "file": "PIC04437.jpg", "original_name": "PIC04437.JPG"}, {"id": "PIC04438", "file": "PIC04438.jpg", "original_name": "PIC04438.JPG"}, {"id": "PIC04439", "file": "PIC04439.jpg", "original_name": "PIC04439.JPG"}, {"id": "PIC04440", "file": "PIC04440.jpg", "original_name": "PIC04440.JPG"}, {"id": "PIC04441", "file": "PIC04441.jpg", "original_name": "PIC04441.JPG"}, {"id": "PIC04442", "file": "PIC04442.jpg", "original_name": "PIC04442.JPG"}, {"id": "PIC04443", "file": "PIC04443.jpg", "original_name": "PIC04443.JPG"}, {"id": "PIC04444", "file": "PIC04444.jpg", "original_name": "PIC04444.JPG"}, {"id": "PIC04445", "file": "PIC04445.jpg", "original_name": "PIC04445.JPG"}, {"id": "PIC04446", "file": "PIC04446.jpg", "original_name": "PIC04446.JPG"}, {"id": "PIC04447", "file": "PIC04447.jpg", "original_name": "PIC04447.JPG"}, {"id": "PIC04448", "file": "PIC04448.jpg", "original_name": "PIC04448.JPG"}, {"id": "PIC04449", "file": "PIC04449.jpg", "original_name": "PIC04449.JPG"}, {"id": "PIC04450", "file": "PIC04450.jpg", "original_name": "PIC04450.JPG"}, {"id": "PIC04451", "file": "PIC04451.jpg", "original_name": "PIC04451.JPG"}, {"id": "PIC04452", "file": "PIC04452.jpg", "original_name": "PIC04452.JPG"}, {"id": "PIC04453", "file": "PIC04453.jpg", "original_name": "PIC04453.JPG"}, {"id": "PIC04454", "file": "PIC04454.jpg", "original_name": "PIC04454.JPG"}, {"id": "PIC04455", "file": "PIC04455.jpg", "original_name": "PIC04455.JPG"}, {"id": "PIC04456", "file": "PIC04456.jpg", "original_name": "PIC04456.JPG"}, {"id": "PIC04457", "file": "PIC04457.jpg", "original_name": "PIC04457.JPG"}, {"id": "PIC04458", "file": "PIC04458.jpg", "original_name": "PIC04458.JPG"}, {"id": "PIC04459", "file": "PIC04459.jpg", "original_name": "PIC04459.JPG"}, {"id": "PIC04460", "file": "PIC04460.jpg", "original_name": "PIC04460.JPG"}, {"id": "PIC04461", "file": "PIC04461.jpg", "original_name": "PIC04461.JPG"}, {"id": "PIC04462", "file": "PIC04462.jpg", "original_name": "PIC04462.JPG"}, {"id": "PIC04463", "file": "PIC04463.jpg", "original_name": "PIC04463.JPG"}, {"id": "PIC04464", "file": "PIC04464.jpg", "original_name": "PIC04464.JPG"}, {"id": "PIC04465", "file": "PIC04465.jpg", "original_name": "PIC04465.JPG"}, {"id": "PIC04466", "file": "PIC04466.jpg", "original_name": "PIC04466.JPG"}, {"id": "PIC04467", "file": "PIC04467.jpg", "original_name": "PIC04467.JPG"}, {"id": "PIC04468", "file": "PIC04468.jpg", "original_name": "PIC04468.JPG"}, {"id": "PIC04469", "file": "PIC04469.jpg", "original_name": "PIC04469.JPG"}, {"id": "PIC04470", "file": "PIC04470.jpg", "original_name": "PIC04470.JPG"}, {"id": "PIC04471", "file": "PIC04471.jpg", "original_name": "PIC04471.JPG"}, {"id": "PIC04472", "file": "PIC04472.jpg", "original_name": "PIC04472.JPG"}, {"id": "PIC04473", "file": "PIC04473.jpg", "original_name": "PIC04473.JPG"}, {"id": "PIC04474", "file": "PIC04474.jpg", "original_name": "PIC04474.JPG"}, {"id": "PIC04475", "file": "PIC04475.jpg", "original_name": "PIC04475.JPG"}, {"id": "PIC04476", "file": "PIC04476.jpg", "original_name": "PIC04476.JPG"}, {"id": "PIC04477", "file": "PIC04477.jpg", "original_name": "PIC04477.JPG"}, {"id": "PIC04478", "file": "PIC04478.jpg", "original_name": "PIC04478.JPG"}, {"id": "PIC04479", "file": "PIC04479.jpg", "original_name": "PIC04479.JPG"}, {"id": "PIC04480", "file": "PIC04480.jpg", "original_name": "PIC04480.JPG"}, {"id": "PIC04481", "file": "PIC04481.jpg", "original_name": "PIC04481.JPG"}, {"id": "PIC04482", "file": "PIC04482.jpg", "original_name": "PIC04482.JPG"}, {"id": "PIC04483", "file": "PIC04483.jpg", "original_name": "PIC04483.JPG"}, {"id": "PIC04484", "file": "PIC04484.jpg", "original_name": "PIC04484.JPG"}, {"id": "PIC04485", "file": "PIC04485.jpg", "original_name": "PIC04485.JPG"}, {"id": "PIC04486", "file": "PIC04486.jpg", "original_name": "PIC04486.JPG"}, {"id": "PIC04487", "file": "PIC04487.jpg", "original_name": "PIC04487.JPG"}, {"id": "PIC04488", "file": "PIC04488.jpg", "original_name": "PIC04488.JPG"}, {"id": "PIC04489", "file": "PIC04489.jpg", "original_name": "PIC04489.JPG"}, {"id": "PIC04490", "file": "PIC04490.jpg", "original_name": "PIC04490.JPG"}, {"id": "PIC04491", "file": "PIC04491.jpg", "original_name": "PIC04491.JPG"}, {"id": "PIC04492", "file": "PIC04492.jpg", "original_name": "PIC04492.JPG"}, {"id": "PIC04493", "file": "PIC04493.jpg", "original_name": "PIC04493.JPG"}, {"id": "PIC04494", "file": "PIC04494.jpg", "original_name": "PIC04494.JPG"}, {"id": "PIC04495", "file": "PIC04495.jpg", "original_name": "PIC04495.JPG"}, {"id": "PIC04496", "file": "PIC04496.jpg", "original_name": "PIC04496.JPG"}, {"id": "PIC04497", "file": "PIC04497.jpg", "original_name": "PIC04497.JPG"}, {"id": "PIC04498", "file": "PIC04498.jpg", "original_name": "PIC04498.JPG"}, {"id": "PIC04499", "file": "PIC04499.jpg", "original_name": "PIC04499.JPG"}, {"id": "PIC04500", "file": "PIC04500.jpg", "original_name": "PIC04500.JPG"}, {"id": "PIC04501", "file": "PIC04501.jpg", "original_name": "PIC04501.JPG"}, {"id": "PIC04502", "file": "PIC04502.jpg", "original_name": "PIC04502.JPG"}, {"id": "PIC04503", "file": "PIC04503.jpg", "original_name": "PIC04503.JPG"}, {"id": "PIC04504", "file": "PIC04504.jpg", "original_name": "PIC04504.JPG"}, {"id": "PIC04505", "file": "PIC04505.jpg", "original_name": "PIC04505.JPG"}, {"id": "PIC04506", "file": "PIC04506.jpg", "original_name": "PIC04506.JPG"}, {"id": "PIC04507", "file": "PIC04507.jpg", "original_name": "PIC04507.JPG"}, {"id": "PIC04508", "file": "PIC04508.jpg", "original_name": "PIC04508.JPG"}, {"id": "PIC04509", "file": "PIC04509.jpg", "original_name": "PIC04509.JPG"}, {"id": "PIC04510", "file": "PIC04510.jpg", "original_name": "PIC04510.JPG"}, {"id": "PIC04511", "file": "PIC04511.jpg", "original_name": "PIC04511.JPG"}, {"id": "PIC04512", "file": "PIC04512.jpg", "original_name": "PIC04512.JPG"}, {"id": "PIC04513", "file": "PIC04513.jpg", "original_name": "PIC04513.JPG"}, {"id": "PIC04514", "file": "PIC04514.jpg", "original_name": "PIC04514.JPG"}, {"id": "PIC04515", "file": "PIC04515.jpg", "original_name": "PIC04515.JPG"}, {"id": "PIC04516", "file": "PIC04516.jpg", "original_name": "PIC04516.JPG"}, {"id": "PIC04517", "file": "PIC04517.jpg", "original_name": "PIC04517.JPG"}, {"id": "PIC04518", "file": "PIC04518.jpg", "original_name": "PIC04518.JPG"}, {"id": "PIC04519", "file": "PIC04519.jpg", "original_name": "PIC04519.JPG"}, {"id": "PIC04520", "file": "PIC04520.jpg", "original_name": "PIC04520.JPG"}, {"id": "PIC04521", "file": "PIC04521.jpg", "original_name": "PIC04521.JPG"}, {"id": "PIC04522", "file": "PIC04522.jpg", "original_name": "PIC04522.JPG"}, {"id": "PIC04523", "file": "PIC04523.jpg", "original_name": "PIC04523.JPG"}, {"id": "PIC04524", "file": "PIC04524.jpg", "original_name": "PIC04524.JPG"}, {"id": "PIC04525", "file": "PIC04525.jpg", "original_name": "PIC04525.JPG"}, {"id": "PIC04526", "file": "PIC04526.jpg", "original_name": "PIC04526.JPG"}, {"id": "PIC04527", "file": "PIC04527.jpg", "original_name": "PIC04527.JPG"}, {"id": "PIC04528", "file": "PIC04528.jpg", "original_name": "PIC04528.JPG"}, {"id": "PIC04529", "file": "PIC04529.jpg", "original_name": "PIC04529.JPG"}, {"id": "PIC04530", "file": "PIC04530.jpg", "original_name": "PIC04530.JPG"}, {"id": "PIC04531", "file": "PIC04531.jpg", "original_name": "PIC04531.JPG"}, {"id": "PIC04532", "file": "PIC04532.jpg", "original_name": "PIC04532.JPG"}, {"id": "PIC04533", "file": "PIC04533.jpg", "original_name": "PIC04533.JPG"}, {"id": "PIC04534", "file": "PIC04534.jpg", "original_name": "PIC04534.JPG"}, {"id": "PIC04535", "file": "PIC04535.jpg", "original_name": "PIC04535.JPG"}, {"id": "PIC04536", "file": "PIC04536.jpg", "original_name": "PIC04536.JPG"}, {"id": "PIC04537", "file": "PIC04537.jpg", "original_name": "PIC04537.JPG"}, {"id": "PIC04538", "file": "PIC04538.jpg", "original_name": "PIC04538.JPG"}, {"id": "PIC04539", "file": "PIC04539.jpg", "original_name": "PIC04539.JPG"}, {"id": "PIC04540", "file": "PIC04540.jpg", "original_name": "PIC04540.JPG"}, {"id": "PIC04541", "file": "PIC04541.jpg", "original_name": "PIC04541.JPG"}, {"id": "PIC04542", "file": "PIC04542.jpg", "original_name": "PIC04542.JPG"}, {"id": "PIC04543", "file": "PIC04543.jpg", "original_name": "PIC04543.JPG"}, {"id": "PIC04544", "file": "PIC04544.jpg", "original_name": "PIC04544.JPG"}, {"id": "PIC04545", "file": "PIC04545.jpg", "original_name": "PIC04545.JPG"}, {"id": "PIC04546", "file": "PIC04546.jpg", "original_name": "PIC04546.JPG"}, {"id": "PIC04547", "file": "PIC04547.jpg", "original_name": "PIC04547.JPG"}, {"id": "PIC04548", "file": "PIC04548.jpg", "original_name": "PIC04548.JPG"}, {"id": "PIC04549", "file": "PIC04549.jpg", "original_name": "PIC04549.JPG"}, {"id": "PIC04550", "file": "PIC04550.jpg", "original_name": "PIC04550.JPG"}, {"id": "PIC04551", "file": "PIC04551.jpg", "original_name": "PIC04551.JPG"}, {"id": "PIC04552", "file": "PIC04552.jpg", "original_name": "PIC04552.JPG"}, {"id": "PIC04553", "file": "PIC04553.jpg", "original_name": "PIC04553.JPG"}, {"id": "PIC04554", "file": "PIC04554.jpg", "original_name": "PIC04554.JPG"}, {"id": "PIC04555", "file": "PIC04555.jpg", "original_name": "PIC04555.JPG"}, {"id": "PIC04556", "file": "PIC04556.jpg", "original_name": "PIC04556.JPG"}, {"id": "PIC04557", "file": "PIC04557.jpg", "original_name": "PIC04557.JPG"}, {"id": "PIC04558", "file": "PIC04558.jpg", "original_name": "PIC04558.JPG"}, {"id": "PIC04559", "file": "PIC04559.jpg", "original_name": "PIC04559.JPG"}, {"id": "PIC04560", "file": "PIC04560.jpg", "original_name": "PIC04560.JPG"}, {"id": "PIC04561", "file": "PIC04561.jpg", "original_name": "PIC04561.JPG"}, {"id": "PIC04562", "file": "PIC04562.jpg", "original_name": "PIC04562.JPG"}, {"id": "PIC04563", "file": "PIC04563.jpg", "original_name": "PIC04563.JPG"}, {"id": "PIC04564", "file": "PIC04564.jpg", "original_name": "PIC04564.JPG"}, {"id": "PIC04565", "file": "PIC04565.jpg", "original_name": "PIC04565.JPG"}, {"id": "PIC04566", "file": "PIC04566.jpg", "original_name": "PIC04566.JPG"}, {"id": "PIC04567", "file": "PIC04567.jpg", "original_name": "PIC04567.JPG"}, {"id": "PIC04568", "file": "PIC04568.jpg", "original_name": "PIC04568.JPG"}, {"id": "PIC04569", "file": "PIC04569.jpg", "original_name": "PIC04569.JPG"}, {"id": "PIC04570", "file": "PIC04570.jpg", "original_name": "PIC04570.JPG"}, {"id": "PIC04571", "file": "PIC04571.jpg", "original_name": "PIC04571.JPG"}, {"id": "PIC04572", "file": "PIC04572.jpg", "original_name": "PIC04572.JPG"}, {"id": "PIC04573", "file": "PIC04573.jpg", "original_name": "PIC04573.JPG"}, {"id": "PIC04574", "file": "PIC04574.jpg", "original_name": "PIC04574.JPG"}, {"id": "PIC04575", "file": "PIC04575.jpg", "original_name": "PIC04575.JPG"}, {"id": "PIC04576", "file": "PIC04576.jpg", "original_name": "PIC04576.JPG"}, {"id": "PIC04577", "file": "PIC04577.jpg", "original_name": "PIC04577.JPG"}, {"id": "PIC04578", "file": "PIC04578.jpg", "original_name": "PIC04578.JPG"}, {"id": "PIC04579", "file": "PIC04579.jpg", "original_name": "PIC04579.JPG"}, {"id": "PIC04580", "file": "PIC04580.jpg", "original_name": "PIC04580.JPG"}, {"id": "PIC04581", "file": "PIC04581.jpg", "original_name": "PIC04581.JPG"}, {"id": "PIC04582", "file": "PIC04582.jpg", "original_name": "PIC04582.JPG"}, {"id": "PIC04583", "file": "PIC04583.jpg", "original_name": "PIC04583.JPG"}, {"id": "PIC04584", "file": "PIC04584.jpg", "original_name": "PIC04584.JPG"}, {"id": "PIC04585", "file": "PIC04585.jpg", "original_name": "PIC04585.JPG"}, {"id": "PIC04586", "file": "PIC04586.jpg", "original_name": "PIC04586.JPG"}, {"id": "PIC04587", "file": "PIC04587.jpg", "original_name": "PIC04587.JPG"}, {"id": "PIC04588", "file": "PIC04588.jpg", "original_name": "PIC04588.JPG"}, {"id": "PIC04589", "file": "PIC04589.jpg", "original_name": "PIC04589.JPG"}, {"id": "PIC04590", "file": "PIC04590.jpg", "original_name": "PIC04590.JPG"}, {"id": "PIC04591", "file": "PIC04591.jpg", "original_name": "PIC04591.JPG"}, {"id": "PIC04592", "file": "PIC04592.jpg", "original_name": "PIC04592.JPG"}, {"id": "PIC04593", "file": "PIC04593.jpg", "original_name": "PIC04593.JPG"}, {"id": "PIC04594", "file": "PIC04594.jpg", "original_name": "PIC04594.JPG"}, {"id": "PIC04595", "file": "PIC04595.jpg", "original_name": "PIC04595.JPG"}, {"id": "PIC04596", "file": "PIC04596.jpg", "original_name": "PIC04596.JPG"}, {"id": "PIC04597", "file": "PIC04597.jpg", "original_name": "PIC04597.JPG"}, {"id": "PIC04598", "file": "PIC04598.jpg", "original_name": "PIC04598.JPG"}, {"id": "PIC04599", "file": "PIC04599.jpg", "original_name": "PIC04599.JPG"}, {"id": "PIC04600", "file": "PIC04600.jpg", "original_name": "PIC04600.JPG"}, {"id": "PIC04601", "file": "PIC04601.jpg", "original_name": "PIC04601.JPG"}, {"id": "PIC04602", "file": "PIC04602.jpg", "original_name": "PIC04602.JPG"}, {"id": "PIC04603", "file": "PIC04603.jpg", "original_name": "PIC04603.JPG"}, {"id": "PIC04604", "file": "PIC04604.jpg", "original_name": "PIC04604.JPG"}, {"id": "PIC04605", "file": "PIC04605.jpg", "original_name": "PIC04605.JPG"}, {"id": "PIC04606", "file": "PIC04606.jpg", "original_name": "PIC04606.JPG"}, {"id": "PIC04607", "file": "PIC04607.jpg", "original_name": "PIC04607.JPG"}, {"id": "PIC04608", "file": "PIC04608.jpg", "original_name": "PIC04608.JPG"}, {"id": "PIC04609", "file": "PIC04609.jpg", "original_name": "PIC04609.JPG"}, {"id": "PIC04610", "file": "PIC04610.jpg", "original_name": "PIC04610.JPG"}, {"id": "PIC04611", "file": "PIC04611.jpg", "original_name": "PIC04611.JPG"}, {"id": "PIC04612", "file": "PIC04612.jpg", "original_name": "PIC04612.JPG"}, {"id": "PIC04613", "file": "PIC04613.jpg", "original_name": "PIC04613.JPG"}, {"id": "PIC04614", "file": "PIC04614.jpg", "original_name": "PIC04614.JPG"}, {"id": "PIC04615", "file": "PIC04615.jpg", "original_name": "PIC04615.JPG"}, {"id": "PIC04616", "file": "PIC04616.jpg", "original_name": "PIC04616.JPG"}, {"id": "PIC04617", "file": "PIC04617.jpg", "original_name": "PIC04617.JPG"}, {"id": "PIC04618", "file": "PIC04618.jpg", "original_name": "PIC04618.JPG"}, {"id": "PIC04619", "file": "PIC04619.jpg", "original_name": "PIC04619.JPG"}, {"id": "PIC04620", "file": "PIC04620.jpg", "original_name": "PIC04620.JPG"}, {"id": "PIC04621", "file": "PIC04621.jpg", "original_name": "PIC04621.JPG"}, {"id": "PIC04622", "file": "PIC04622.jpg", "original_name": "PIC04622.JPG"}, {"id": "PIC04623", "file": "PIC04623.jpg", "original_name": "PIC04623.JPG"}, {"id": "PIC04624", "file": "PIC04624.jpg", "original_name": "PIC04624.JPG"}]
+};
+
+const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0 };
+
+// ===== LOGIN =====
+function doLogin(e) {
+  e.preventDefault();
+  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
+  if (encoded === CONFIG.pwHash) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('gallery-screen').style.display = 'block';
+    buildGallery();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+  return false;
+}
+
+// ===== BUILD GALLERY =====
+function buildGallery() {
+  const grid = document.getElementById('gallery-grid');
+  CONFIG.foto.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.dataset.id = f.id;
+    card.innerHTML = `
+      <img src="./foto/${f.file}" alt="${f.id}" loading="lazy">
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor"/></svg></div>
+      <div class="comment-wrap">
+        <div class="comment-label">Nota (opzionale)</div>
+        <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita…" oninput="updateComment('${f.id}',this.value)"></textarea>
+      </div>`;
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('comment-input')) return;
+      toggleSelect(f.id, f.file, card);
+    });
+    card.addEventListener('dblclick', () => openFull(i));
+    let lt;
+    card.addEventListener('touchstart', () => { lt = setTimeout(() => openFull(i), 500); }, {passive:true});
+    card.addEventListener('touchend',   () => clearTimeout(lt), {passive:true});
+    card.addEventListener('touchmove',  () => clearTimeout(lt), {passive:true});
+    grid.appendChild(card);
+  });
+  buildDots();
+}
+
+// ===== SELEZIONE =====
+function toggleSelect(id, file, card) {
+  if (state.selections[id]) {
+    delete state.selections[id];
+    card.classList.remove('selected');
+  } else {
+    const count = Object.keys(state.selections).length;
+    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
+      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+    }
+    state.selections[id] = { file, comment: '' };
+    card.classList.add('selected');
+  }
+  updateCounter();
+  updateFullFooter();
+}
+
+function updateComment(id, val) {
+  if (state.selections[id]) state.selections[id].comment = val.trim();
+}
+
+function updateCounter() {
+  const count = Object.keys(state.selections).length;
+  const max = CONFIG.maxSelezioni;
+  document.getElementById('sel-count').textContent = count;
+  document.getElementById('sel-max').textContent = max > 0 ? `/ ${max}` : '';
+  document.getElementById('counter-pill').classList.toggle('at-limit', max > 0 && count >= max);
+  document.getElementById('btn-invia').disabled = count === 0;
+}
+
+// ===== VIEW SWITCH =====
+function switchView(v) {
+  const isGrid = v === 'grid';
+  document.getElementById('view-grid').style.display = isGrid ? 'block' : 'none';
+  document.getElementById('view-full').classList.toggle('active', !isGrid);
+  document.getElementById('vbtn-grid').classList.toggle('active', isGrid);
+  document.getElementById('vbtn-full').classList.toggle('active', !isGrid);
+  if (!isGrid) { resetZoom(); renderFull(state.fullIdx); }
+}
+
+function openFull(idx) {
+  state.fullIdx = idx;
+  switchView('full');
+}
+
+// ===== FULLSCREEN =====
+function buildDots() {
+  const wrap = document.getElementById('full-dots');
+  const n = CONFIG.foto.length;
+  if (n > 40) { wrap.style.display = 'none'; return; }
+  wrap.innerHTML = '';
+  CONFIG.foto.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'full-dot' + (i === 0 ? ' active' : '');
+    wrap.appendChild(d);
+  });
+}
+
+function updateDots(idx) {
+  document.querySelectorAll('.full-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function resetZoom() {
+  state.zoom = 1; state.panX = 0; state.panY = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  document.getElementById('full-img').style.transform = `translate(${state.panX}px,${state.panY}px) scale(${state.zoom})`;
+}
+
+function renderFull(idx) {
+  const f = CONFIG.foto[idx];
+  if (!f) return;
+  resetZoom();
+  document.getElementById('full-img').src = `./foto/${f.file}`;
+  document.getElementById('full-img').alt = f.id;
+  document.getElementById('full-counter-top').textContent = `${idx + 1} / ${CONFIG.foto.length}`;
+  updateDots(idx);
+  updateFullFooter();
+}
+
+function updateFullFooter() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const isSel = !!state.selections[f.id];
+  document.getElementById('btn-full-add').style.display   = isSel ? 'none' : 'flex';
+  document.getElementById('btn-full-desel').style.display = isSel ? 'flex' : 'none';
+}
+
+function fullNav(dir) {
+  const next = state.fullIdx + dir;
+  if (next < 0 || next >= CONFIG.foto.length) return;
+  state.fullIdx = next;
+  renderFull(next);
+}
+
+function fullSelect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const count = Object.keys(state.selections).length;
+  if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni && !state.selections[f.id]) {
+    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+  }
+  state.selections[f.id] = { file: f.file, comment: '' };
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) card.classList.add('selected');
+  updateCounter();
+  updateFullFooter();
+  showToast('✓ Selezionata', 'success');
+  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 300);
+}
+
+function fullDeselect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  delete state.selections[f.id];
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) card.classList.remove('selected');
+  updateCounter();
+  updateFullFooter();
+  showToast('Rimossa', 'info');
+}
+
+// ===== ZOOM PC =====
+function pcZoom(delta) {
+  if (delta === 0) { resetZoom(); return; }
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}
+
+// Scroll wheel zoom (PC)
+document.getElementById('full-img-wrap').addEventListener('wheel', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  e.preventDefault();
+  const delta = e.deltaY < 0 ? 0.15 : -0.15;
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}, {passive: false});
+
+// Drag to pan (PC, when zoomed)
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let dragging = false, startX, startY, startPanX, startPanY;
+  wrap.addEventListener('mousedown', e => {
+    if (state.zoom <= 1) return;
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    startPanX = state.panX; startPanY = state.panY;
+    wrap.classList.add('grabbing');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    state.panX = startPanX + (e.clientX - startX);
+    state.panY = startPanY + (e.clientY - startY);
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remove('grabbing'); });
+})();
+
+// ===== SWIPE TOUCH (solo navigazione + selezione via bottoni) =====
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let sx=0, sy=0, lastDist=0, pinching=false, startPanX=0, startPanY=0;
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      pinching = true;
+      lastDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    } else if (e.touches.length === 1) {
+      pinching = false;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      startPanX = state.panX; startPanY = state.panY;
+    }
+  }, {passive:true});
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && pinching) {
+      const d = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      state.zoom = Math.min(Math.max(state.zoom * (d / lastDist), 1), 4);
+      lastDist = d;
+      applyTransform();
+      e.preventDefault();
+    } else if (e.touches.length === 1 && state.zoom > 1) {
+      state.panX = startPanX + (e.touches[0].clientX - sx);
+      state.panY = startPanY + (e.touches[0].clientY - sy);
+      applyTransform();
+      e.preventDefault();
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', e => {
+    if (pinching) { pinching = false; return; }
+    if (state.zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 45) return;
+    // Swipe sinistra o destra = naviga soltanto
+    fullNav(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+// ===== TASTIERA PC =====
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); fullNav(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); fullNav(-1); }
+  if (e.key === 'Enter' || e.key === ' ')               { e.preventDefault(); fullSelect(); }
+  if (e.key === 'Escape')                               switchView('grid');
+  if (e.key === '+' || e.key === '=')                   pcZoom(0.25);
+  if (e.key === '-')                                    pcZoom(-0.25);
+  if (e.key === '0')                                    pcZoom(0);
+});
+
+// ===== MESSAGGIO =====
+function buildMessage() {
+  let msg = `${CONFIG.nomeEvento}\n\n`;
+  Object.entries(state.selections).forEach(([id, s]) => {
+    msg += s.comment ? `${id} — ${s.comment}\n` : `${id}\n`;
+  });
+  return msg.trimEnd();
+}
+
+function openModal() {
+  document.getElementById('modal-msg-text').textContent = buildMessage();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+function copyMsg() {
+  const t = document.getElementById('modal-msg-text').textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
+  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
+}
+function openWA() {
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ===== TOAST =====
+let _tt = null;
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type; t.style.display = 'block';
+  if (_tt) clearTimeout(_tt);
+  _tt = setTimeout(() => { t.style.display = 'none'; }, 2200);
+}
+
+
+(function(){
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 820;
+  const mob = document.getElementById('legenda-mobile');
+  const desk = document.getElementById('legenda-desktop');
+  if (mob && desk) {
+    mob.style.display = isMobile ? 'block' : 'none';
+    desk.style.display = isMobile ? 'none' : 'block';
+  }
+})();
+
+// Best-effort protection against casual download/copy
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['c','s','u','p'].includes(k)) e.preventDefault();
+    if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k))) e.preventDefault();
+  });
+})();
+
+</script>
+</body>
+</html>
