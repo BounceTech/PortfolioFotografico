@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>260612_Cherimoya_TrattoriaDaMario — Selezione Foto</title>
+<style>
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1e1e1e;
+  --color-border: rgba(255,255,255,0.08);
+  --color-text: #f0f0f0;
+  --color-text-muted: #8a8a8a;
+  --color-primary: #e8c97e;
+  --color-primary-hover: #f0d89a;
+  --color-green: #3dbe6e;
+  --color-green-hover: #2fa85c;
+  --color-red: #e05c5c;
+  --color-red-hover: #c94444;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --shadow-selected: 0 0 0 3px #e8c97e, 0 4px 20px rgba(232,201,126,0.25);
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --transition: 180ms cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+
+/* ===== LOGIN ===== */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;padding:2rem;
+  background:linear-gradient(160deg,#0a0a0a 60%,#1a140a);
+}
+.login-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2.5rem;
+  width:100%;max-width:400px;text-align:center;
+}
+.login-card .evento-subtitle{
+  font-size:.75rem;color:var(--color-text-muted);margin-bottom:.75rem;
+  text-transform:uppercase;letter-spacing:.12em;
+}
+.login-card h1{
+  font-family:var(--font-body);font-size:clamp(1.3rem,4vw,1.9rem);
+  font-weight:700;letter-spacing:-.01em;margin-bottom:1.5rem;color:#fff;
+  word-break:break-word;hyphens:auto;line-height:1.2;
+}
+
+/* LEGENDA LOGIN */
+.legenda{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  text-align:left;margin-bottom:1.5rem;
+}
+.legenda-title{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--color-primary);margin-bottom:.65rem;
+}
+.legenda-row{
+  display:flex;align-items:flex-start;gap:.55rem;
+  font-size:.8rem;color:var(--color-text-muted);margin-bottom:.45rem;line-height:1.4;
+}
+.legenda-row:last-child{margin-bottom:0}
+.legenda-note{margin-top:.55rem;padding-top:.55rem;border-top:1px solid rgba(255,255,255,.08)}
+.legenda-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem}
+
+.login-input{
+  width:100%;padding:.75rem 1rem;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text);
+  font-size:1rem;margin-bottom:1rem;
+  transition:border-color var(--transition);
+}
+.login-input:focus{outline:none;border-color:var(--color-primary)}
+.btn-login{
+  width:100%;padding:.8rem;background:var(--color-primary);
+  color:#0a0a0a;font-weight:700;font-size:.95rem;
+  border-radius:var(--radius-md);letter-spacing:.02em;
+  transition:background var(--transition),transform var(--transition);
+}
+.btn-login:hover{background:var(--color-primary-hover)}
+.btn-login:active{transform:scale(.98)}
+#login-error{display:none;color:#e87e7e;font-size:.85rem;margin-top:.75rem}
+
+/* ===== GALLERY SCREEN ===== */
+#gallery-screen{display:none}
+
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-border);
+  padding:.8rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+}
+.header-left{min-width:0;flex:1}
+.header-left h1{
+  font-size:clamp(.9rem,2vw,1.2rem);font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
+}
+.counter-pill{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-full);padding:.3rem .85rem;
+  white-space:nowrap;flex-shrink:0;
+}
+.counter-pill .count-num{font-size:1rem;font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums}
+.counter-pill .count-label{font-size:.72rem;color:var(--color-text-muted)}
+.counter-pill .count-max{font-size:.78rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+.counter-pill.at-limit .count-num{color:#e87e7e}
+.btn-invia{
+  padding:.45rem 1rem;background:var(--color-primary);color:#0a0a0a;
+  font-weight:700;font-size:.82rem;border-radius:var(--radius-full);
+  transition:background var(--transition),opacity var(--transition);flex-shrink:0;
+}
+.btn-invia:hover{background:var(--color-primary-hover)}
+.btn-invia:disabled{opacity:.35;cursor:not-allowed}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:.4rem;padding:.75rem 1.2rem .25rem}
+.view-btn{
+  padding:.35rem .85rem;border-radius:var(--radius-full);font-size:.78rem;font-weight:600;
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  color:var(--color-text-muted);
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+}
+.view-btn.active{background:var(--color-primary);color:#0a0a0a;border-color:var(--color-primary)}
+
+/* ===== GRID VIEW ===== */
+#view-grid{padding:1rem 1.2rem 2rem}
+.gallery-grid{columns:4 180px;column-gap:.6rem}
+@media(max-width:600px){.gallery-grid{columns:2 140px;column-gap:.5rem}}
+
+.photo-card{
+  break-inside:avoid;margin-bottom:.6rem;position:relative;cursor:pointer;
+  border-radius:var(--radius-md);overflow:hidden;border:2px solid transparent;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+  transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);
+}
+.photo-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.photo-card.selected{border-color:var(--color-primary);box-shadow:var(--shadow-selected)}
+.photo-card img{display:block;width:100%;height:auto;pointer-events:none;user-select:none}
+.photo-card::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:clamp(.7rem,2.2vw,1rem);font-weight:800;letter-spacing:.18em;
+  color:rgba(255,255,255,0.18);text-shadow:0 1px 3px rgba(0,0,0,.5);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.photo-card .tick{
+  position:absolute;top:.45rem;right:.45rem;width:24px;height:24px;border-radius:50%;
+  background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);pointer-events:none;
+}
+.photo-card.selected .tick{background:var(--color-green);border-color:var(--color-green)}
+.tick svg{display:none;width:12px;height:12px;stroke:#fff;stroke-width:3}
+.photo-card.selected .tick svg{display:block}
+.comment-wrap{display:none;padding:.45rem .55rem .55rem;background:var(--color-surface-2)}
+.photo-card.selected .comment-wrap{display:block}
+.comment-label{font-size:.68rem;color:var(--color-text-muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em}
+.comment-input{
+  width:100%;padding:.35rem .55rem;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.76rem;resize:none;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.comment-input:focus{outline:none;border-color:var(--color-primary)}
+
+/* ===== FULLSCREEN VIEW ===== */
+#view-full{
+  display:none;position:fixed;inset:0;z-index:50;
+  background:#000;flex-direction:column;touch-action:none;
+}
+#view-full.active{display:flex}
+
+.full-header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  padding:.75rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(0,0,0,.75) 0%,transparent 100%);
+  gap:.5rem;
+}
+.full-header .full-title{
+  font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.full-counter-top{
+  font-size:.8rem;color:rgba(255,255,255,.5);
+  white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums;
+}
+.full-close{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1rem;flex-shrink:0;
+}
+.full-close:hover{background:rgba(255,255,255,.22)}
+
+/* Immagine centrale */
+.full-img-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;cursor:grab;
+}
+.full-img-wrap.grabbing{cursor:grabbing}
+#full-img{
+  max-width:100%;max-height:100%;object-fit:contain;
+  user-select:none;-webkit-user-drag:none;
+  will-change:transform;transform-origin:center center;
+  transition:none;
+}
+.full-img-wrap::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:clamp(1rem,4vw,2rem);font-weight:800;letter-spacing:.2em;
+  color:rgba(255,255,255,0.10);text-shadow:0 1px 4px rgba(0,0,0,.6);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+
+/* Frecce PC */
+.full-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.4rem;
+  transition:background var(--transition);
+}
+.full-arrow:hover{background:rgba(255,255,255,.25)}
+#arrow-prev{left:.75rem}
+#arrow-next{right:.75rem}
+@media(max-width:700px){.full-arrow{display:none}}
+
+/* Zoom buttons PC */
+.zoom-btns{
+  position:absolute;bottom:7rem;right:1rem;z-index:10;
+  display:flex;flex-direction:column;gap:.4rem;
+}
+.zoom-btn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.13);color:#fff;
+  font-size:1.2rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition);
+}
+.zoom-btn:hover{background:rgba(255,255,255,.25)}
+@media(max-width:700px){.zoom-btns{display:none}}
+
+/* Footer azioni fullscreen */
+.full-footer{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:.9rem 1.2rem 2rem;
+  display:flex;align-items:center;justify-content:center;gap:.75rem;
+  background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);
+}
+.btn-full-action{
+  flex:1;max-width:200px;padding:.8rem;border-radius:var(--radius-md);
+  font-size:.95rem;font-weight:700;letter-spacing:.02em;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:background var(--transition),transform var(--transition),opacity var(--transition);
+}
+.btn-full-action:active{transform:scale(.97)}
+#btn-full-add{background:var(--color-green);color:#fff}
+#btn-full-add:hover{background:var(--color-green-hover)}
+#btn-full-desel{background:var(--color-red);color:#fff}
+#btn-full-desel:hover{background:var(--color-red-hover)}
+
+/* Dot navigator */
+.full-dots{
+  position:absolute;bottom:5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:.35rem;pointer-events:none;
+}
+.full-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:background var(--transition),transform var(--transition)}
+.full-dot.active{background:#fff;transform:scale(1.4)}
+
+/* ===== MODAL ===== */
+#modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2rem;
+  width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;
+}
+.modal-box h2{font-size:1.4rem;font-weight:700;margin-bottom:.35rem;color:#fff}
+.modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
+.modal-msg{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  font-size:.88rem;line-height:1.7;color:var(--color-text);
+  white-space:pre-wrap;word-break:break-word;margin-bottom:1.25rem;
+}
+.modal-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-copy{
+  flex:1;padding:.7rem;background:var(--color-surface-2);
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:.9rem;font-weight:600;color:var(--color-text);
+  transition:background var(--transition);
+}
+.btn-copy:hover{background:rgba(255,255,255,.06)}
+.btn-wa{
+  flex:1;padding:.7rem;background:#25D366;
+  border-radius:var(--radius-md);font-size:.9rem;font-weight:700;color:#fff;
+  transition:background var(--transition);
+}
+.btn-wa:hover{background:#1ebe5a}
+.btn-chiudi{
+  width:100%;padding:.6rem;margin-top:.75rem;
+  background:none;border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text-muted);font-size:.85rem;
+  transition:border-color var(--transition),color var(--transition);
+}
+.btn-chiudi:hover{border-color:rgba(255,255,255,.3);color:var(--color-text)}
+
+/* TOAST */
+#toast{
+  display:none;position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%);z-index:300;
+  color:#fff;font-weight:700;
+  padding:.65rem 1.3rem;border-radius:var(--radius-full);
+  font-size:.85rem;box-shadow:0 4px 20px rgba(0,0,0,.4);
+  white-space:nowrap;
+}
+#toast.error{background:var(--color-red)}
+#toast.success{background:var(--color-green)}
+#toast.info{background:#444}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="evento-subtitle">Selezione Foto</div>
+    <h1>260612_Cherimoya_TrattoriaDaMario</h1>
+
+    <!-- LEGENDA -->
+    <div class="legenda" id="legenda-box">
+      <div class="legenda-title">Come selezionare</div>
+      <div id="legenda-mobile" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">📱</span><span>Apri <strong>Sfoglia</strong> per vedere una foto grande alla volta e scorri a destra o sinistra per cambiare immagine.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✅</span><span>Per confermare una foto usa il bottone <strong style="color:#3dbe6e">verde Seleziona</strong>. Per toglierla usa il bottone <strong style="color:#e05c5c">rosso Rimuovi</strong>.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong> per generare il messaggio finale.</span></div>
+      </div>
+      <div id="legenda-desktop" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">💻</span><span>Usa <strong>Griglia</strong> per vedere tutte le foto oppure <strong>Sfoglia</strong> per una visione grande.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">🔍</span><span>In <strong>Sfoglia</strong> puoi usare frecce laterali, zoom + / − e tastiera per muoverti più velocemente.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">✉️</span><span>Quando hai finito premi <strong>Invia</strong> per preparare il messaggio già pronto.</span></div>
+      </div>
+      <div class="legenda-row legenda-note"><span class="legenda-icon">🛡️</span><span>Le anteprime sono protette e mostrate solo per la selezione.</span></div>
+    </div>
+
+    <form id="login-form" onsubmit="return doLogin(event)">
+      <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-login" type="submit">Entra →</button>
+      <div id="login-error">Password errata. Riprova.</div>
+    </form>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery-screen">
+  <header class="site-header">
+    <div class="header-left"><h1>260612_Cherimoya_TrattoriaDaMario</h1></div>
+    <div class="counter-pill" id="counter-pill">
+      <span class="count-num" id="sel-count">0</span>
+      <span class="count-label">sel.</span>
+      <span class="count-max" id="sel-max"></span>
+    </div>
+    <button class="btn-invia" id="btn-invia" onclick="openModal()" disabled>Invia</button>
+  </header>
+
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbtn-grid" onclick="switchView('grid')">☰ Griglia</button>
+    <button class="view-btn" id="vbtn-full" onclick="switchView('full')">⊞ Sfoglia</button>
+  </div>
+
+  <div id="view-grid">
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div id="view-full">
+  <div class="full-header">
+    <span class="full-title">260612_Cherimoya_TrattoriaDaMario</span>
+    <span class="full-counter-top" id="full-counter-top">1 / 1</span>
+    <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
+  </div>
+
+  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)" title="Precedente">‹</button>
+  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)" title="Successiva">›</button>
+
+  <div class="full-img-wrap" id="full-img-wrap">
+    <img id="full-img" src="" alt="">
+  </div>
+
+  <!-- Zoom buttons (solo PC) -->
+  <div class="zoom-btns">
+    <button class="zoom-btn" onclick="pcZoom(0.25)" title="Zoom in">+</button>
+    <button class="zoom-btn" onclick="pcZoom(-0.25)" title="Zoom out">−</button>
+    <button class="zoom-btn" onclick="pcZoom(0)" title="Reset zoom" style="font-size:.7rem;font-weight:800">1:1</button>
+  </div>
+
+  <div class="full-dots" id="full-dots"></div>
+
+  <div class="full-footer">
+    <button class="btn-full-action" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
+    <button class="btn-full-action" id="btn-full-add"   onclick="fullSelect()">✓ Seleziona</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <h2>Riepilogo selezione</h2>
+    <p class="modal-subtitle">Copia il messaggio e inviamelo su WhatsApp.</p>
+    <div class="modal-msg" id="modal-msg-text"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" onclick="copyMsg()">📋 Copia</button>
+      <button class="btn-wa"   onclick="openWA()">📲 WhatsApp</button>
+    </div>
+    <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const CONFIG = {
+  nomeEvento:   "260612_Cherimoya_TrattoriaDaMario",
+  maxSelezioni: 40,
+  whatsapp:     "393348493876",
+  storageKey:   "260612_Cherimoya_TrattoriaDaMario",
+  pwHash:       "VHJhdHRvcmlhRGFNYXJpby4xMg==",
+  foto:         [{"id": "PIC04988", "file": "PIC04988.jpg", "original_name": "PIC04988.JPG"}, {"id": "PIC04989", "file": "PIC04989.jpg", "original_name": "PIC04989.JPG"}, {"id": "PIC04990", "file": "PIC04990.jpg", "original_name": "PIC04990.JPG"}, {"id": "PIC04991", "file": "PIC04991.jpg", "original_name": "PIC04991.JPG"}, {"id": "PIC04992", "file": "PIC04992.jpg", "original_name": "PIC04992.JPG"}, {"id": "PIC04993", "file": "PIC04993.jpg", "original_name": "PIC04993.JPG"}, {"id": "PIC04994", "file": "PIC04994.jpg", "original_name": "PIC04994.JPG"}, {"id": "PIC04995", "file": "PIC04995.jpg", "original_name": "PIC04995.JPG"}, {"id": "PIC04996", "file": "PIC04996.jpg", "original_name": "PIC04996.JPG"}, {"id": "PIC04997", "file": "PIC04997.jpg", "original_name": "PIC04997.JPG"}, {"id": "PIC04998", "file": "PIC04998.jpg", "original_name": "PIC04998.JPG"}, {"id": "PIC04999", "file": "PIC04999.jpg", "original_name": "PIC04999.JPG"}, {"id": "PIC05000", "file": "PIC05000.jpg", "original_name": "PIC05000.JPG"}, {"id": "PIC05001", "file": "PIC05001.jpg", "original_name": "PIC05001.JPG"}, {"id": "PIC05002", "file": "PIC05002.jpg", "original_name": "PIC05002.JPG"}, {"id": "PIC05003", "file": "PIC05003.jpg", "original_name": "PIC05003.JPG"}, {"id": "PIC05004", "file": "PIC05004.jpg", "original_name": "PIC05004.JPG"}, {"id": "PIC05005", "file": "PIC05005.jpg", "original_name": "PIC05005.JPG"}, {"id": "PIC05006", "file": "PIC05006.jpg", "original_name": "PIC05006.JPG"}, {"id": "PIC05007", "file": "PIC05007.jpg", "original_name": "PIC05007.JPG"}, {"id": "PIC05008", "file": "PIC05008.jpg", "original_name": "PIC05008.JPG"}, {"id": "PIC05009", "file": "PIC05009.jpg", "original_name": "PIC05009.JPG"}, {"id": "PIC05010", "file": "PIC05010.jpg", "original_name": "PIC05010.JPG"}, {"id": "PIC05011", "file": "PIC05011.jpg", "original_name": "PIC05011.JPG"}, {"id": "PIC05012", "file": "PIC05012.jpg", "original_name": "PIC05012.JPG"}, {"id": "PIC05013", "file": "PIC05013.jpg", "original_name": "PIC05013.JPG"}, {"id": "PIC05014", "file": "PIC05014.jpg", "original_name": "PIC05014.JPG"}, {"id": "PIC05015", "file": "PIC05015.jpg", "original_name": "PIC05015.JPG"}, {"id": "PIC05016", "file": "PIC05016.jpg", "original_name": "PIC05016.JPG"}, {"id": "PIC05017", "file": "PIC05017.jpg", "original_name": "PIC05017.JPG"}, {"id": "PIC05019", "file": "PIC05019.jpg", "original_name": "PIC05019.JPG"}, {"id": "PIC05021", "file": "PIC05021.jpg", "original_name": "PIC05021.JPG"}, {"id": "PIC05024", "file": "PIC05024.jpg", "original_name": "PIC05024.JPG"}, {"id": "PIC05031", "file": "PIC05031.jpg", "original_name": "PIC05031.JPG"}, {"id": "PIC05033", "file": "PIC05033.jpg", "original_name": "PIC05033.JPG"}, {"id": "PIC05034", "file": "PIC05034.jpg", "original_name": "PIC05034.JPG"}, {"id": "PIC05035", "file": "PIC05035.jpg", "original_name": "PIC05035.JPG"}, {"id": "PIC05036", "file": "PIC05036.jpg", "original_name": "PIC05036.JPG"}, {"id": "PIC05039", "file": "PIC05039.jpg", "original_name": "PIC05039.JPG"}, {"id": "PIC05041", "file": "PIC05041.jpg", "original_name": "PIC05041.JPG"}, {"id": "PIC05046", "file": "PIC05046.jpg", "original_name": "PIC05046.JPG"}, {"id": "PIC05048", "file": "PIC05048.jpg", "original_name": "PIC05048.JPG"}, {"id": "PIC05049", "file": "PIC05049.jpg", "original_name": "PIC05049.JPG"}, {"id": "PIC05050", "file": "PIC05050.jpg", "original_name": "PIC05050.JPG"}, {"id": "PIC05051", "file": "PIC05051.jpg", "original_name": "PIC05051.JPG"}, {"id": "PIC05052", "file": "PIC05052.jpg", "original_name": "PIC05052.JPG"}, {"id": "PIC05053", "file": "PIC05053.jpg", "original_name": "PIC05053.JPG"}, {"id": "PIC05054", "file": "PIC05054.jpg", "original_name": "PIC05054.JPG"}, {"id": "PIC05055", "file": "PIC05055.jpg", "original_name": "PIC05055.JPG"}, {"id": "PIC05056", "file": "PIC05056.jpg", "original_name": "PIC05056.JPG"}, {"id": "PIC05057", "file": "PIC05057.jpg", "original_name": "PIC05057.JPG"}, {"id": "PIC05058", "file": "PIC05058.jpg", "original_name": "PIC05058.JPG"}, {"id": "PIC05059", "file": "PIC05059.jpg", "original_name": "PIC05059.JPG"}, {"id": "PIC05060", "file": "PIC05060.jpg", "original_name": "PIC05060.JPG"}, {"id": "PIC05061", "file": "PIC05061.jpg", "original_name": "PIC05061.JPG"}, {"id": "PIC05062", "file": "PIC05062.jpg", "original_name": "PIC05062.JPG"}, {"id": "PIC05063", "file": "PIC05063.jpg", "original_name": "PIC05063.JPG"}, {"id": "PIC05065", "file": "PIC05065.jpg", "original_name": "PIC05065.JPG"}, {"id": "PIC05066", "file": "PIC05066.jpg", "original_name": "PIC05066.JPG"}, {"id": "PIC05068", "file": "PIC05068.jpg", "original_name": "PIC05068.JPG"}, {"id": "PIC05074", "file": "PIC05074.jpg", "original_name": "PIC05074.JPG"}, {"id": "PIC05075", "file": "PIC05075.jpg", "original_name": "PIC05075.JPG"}, {"id": "PIC05076", "file": "PIC05076.jpg", "original_name": "PIC05076.JPG"}, {"id": "PIC05077", "file": "PIC05077.jpg", "original_name": "PIC05077.JPG"}, {"id": "PIC05078", "file": "PIC05078.jpg", "original_name": "PIC05078.JPG"}, {"id": "PIC05079", "file": "PIC05079.jpg", "original_name": "PIC05079.JPG"}, {"id": "PIC05080", "file": "PIC05080.jpg", "original_name": "PIC05080.JPG"}, {"id": "PIC05085", "file": "PIC05085.jpg", "original_name": "PIC05085.JPG"}, {"id": "PIC05086", "file": "PIC05086.jpg", "original_name": "PIC05086.JPG"}, {"id": "PIC05087", "file": "PIC05087.jpg", "original_name": "PIC05087.JPG"}, {"id": "PIC05088", "file": "PIC05088.jpg", "original_name": "PIC05088.JPG"}, {"id": "PIC05089", "file": "PIC05089.jpg", "original_name": "PIC05089.JPG"}, {"id": "PIC05090", "file": "PIC05090.jpg", "original_name": "PIC05090.JPG"}, {"id": "PIC05091", "file": "PIC05091.jpg", "original_name": "PIC05091.JPG"}, {"id": "PIC05092", "file": "PIC05092.jpg", "original_name": "PIC05092.JPG"}, {"id": "PIC05093", "file": "PIC05093.jpg", "original_name": "PIC05093.JPG"}, {"id": "PIC05098", "file": "PIC05098.jpg", "original_name": "PIC05098.JPG"}, {"id": "PIC05099", "file": "PIC05099.jpg", "original_name": "PIC05099.JPG"}, {"id": "PIC05102", "file": "PIC05102.jpg", "original_name": "PIC05102.JPG"}, {"id": "PIC05103", "file": "PIC05103.jpg", "original_name": "PIC05103.JPG"}, {"id": "PIC05104", "file": "PIC05104.jpg", "original_name": "PIC05104.JPG"}, {"id": "PIC05105", "file": "PIC05105.jpg", "original_name": "PIC05105.JPG"}, {"id": "PIC05106", "file": "PIC05106.jpg", "original_name": "PIC05106.JPG"}, {"id": "PIC05107", "file": "PIC05107.jpg", "original_name": "PIC05107.JPG"}, {"id": "PIC05108", "file": "PIC05108.jpg", "original_name": "PIC05108.JPG"}, {"id": "PIC05110", "file": "PIC05110.jpg", "original_name": "PIC05110.JPG"}, {"id": "PIC05111", "file": "PIC05111.jpg", "original_name": "PIC05111.JPG"}, {"id": "PIC05112", "file": "PIC05112.jpg", "original_name": "PIC05112.JPG"}, {"id": "PIC05113", "file": "PIC05113.jpg", "original_name": "PIC05113.JPG"}, {"id": "PIC05114", "file": "PIC05114.jpg", "original_name": "PIC05114.JPG"}, {"id": "PIC05115", "file": "PIC05115.jpg", "original_name": "PIC05115.JPG"}, {"id": "PIC05116", "file": "PIC05116.jpg", "original_name": "PIC05116.JPG"}, {"id": "PIC05117", "file": "PIC05117.jpg", "original_name": "PIC05117.JPG"}, {"id": "PIC05118", "file": "PIC05118.jpg", "original_name": "PIC05118.JPG"}, {"id": "PIC05119", "file": "PIC05119.jpg", "original_name": "PIC05119.JPG"}, {"id": "PIC05120", "file": "PIC05120.jpg", "original_name": "PIC05120.JPG"}, {"id": "PIC05121", "file": "PIC05121.jpg", "original_name": "PIC05121.JPG"}, {"id": "PIC05122", "file": "PIC05122.jpg", "original_name": "PIC05122.JPG"}, {"id": "PIC05123", "file": "PIC05123.jpg", "original_name": "PIC05123.JPG"}, {"id": "PIC05124", "file": "PIC05124.jpg", "original_name": "PIC05124.JPG"}, {"id": "PIC05125", "file": "PIC05125.jpg", "original_name": "PIC05125.JPG"}, {"id": "PIC05126", "file": "PIC05126.jpg", "original_name": "PIC05126.JPG"}, {"id": "PIC05127", "file": "PIC05127.jpg", "original_name": "PIC05127.JPG"}, {"id": "PIC05128", "file": "PIC05128.jpg", "original_name": "PIC05128.JPG"}, {"id": "PIC05129", "file": "PIC05129.jpg", "original_name": "PIC05129.JPG"}, {"id": "PIC05130", "file": "PIC05130.jpg", "original_name": "PIC05130.JPG"}, {"id": "PIC05131", "file": "PIC05131.jpg", "original_name": "PIC05131.JPG"}, {"id": "PIC05132", "file": "PIC05132.jpg", "original_name": "PIC05132.JPG"}, {"id": "PIC05133", "file": "PIC05133.jpg", "original_name": "PIC05133.JPG"}, {"id": "PIC05134", "file": "PIC05134.jpg", "original_name": "PIC05134.JPG"}, {"id": "PIC05135", "file": "PIC05135.jpg", "original_name": "PIC05135.JPG"}, {"id": "PIC05136", "file": "PIC05136.jpg", "original_name": "PIC05136.JPG"}, {"id": "PIC05137", "file": "PIC05137.jpg", "original_name": "PIC05137.JPG"}, {"id": "PIC05138", "file": "PIC05138.jpg", "original_name": "PIC05138.JPG"}, {"id": "PIC05139", "file": "PIC05139.jpg", "original_name": "PIC05139.JPG"}, {"id": "PIC05140", "file": "PIC05140.jpg", "original_name": "PIC05140.JPG"}, {"id": "PIC05142", "file": "PIC05142.jpg", "original_name": "PIC05142.JPG"}, {"id": "PIC05143", "file": "PIC05143.jpg", "original_name": "PIC05143.JPG"}, {"id": "PIC05144", "file": "PIC05144.jpg", "original_name": "PIC05144.JPG"}, {"id": "PIC05145", "file": "PIC05145.jpg", "original_name": "PIC05145.JPG"}, {"id": "PIC05146", "file": "PIC05146.jpg", "original_name": "PIC05146.JPG"}, {"id": "PIC05147", "file": "PIC05147.jpg", "original_name": "PIC05147.JPG"}, {"id": "PIC05148", "file": "PIC05148.jpg", "original_name": "PIC05148.JPG"}, {"id": "PIC05149", "file": "PIC05149.jpg", "original_name": "PIC05149.JPG"}, {"id": "PIC05151", "file": "PIC05151.jpg", "original_name": "PIC05151.JPG"}, {"id": "PIC05152", "file": "PIC05152.jpg", "original_name": "PIC05152.JPG"}, {"id": "PIC05153", "file": "PIC05153.jpg", "original_name": "PIC05153.JPG"}, {"id": "PIC05154", "file": "PIC05154.jpg", "original_name": "PIC05154.JPG"}, {"id": "PIC05155", "file": "PIC05155.jpg", "original_name": "PIC05155.JPG"}, {"id": "PIC05156", "file": "PIC05156.jpg", "original_name": "PIC05156.JPG"}, {"id": "PIC05157", "file": "PIC05157.jpg", "original_name": "PIC05157.JPG"}, {"id": "PIC05158", "file": "PIC05158.jpg", "original_name": "PIC05158.JPG"}, {"id": "PIC05159", "file": "PIC05159.jpg", "original_name": "PIC05159.JPG"}, {"id": "PIC05160", "file": "PIC05160.jpg", "original_name": "PIC05160.JPG"}, {"id": "PIC05169", "file": "PIC05169.jpg", "original_name": "PIC05169.JPG"}, {"id": "PIC05174", "file": "PIC05174.jpg", "original_name": "PIC05174.JPG"}, {"id": "PIC05177", "file": "PIC05177.jpg", "original_name": "PIC05177.JPG"}, {"id": "PIC05178", "file": "PIC05178.jpg", "original_name": "PIC05178.JPG"}, {"id": "PIC05179", "file": "PIC05179.jpg", "original_name": "PIC05179.JPG"}, {"id": "PIC05180", "file": "PIC05180.jpg", "original_name": "PIC05180.JPG"}, {"id": "PIC05181", "file": "PIC05181.jpg", "original_name": "PIC05181.JPG"}, {"id": "PIC05182", "file": "PIC05182.jpg", "original_name": "PIC05182.JPG"}, {"id": "PIC05183", "file": "PIC05183.jpg", "original_name": "PIC05183.JPG"}, {"id": "PIC05184", "file": "PIC05184.jpg", "original_name": "PIC05184.JPG"}, {"id": "PIC05185", "file": "PIC05185.jpg", "original_name": "PIC05185.JPG"}, {"id": "PIC05186", "file": "PIC05186.jpg", "original_name": "PIC05186.JPG"}, {"id": "PIC05187", "file": "PIC05187.jpg", "original_name": "PIC05187.JPG"}, {"id": "PIC05188", "file": "PIC05188.jpg", "original_name": "PIC05188.JPG"}, {"id": "PIC05191", "file": "PIC05191.jpg", "original_name": "PIC05191.JPG"}, {"id": "PIC05192", "file": "PIC05192.jpg", "original_name": "PIC05192.JPG"}, {"id": "PIC05193", "file": "PIC05193.jpg", "original_name": "PIC05193.JPG"}, {"id": "PIC05194", "file": "PIC05194.jpg", "original_name": "PIC05194.JPG"}, {"id": "PIC05195", "file": "PIC05195.jpg", "original_name": "PIC05195.JPG"}, {"id": "PIC05196", "file": "PIC05196.jpg", "original_name": "PIC05196.JPG"}, {"id": "PIC05197", "file": "PIC05197.jpg", "original_name": "PIC05197.JPG"}, {"id": "PIC05198", "file": "PIC05198.jpg", "original_name": "PIC05198.JPG"}, {"id": "PIC05199", "file": "PIC05199.jpg", "original_name": "PIC05199.JPG"}, {"id": "PIC05200", "file": "PIC05200.jpg", "original_name": "PIC05200.JPG"}, {"id": "PIC05201", "file": "PIC05201.jpg", "original_name": "PIC05201.JPG"}, {"id": "PIC05203", "file": "PIC05203.jpg", "original_name": "PIC05203.JPG"}, {"id": "PIC05204", "file": "PIC05204.jpg", "original_name": "PIC05204.JPG"}, {"id": "PIC05205", "file": "PIC05205.jpg", "original_name": "PIC05205.JPG"}, {"id": "PIC05206", "file": "PIC05206.jpg", "original_name": "PIC05206.JPG"}, {"id": "PIC05207", "file": "PIC05207.jpg", "original_name": "PIC05207.JPG"}, {"id": "PIC05208", "file": "PIC05208.jpg", "original_name": "PIC05208.JPG"}, {"id": "PIC05210", "file": "PIC05210.jpg", "original_name": "PIC05210.JPG"}, {"id": "PIC05211", "file": "PIC05211.jpg", "original_name": "PIC05211.JPG"}, {"id": "PIC05213", "file": "PIC05213.jpg", "original_name": "PIC05213.JPG"}, {"id": "PIC05214", "file": "PIC05214.jpg", "original_name": "PIC05214.JPG"}, {"id": "PIC05215", "file": "PIC05215.jpg", "original_name": "PIC05215.JPG"}, {"id": "PIC05216", "file": "PIC05216.jpg", "original_name": "PIC05216.JPG"}, {"id": "PIC05217", "file": "PIC05217.jpg", "original_name": "PIC05217.JPG"}, {"id": "PIC05218", "file": "PIC05218.jpg", "original_name": "PIC05218.JPG"}, {"id": "PIC05220", "file": "PIC05220.jpg", "original_name": "PIC05220.JPG"}, {"id": "PIC05233", "file": "PIC05233.jpg", "original_name": "PIC05233.JPG"}, {"id": "PIC05234", "file": "PIC05234.jpg", "original_name": "PIC05234.JPG"}, {"id": "PIC05235", "file": "PIC05235.jpg", "original_name": "PIC05235.JPG"}, {"id": "PIC05236", "file": "PIC05236.jpg", "original_name": "PIC05236.JPG"}, {"id": "PIC05237", "file": "PIC05237.jpg", "original_name": "PIC05237.JPG"}, {"id": "PIC05246", "file": "PIC05246.jpg", "original_name": "PIC05246.JPG"}, {"id": "PIC05251", "file": "PIC05251.jpg", "original_name": "PIC05251.JPG"}, {"id": "PIC05252", "file": "PIC05252.jpg", "original_name": "PIC05252.JPG"}, {"id": "PIC05254", "file": "PIC05254.jpg", "original_name": "PIC05254.JPG"}, {"id": "PIC05255", "file": "PIC05255.jpg", "original_name": "PIC05255.JPG"}, {"id": "PIC05256", "file": "PIC05256.jpg", "original_name": "PIC05256.JPG"}, {"id": "PIC05257", "file": "PIC05257.jpg", "original_name": "PIC05257.JPG"}, {"id": "PIC05258", "file": "PIC05258.jpg", "original_name": "PIC05258.JPG"}, {"id": "PIC05259", "file": "PIC05259.jpg", "original_name": "PIC05259.JPG"}, {"id": "PIC05260", "file": "PIC05260.jpg", "original_name": "PIC05260.JPG"}, {"id": "PIC05261", "file": "PIC05261.jpg", "original_name": "PIC05261.JPG"}, {"id": "PIC05262", "file": "PIC05262.jpg", "original_name": "PIC05262.JPG"}, {"id": "PIC05264", "file": "PIC05264.jpg", "original_name": "PIC05264.JPG"}, {"id": "PIC05266", "file": "PIC05266.jpg", "original_name": "PIC05266.JPG"}, {"id": "PIC05267", "file": "PIC05267.jpg", "original_name": "PIC05267.JPG"}, {"id": "PIC05268", "file": "PIC05268.jpg", "original_name": "PIC05268.JPG"}, {"id": "PIC05269", "file": "PIC05269.jpg", "original_name": "PIC05269.JPG"}, {"id": "PIC05270", "file": "PIC05270.jpg", "original_name": "PIC05270.JPG"}, {"id": "PIC05271", "file": "PIC05271.jpg", "original_name": "PIC05271.JPG"}, {"id": "PIC05272", "file": "PIC05272.jpg", "original_name": "PIC05272.JPG"}, {"id": "PIC05274", "file": "PIC05274.jpg", "original_name": "PIC05274.JPG"}, {"id": "PIC05275", "file": "PIC05275.jpg", "original_name": "PIC05275.JPG"}, {"id": "PIC05276", "file": "PIC05276.jpg", "original_name": "PIC05276.JPG"}, {"id": "PIC05277", "file": "PIC05277.jpg", "original_name": "PIC05277.JPG"}, {"id": "PIC05279", "file": "PIC05279.jpg", "original_name": "PIC05279.JPG"}, {"id": "PIC05280", "file": "PIC05280.jpg", "original_name": "PIC05280.JPG"}, {"id": "PIC05282", "file": "PIC05282.jpg", "original_name": "PIC05282.JPG"}, {"id": "PIC05284", "file": "PIC05284.jpg", "original_name": "PIC05284.JPG"}, {"id": "PIC05286", "file": "PIC05286.jpg", "original_name": "PIC05286.JPG"}, {"id": "PIC05287", "file": "PIC05287.jpg", "original_name": "PIC05287.JPG"}, {"id": "PIC05288", "file": "PIC05288.jpg", "original_name": "PIC05288.JPG"}, {"id": "PIC05290", "file": "PIC05290.jpg", "original_name": "PIC05290.JPG"}, {"id": "PIC05291", "file": "PIC05291.jpg", "original_name": "PIC05291.JPG"}, {"id": "PIC05292", "file": "PIC05292.jpg", "original_name": "PIC05292.JPG"}, {"id": "PIC05293", "file": "PIC05293.jpg", "original_name": "PIC05293.JPG"}, {"id": "PIC05294", "file": "PIC05294.jpg", "original_name": "PIC05294.JPG"}, {"id": "PIC05295", "file": "PIC05295.jpg", "original_name": "PIC05295.JPG"}, {"id": "PIC05296", "file": "PIC05296.jpg", "original_name": "PIC05296.JPG"}, {"id": "PIC05297", "file": "PIC05297.jpg", "original_name": "PIC05297.JPG"}, {"id": "PIC05298", "file": "PIC05298.jpg", "original_name": "PIC05298.JPG"}, {"id": "PIC05299", "file": "PIC05299.jpg", "original_name": "PIC05299.JPG"}, {"id": "PIC05300", "file": "PIC05300.jpg", "original_name": "PIC05300.JPG"}, {"id": "PIC05301", "file": "PIC05301.jpg", "original_name": "PIC05301.JPG"}, {"id": "PIC05302", "file": "PIC05302.jpg", "original_name": "PIC05302.JPG"}, {"id": "PIC05303", "file": "PIC05303.jpg", "original_name": "PIC05303.JPG"}, {"id": "PIC05304", "file": "PIC05304.jpg", "original_name": "PIC05304.JPG"}, {"id": "PIC05305", "file": "PIC05305.jpg", "original_name": "PIC05305.JPG"}, {"id": "PIC05306", "file": "PIC05306.jpg", "original_name": "PIC05306.JPG"}, {"id": "PIC05307", "file": "PIC05307.jpg", "original_name": "PIC05307.JPG"}, {"id": "PIC05308", "file": "PIC05308.jpg", "original_name": "PIC05308.JPG"}, {"id": "PIC05309", "file": "PIC05309.jpg", "original_name": "PIC05309.JPG"}, {"id": "PIC05310", "file": "PIC05310.jpg", "original_name": "PIC05310.JPG"}, {"id": "PIC05311", "file": "PIC05311.jpg", "original_name": "PIC05311.JPG"}, {"id": "PIC05312", "file": "PIC05312.jpg", "original_name": "PIC05312.JPG"}, {"id": "PIC05313", "file": "PIC05313.jpg", "original_name": "PIC05313.JPG"}, {"id": "PIC05314", "file": "PIC05314.jpg", "original_name": "PIC05314.JPG"}, {"id": "PIC05315", "file": "PIC05315.jpg", "original_name": "PIC05315.JPG"}, {"id": "PIC05316", "file": "PIC05316.jpg", "original_name": "PIC05316.JPG"}, {"id": "PIC05317", "file": "PIC05317.jpg", "original_name": "PIC05317.JPG"}, {"id": "PIC05319", "file": "PIC05319.jpg", "original_name": "PIC05319.JPG"}, {"id": "PIC05320", "file": "PIC05320.jpg", "original_name": "PIC05320.JPG"}, {"id": "PIC05321", "file": "PIC05321.jpg", "original_name": "PIC05321.JPG"}, {"id": "PIC05323", "file": "PIC05323.jpg", "original_name": "PIC05323.JPG"}, {"id": "PIC05324", "file": "PIC05324.jpg", "original_name": "PIC05324.JPG"}, {"id": "PIC05325", "file": "PIC05325.jpg", "original_name": "PIC05325.JPG"}, {"id": "PIC05326", "file": "PIC05326.jpg", "original_name": "PIC05326.JPG"}, {"id": "PIC05327", "file": "PIC05327.jpg", "original_name": "PIC05327.JPG"}, {"id": "PIC05328", "file": "PIC05328.jpg", "original_name": "PIC05328.JPG"}, {"id": "PIC05329", "file": "PIC05329.jpg", "original_name": "PIC05329.JPG"}, {"id": "PIC05330", "file": "PIC05330.jpg", "original_name": "PIC05330.JPG"}, {"id": "PIC05331", "file": "PIC05331.jpg", "original_name": "PIC05331.JPG"}, {"id": "PIC05332", "file": "PIC05332.jpg", "original_name": "PIC05332.JPG"}, {"id": "PIC05333", "file": "PIC05333.jpg", "original_name": "PIC05333.JPG"}, {"id": "PIC05334", "file": "PIC05334.jpg", "original_name": "PIC05334.JPG"}, {"id": "PIC05335", "file": "PIC05335.jpg", "original_name": "PIC05335.JPG"}, {"id": "PIC05336", "file": "PIC05336.jpg", "original_name": "PIC05336.JPG"}, {"id": "PIC05337", "file": "PIC05337.jpg", "original_name": "PIC05337.JPG"}, {"id": "PIC05338", "file": "PIC05338.jpg", "original_name": "PIC05338.JPG"}, {"id": "PIC05339", "file": "PIC05339.jpg", "original_name": "PIC05339.JPG"}, {"id": "PIC05344", "file": "PIC05344.jpg", "original_name": "PIC05344.JPG"}, {"id": "PIC05345", "file": "PIC05345.jpg", "original_name": "PIC05345.JPG"}, {"id": "PIC05346", "file": "PIC05346.jpg", "original_name": "PIC05346.JPG"}, {"id": "PIC05347", "file": "PIC05347.jpg", "original_name": "PIC05347.JPG"}, {"id": "PIC05349", "file": "PIC05349.jpg", "original_name": "PIC05349.JPG"}, {"id": "PIC05350", "file": "PIC05350.jpg", "original_name": "PIC05350.JPG"}, {"id": "PIC05352", "file": "PIC05352.jpg", "original_name": "PIC05352.JPG"}, {"id": "PIC05354", "file": "PIC05354.jpg", "original_name": "PIC05354.JPG"}, {"id": "PIC05356", "file": "PIC05356.jpg", "original_name": "PIC05356.JPG"}, {"id": "PIC05358", "file": "PIC05358.jpg", "original_name": "PIC05358.JPG"}, {"id": "PIC05360", "file": "PIC05360.jpg", "original_name": "PIC05360.JPG"}, {"id": "PIC05362", "file": "PIC05362.jpg", "original_name": "PIC05362.JPG"}, {"id": "PIC05365", "file": "PIC05365.jpg", "original_name": "PIC05365.JPG"}, {"id": "PIC05366", "file": "PIC05366.jpg", "original_name": "PIC05366.JPG"}, {"id": "PIC05367", "file": "PIC05367.jpg", "original_name": "PIC05367.JPG"}, {"id": "PIC05368", "file": "PIC05368.jpg", "original_name": "PIC05368.JPG"}, {"id": "PIC05369", "file": "PIC05369.jpg", "original_name": "PIC05369.JPG"}, {"id": "PIC05370", "file": "PIC05370.jpg", "original_name": "PIC05370.JPG"}, {"id": "PIC05371", "file": "PIC05371.jpg", "original_name": "PIC05371.JPG"}, {"id": "PIC05372", "file": "PIC05372.jpg", "original_name": "PIC05372.JPG"}, {"id": "PIC05373", "file": "PIC05373.jpg", "original_name": "PIC05373.JPG"}, {"id": "PIC05374", "file": "PIC05374.jpg", "original_name": "PIC05374.JPG"}, {"id": "PIC05375", "file": "PIC05375.jpg", "original_name": "PIC05375.JPG"}, {"id": "PIC05376", "file": "PIC05376.jpg", "original_name": "PIC05376.JPG"}, {"id": "PIC05377", "file": "PIC05377.jpg", "original_name": "PIC05377.JPG"}, {"id": "PIC05378", "file": "PIC05378.jpg", "original_name": "PIC05378.JPG"}, {"id": "PIC05379", "file": "PIC05379.jpg", "original_name": "PIC05379.JPG"}, {"id": "PIC05380", "file": "PIC05380.jpg", "original_name": "PIC05380.JPG"}, {"id": "PIC05382", "file": "PIC05382.jpg", "original_name": "PIC05382.JPG"}, {"id": "PIC05383", "file": "PIC05383.jpg", "original_name": "PIC05383.JPG"}, {"id": "PIC05384", "file": "PIC05384.jpg", "original_name": "PIC05384.JPG"}, {"id": "PIC05387", "file": "PIC05387.jpg", "original_name": "PIC05387.JPG"}, {"id": "PIC05388", "file": "PIC05388.jpg", "original_name": "PIC05388.JPG"}, {"id": "PIC05389", "file": "PIC05389.jpg", "original_name": "PIC05389.JPG"}, {"id": "PIC05390", "file": "PIC05390.jpg", "original_name": "PIC05390.JPG"}, {"id": "PIC05391", "file": "PIC05391.jpg", "original_name": "PIC05391.JPG"}, {"id": "PIC05392", "file": "PIC05392.jpg", "original_name": "PIC05392.JPG"}, {"id": "PIC05393", "file": "PIC05393.jpg", "original_name": "PIC05393.JPG"}, {"id": "PIC05394", "file": "PIC05394.jpg", "original_name": "PIC05394.JPG"}, {"id": "PIC05395", "file": "PIC05395.jpg", "original_name": "PIC05395.JPG"}, {"id": "PIC05398", "file": "PIC05398.jpg", "original_name": "PIC05398.JPG"}, {"id": "PIC05399", "file": "PIC05399.jpg", "original_name": "PIC05399.JPG"}, {"id": "PIC05400", "file": "PIC05400.jpg", "original_name": "PIC05400.JPG"}, {"id": "PIC05401", "file": "PIC05401.jpg", "original_name": "PIC05401.JPG"}, {"id": "PIC05402", "file": "PIC05402.jpg", "original_name": "PIC05402.JPG"}, {"id": "PIC05403", "file": "PIC05403.jpg", "original_name": "PIC05403.JPG"}, {"id": "PIC05404", "file": "PIC05404.jpg", "original_name": "PIC05404.JPG"}, {"id": "PIC05405", "file": "PIC05405.jpg", "original_name": "PIC05405.JPG"}, {"id": "PIC05406", "file": "PIC05406.jpg", "original_name": "PIC05406.JPG"}, {"id": "PIC05407", "file": "PIC05407.jpg", "original_name": "PIC05407.JPG"}, {"id": "PIC05408", "file": "PIC05408.jpg", "original_name": "PIC05408.JPG"}, {"id": "PIC05409", "file": "PIC05409.jpg", "original_name": "PIC05409.JPG"}, {"id": "PIC05410", "file": "PIC05410.jpg", "original_name": "PIC05410.JPG"}, {"id": "PIC05411", "file": "PIC05411.jpg", "original_name": "PIC05411.JPG"}, {"id": "PIC05412", "file": "PIC05412.jpg", "original_name": "PIC05412.JPG"}, {"id": "PIC05413", "file": "PIC05413.jpg", "original_name": "PIC05413.JPG"}, {"id": "PIC05414", "file": "PIC05414.jpg", "original_name": "PIC05414.JPG"}, {"id": "PIC05415", "file": "PIC05415.jpg", "original_name": "PIC05415.JPG"}, {"id": "PIC05416", "file": "PIC05416.jpg", "original_name": "PIC05416.JPG"}, {"id": "PIC05417", "file": "PIC05417.jpg", "original_name": "PIC05417.JPG"}, {"id": "PIC05418", "file": "PIC05418.jpg", "original_name": "PIC05418.JPG"}, {"id": "PIC05419", "file": "PIC05419.jpg", "original_name": "PIC05419.JPG"}, {"id": "PIC05420", "file": "PIC05420.jpg", "original_name": "PIC05420.JPG"}, {"id": "PIC05421", "file": "PIC05421.jpg", "original_name": "PIC05421.JPG"}, {"id": "PIC05422", "file": "PIC05422.jpg", "original_name": "PIC05422.JPG"}, {"id": "PIC05423", "file": "PIC05423.jpg", "original_name": "PIC05423.JPG"}, {"id": "PIC05424", "file": "PIC05424.jpg", "original_name": "PIC05424.JPG"}, {"id": "PIC05425", "file": "PIC05425.jpg", "original_name": "PIC05425.JPG"}, {"id": "PIC05426", "file": "PIC05426.jpg", "original_name": "PIC05426.JPG"}, {"id": "PIC05427", "file": "PIC05427.jpg", "original_name": "PIC05427.JPG"}, {"id": "PIC05428", "file": "PIC05428.jpg", "original_name": "PIC05428.JPG"}, {"id": "PIC05429", "file": "PIC05429.jpg", "original_name": "PIC05429.JPG"}, {"id": "PIC05430", "file": "PIC05430.jpg", "original_name": "PIC05430.JPG"}, {"id": "PIC05431", "file": "PIC05431.jpg", "original_name": "PIC05431.JPG"}, {"id": "PIC05432", "file": "PIC05432.jpg", "original_name": "PIC05432.JPG"}, {"id": "PIC05433", "file": "PIC05433.jpg", "original_name": "PIC05433.JPG"}, {"id": "PIC05434", "file": "PIC05434.jpg", "original_name": "PIC05434.JPG"}, {"id": "PIC05435", "file": "PIC05435.jpg", "original_name": "PIC05435.JPG"}, {"id": "PIC05436", "file": "PIC05436.jpg", "original_name": "PIC05436.JPG"}, {"id": "PIC05437", "file": "PIC05437.jpg", "original_name": "PIC05437.JPG"}, {"id": "PIC05438", "file": "PIC05438.jpg", "original_name": "PIC05438.JPG"}, {"id": "PIC05439", "file": "PIC05439.jpg", "original_name": "PIC05439.JPG"}, {"id": "PIC05440", "file": "PIC05440.jpg", "original_name": "PIC05440.JPG"}, {"id": "PIC05441", "file": "PIC05441.jpg", "original_name": "PIC05441.JPG"}, {"id": "PIC05442", "file": "PIC05442.jpg", "original_name": "PIC05442.JPG"}, {"id": "PIC05443", "file": "PIC05443.jpg", "original_name": "PIC05443.JPG"}, {"id": "PIC05444", "file": "PIC05444.jpg", "original_name": "PIC05444.JPG"}, {"id": "PIC05445", "file": "PIC05445.jpg", "original_name": "PIC05445.JPG"}, {"id": "PIC05446", "file": "PIC05446.jpg", "original_name": "PIC05446.JPG"}, {"id": "PIC05447", "file": "PIC05447.jpg", "original_name": "PIC05447.JPG"}, {"id": "PIC05448", "file": "PIC05448.jpg", "original_name": "PIC05448.JPG"}, {"id": "PIC05449", "file": "PIC05449.jpg", "original_name": "PIC05449.JPG"}, {"id": "PIC05450", "file": "PIC05450.jpg", "original_name": "PIC05450.JPG"}, {"id": "PIC05451", "file": "PIC05451.jpg", "original_name": "PIC05451.JPG"}, {"id": "PIC05452", "file": "PIC05452.jpg", "original_name": "PIC05452.JPG"}, {"id": "PIC05453", "file": "PIC05453.jpg", "original_name": "PIC05453.JPG"}, {"id": "PIC05454", "file": "PIC05454.jpg", "original_name": "PIC05454.JPG"}, {"id": "PIC05455", "file": "PIC05455.jpg", "original_name": "PIC05455.JPG"}, {"id": "PIC05456", "file": "PIC05456.jpg", "original_name": "PIC05456.JPG"}, {"id": "PIC05457", "file": "PIC05457.jpg", "original_name": "PIC05457.JPG"}, {"id": "PIC05458", "file": "PIC05458.jpg", "original_name": "PIC05458.JPG"}, {"id": "PIC05459", "file": "PIC05459.jpg", "original_name": "PIC05459.JPG"}, {"id": "PIC05460", "file": "PIC05460.jpg", "original_name": "PIC05460.JPG"}, {"id": "PIC05461", "file": "PIC05461.jpg", "original_name": "PIC05461.JPG"}, {"id": "PIC05462", "file": "PIC05462.jpg", "original_name": "PIC05462.JPG"}, {"id": "PIC05463", "file": "PIC05463.jpg", "original_name": "PIC05463.JPG"}, {"id": "PIC05464", "file": "PIC05464.jpg", "original_name": "PIC05464.JPG"}, {"id": "PIC05465", "file": "PIC05465.jpg", "original_name": "PIC05465.JPG"}, {"id": "PIC05466", "file": "PIC05466.jpg", "original_name": "PIC05466.JPG"}, {"id": "PIC05467", "file": "PIC05467.jpg", "original_name": "PIC05467.JPG"}, {"id": "PIC05468", "file": "PIC05468.jpg", "original_name": "PIC05468.JPG"}, {"id": "PIC05469", "file": "PIC05469.jpg", "original_name": "PIC05469.JPG"}, {"id": "PIC05470", "file": "PIC05470.jpg", "original_name": "PIC05470.JPG"}, {"id": "PIC05471", "file": "PIC05471.jpg", "original_name": "PIC05471.JPG"}, {"id": "PIC05472", "file": "PIC05472.jpg", "original_name": "PIC05472.JPG"}, {"id": "PIC05473", "file": "PIC05473.jpg", "original_name": "PIC05473.JPG"}, {"id": "PIC05474", "file": "PIC05474.jpg", "original_name": "PIC05474.JPG"}, {"id": "PIC05475", "file": "PIC05475.jpg", "original_name": "PIC05475.JPG"}, {"id": "PIC05476", "file": "PIC05476.jpg", "original_name": "PIC05476.JPG"}, {"id": "PIC05477", "file": "PIC05477.jpg", "original_name": "PIC05477.JPG"}, {"id": "PIC05478", "file": "PIC05478.jpg", "original_name": "PIC05478.JPG"}, {"id": "PIC05479", "file": "PIC05479.jpg", "original_name": "PIC05479.JPG"}, {"id": "PIC05480", "file": "PIC05480.jpg", "original_name": "PIC05480.JPG"}, {"id": "PIC05481", "file": "PIC05481.jpg", "original_name": "PIC05481.JPG"}, {"id": "PIC05482", "file": "PIC05482.jpg", "original_name": "PIC05482.JPG"}, {"id": "PIC05483", "file": "PIC05483.jpg", "original_name": "PIC05483.JPG"}, {"id": "PIC05484", "file": "PIC05484.jpg", "original_name": "PIC05484.JPG"}, {"id": "PIC05485", "file": "PIC05485.jpg", "original_name": "PIC05485.JPG"}, {"id": "PIC05486", "file": "PIC05486.jpg", "original_name": "PIC05486.JPG"}, {"id": "PIC05488", "file": "PIC05488.jpg", "original_name": "PIC05488.JPG"}, {"id": "PIC05489", "file": "PIC05489.jpg", "original_name": "PIC05489.JPG"}, {"id": "PIC05492", "file": "PIC05492.jpg", "original_name": "PIC05492.JPG"}, {"id": "PIC05493", "file": "PIC05493.jpg", "original_name": "PIC05493.JPG"}, {"id": "PIC05496", "file": "PIC05496.jpg", "original_name": "PIC05496.JPG"}, {"id": "PIC05498", "file": "PIC05498.jpg", "original_name": "PIC05498.JPG"}]
+};
+
+const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0 };
+
+// ===== LOGIN =====
+function doLogin(e) {
+  e.preventDefault();
+  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
+  if (encoded === CONFIG.pwHash) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('gallery-screen').style.display = 'block';
+    buildGallery();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+  return false;
+}
+
+// ===== BUILD GALLERY =====
+function buildGallery() {
+  const grid = document.getElementById('gallery-grid');
+  CONFIG.foto.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.dataset.id = f.id;
+    card.innerHTML = `
+      <img src="./foto/${f.file}" alt="${f.id}" loading="lazy">
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor"/></svg></div>
+      <div class="comment-wrap">
+        <div class="comment-label">Nota (opzionale)</div>
+        <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita…" oninput="updateComment('${f.id}',this.value)"></textarea>
+      </div>`;
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('comment-input')) return;
+      toggleSelect(f.id, f.file, card);
+    });
+    card.addEventListener('dblclick', () => openFull(i));
+    let lt;
+    card.addEventListener('touchstart', () => { lt = setTimeout(() => openFull(i), 500); }, {passive:true});
+    card.addEventListener('touchend',   () => clearTimeout(lt), {passive:true});
+    card.addEventListener('touchmove',  () => clearTimeout(lt), {passive:true});
+    grid.appendChild(card);
+  });
+  buildDots();
+}
+
+// ===== SELEZIONE =====
+function toggleSelect(id, file, card) {
+  if (state.selections[id]) {
+    delete state.selections[id];
+    card.classList.remove('selected');
+  } else {
+    const count = Object.keys(state.selections).length;
+    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
+      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+    }
+    state.selections[id] = { file, comment: '' };
+    card.classList.add('selected');
+  }
+  updateCounter();
+  updateFullFooter();
+}
+
+function updateComment(id, val) {
+  if (state.selections[id]) state.selections[id].comment = val.trim();
+}
+
+function updateCounter() {
+  const count = Object.keys(state.selections).length;
+  const max = CONFIG.maxSelezioni;
+  document.getElementById('sel-count').textContent = count;
+  document.getElementById('sel-max').textContent = max > 0 ? `/ ${max}` : '';
+  document.getElementById('counter-pill').classList.toggle('at-limit', max > 0 && count >= max);
+  document.getElementById('btn-invia').disabled = count === 0;
+}
+
+// ===== VIEW SWITCH =====
+function switchView(v) {
+  const isGrid = v === 'grid';
+  document.getElementById('view-grid').style.display = isGrid ? 'block' : 'none';
+  document.getElementById('view-full').classList.toggle('active', !isGrid);
+  document.getElementById('vbtn-grid').classList.toggle('active', isGrid);
+  document.getElementById('vbtn-full').classList.toggle('active', !isGrid);
+  if (!isGrid) { resetZoom(); renderFull(state.fullIdx); }
+}
+
+function openFull(idx) {
+  state.fullIdx = idx;
+  switchView('full');
+}
+
+// ===== FULLSCREEN =====
+function buildDots() {
+  const wrap = document.getElementById('full-dots');
+  const n = CONFIG.foto.length;
+  if (n > 40) { wrap.style.display = 'none'; return; }
+  wrap.innerHTML = '';
+  CONFIG.foto.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'full-dot' + (i === 0 ? ' active' : '');
+    wrap.appendChild(d);
+  });
+}
+
+function updateDots(idx) {
+  document.querySelectorAll('.full-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function resetZoom() {
+  state.zoom = 1; state.panX = 0; state.panY = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  document.getElementById('full-img').style.transform = `translate(${state.panX}px,${state.panY}px) scale(${state.zoom})`;
+}
+
+function renderFull(idx) {
+  const f = CONFIG.foto[idx];
+  if (!f) return;
+  resetZoom();
+  document.getElementById('full-img').src = `./foto/${f.file}`;
+  document.getElementById('full-img').alt = f.id;
+  document.getElementById('full-counter-top').textContent = `${idx + 1} / ${CONFIG.foto.length}`;
+  updateDots(idx);
+  updateFullFooter();
+}
+
+function updateFullFooter() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const isSel = !!state.selections[f.id];
+  document.getElementById('btn-full-add').style.display   = isSel ? 'none' : 'flex';
+  document.getElementById('btn-full-desel').style.display = isSel ? 'flex' : 'none';
+}
+
+function fullNav(dir) {
+  const next = state.fullIdx + dir;
+  if (next < 0 || next >= CONFIG.foto.length) return;
+  state.fullIdx = next;
+  renderFull(next);
+}
+
+function fullSelect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const count = Object.keys(state.selections).length;
+  if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni && !state.selections[f.id]) {
+    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+  }
+  state.selections[f.id] = { file: f.file, comment: '' };
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) card.classList.add('selected');
+  updateCounter();
+  updateFullFooter();
+  showToast('✓ Selezionata', 'success');
+  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 300);
+}
+
+function fullDeselect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  delete state.selections[f.id];
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) card.classList.remove('selected');
+  updateCounter();
+  updateFullFooter();
+  showToast('Rimossa', 'info');
+}
+
+// ===== ZOOM PC =====
+function pcZoom(delta) {
+  if (delta === 0) { resetZoom(); return; }
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}
+
+// Scroll wheel zoom (PC)
+document.getElementById('full-img-wrap').addEventListener('wheel', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  e.preventDefault();
+  const delta = e.deltaY < 0 ? 0.15 : -0.15;
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}, {passive: false});
+
+// Drag to pan (PC, when zoomed)
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let dragging = false, startX, startY, startPanX, startPanY;
+  wrap.addEventListener('mousedown', e => {
+    if (state.zoom <= 1) return;
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    startPanX = state.panX; startPanY = state.panY;
+    wrap.classList.add('grabbing');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    state.panX = startPanX + (e.clientX - startX);
+    state.panY = startPanY + (e.clientY - startY);
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remove('grabbing'); });
+})();
+
+// ===== SWIPE TOUCH (solo navigazione + selezione via bottoni) =====
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let sx=0, sy=0, lastDist=0, pinching=false, startPanX=0, startPanY=0;
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      pinching = true;
+      lastDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    } else if (e.touches.length === 1) {
+      pinching = false;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      startPanX = state.panX; startPanY = state.panY;
+    }
+  }, {passive:true});
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && pinching) {
+      const d = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      state.zoom = Math.min(Math.max(state.zoom * (d / lastDist), 1), 4);
+      lastDist = d;
+      applyTransform();
+      e.preventDefault();
+    } else if (e.touches.length === 1 && state.zoom > 1) {
+      state.panX = startPanX + (e.touches[0].clientX - sx);
+      state.panY = startPanY + (e.touches[0].clientY - sy);
+      applyTransform();
+      e.preventDefault();
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', e => {
+    if (pinching) { pinching = false; return; }
+    if (state.zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 45) return;
+    // Swipe sinistra o destra = naviga soltanto
+    fullNav(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+// ===== TASTIERA PC =====
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); fullNav(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); fullNav(-1); }
+  if (e.key === 'Enter' || e.key === ' ')               { e.preventDefault(); fullSelect(); }
+  if (e.key === 'Escape')                               switchView('grid');
+  if (e.key === '+' || e.key === '=')                   pcZoom(0.25);
+  if (e.key === '-')                                    pcZoom(-0.25);
+  if (e.key === '0')                                    pcZoom(0);
+});
+
+// ===== MESSAGGIO =====
+function buildMessage() {
+  let msg = `${CONFIG.nomeEvento}\n\n`;
+  Object.entries(state.selections).forEach(([id, s]) => {
+    msg += s.comment ? `${id} — ${s.comment}\n` : `${id}\n`;
+  });
+  return msg.trimEnd();
+}
+
+function openModal() {
+  document.getElementById('modal-msg-text').textContent = buildMessage();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+function copyMsg() {
+  const t = document.getElementById('modal-msg-text').textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
+  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
+}
+function openWA() {
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ===== TOAST =====
+let _tt = null;
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type; t.style.display = 'block';
+  if (_tt) clearTimeout(_tt);
+  _tt = setTimeout(() => { t.style.display = 'none'; }, 2200);
+}
+
+
+(function(){
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 820;
+  const mob = document.getElementById('legenda-mobile');
+  const desk = document.getElementById('legenda-desktop');
+  if (mob && desk) {
+    mob.style.display = isMobile ? 'block' : 'none';
+    desk.style.display = isMobile ? 'none' : 'block';
+  }
+})();
+
+// Best-effort protection against casual download/copy
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['c','s','u','p'].includes(k)) e.preventDefault();
+    if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k))) e.preventDefault();
+  });
+})();
+
+</script>
+</body>
+</html>
