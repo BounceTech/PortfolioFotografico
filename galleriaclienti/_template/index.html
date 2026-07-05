@@ -440,7 +440,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div class="login-card">
     <div class="evento-subtitle">Mattia Buoli — Selezione foto</div>
     <h1 id="login-title">Shooting Catering</h1>
-    <div class="evento-data" id="login-data">27.06.2026</div>
 
     <!-- LEGENDA -->
     <div class="legenda" id="legenda-box">
@@ -550,40 +549,49 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <script>
 /* ============================================================
-   TEMPLATE CONSEGNA CLIENTE — per una nuova consegna copia questa
-   cartella e cambia SOLO i campi di CONFIG qui sotto:
-   - titoloEvento / dataEvento: come appaiono al cliente
-   - nomeEvento: codice job (usato nel messaggio e nel tag Telegram)
-   - maxSelezioni, pwHash (= btoa della password), storageKey
-   - fotoPath: "./foto/" nelle consegne reali
-   - foto: lista generata dallo script
-   - telegramToken/telegramChat/secretCode: come nelle consegne attuali
+   CONFIG — struttura IDENTICA alle gallerie attuali: il flusso
+   (Lightroom / generatore) imposta questi stessi campi come sempre.
+   Cambia solo la grafica, non i campi né i loro nomi.
+     nomeEvento    codice job (titolo mostrato + messaggio + tag Telegram)
+     maxSelezioni  limite selezione
+     whatsapp      numero destinatario
+     storageKey    chiave localStorage (= nomeEvento)
+     pwHash        btoa della password
+     foto          lista immagini (cartella ./foto/)
+     telegramToken/telegramChat/secretCode  notifica plugin Lightroom
    ============================================================ */
 const CONFIG = {
-  titoloEvento:  "Shooting Catering",
-  dataEvento:    "27.06.2026",
-  nomeEvento:    "DEMO_Restyling",
+  nomeEvento:    "260627_ShootingCatering",
   maxSelezioni:  40,
   whatsapp:      "393348493876",
-  storageKey:    "DEMO_Restyling",
-  pwHash:        "ZGVtbw==",
-  fotoPath:      "../260627_ShootingCatering/foto/",
+  storageKey:    "260627_ShootingCatering",
+  pwHash:        "MTIuMzQ=",
   foto:          [{"id": "PIC05674", "file": "PIC05674.jpg", "original_name": "PIC05674.jpg"}, {"id": "PIC05679", "file": "PIC05679.jpg", "original_name": "PIC05679.jpg"}, {"id": "PIC05686", "file": "PIC05686.jpg", "original_name": "PIC05686.jpg"}, {"id": "PIC05688", "file": "PIC05688.jpg", "original_name": "PIC05688.jpg"}, {"id": "PIC05689", "file": "PIC05689.jpg", "original_name": "PIC05689.jpg"}, {"id": "PIC05693", "file": "PIC05693.jpg", "original_name": "PIC05693.jpg"}, {"id": "PIC05694", "file": "PIC05694.jpg", "original_name": "PIC05694.jpg"}, {"id": "PIC05697", "file": "PIC05697.jpg", "original_name": "PIC05697.jpg"}, {"id": "PIC05698", "file": "PIC05698.jpg", "original_name": "PIC05698.jpg"}, {"id": "PIC05709", "file": "PIC05709.jpg", "original_name": "PIC05709.jpg"}, {"id": "PIC05729", "file": "PIC05729.jpg", "original_name": "PIC05729.jpg"}, {"id": "PIC05734", "file": "PIC05734.jpg", "original_name": "PIC05734.jpg"}, {"id": "PIC05739", "file": "PIC05739.jpg", "original_name": "PIC05739.jpg"}, {"id": "PIC05742", "file": "PIC05742.jpg", "original_name": "PIC05742.jpg"}, {"id": "PIC05758", "file": "PIC05758.jpg", "original_name": "PIC05758.jpg"}, {"id": "PIC05760", "file": "PIC05760.jpg", "original_name": "PIC05760.jpg"}, {"id": "PIC05765", "file": "PIC05765.jpg", "original_name": "PIC05765.jpg"}, {"id": "PIC05772", "file": "PIC05772.jpg", "original_name": "PIC05772.jpg"}, {"id": "PIC05780", "file": "PIC05780.jpg", "original_name": "PIC05780.jpg"}, {"id": "PIC05785", "file": "PIC05785.jpg", "original_name": "PIC05785.jpg"}, {"id": "PIC05794", "file": "PIC05794.jpg", "original_name": "PIC05794.jpg"}, {"id": "PIC05811", "file": "PIC05811.jpg", "original_name": "PIC05811.jpg"}, {"id": "PIC05822", "file": "PIC05822.jpg", "original_name": "PIC05822.jpg"}, {"id": "PIC05826", "file": "PIC05826.jpg", "original_name": "PIC05826.jpg"}, {"id": "PIC05843", "file": "PIC05843.jpg", "original_name": "PIC05843.jpg"}, {"id": "PIC05847", "file": "PIC05847.jpg", "original_name": "PIC05847.jpg"}, {"id": "PIC05855", "file": "PIC05855.jpg", "original_name": "PIC05855.jpg"}, {"id": "PIC05858", "file": "PIC05858.jpg", "original_name": "PIC05858.jpg"}, {"id": "PIC05860", "file": "PIC05860.jpg", "original_name": "PIC05860.jpg"}, {"id": "PIC05863", "file": "PIC05863.jpg", "original_name": "PIC05863.jpg"}, {"id": "PIC05865", "file": "PIC05865.jpg", "original_name": "PIC05865.jpg"}, {"id": "PIC05878", "file": "PIC05878.jpg", "original_name": "PIC05878.jpg"}, {"id": "PIC05893", "file": "PIC05893.jpg", "original_name": "PIC05893.jpg"}, {"id": "PIC05900", "file": "PIC05900.jpg", "original_name": "PIC05900.jpg"}, {"id": "PIC05904", "file": "PIC05904.jpg", "original_name": "PIC05904.jpg"}, {"id": "PIC05906", "file": "PIC05906.jpg", "original_name": "PIC05906.jpg"}, {"id": "PIC05908", "file": "PIC05908.jpg", "original_name": "PIC05908.jpg"}, {"id": "PIC05916", "file": "PIC05916.jpg", "original_name": "PIC05916.jpg"}, {"id": "PIC05918", "file": "PIC05918.jpg", "original_name": "PIC05918.jpg"}, {"id": "PIC05921", "file": "PIC05921.jpg", "original_name": "PIC05921.jpg"}, {"id": "PIC05931", "file": "PIC05931.jpg", "original_name": "PIC05931.jpg"}, {"id": "PIC05932", "file": "PIC05932.jpg", "original_name": "PIC05932.jpg"}, {"id": "PIC05934", "file": "PIC05934.jpg", "original_name": "PIC05934.jpg"}, {"id": "PIC05935", "file": "PIC05935.jpg", "original_name": "PIC05935.jpg"}, {"id": "PIC05937", "file": "PIC05937.jpg", "original_name": "PIC05937.jpg"}, {"id": "PIC05939", "file": "PIC05939.jpg", "original_name": "PIC05939.jpg"}, {"id": "PIC05944", "file": "PIC05944.jpg", "original_name": "PIC05944.jpg"}, {"id": "PIC05946", "file": "PIC05946.jpg", "original_name": "PIC05946.jpg"}, {"id": "PIC05952", "file": "PIC05952.jpg", "original_name": "PIC05952.jpg"}, {"id": "PIC05955", "file": "PIC05955.jpg", "original_name": "PIC05955.jpg"}, {"id": "PIC05972", "file": "PIC05972.jpg", "original_name": "PIC05972.jpg"}, {"id": "PIC05975", "file": "PIC05975.jpg", "original_name": "PIC05975.jpg"}, {"id": "PIC05978", "file": "PIC05978.jpg", "original_name": "PIC05978.jpg"}, {"id": "PIC05994", "file": "PIC05994.jpg", "original_name": "PIC05994.jpg"}, {"id": "PIC05996", "file": "PIC05996.jpg", "original_name": "PIC05996.jpg"}, {"id": "PIC06008", "file": "PIC06008.jpg", "original_name": "PIC06008.jpg"}, {"id": "PIC06013", "file": "PIC06013.jpg", "original_name": "PIC06013.jpg"}, {"id": "PIC06014", "file": "PIC06014.jpg", "original_name": "PIC06014.jpg"}, {"id": "PIC06017", "file": "PIC06017.jpg", "original_name": "PIC06017.jpg"}, {"id": "PIC06018", "file": "PIC06018.jpg", "original_name": "PIC06018.jpg"}, {"id": "PIC06023", "file": "PIC06023.jpg", "original_name": "PIC06023.jpg"}],
-  telegramToken: "",
-  telegramChat:  "",
-  secretCode:    ""
+  telegramToken: "{{telegramToken}}",
+  telegramChat:  "{{telegramChat}}",
+  secretCode:    "{{secretCode}}"
 };
 
 const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
 
-// Intestazioni dinamiche dal CONFIG
+// Titolo mostrato al cliente: ricavato da nomeEvento (campo che il flusso
+// già imposta). Puramente estetico — toglie il prefisso data e gli
+// underscore, così "260627_ShootingCatering" diventa "Shooting Catering".
+function prettyEventName(raw) {
+  try {
+    const s = String(raw)
+      .replace(/^\d{6,8}[_-]/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .trim();
+    return s || String(raw);
+  } catch (e) { return String(raw); }
+}
 (function () {
-  const t = CONFIG.titoloEvento || CONFIG.nomeEvento;
+  const t = prettyEventName(CONFIG.nomeEvento);
   document.getElementById('login-title').textContent = t;
   document.getElementById('header-title').textContent = t;
   document.getElementById('full-title').textContent = t;
-  const d = document.getElementById('login-data');
-  if (d) { d.textContent = CONFIG.dataEvento || ''; d.style.display = CONFIG.dataEvento ? '' : 'none'; }
   document.title = t + ' — Selezione Foto | Mattia Buoli';
 })();
 
@@ -623,7 +631,7 @@ function buildGallery() {
     card.dataset.id = f.id;
     card.innerHTML = `
       <div class="card-inner">
-        <img data-src="${CONFIG.fotoPath}${f.file}" alt="${f.id}">
+        <img data-src="./foto/${f.file}" alt="${f.id}">
         <div class="comment-wrap">
           <div class="comment-label">Nota (opzionale)</div>
           <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita…" oninput="updateComment('${f.id}',this.value)"></textarea>
@@ -811,7 +819,7 @@ function renderFull(idx) {
   const f = CONFIG.foto[idx];
   if (!f) return;
   resetZoom();
-  document.getElementById('full-img').src = `${CONFIG.fotoPath}${f.file}`;
+  document.getElementById('full-img').src = `./foto/${f.file}`;
   document.getElementById('full-img').alt = f.id;
   document.getElementById('full-counter-top').textContent = `N°${String(idx + 1).padStart(2, '0')} / ${CONFIG.foto.length}`;
   updateDots(idx);
