@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>260807_ByTiffany_MulinoDiOZ — Selezione Foto</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0e0e">
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #0e0e0e;
+  --color-surface: #151515;
+  --color-surface-2: #1c1c1c;
+  --color-border: #262626;
+  --color-text: #f2efe9;
+  --color-text-muted: #9b968e;
+  --color-primary: #c9a97c;
+  --color-primary-hover: #dcbf94;
+  --color-green: #4a7a5c;
+  --color-green-hover: #558a68;
+  --color-red: #8a4a44;
+  --color-red-hover: #9c5850;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-full: 9999px;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --transition: 220ms cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+::selection{background:var(--color-primary);color:#0e0e0e}
+
+/* Grana pellicola */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== LOGIN ===== */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;padding:2rem;position:relative;
+}
+.login-card{
+  width:100%;max-width:440px;text-align:center;
+  position:relative;padding:3rem 2.5rem;
+}
+.login-card::before,.login-card::after{
+  content:'';position:absolute;width:26px;height:26px;
+}
+.login-card::before{top:0;left:0;border-top:1px solid var(--color-primary);border-left:1px solid var(--color-primary)}
+.login-card::after{bottom:0;right:0;border-bottom:1px solid var(--color-primary);border-right:1px solid var(--color-primary)}
+.login-card .evento-subtitle{
+  font-family:var(--font-mono);font-size:.68rem;color:var(--color-primary);margin-bottom:1rem;
+  text-transform:uppercase;letter-spacing:.22em;
+}
+.login-card h1{
+  font-family:var(--font-display);font-size:clamp(1.8rem,6vw,2.6rem);
+  font-weight:500;letter-spacing:-.01em;margin-bottom:.4rem;color:var(--color-text);
+  word-break:break-word;hyphens:auto;line-height:1.15;
+}
+.evento-data{
+  font-family:var(--font-mono);font-size:.68rem;color:var(--color-text-muted);
+  text-transform:uppercase;letter-spacing:.18em;margin-bottom:1.75rem;
+}
+
+/* LEGENDA LOGIN */
+.legenda{
+  border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);
+  padding:1.1rem .25rem;text-align:left;margin-bottom:1.75rem;
+}
+.legenda-title{
+  font-family:var(--font-mono);font-size:.66rem;font-weight:400;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--color-primary);margin-bottom:.75rem;
+}
+.legenda-row{
+  display:flex;align-items:flex-start;gap:.6rem;
+  font-size:.8rem;color:var(--color-text-muted);margin-bottom:.5rem;line-height:1.5;
+}
+.legenda-row:last-child{margin-bottom:0}
+.legenda-row strong{color:var(--color-text);font-weight:500}
+.legenda-note{margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--color-border)}
+.legenda-icon{font-family:var(--font-mono);font-size:.75rem;color:var(--color-primary);flex-shrink:0;margin-top:.1rem}
+
+.login-input{
+  width:100%;padding:.8rem 1rem;
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-sm);color:var(--color-text);
+  font-size:1rem;font-family:var(--font-body);margin-bottom:.9rem;
+  transition:border-color var(--transition);
+}
+.login-input::placeholder{color:#5c5852}
+.login-input:focus{outline:none;border-color:var(--color-primary)}
+.btn-login{
+  width:100%;padding:.9rem;background:var(--color-text);
+  color:#0e0e0e;font-weight:600;font-size:.78rem;
+  border-radius:var(--radius-sm);letter-spacing:.14em;text-transform:uppercase;
+  transition:background var(--transition);
+}
+.btn-login:hover{background:var(--color-primary)}
+.btn-login:active{transform:scale(.985)}
+#login-error{display:none;color:#d98a83;font-size:.82rem;margin-top:.8rem;font-family:var(--font-mono)}
+.login-brand{
+  position:absolute;bottom:1.4rem;left:0;right:0;text-align:center;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#4a4741;
+}
+.login-brand a{color:inherit;text-decoration:none}
+.login-brand a:hover{color:var(--color-primary)}
+
+/* ===== GALLERY SCREEN ===== */
+#gallery-screen{display:none}
+
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,14,14,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-border);
+  padding:.8rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+}
+.header-left{min-width:0;flex:1}
+.header-left .header-brand{
+  font-family:var(--font-mono);font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--color-primary);display:block;line-height:1.4;
+}
+.header-left h1{
+  font-family:var(--font-display);font-size:clamp(1rem,2.4vw,1.35rem);font-weight:500;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--color-text);line-height:1.25;
+}
+.counter-pill{
+  display:flex;align-items:center;gap:.4rem;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);padding:.35rem .9rem;
+  white-space:nowrap;flex-shrink:0;font-family:var(--font-mono);
+}
+.counter-pill .count-num{font-size:.95rem;font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums}
+.counter-pill .count-label{font-size:.62rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.1em}
+.counter-pill .count-max{font-size:.72rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+.counter-pill.at-limit .count-num{color:#d98a83}
+.btn-invia{
+  padding:.5rem 1.15rem;background:var(--color-text);color:#0e0e0e;
+  font-weight:600;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  border-radius:var(--radius-full);
+  transition:background var(--transition),opacity var(--transition);flex-shrink:0;
+}
+.btn-invia:hover{background:var(--color-primary)}
+.btn-invia.is-empty{opacity:.35}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:.4rem;padding:.85rem 1.2rem .25rem}
+.view-btn{
+  padding:.4rem .95rem;border-radius:var(--radius-full);
+  font-family:var(--font-mono);font-size:.64rem;font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--color-border);
+  color:var(--color-text-muted);
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+}
+.view-btn.active{background:var(--color-primary);color:#0e0e0e;border-color:var(--color-primary);font-weight:700}
+
+/* ===== GRID VIEW =====
+   Mosaico in ordine di lettura: le foto seguono la cronologia
+   da sinistra a destra, riga per riga (serpentina), mantenendo
+   le proporzioni native. Le altezze sono gestite via grid-row span. */
+#view-grid{padding:1rem 1.2rem 2rem}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  grid-auto-rows:8px;
+  gap:.6rem;
+}
+@media(max-width:600px){
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.5rem}
+}
+
+.photo-card{
+  position:relative;cursor:pointer;align-self:start;
+  border-radius:var(--radius-sm);overflow:hidden;border:1px solid transparent;
+  background:var(--color-surface);
+  transition:border-color var(--transition),transform var(--transition),opacity var(--transition);
+}
+.photo-card:hover{transform:translateY(-2px)}
+.photo-card.selected{border-color:var(--color-primary)}
+.photo-card img{display:block;width:100%;height:auto;pointer-events:none;user-select:none;transition:opacity var(--transition)}
+.photo-card::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-family:var(--font-mono);
+  font-size:clamp(.7rem,2.4vw,1rem);font-weight:700;letter-spacing:.25em;
+  color:rgba(242,239,233,0.5);text-shadow:0 1px 3px rgba(0,0,0,.6);
+  border:1px solid rgba(242,239,233,.4);padding:.35em .9em .35em 1.15em;
+  background:rgba(14,14,14,.3);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.photo-card .tick{
+  position:absolute;top:.45rem;right:.45rem;width:24px;height:24px;border-radius:50%;
+  background:rgba(14,14,14,.55);border:1px solid rgba(242,239,233,.35);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);pointer-events:none;
+}
+.photo-card.selected .tick{background:var(--color-primary);border-color:var(--color-primary)}
+.tick svg{display:none;width:12px;height:12px;stroke:#0e0e0e;stroke-width:3}
+.photo-card.selected .tick svg{display:block}
+.comment-wrap{display:none;padding:.5rem .6rem .6rem;background:var(--color-surface-2);border-top:1px solid var(--color-border)}
+.photo-card.selected .comment-wrap{display:block}
+.comment-label{font-family:var(--font-mono);font-size:.58rem;color:var(--color-text-muted);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.14em}
+.comment-input{
+  width:100%;padding:.4rem .6rem;background:rgba(242,239,233,.05);
+  border:1px solid var(--color-border);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.76rem;resize:none;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.comment-input::placeholder{color:#5c5852}
+.comment-input:focus{outline:none;border-color:var(--color-primary)}
+
+/* Footer griglia */
+.grid-footer{
+  text-align:center;padding:1.5rem 1.2rem 2.5rem;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#4a4741;
+}
+.grid-footer a{color:inherit;text-decoration:none}
+.grid-footer a:hover{color:var(--color-primary)}
+
+/* ===== FULLSCREEN VIEW ===== */
+#view-full{
+  display:none;position:fixed;inset:0;z-index:50;
+  background:#050505;flex-direction:column;touch-action:none;
+}
+#view-full.active{display:flex}
+
+.full-header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  padding:.8rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(5,5,5,.8) 0%,transparent 100%);
+  gap:.5rem;
+}
+.full-header .full-title{
+  font-family:var(--font-display);font-size:.95rem;font-weight:500;color:rgba(242,239,233,.8);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.full-counter-top{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;color:var(--color-text-muted);
+  white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums;
+}
+.full-close{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(242,239,233,.08);border:1px solid var(--color-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--color-text);font-size:.9rem;flex-shrink:0;
+  transition:border-color var(--transition),color var(--transition);
+}
+.full-close:hover{border-color:var(--color-primary);color:var(--color-primary)}
+
+/* Immagine centrale con mirino */
+.full-img-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;cursor:grab;
+}
+.full-img-wrap.grabbing{cursor:grabbing}
+#full-img{
+  max-width:100%;max-height:100%;object-fit:contain;
+  user-select:none;-webkit-user-drag:none;
+  will-change:transform;transform-origin:center center;
+  transition:none;
+}
+.full-img-wrap::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-family:var(--font-mono);
+  font-size:clamp(1.1rem,4vw,2rem);font-weight:700;letter-spacing:.3em;
+  color:rgba(242,239,233,0.38);text-shadow:0 1px 4px rgba(0,0,0,.7);
+  border:1px solid rgba(242,239,233,.3);padding:.35em .9em .35em 1.2em;
+  background:rgba(14,14,14,.28);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.vf-corner{position:absolute;width:24px;height:24px;pointer-events:none;z-index:5}
+.vf-tl{top:3.4rem;left:1rem;border-top:1px solid var(--color-primary);border-left:1px solid var(--color-primary)}
+.vf-br{bottom:8.2rem;right:1rem;border-bottom:1px solid var(--color-primary);border-right:1px solid var(--color-primary)}
+
+/* Frecce PC */
+.full-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(14,14,14,.6);border:1px solid var(--color-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--color-text);font-size:1.4rem;
+  transition:border-color var(--transition),color var(--transition);
+}
+.full-arrow:hover{border-color:var(--color-primary);color:var(--color-primary)}
+#arrow-prev{left:.75rem}
+#arrow-next{right:.75rem}
+@media(max-width:700px){.full-arrow{display:none}}
+
+/* Zoom buttons PC */
+.zoom-btns{
+  position:absolute;bottom:7rem;right:1rem;z-index:10;
+  display:flex;flex-direction:column;gap:.4rem;
+}
+.zoom-btn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:rgba(14,14,14,.6);border:1px solid var(--color-border);
+  color:var(--color-text);font-family:var(--font-mono);
+  font-size:1.1rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--transition),color var(--transition);
+}
+.zoom-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
+@media(max-width:700px){.zoom-btns{display:none}}
+
+/* Footer azioni fullscreen */
+.full-footer{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:.9rem 1.2rem 2rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;
+  background:linear-gradient(to top,rgba(5,5,5,.85) 0%,transparent 100%);
+}
+.full-actions{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%}
+
+/* Nota in fullscreen (visibile quando la foto è selezionata) */
+.full-comment{display:none;width:100%;max-width:416px;text-align:left}
+#view-full.has-comment .full-comment{display:block}
+.full-comment-label{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--color-text-muted);
+  margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.14em;
+}
+.full-comment-input{
+  width:100%;padding:.6rem .75rem;background:rgba(20,20,20,.9);
+  border:1px solid var(--color-border);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.85rem;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.full-comment-input::placeholder{color:#5c5852}
+.full-comment-input:focus{outline:none;border-color:var(--color-primary)}
+#view-full.has-comment .full-dots{bottom:8.6rem}
+#view-full.has-comment .vf-br{bottom:11.8rem}
+.btn-full-action{
+  flex:1;max-width:200px;padding:.85rem;border-radius:var(--radius-sm);
+  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:background var(--transition),transform var(--transition),opacity var(--transition);
+}
+.btn-full-action:active{transform:scale(.97)}
+#btn-full-add{background:var(--color-green);color:#f2efe9}
+#btn-full-add:hover{background:var(--color-green-hover)}
+#btn-full-desel{background:var(--color-red);color:#f2efe9}
+#btn-full-desel:hover{background:var(--color-red-hover)}
+
+/* Dot navigator */
+.full-dots{
+  position:absolute;bottom:5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:.35rem;pointer-events:none;
+}
+.full-dot{width:5px;height:5px;border-radius:50%;background:rgba(242,239,233,.2);transition:background var(--transition),transform var(--transition)}
+.full-dot.active{background:var(--color-primary);transform:scale(1.4)}
+
+/* ===== MODAL ===== */
+#modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(5,5,5,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2rem;
+  width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;
+  position:relative;
+}
+.modal-box::before{
+  content:'';position:absolute;top:-1px;left:-1px;width:22px;height:22px;
+  border-top:1px solid var(--color-primary);border-left:1px solid var(--color-primary);
+}
+.modal-box h2{font-family:var(--font-display);font-size:1.5rem;font-weight:500;margin-bottom:.35rem;color:var(--color-text)}
+.modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
+.modal-msg{
+  background:var(--color-bg);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  font-family:var(--font-mono);font-size:.78rem;line-height:1.8;color:var(--color-text);
+  white-space:pre-wrap;word-break:break-word;margin-bottom:1.25rem;
+}
+.modal-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-copy{
+  flex:1;padding:.75rem;background:transparent;
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text);
+  transition:border-color var(--transition),color var(--transition);
+}
+.btn-copy:hover{border-color:var(--color-primary);color:var(--color-primary)}
+.btn-wa{
+  flex:1;padding:.75rem;background:var(--color-text);
+  border-radius:var(--radius-md);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#0e0e0e;
+  transition:background var(--transition);
+}
+.btn-wa:hover{background:var(--color-primary)}
+.btn-chiudi{
+  width:100%;padding:.65rem;margin-top:.75rem;
+  background:none;border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text-muted);
+  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  transition:border-color var(--transition),color var(--transition);
+}
+.btn-chiudi:hover{border-color:var(--color-text-muted);color:var(--color-text)}
+
+/* TOAST — centrato: non copre i bottoni azione */
+#toast{
+  display:none;position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:300;
+  color:#f2efe9;font-family:var(--font-mono);font-weight:400;
+  padding:.7rem 1.4rem;border-radius:var(--radius-full);
+  font-size:.75rem;letter-spacing:.06em;box-shadow:0 4px 20px rgba(0,0,0,.5);
+  white-space:nowrap;border:1px solid transparent;
+}
+#toast.error{background:#3d1f1c;border-color:var(--color-red);color:#e8b3ad}
+#toast.success{background:#1e3226;border-color:var(--color-green);color:#b8dcc5}
+#toast.info{background:#1c1c1c;border-color:var(--color-border);color:var(--color-text-muted)}
+
+/* Accessibilità */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  .photo-card,.photo-card img,.btn-full-action{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="evento-subtitle">Mattia Buoli — Selezione foto</div>
+    <h1 id="login-title">Shooting Catering</h1>
+
+    <!-- LEGENDA -->
+    <div class="legenda" id="legenda-box">
+      <div class="legenda-title">Come selezionare</div>
+      <div id="legenda-mobile" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">01</span><span>Apri <strong>Sfoglia</strong> per vedere una foto grande alla volta e scorri a destra o sinistra per cambiare immagine.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">02</span><span>Per confermare una foto usa il bottone <strong>Seleziona</strong>. Per toglierla usa il bottone <strong>Rimuovi</strong>.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">03</span><span>Quando hai finito premi <strong>Invia</strong> per generare il messaggio finale.</span></div>
+      </div>
+      <div id="legenda-desktop" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">01</span><span>Usa <strong>Griglia</strong> per vedere tutte le foto oppure <strong>Sfoglia</strong> per una visione grande.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">02</span><span>In <strong>Sfoglia</strong> puoi usare frecce laterali, zoom + / − e tastiera per muoverti più velocemente.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">03</span><span>Quando hai finito premi <strong>Invia</strong> per preparare il messaggio già pronto.</span></div>
+      </div>
+      <div class="legenda-row legenda-note"><span class="legenda-icon">—</span><span>Le immagini mostrate sono solo un'anteprima.</span></div>
+    </div>
+
+    <form id="login-form" onsubmit="return doLogin(event)">
+      <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="ByTiffany" required>
+      <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-login" type="submit">Entra</button>
+      <div id="login-error">Password errata. Riprova.</div>
+    </form>
+  </div>
+  <div class="login-brand"><a href="https://mattiabuoli.it">mattiabuoli.it</a></div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery-screen">
+  <header class="site-header">
+    <div class="header-left">
+      <span class="header-brand">Mattia Buoli — Consegna cliente</span>
+      <h1 id="header-title">Shooting Catering</h1>
+    </div>
+    <div class="counter-pill" id="counter-pill">
+      <span class="count-num" id="sel-count">0</span>
+      <span class="count-label">sel.</span>
+      <span class="count-max" id="sel-max"></span>
+    </div>
+    <button class="btn-invia is-empty" id="btn-invia" onclick="openModal()">Invia</button>
+  </header>
+
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbtn-grid" onclick="switchView('grid')">Griglia</button>
+    <button class="view-btn" id="vbtn-full" onclick="switchView('full')">Sfoglia</button>
+  </div>
+
+  <div id="view-grid">
+    <div class="gallery-grid" id="gallery-grid"></div>
+    <div class="grid-footer">Fotografie di Mattia Buoli · <a href="https://mattiabuoli.it">mattiabuoli.it</a></div>
+  </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div id="view-full">
+  <div class="full-header">
+    <span class="full-title" id="full-title">Shooting Catering</span>
+    <span class="full-counter-top" id="full-counter-top">1 / 1</span>
+    <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
+  </div>
+
+  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)" title="Precedente">‹</button>
+  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)" title="Successiva">›</button>
+
+  <div class="full-img-wrap" id="full-img-wrap">
+    <img id="full-img" src="" alt="">
+    <div class="vf-corner vf-tl"></div>
+    <div class="vf-corner vf-br"></div>
+  </div>
+
+  <!-- Zoom buttons (solo PC) -->
+  <div class="zoom-btns">
+    <button class="zoom-btn" onclick="pcZoom(0.25)" title="Zoom in">+</button>
+    <button class="zoom-btn" onclick="pcZoom(-0.25)" title="Zoom out">−</button>
+    <button class="zoom-btn" onclick="pcZoom(0)" title="Reset zoom" style="font-size:.65rem">1:1</button>
+  </div>
+
+  <div class="full-dots" id="full-dots"></div>
+
+  <div class="full-footer">
+    <div class="full-comment" id="full-comment-wrap">
+      <div class="full-comment-label">Nota (opzionale)</div>
+      <input class="full-comment-input" id="full-comment-input" type="text" placeholder="es. questa è la mia preferita…" oninput="updateFullComment(this.value)">
+    </div>
+    <div class="full-actions">
+      <button class="btn-full-action" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
+      <button class="btn-full-action" id="btn-full-add"   onclick="fullSelect()">✓ Seleziona</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <h2>Riepilogo selezione</h2>
+    <p class="modal-subtitle">Copia il messaggio e inviamelo su WhatsApp.</p>
+    <div class="modal-msg" id="modal-msg-text"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" onclick="copyMsg()">Copia</button>
+      <button class="btn-wa"   onclick="openWA()">WhatsApp</button>
+    </div>
+    <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIG — struttura IDENTICA alle gallerie attuali: il flusso
+   (Lightroom / generatore) imposta questi stessi campi come sempre.
+   Cambia solo la grafica, non i campi né i loro nomi.
+     nomeEvento    codice job (titolo mostrato + messaggio + tag Telegram)
+     maxSelezioni  limite selezione
+     whatsapp      numero destinatario
+     storageKey    chiave localStorage (= nomeEvento)
+     pwHash        btoa della password
+     foto          lista immagini (cartella ./foto/)
+     telegramToken/telegramChat/secretCode  notifica plugin Lightroom
+   ============================================================ */
+const CONFIG = {
+  nomeEvento:    "260807_ByTiffany_MulinoDiOZ",
+  maxSelezioni:  15,
+  whatsapp:      "393348493876",
+  storageKey:    "260807_ByTiffany_MulinoDiOZ",
+  pwHash:        "TXVsaW5vLk96",
+  foto:          [{"id": "PIC06280", "file": "PIC06280.jpg", "original_name": "PIC06280.JPG"}, {"id": "PIC06281", "file": "PIC06281.jpg", "original_name": "PIC06281.JPG"}, {"id": "PIC06282", "file": "PIC06282.jpg", "original_name": "PIC06282.JPG"}, {"id": "PIC06283", "file": "PIC06283.jpg", "original_name": "PIC06283.JPG"}, {"id": "PIC06284", "file": "PIC06284.jpg", "original_name": "PIC06284.JPG"}, {"id": "PIC06285", "file": "PIC06285.jpg", "original_name": "PIC06285.JPG"}, {"id": "PIC06286", "file": "PIC06286.jpg", "original_name": "PIC06286.JPG"}, {"id": "PIC06287", "file": "PIC06287.jpg", "original_name": "PIC06287.JPG"}, {"id": "PIC06288", "file": "PIC06288.jpg", "original_name": "PIC06288.JPG"}, {"id": "PIC06289", "file": "PIC06289.jpg", "original_name": "PIC06289.JPG"}, {"id": "PIC06290", "file": "PIC06290.jpg", "original_name": "PIC06290.JPG"}, {"id": "PIC06291", "file": "PIC06291.jpg", "original_name": "PIC06291.JPG"}, {"id": "PIC06292", "file": "PIC06292.jpg", "original_name": "PIC06292.JPG"}, {"id": "PIC06293", "file": "PIC06293.jpg", "original_name": "PIC06293.JPG"}, {"id": "PIC06294", "file": "PIC06294.jpg", "original_name": "PIC06294.JPG"}, {"id": "PIC06295", "file": "PIC06295.jpg", "original_name": "PIC06295.JPG"}, {"id": "PIC06296", "file": "PIC06296.jpg", "original_name": "PIC06296.JPG"}, {"id": "PIC06297", "file": "PIC06297.jpg", "original_name": "PIC06297.JPG"}, {"id": "PIC06298", "file": "PIC06298.jpg", "original_name": "PIC06298.JPG"}, {"id": "PIC06299", "file": "PIC06299.jpg", "original_name": "PIC06299.JPG"}, {"id": "PIC06300", "file": "PIC06300.jpg", "original_name": "PIC06300.JPG"}, {"id": "PIC06301", "file": "PIC06301.jpg", "original_name": "PIC06301.JPG"}, {"id": "PIC06302", "file": "PIC06302.jpg", "original_name": "PIC06302.JPG"}, {"id": "PIC06303", "file": "PIC06303.jpg", "original_name": "PIC06303.JPG"}, {"id": "PIC06304", "file": "PIC06304.jpg", "original_name": "PIC06304.JPG"}, {"id": "PIC06305", "file": "PIC06305.jpg", "original_name": "PIC06305.JPG"}, {"id": "PIC06306", "file": "PIC06306.jpg", "original_name": "PIC06306.JPG"}, {"id": "PIC06307", "file": "PIC06307.jpg", "original_name": "PIC06307.JPG"}, {"id": "PIC06308", "file": "PIC06308.jpg", "original_name": "PIC06308.JPG"}, {"id": "PIC06309", "file": "PIC06309.jpg", "original_name": "PIC06309.JPG"}, {"id": "PIC06310", "file": "PIC06310.jpg", "original_name": "PIC06310.JPG"}, {"id": "PIC06311", "file": "PIC06311.jpg", "original_name": "PIC06311.JPG"}, {"id": "PIC06312", "file": "PIC06312.jpg", "original_name": "PIC06312.JPG"}, {"id": "PIC06313", "file": "PIC06313.jpg", "original_name": "PIC06313.JPG"}, {"id": "PIC06314", "file": "PIC06314.jpg", "original_name": "PIC06314.JPG"}, {"id": "PIC06315", "file": "PIC06315.jpg", "original_name": "PIC06315.JPG"}, {"id": "PIC06316", "file": "PIC06316.jpg", "original_name": "PIC06316.JPG"}, {"id": "PIC06317", "file": "PIC06317.jpg", "original_name": "PIC06317.JPG"}, {"id": "PIC06318", "file": "PIC06318.jpg", "original_name": "PIC06318.JPG"}, {"id": "PIC06319", "file": "PIC06319.jpg", "original_name": "PIC06319.JPG"}, {"id": "PIC06320", "file": "PIC06320.jpg", "original_name": "PIC06320.JPG"}, {"id": "PIC06321", "file": "PIC06321.jpg", "original_name": "PIC06321.JPG"}, {"id": "PIC06322", "file": "PIC06322.jpg", "original_name": "PIC06322.JPG"}, {"id": "PIC06323", "file": "PIC06323.jpg", "original_name": "PIC06323.JPG"}, {"id": "PIC06324", "file": "PIC06324.jpg", "original_name": "PIC06324.JPG"}, {"id": "PIC06325", "file": "PIC06325.jpg", "original_name": "PIC06325.JPG"}, {"id": "PIC06326", "file": "PIC06326.jpg", "original_name": "PIC06326.JPG"}, {"id": "PIC06327", "file": "PIC06327.jpg", "original_name": "PIC06327.JPG"}, {"id": "PIC06328", "file": "PIC06328.jpg", "original_name": "PIC06328.JPG"}, {"id": "PIC06329", "file": "PIC06329.jpg", "original_name": "PIC06329.JPG"}, {"id": "PIC06330", "file": "PIC06330.jpg", "original_name": "PIC06330.JPG"}, {"id": "PIC06331", "file": "PIC06331.jpg", "original_name": "PIC06331.JPG"}, {"id": "PIC06332", "file": "PIC06332.jpg", "original_name": "PIC06332.JPG"}, {"id": "PIC06333", "file": "PIC06333.jpg", "original_name": "PIC06333.JPG"}, {"id": "PIC06334", "file": "PIC06334.jpg", "original_name": "PIC06334.JPG"}, {"id": "PIC06335", "file": "PIC06335.jpg", "original_name": "PIC06335.JPG"}, {"id": "PIC06336", "file": "PIC06336.jpg", "original_name": "PIC06336.JPG"}, {"id": "PIC06337", "file": "PIC06337.jpg", "original_name": "PIC06337.JPG"}, {"id": "PIC06338", "file": "PIC06338.jpg", "original_name": "PIC06338.JPG"}, {"id": "PIC06339", "file": "PIC06339.jpg", "original_name": "PIC06339.JPG"}, {"id": "PIC06340", "file": "PIC06340.jpg", "original_name": "PIC06340.JPG"}, {"id": "PIC06341", "file": "PIC06341.jpg", "original_name": "PIC06341.JPG"}, {"id": "PIC06342", "file": "PIC06342.jpg", "original_name": "PIC06342.JPG"}, {"id": "PIC06343", "file": "PIC06343.jpg", "original_name": "PIC06343.JPG"}, {"id": "PIC06344", "file": "PIC06344.jpg", "original_name": "PIC06344.JPG"}, {"id": "PIC06345", "file": "PIC06345.jpg", "original_name": "PIC06345.JPG"}, {"id": "PIC06346", "file": "PIC06346.jpg", "original_name": "PIC06346.JPG"}, {"id": "PIC06347", "file": "PIC06347.jpg", "original_name": "PIC06347.JPG"}, {"id": "PIC06348", "file": "PIC06348.jpg", "original_name": "PIC06348.JPG"}, {"id": "PIC06349", "file": "PIC06349.jpg", "original_name": "PIC06349.JPG"}, {"id": "PIC06350", "file": "PIC06350.jpg", "original_name": "PIC06350.JPG"}, {"id": "PIC06351", "file": "PIC06351.jpg", "original_name": "PIC06351.JPG"}, {"id": "PIC06352", "file": "PIC06352.jpg", "original_name": "PIC06352.JPG"}, {"id": "PIC06353", "file": "PIC06353.jpg", "original_name": "PIC06353.JPG"}, {"id": "PIC06354", "file": "PIC06354.jpg", "original_name": "PIC06354.JPG"}, {"id": "PIC06355", "file": "PIC06355.jpg", "original_name": "PIC06355.JPG"}, {"id": "PIC06356", "file": "PIC06356.jpg", "original_name": "PIC06356.JPG"}, {"id": "PIC06357", "file": "PIC06357.jpg", "original_name": "PIC06357.JPG"}, {"id": "PIC06358", "file": "PIC06358.jpg", "original_name": "PIC06358.JPG"}, {"id": "PIC06359", "file": "PIC06359.jpg", "original_name": "PIC06359.JPG"}, {"id": "PIC06360", "file": "PIC06360.jpg", "original_name": "PIC06360.JPG"}, {"id": "PIC06361", "file": "PIC06361.jpg", "original_name": "PIC06361.JPG"}, {"id": "PIC06362", "file": "PIC06362.jpg", "original_name": "PIC06362.JPG"}, {"id": "PIC06363", "file": "PIC06363.jpg", "original_name": "PIC06363.JPG"}, {"id": "PIC06364", "file": "PIC06364.jpg", "original_name": "PIC06364.JPG"}, {"id": "PIC06365", "file": "PIC06365.jpg", "original_name": "PIC06365.JPG"}, {"id": "PIC06366", "file": "PIC06366.jpg", "original_name": "PIC06366.JPG"}, {"id": "PIC06367", "file": "PIC06367.jpg", "original_name": "PIC06367.JPG"}, {"id": "PIC06368", "file": "PIC06368.jpg", "original_name": "PIC06368.JPG"}, {"id": "PIC06369", "file": "PIC06369.jpg", "original_name": "PIC06369.JPG"}, {"id": "PIC06370", "file": "PIC06370.jpg", "original_name": "PIC06370.JPG"}, {"id": "PIC06371", "file": "PIC06371.jpg", "original_name": "PIC06371.JPG"}, {"id": "PIC06372", "file": "PIC06372.jpg", "original_name": "PIC06372.JPG"}, {"id": "PIC06373", "file": "PIC06373.jpg", "original_name": "PIC06373.JPG"}, {"id": "PIC06374", "file": "PIC06374.jpg", "original_name": "PIC06374.JPG"}, {"id": "PIC06375", "file": "PIC06375.jpg", "original_name": "PIC06375.JPG"}, {"id": "PIC06376", "file": "PIC06376.jpg", "original_name": "PIC06376.JPG"}, {"id": "PIC06377", "file": "PIC06377.jpg", "original_name": "PIC06377.JPG"}, {"id": "PIC06378", "file": "PIC06378.jpg", "original_name": "PIC06378.JPG"}, {"id": "PIC06379", "file": "PIC06379.jpg", "original_name": "PIC06379.JPG"}, {"id": "PIC06380", "file": "PIC06380.jpg", "original_name": "PIC06380.JPG"}, {"id": "PIC06381", "file": "PIC06381.jpg", "original_name": "PIC06381.JPG"}, {"id": "PIC06382", "file": "PIC06382.jpg", "original_name": "PIC06382.JPG"}, {"id": "PIC06383", "file": "PIC06383.jpg", "original_name": "PIC06383.JPG"}, {"id": "PIC06384", "file": "PIC06384.jpg", "original_name": "PIC06384.JPG"}, {"id": "PIC06385", "file": "PIC06385.jpg", "original_name": "PIC06385.JPG"}, {"id": "PIC06386", "file": "PIC06386.jpg", "original_name": "PIC06386.JPG"}, {"id": "PIC06387", "file": "PIC06387.jpg", "original_name": "PIC06387.JPG"}, {"id": "PIC06388", "file": "PIC06388.jpg", "original_name": "PIC06388.JPG"}, {"id": "PIC06389", "file": "PIC06389.jpg", "original_name": "PIC06389.JPG"}, {"id": "PIC06390", "file": "PIC06390.jpg", "original_name": "PIC06390.JPG"}, {"id": "PIC06391", "file": "PIC06391.jpg", "original_name": "PIC06391.JPG"}, {"id": "PIC06392", "file": "PIC06392.jpg", "original_name": "PIC06392.JPG"}, {"id": "PIC06393", "file": "PIC06393.jpg", "original_name": "PIC06393.JPG"}, {"id": "PIC06394", "file": "PIC06394.jpg", "original_name": "PIC06394.JPG"}, {"id": "PIC06395", "file": "PIC06395.jpg", "original_name": "PIC06395.JPG"}, {"id": "PIC06396", "file": "PIC06396.jpg", "original_name": "PIC06396.JPG"}, {"id": "PIC06397", "file": "PIC06397.jpg", "original_name": "PIC06397.JPG"}, {"id": "PIC06398", "file": "PIC06398.jpg", "original_name": "PIC06398.JPG"}, {"id": "PIC06399", "file": "PIC06399.jpg", "original_name": "PIC06399.JPG"}, {"id": "PIC06400", "file": "PIC06400.jpg", "original_name": "PIC06400.JPG"}, {"id": "PIC06401", "file": "PIC06401.jpg", "original_name": "PIC06401.JPG"}, {"id": "PIC06402", "file": "PIC06402.jpg", "original_name": "PIC06402.JPG"}, {"id": "PIC06403", "file": "PIC06403.jpg", "original_name": "PIC06403.JPG"}, {"id": "PIC06404", "file": "PIC06404.jpg", "original_name": "PIC06404.JPG"}, {"id": "PIC06405", "file": "PIC06405.jpg", "original_name": "PIC06405.JPG"}, {"id": "PIC06406", "file": "PIC06406.jpg", "original_name": "PIC06406.JPG"}, {"id": "PIC06407", "file": "PIC06407.jpg", "original_name": "PIC06407.JPG"}, {"id": "PIC06408", "file": "PIC06408.jpg", "original_name": "PIC06408.JPG"}, {"id": "PIC06409", "file": "PIC06409.jpg", "original_name": "PIC06409.JPG"}, {"id": "PIC06410", "file": "PIC06410.jpg", "original_name": "PIC06410.JPG"}, {"id": "PIC06411", "file": "PIC06411.jpg", "original_name": "PIC06411.JPG"}],
+  telegramToken: "8883896482:AAG0Z3sGZYoS_j-u26Wom__K5uUwmSnxamg",
+  telegramChat:  "987017339",
+  secretCode:    "827dfbc744706868"
+};
+
+const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
+
+// Titolo mostrato al cliente: ricavato da nomeEvento (campo che il flusso
+// già imposta). Puramente estetico — toglie il prefisso data e gli
+// underscore, così "250815_NomeEvento" diventa "Nome Evento".
+function prettyEventName(raw) {
+  try {
+    const s = String(raw)
+      .replace(/^\d{6,8}[_-]/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .trim();
+    return s || String(raw);
+  } catch (e) { return String(raw); }
+}
+(function () {
+  const t = prettyEventName(CONFIG.nomeEvento);
+  document.getElementById('login-title').textContent = t;
+  document.getElementById('header-title').textContent = t;
+  document.getElementById('full-title').textContent = t;
+  document.title = t + ' — Selezione Foto | Mattia Buoli';
+})();
+
+// Se qualcuno ha già scelto da questo dispositivo, il suo nome ha priorità
+// sul nome suggerito dal fotografo (così ognuno ritrova il proprio).
+(function () {
+  try {
+    const saved = localStorage.getItem(CONFIG.storageKey + '_name');
+    if (saved) document.getElementById('name-input').value = saved;
+  } catch (err) {}
+})();
+
+// ===== LOGIN =====
+function doLogin(e) {
+  e.preventDefault();
+  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
+  if (encoded === CONFIG.pwHash) {
+    state.personName = (document.getElementById('name-input').value || '').trim() || 'Cliente';
+    try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('gallery-screen').style.display = 'block';
+    buildGallery();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+  return false;
+}
+
+// ===== BUILD GALLERY =====
+function buildGallery() {
+  const grid = document.getElementById('gallery-grid');
+  CONFIG.foto.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.dataset.id = f.id;
+    card.innerHTML = `
+      <div class="card-inner">
+        <img data-src="./foto/${f.file}" alt="${f.id}">
+        <div class="comment-wrap">
+          <div class="comment-label">Nota (opzionale)</div>
+          <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita…" oninput="updateComment('${f.id}',this.value)"></textarea>
+        </div>
+      </div>
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor"/></svg></div>`;
+    const img = card.querySelector('img');
+    img.addEventListener('load', () => { sizeCard(card); loadVisibleImages(); });
+    img.addEventListener('error', () => sizeCard(card));
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('comment-input')) return;
+      toggleSelect(f.id, f.file, card);
+    });
+    card.addEventListener('dblclick', () => openFull(i));
+    let lt;
+    card.addEventListener('touchstart', () => { lt = setTimeout(() => openFull(i), 500); }, {passive:true});
+    card.addEventListener('touchend',   () => clearTimeout(lt), {passive:true});
+    card.addEventListener('touchmove',  () => clearTimeout(lt), {passive:true});
+    grid.appendChild(card);
+  });
+  buildDots();
+  loadSelections();
+  sizeAllCards();
+  loadVisibleImages();
+}
+
+// ===== MOSAICO IN ORDINE CRONOLOGICO =====
+// Ogni card occupa il numero di righe della griglia pari alla sua
+// altezza reale: l'ordine del DOM (= cronologico) diventa ordine di
+// lettura, da sinistra a destra riga per riga.
+function gridMetrics() {
+  const grid = document.getElementById('gallery-grid');
+  const cs = getComputedStyle(grid);
+  return { rowH: parseFloat(cs.gridAutoRows) || 8, gap: parseFloat(cs.rowGap) || 0 };
+}
+
+function setSpan(card, h) {
+  const m = gridMetrics();
+  card.style.gridRowEnd = 'span ' + Math.max(1, Math.ceil((h + m.gap) / (m.rowH + m.gap)));
+}
+
+function sizeCard(card) {
+  const img = card.querySelector('img');
+  // foto non ancora caricata: altezza stimata, corretta poi al load
+  if (img && img.dataset.src) {
+    setSpan(card, (card.clientWidth || 200) * 1.05);
+    return;
+  }
+  const inner = card.querySelector('.card-inner');
+  if (!inner) return;
+  setSpan(card, inner.getBoundingClientRect().height + 2); // +2 per i bordi della card
+}
+
+function sizeAllCards() {
+  document.querySelectorAll('.photo-card').forEach(sizeCard);
+}
+
+// Lazy loading a eventi scroll: funziona anche dove il lazy nativo
+// e IntersectionObserver sono inaffidabili (webview embedded).
+function loadVisibleImages() {
+  const ahead = window.innerHeight + 800;
+  document.querySelectorAll('.photo-card img[data-src]').forEach(img => {
+    const r = img.closest('.photo-card').getBoundingClientRect();
+    if (r.top < ahead && r.bottom > -800) {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    }
+  });
+}
+
+let _rsz = null;
+window.addEventListener('resize', () => {
+  if (_rsz) clearTimeout(_rsz);
+  _rsz = setTimeout(() => { sizeAllCards(); loadVisibleImages(); }, 150);
+});
+
+let _scr = null;
+window.addEventListener('scroll', () => {
+  if (_scr) return;
+  _scr = setTimeout(() => { _scr = null; loadVisibleImages(); }, 120);
+}, { passive: true });
+
+window.addEventListener('load', () => { sizeAllCards(); loadVisibleImages(); });
+
+// ===== PERSISTENZA SELEZIONE (sopravvive a chiusura browser / cambio app) =====
+function saveSelections() {
+  try { localStorage.setItem(CONFIG.storageKey + '_sel', JSON.stringify(state.selections)); } catch (err) {}
+}
+
+function loadSelections() {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(CONFIG.storageKey + '_sel') || '{}'); } catch (err) { saved = {}; }
+  let restored = 0;
+  Object.keys(saved).forEach(id => {
+    const f = CONFIG.foto.find(x => x.id === id);
+    if (!f) return;   // foto non più presente in questa galleria: ignora
+    state.selections[id] = { file: f.file, comment: saved[id].comment || '' };
+    const card = document.querySelector(`.photo-card[data-id="${id}"]`);
+    if (card) {
+      card.classList.add('selected');
+      const ta = card.querySelector('.comment-input');
+      if (ta) ta.value = state.selections[id].comment;
+    }
+    restored++;
+  });
+  if (restored > 0) showToast(`Ripresa la selezione: ${restored} foto già scelte`, 'info');
+  updateCounter();
+}
+
+// ===== SELEZIONE =====
+function toggleSelect(id, file, card) {
+  if (state.selections[id]) {
+    delete state.selections[id];
+    card.classList.remove('selected');
+  } else {
+    const count = Object.keys(state.selections).length;
+    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
+      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+    }
+    state.selections[id] = { file, comment: '' };
+    card.classList.add('selected');
+  }
+  sizeCard(card);
+  updateCounter();
+  updateFullFooter();
+  saveSelections();
+}
+
+function updateComment(id, val) {
+  if (state.selections[id]) state.selections[id].comment = val.trim();
+  saveSelections();
+}
+
+function updateCounter() {
+  const count = Object.keys(state.selections).length;
+  const max = CONFIG.maxSelezioni;
+  document.getElementById('sel-count').textContent = count;
+  document.getElementById('sel-max').textContent = max > 0 ? `/ ${max}` : '';
+  document.getElementById('counter-pill').classList.toggle('at-limit', max > 0 && count >= max);
+  document.getElementById('btn-invia').classList.toggle('is-empty', count === 0);
+}
+
+// ===== VIEW SWITCH =====
+function switchView(v) {
+  const isGrid = v === 'grid';
+  document.getElementById('view-grid').style.display = isGrid ? 'block' : 'none';
+  document.getElementById('view-full').classList.toggle('active', !isGrid);
+  document.getElementById('vbtn-grid').classList.toggle('active', isGrid);
+  document.getElementById('vbtn-full').classList.toggle('active', !isGrid);
+  if (!isGrid) { resetZoom(); renderFull(state.fullIdx); }
+}
+
+function openFull(idx) {
+  state.fullIdx = idx;
+  switchView('full');
+}
+
+// ===== FULLSCREEN =====
+function buildDots() {
+  const wrap = document.getElementById('full-dots');
+  const n = CONFIG.foto.length;
+  if (n > 40) { wrap.style.display = 'none'; return; }
+  wrap.innerHTML = '';
+  CONFIG.foto.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'full-dot' + (i === 0 ? ' active' : '');
+    wrap.appendChild(d);
+  });
+}
+
+function updateDots(idx) {
+  document.querySelectorAll('.full-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function resetZoom() {
+  state.zoom = 1; state.panX = 0; state.panY = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  document.getElementById('full-img').style.transform = `translate(${state.panX}px,${state.panY}px) scale(${state.zoom})`;
+}
+
+function renderFull(idx) {
+  const f = CONFIG.foto[idx];
+  if (!f) return;
+  resetZoom();
+  document.getElementById('full-img').src = `./foto/${f.file}`;
+  document.getElementById('full-img').alt = f.id;
+  document.getElementById('full-counter-top').textContent = `N°${String(idx + 1).padStart(2, '0')} / ${CONFIG.foto.length}`;
+  updateDots(idx);
+  updateFullFooter();
+}
+
+function updateFullFooter() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const isSel = !!state.selections[f.id];
+  document.getElementById('btn-full-add').style.display   = isSel ? 'none' : 'flex';
+  document.getElementById('btn-full-desel').style.display = isSel ? 'flex' : 'none';
+  document.getElementById('view-full').classList.toggle('has-comment', isSel);
+  const inp = document.getElementById('full-comment-input');
+  if (inp) inp.value = isSel ? (state.selections[f.id].comment || '') : '';
+}
+
+// Nota scritta in fullscreen: sincronizzata con la card in griglia
+function updateFullComment(val) {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f || !state.selections[f.id]) return;
+  state.selections[f.id].comment = val.trim();
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) {
+    const ta = card.querySelector('.comment-input');
+    if (ta) ta.value = val;
+  }
+  saveSelections();
+}
+
+function fullNav(dir) {
+  const next = state.fullIdx + dir;
+  if (next < 0 || next >= CONFIG.foto.length) return;
+  state.fullIdx = next;
+  renderFull(next);
+}
+
+function fullSelect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const count = Object.keys(state.selections).length;
+  if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni && !state.selections[f.id]) {
+    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+  }
+  state.selections[f.id] = { file: f.file, comment: '' };
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) { card.classList.add('selected'); sizeCard(card); }
+  updateCounter();
+  updateFullFooter();
+  saveSelections();
+  showToast('✓ Selezionata', 'success');
+  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 300);
+}
+
+function fullDeselect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  delete state.selections[f.id];
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) { card.classList.remove('selected'); sizeCard(card); }
+  updateCounter();
+  updateFullFooter();
+  saveSelections();
+  showToast('Rimossa', 'info');
+}
+
+// ===== ZOOM PC =====
+function pcZoom(delta) {
+  if (delta === 0) { resetZoom(); return; }
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}
+
+// Scroll wheel zoom (PC)
+document.getElementById('full-img-wrap').addEventListener('wheel', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  e.preventDefault();
+  const delta = e.deltaY < 0 ? 0.15 : -0.15;
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}, {passive: false});
+
+// Drag to pan (PC, when zoomed)
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let dragging = false, startX, startY, startPanX, startPanY;
+  wrap.addEventListener('mousedown', e => {
+    if (state.zoom <= 1) return;
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    startPanX = state.panX; startPanY = state.panY;
+    wrap.classList.add('grabbing');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    state.panX = startPanX + (e.clientX - startX);
+    state.panY = startPanY + (e.clientY - startY);
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remove('grabbing'); });
+})();
+
+// ===== SWIPE TOUCH (solo navigazione + selezione via bottoni) =====
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let sx=0, sy=0, lastDist=0, pinching=false, startPanX=0, startPanY=0;
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      pinching = true;
+      lastDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    } else if (e.touches.length === 1) {
+      pinching = false;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      startPanX = state.panX; startPanY = state.panY;
+    }
+  }, {passive:true});
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && pinching) {
+      const d = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      state.zoom = Math.min(Math.max(state.zoom * (d / lastDist), 1), 4);
+      lastDist = d;
+      applyTransform();
+      e.preventDefault();
+    } else if (e.touches.length === 1 && state.zoom > 1) {
+      state.panX = startPanX + (e.touches[0].clientX - sx);
+      state.panY = startPanY + (e.touches[0].clientY - sy);
+      applyTransform();
+      e.preventDefault();
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', e => {
+    if (pinching) { pinching = false; return; }
+    if (state.zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (dy > 80 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+      switchView('grid');   // Swipe verso il basso = torna alla griglia
+      return;
+    }
+    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 45) return;
+    // Swipe sinistra o destra = naviga soltanto
+    fullNav(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+// ===== TASTIERA PC =====
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  // Non intercettare la tastiera mentre si scrive una nota
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); fullNav(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); fullNav(-1); }
+  if (e.key === 'Enter' || e.key === ' ')               { e.preventDefault(); fullSelect(); }
+  if (e.key === 'Escape')                               switchView('grid');
+  if (e.key === '+' || e.key === '=')                   pcZoom(0.25);
+  if (e.key === '-')                                    pcZoom(-0.25);
+  if (e.key === '0')                                    pcZoom(0);
+});
+
+// ===== MESSAGGIO =====
+function buildMessage() {
+  let msg = `${CONFIG.nomeEvento}\n\n`;
+  Object.entries(state.selections).forEach(([id, s]) => {
+    msg += s.comment ? `${id} — ${s.comment}\n` : `${id}\n`;
+  });
+  return msg.trimEnd();
+}
+
+function openModal() {
+  if (Object.keys(state.selections).length === 0) {
+    showToast('Seleziona almeno una foto prima di inviare', 'error');
+    return;
+  }
+  document.getElementById('modal-msg-text').textContent = buildMessage();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+function copyMsg() {
+  sendToTelegram();
+  const t = document.getElementById('modal-msg-text').textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
+  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
+}
+function openWA() {
+  sendToTelegram();
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
+}
+
+// ===== INVIO AUTOMATICO (silenzioso, in parallelo a WhatsApp) =====
+// Manda la selezione al canale Telegram così il plugin Lightroom la tagga da solo.
+// Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
+let _tgLastSig = null;
+function sendToTelegram() {
+  if (!CONFIG.telegramToken || CONFIG.telegramToken.indexOf('{{') === 0) return;
+  const ids = Object.keys(state.selections);
+  if (ids.length === 0) return;
+  const sig = ids.slice().sort().join(',');
+  if (sig === _tgLastSig) return;   // selezione invariata dall'ultimo invio: non rimando
+  _tgLastSig = sig;
+  const text = 'SELEZIONE|JOB=' + CONFIG.nomeEvento + '|NOME=' + state.personName + '|FOTO=' + ids.join(' ') + '|SECRET=' + CONFIG.secretCode;
+  const url = 'https://api.telegram.org/bot' + CONFIG.telegramToken + '/sendMessage'
+    + '?chat_id=' + encodeURIComponent(CONFIG.telegramChat)
+    + '&text=' + encodeURIComponent(text);
+  fetch(url).catch(function () {});
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ===== TOAST =====
+let _tt = null;
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type; t.style.display = 'block';
+  if (_tt) clearTimeout(_tt);
+  _tt = setTimeout(() => { t.style.display = 'none'; }, 2200);
+}
+
+
+(function(){
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 820;
+  const mob = document.getElementById('legenda-mobile');
+  const desk = document.getElementById('legenda-desktop');
+  if (mob && desk) {
+    mob.style.display = isMobile ? 'block' : 'none';
+    desk.style.display = isMobile ? 'none' : 'block';
+  }
+})();
+
+// Best-effort protection against casual download/copy
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['c','s','u','p'].includes(k)) e.preventDefault();
+    if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k))) e.preventDefault();
+  });
+})();
+
+</script>
+</body>
+</html>
