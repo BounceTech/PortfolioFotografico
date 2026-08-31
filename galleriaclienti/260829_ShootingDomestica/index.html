@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>260829_ShootingDomestica — Selezione Foto</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0e0e">
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #0e0e0e;
+  --color-surface: #151515;
+  --color-surface-2: #1c1c1c;
+  --color-border: #262626;
+  --color-text: #f2efe9;
+  --color-text-muted: #9b968e;
+  --color-primary: #c9a97c;
+  --color-primary-hover: #dcbf94;
+  --color-green: #4a7a5c;
+  --color-green-hover: #558a68;
+  --color-red: #8a4a44;
+  --color-red-hover: #9c5850;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-full: 9999px;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --transition: 220ms cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+::selection{background:var(--color-primary);color:#0e0e0e}
+
+/* Grana pellicola */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== LOGIN ===== */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;padding:2rem;position:relative;
+}
+.login-card{
+  width:100%;max-width:440px;text-align:center;
+  position:relative;padding:3rem 2.5rem;
+}
+.login-card::before,.login-card::after{
+  content:'';position:absolute;width:26px;height:26px;
+}
+.login-card::before{top:0;left:0;border-top:1px solid var(--color-primary);border-left:1px solid var(--color-primary)}
+.login-card::after{bottom:0;right:0;border-bottom:1px solid var(--color-primary);border-right:1px solid var(--color-primary)}
+.login-card .evento-subtitle{
+  font-family:var(--font-mono);font-size:.68rem;color:var(--color-primary);margin-bottom:1rem;
+  text-transform:uppercase;letter-spacing:.22em;
+}
+.login-card h1{
+  font-family:var(--font-display);font-size:clamp(1.8rem,6vw,2.6rem);
+  font-weight:500;letter-spacing:-.01em;margin-bottom:.4rem;color:var(--color-text);
+  word-break:break-word;hyphens:auto;line-height:1.15;
+}
+.evento-data{
+  font-family:var(--font-mono);font-size:.68rem;color:var(--color-text-muted);
+  text-transform:uppercase;letter-spacing:.18em;margin-bottom:1.75rem;
+}
+
+/* LEGENDA LOGIN */
+.legenda{
+  border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);
+  padding:1.1rem .25rem;text-align:left;margin-bottom:1.75rem;
+}
+.legenda-title{
+  font-family:var(--font-mono);font-size:.66rem;font-weight:400;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--color-primary);margin-bottom:.75rem;
+}
+.legenda-row{
+  display:flex;align-items:flex-start;gap:.6rem;
+  font-size:.8rem;color:var(--color-text-muted);margin-bottom:.5rem;line-height:1.5;
+}
+.legenda-row:last-child{margin-bottom:0}
+.legenda-row strong{color:var(--color-text);font-weight:500}
+.legenda-note{margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--color-border)}
+.legenda-icon{font-family:var(--font-mono);font-size:.75rem;color:var(--color-primary);flex-shrink:0;margin-top:.1rem}
+
+.login-input{
+  width:100%;padding:.8rem 1rem;
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-sm);color:var(--color-text);
+  font-size:1rem;font-family:var(--font-body);margin-bottom:.9rem;
+  transition:border-color var(--transition);
+}
+.login-input::placeholder{color:#5c5852}
+.login-input:focus{outline:none;border-color:var(--color-primary)}
+.btn-login{
+  width:100%;padding:.9rem;background:var(--color-text);
+  color:#0e0e0e;font-weight:600;font-size:.78rem;
+  border-radius:var(--radius-sm);letter-spacing:.14em;text-transform:uppercase;
+  transition:background var(--transition);
+}
+.btn-login:hover{background:var(--color-primary)}
+.btn-login:active{transform:scale(.985)}
+#login-error{display:none;color:#d98a83;font-size:.82rem;margin-top:.8rem;font-family:var(--font-mono)}
+.login-brand{
+  position:absolute;bottom:1.4rem;left:0;right:0;text-align:center;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#4a4741;
+}
+.login-brand a{color:inherit;text-decoration:none}
+.login-brand a:hover{color:var(--color-primary)}
+
+/* ===== GALLERY SCREEN ===== */
+#gallery-screen{display:none}
+
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,14,14,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-border);
+  padding:.8rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+}
+.header-left{min-width:0;flex:1}
+.header-left .header-brand{
+  font-family:var(--font-mono);font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--color-primary);display:block;line-height:1.4;
+}
+.header-left h1{
+  font-family:var(--font-display);font-size:clamp(1rem,2.4vw,1.35rem);font-weight:500;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--color-text);line-height:1.25;
+}
+.counter-pill{
+  display:flex;align-items:center;gap:.4rem;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);padding:.35rem .9rem;
+  white-space:nowrap;flex-shrink:0;font-family:var(--font-mono);
+}
+.counter-pill .count-num{font-size:.95rem;font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums}
+.counter-pill .count-label{font-size:.62rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.1em}
+.counter-pill .count-max{font-size:.72rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+.counter-pill.at-limit .count-num{color:#d98a83}
+.btn-invia{
+  padding:.5rem 1.15rem;background:var(--color-text);color:#0e0e0e;
+  font-weight:600;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  border-radius:var(--radius-full);
+  transition:background var(--transition),opacity var(--transition);flex-shrink:0;
+}
+.btn-invia:hover{background:var(--color-primary)}
+.btn-invia.is-empty{opacity:.35}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:.4rem;padding:.85rem 1.2rem .25rem}
+.view-btn{
+  padding:.4rem .95rem;border-radius:var(--radius-full);
+  font-family:var(--font-mono);font-size:.64rem;font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--color-border);
+  color:var(--color-text-muted);
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+}
+.view-btn.active{background:var(--color-primary);color:#0e0e0e;border-color:var(--color-primary);font-weight:700}
+
+/* ===== GRID VIEW =====
+   Mosaico in ordine di lettura: le foto seguono la cronologia
+   da sinistra a destra, riga per riga (serpentina), mantenendo
+   le proporzioni native. Le altezze sono gestite via grid-row span. */
+#view-grid{padding:1rem 1.2rem 2rem}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  grid-auto-rows:8px;
+  gap:.6rem;
+}
+@media(max-width:600px){
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.5rem}
+}
+
+.photo-card{
+  position:relative;cursor:pointer;align-self:start;
+  border-radius:var(--radius-sm);overflow:hidden;border:1px solid transparent;
+  background:var(--color-surface);
+  transition:border-color var(--transition),transform var(--transition),opacity var(--transition);
+}
+.photo-card:hover{transform:translateY(-2px)}
+.photo-card.selected{border-color:var(--color-primary)}
+.photo-card img{display:block;width:100%;height:auto;pointer-events:none;user-select:none;transition:opacity var(--transition)}
+.photo-card::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-family:var(--font-mono);
+  font-size:clamp(.7rem,2.4vw,1rem);font-weight:700;letter-spacing:.25em;
+  color:rgba(242,239,233,0.5);text-shadow:0 1px 3px rgba(0,0,0,.6);
+  border:1px solid rgba(242,239,233,.4);padding:.35em .9em .35em 1.15em;
+  background:rgba(14,14,14,.3);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.photo-card .tick{
+  position:absolute;top:.45rem;right:.45rem;width:24px;height:24px;border-radius:50%;
+  background:rgba(14,14,14,.55);border:1px solid rgba(242,239,233,.35);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);pointer-events:none;
+}
+.photo-card.selected .tick{background:var(--color-primary);border-color:var(--color-primary)}
+.tick svg{display:none;width:12px;height:12px;stroke:#0e0e0e;stroke-width:3}
+.photo-card.selected .tick svg{display:block}
+.comment-wrap{display:none;padding:.5rem .6rem .6rem;background:var(--color-surface-2);border-top:1px solid var(--color-border)}
+.photo-card.selected .comment-wrap{display:block}
+.comment-label{font-family:var(--font-mono);font-size:.58rem;color:var(--color-text-muted);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.14em}
+.comment-input{
+  width:100%;padding:.4rem .6rem;background:rgba(242,239,233,.05);
+  border:1px solid var(--color-border);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.76rem;resize:none;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.comment-input::placeholder{color:#5c5852}
+.comment-input:focus{outline:none;border-color:var(--color-primary)}
+
+/* Footer griglia */
+.grid-footer{
+  text-align:center;padding:1.5rem 1.2rem 2.5rem;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#4a4741;
+}
+.grid-footer a{color:inherit;text-decoration:none}
+.grid-footer a:hover{color:var(--color-primary)}
+
+/* ===== FULLSCREEN VIEW ===== */
+#view-full{
+  display:none;position:fixed;inset:0;z-index:50;
+  background:#050505;flex-direction:column;touch-action:none;
+}
+#view-full.active{display:flex}
+
+.full-header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  padding:.8rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(5,5,5,.8) 0%,transparent 100%);
+  gap:.5rem;
+}
+.full-header .full-title{
+  font-family:var(--font-display);font-size:.95rem;font-weight:500;color:rgba(242,239,233,.8);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.full-counter-top{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;color:var(--color-text-muted);
+  white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums;
+}
+.full-close{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(242,239,233,.08);border:1px solid var(--color-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--color-text);font-size:.9rem;flex-shrink:0;
+  transition:border-color var(--transition),color var(--transition);
+}
+.full-close:hover{border-color:var(--color-primary);color:var(--color-primary)}
+
+/* Immagine centrale con mirino */
+.full-img-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;cursor:grab;
+}
+.full-img-wrap.grabbing{cursor:grabbing}
+#full-img{
+  max-width:100%;max-height:100%;object-fit:contain;
+  user-select:none;-webkit-user-drag:none;
+  will-change:transform;transform-origin:center center;
+  transition:none;
+}
+.full-img-wrap::after{
+  content:'ANTEPRIMA';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-family:var(--font-mono);
+  font-size:clamp(1.1rem,4vw,2rem);font-weight:700;letter-spacing:.3em;
+  color:rgba(242,239,233,0.38);text-shadow:0 1px 4px rgba(0,0,0,.7);
+  border:1px solid rgba(242,239,233,.3);padding:.35em .9em .35em 1.2em;
+  background:rgba(14,14,14,.28);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.vf-corner{position:absolute;width:24px;height:24px;pointer-events:none;z-index:5}
+.vf-tl{top:3.4rem;left:1rem;border-top:1px solid var(--color-primary);border-left:1px solid var(--color-primary)}
+.vf-br{bottom:8.2rem;right:1rem;border-bottom:1px solid var(--color-primary);border-right:1px solid var(--color-primary)}
+
+/* Frecce PC */
+.full-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(14,14,14,.6);border:1px solid var(--color-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--color-text);font-size:1.4rem;
+  transition:border-color var(--transition),color var(--transition);
+}
+.full-arrow:hover{border-color:var(--color-primary);color:var(--color-primary)}
+#arrow-prev{left:.75rem}
+#arrow-next{right:.75rem}
+@media(max-width:700px){.full-arrow{display:none}}
+
+/* Zoom buttons PC */
+.zoom-btns{
+  position:absolute;bottom:7rem;right:1rem;z-index:10;
+  display:flex;flex-direction:column;gap:.4rem;
+}
+.zoom-btn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:rgba(14,14,14,.6);border:1px solid var(--color-border);
+  color:var(--color-text);font-family:var(--font-mono);
+  font-size:1.1rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--transition),color var(--transition);
+}
+.zoom-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
+@media(max-width:700px){.zoom-btns{display:none}}
+
+/* Footer azioni fullscreen */
+.full-footer{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:.9rem 1.2rem 2rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;
+  background:linear-gradient(to top,rgba(5,5,5,.85) 0%,transparent 100%);
+}
+.full-actions{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%}
+
+/* Nota in fullscreen (visibile quando la foto è selezionata) */
+.full-comment{display:none;width:100%;max-width:416px;text-align:left}
+#view-full.has-comment .full-comment{display:block}
+.full-comment-label{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--color-text-muted);
+  margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.14em;
+}
+.full-comment-input{
+  width:100%;padding:.6rem .75rem;background:rgba(20,20,20,.9);
+  border:1px solid var(--color-border);border-radius:var(--radius-sm);
+  color:var(--color-text);font-size:.85rem;font-family:var(--font-body);
+  transition:border-color var(--transition);
+}
+.full-comment-input::placeholder{color:#5c5852}
+.full-comment-input:focus{outline:none;border-color:var(--color-primary)}
+#view-full.has-comment .full-dots{bottom:8.6rem}
+#view-full.has-comment .vf-br{bottom:11.8rem}
+.btn-full-action{
+  flex:1;max-width:200px;padding:.85rem;border-radius:var(--radius-sm);
+  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:background var(--transition),transform var(--transition),opacity var(--transition);
+}
+.btn-full-action:active{transform:scale(.97)}
+#btn-full-add{background:var(--color-green);color:#f2efe9}
+#btn-full-add:hover{background:var(--color-green-hover)}
+#btn-full-desel{background:var(--color-red);color:#f2efe9}
+#btn-full-desel:hover{background:var(--color-red-hover)}
+
+/* Dot navigator */
+.full-dots{
+  position:absolute;bottom:5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:.35rem;pointer-events:none;
+}
+.full-dot{width:5px;height:5px;border-radius:50%;background:rgba(242,239,233,.2);transition:background var(--transition),transform var(--transition)}
+.full-dot.active{background:var(--color-primary);transform:scale(1.4)}
+
+/* ===== MODAL ===== */
+#modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(5,5,5,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:2rem;
+  width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;
+  position:relative;
+}
+.modal-box::before{
+  content:'';position:absolute;top:-1px;left:-1px;width:22px;height:22px;
+  border-top:1px solid var(--color-primary);border-left:1px solid var(--color-primary);
+}
+.modal-box h2{font-family:var(--font-display);font-size:1.5rem;font-weight:500;margin-bottom:.35rem;color:var(--color-text)}
+.modal-subtitle{font-size:.85rem;color:var(--color-text-muted);margin-bottom:1.5rem}
+.modal-msg{
+  background:var(--color-bg);border:1px solid var(--color-border);
+  border-radius:var(--radius-md);padding:1rem;
+  font-family:var(--font-mono);font-size:.78rem;line-height:1.8;color:var(--color-text);
+  white-space:pre-wrap;word-break:break-word;margin-bottom:1.25rem;
+}
+.modal-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-copy{
+  flex:1;padding:.75rem;background:transparent;
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text);
+  transition:border-color var(--transition),color var(--transition);
+}
+.btn-copy:hover{border-color:var(--color-primary);color:var(--color-primary)}
+.btn-wa{
+  flex:1;padding:.75rem;background:var(--color-text);
+  border-radius:var(--radius-md);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#0e0e0e;
+  transition:background var(--transition);
+}
+.btn-wa:hover{background:var(--color-primary)}
+.btn-chiudi{
+  width:100%;padding:.65rem;margin-top:.75rem;
+  background:none;border:1px solid var(--color-border);
+  border-radius:var(--radius-md);color:var(--color-text-muted);
+  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  transition:border-color var(--transition),color var(--transition);
+}
+.btn-chiudi:hover{border-color:var(--color-text-muted);color:var(--color-text)}
+
+/* TOAST — centrato: non copre i bottoni azione */
+#toast{
+  display:none;position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:300;
+  color:#f2efe9;font-family:var(--font-mono);font-weight:400;
+  padding:.7rem 1.4rem;border-radius:var(--radius-full);
+  font-size:.75rem;letter-spacing:.06em;box-shadow:0 4px 20px rgba(0,0,0,.5);
+  white-space:nowrap;border:1px solid transparent;
+}
+#toast.error{background:#3d1f1c;border-color:var(--color-red);color:#e8b3ad}
+#toast.success{background:#1e3226;border-color:var(--color-green);color:#b8dcc5}
+#toast.info{background:#1c1c1c;border-color:var(--color-border);color:var(--color-text-muted)}
+
+/* Accessibilità */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  .photo-card,.photo-card img,.btn-full-action{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="evento-subtitle">Mattia Buoli — Selezione foto</div>
+    <h1 id="login-title">Shooting Catering</h1>
+
+    <!-- LEGENDA -->
+    <div class="legenda" id="legenda-box">
+      <div class="legenda-title">Come selezionare</div>
+      <div id="legenda-mobile" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">01</span><span>Apri <strong>Sfoglia</strong> per vedere una foto grande alla volta e scorri a destra o sinistra per cambiare immagine.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">02</span><span>Per confermare una foto usa il bottone <strong>Seleziona</strong>. Per toglierla usa il bottone <strong>Rimuovi</strong>.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">03</span><span>Quando hai finito premi <strong>Invia</strong> per generare il messaggio finale.</span></div>
+      </div>
+      <div id="legenda-desktop" style="display:none">
+        <div class="legenda-row"><span class="legenda-icon">01</span><span>Usa <strong>Griglia</strong> per vedere tutte le foto oppure <strong>Sfoglia</strong> per una visione grande.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">02</span><span>In <strong>Sfoglia</strong> puoi usare frecce laterali, zoom + / − e tastiera per muoverti più velocemente.</span></div>
+        <div class="legenda-row"><span class="legenda-icon">03</span><span>Quando hai finito premi <strong>Invia</strong> per preparare il messaggio già pronto.</span></div>
+      </div>
+      <div class="legenda-row legenda-note"><span class="legenda-icon">—</span><span>Le immagini mostrate sono solo un'anteprima.</span></div>
+    </div>
+
+    <form id="login-form" onsubmit="return doLogin(event)">
+      <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="Stefano" required>
+      <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-login" type="submit">Entra</button>
+      <div id="login-error">Password errata. Riprova.</div>
+    </form>
+  </div>
+  <div class="login-brand"><a href="https://mattiabuoli.it">mattiabuoli.it</a></div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery-screen">
+  <header class="site-header">
+    <div class="header-left">
+      <span class="header-brand">Mattia Buoli — Consegna cliente</span>
+      <h1 id="header-title">Shooting Catering</h1>
+    </div>
+    <div class="counter-pill" id="counter-pill">
+      <span class="count-num" id="sel-count">0</span>
+      <span class="count-label">sel.</span>
+      <span class="count-max" id="sel-max"></span>
+    </div>
+    <button class="btn-invia is-empty" id="btn-invia" onclick="openModal()">Invia</button>
+  </header>
+
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbtn-grid" onclick="switchView('grid')">Griglia</button>
+    <button class="view-btn" id="vbtn-full" onclick="switchView('full')">Sfoglia</button>
+  </div>
+
+  <div id="view-grid">
+    <div class="gallery-grid" id="gallery-grid"></div>
+    <div class="grid-footer">Fotografie di Mattia Buoli · <a href="https://mattiabuoli.it">mattiabuoli.it</a></div>
+  </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div id="view-full">
+  <div class="full-header">
+    <span class="full-title" id="full-title">Shooting Catering</span>
+    <span class="full-counter-top" id="full-counter-top">1 / 1</span>
+    <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
+  </div>
+
+  <button class="full-arrow" id="arrow-prev" onclick="fullNav(-1)" title="Precedente">‹</button>
+  <button class="full-arrow" id="arrow-next" onclick="fullNav(1)" title="Successiva">›</button>
+
+  <div class="full-img-wrap" id="full-img-wrap">
+    <img id="full-img" src="" alt="">
+    <div class="vf-corner vf-tl"></div>
+    <div class="vf-corner vf-br"></div>
+  </div>
+
+  <!-- Zoom buttons (solo PC) -->
+  <div class="zoom-btns">
+    <button class="zoom-btn" onclick="pcZoom(0.25)" title="Zoom in">+</button>
+    <button class="zoom-btn" onclick="pcZoom(-0.25)" title="Zoom out">−</button>
+    <button class="zoom-btn" onclick="pcZoom(0)" title="Reset zoom" style="font-size:.65rem">1:1</button>
+  </div>
+
+  <div class="full-dots" id="full-dots"></div>
+
+  <div class="full-footer">
+    <div class="full-comment" id="full-comment-wrap">
+      <div class="full-comment-label">Nota (opzionale)</div>
+      <input class="full-comment-input" id="full-comment-input" type="text" placeholder="es. questa è la mia preferita…" oninput="updateFullComment(this.value)">
+    </div>
+    <div class="full-actions">
+      <button class="btn-full-action" id="btn-full-desel" onclick="fullDeselect()">✕ Rimuovi</button>
+      <button class="btn-full-action" id="btn-full-add"   onclick="fullSelect()">✓ Seleziona</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <h2>Riepilogo selezione</h2>
+    <p class="modal-subtitle">Copia il messaggio e inviamelo su WhatsApp.</p>
+    <div class="modal-msg" id="modal-msg-text"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" onclick="copyMsg()">Copia</button>
+      <button class="btn-wa"   onclick="openWA()">WhatsApp</button>
+    </div>
+    <button class="btn-chiudi" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIG — struttura IDENTICA alle gallerie attuali: il flusso
+   (Lightroom / generatore) imposta questi stessi campi come sempre.
+   Cambia solo la grafica, non i campi né i loro nomi.
+     nomeEvento    codice job (titolo mostrato + messaggio + tag Telegram)
+     maxSelezioni  limite selezione
+     whatsapp      numero destinatario
+     storageKey    chiave localStorage (= nomeEvento)
+     pwHash        btoa della password
+     foto          lista immagini (cartella ./foto/)
+     telegramToken/telegramChat/secretCode  notifica plugin Lightroom
+   ============================================================ */
+const CONFIG = {
+  nomeEvento:    "260829_ShootingDomestica",
+  maxSelezioni:  40,
+  whatsapp:      "393348493876",
+  storageKey:    "260829_ShootingDomestica",
+  pwHash:        "RG9tZXN0aWNhQ2F0ZXJpbmcu",
+  foto:          [{"id": "PIC07172", "file": "PIC07172.jpg", "original_name": "PIC07172.JPG"}, {"id": "PIC07173", "file": "PIC07173.jpg", "original_name": "PIC07173.JPG"}, {"id": "PIC07174", "file": "PIC07174.jpg", "original_name": "PIC07174.JPG"}, {"id": "PIC07175", "file": "PIC07175.jpg", "original_name": "PIC07175.JPG"}, {"id": "PIC07176", "file": "PIC07176.jpg", "original_name": "PIC07176.JPG"}, {"id": "PIC07177", "file": "PIC07177.jpg", "original_name": "PIC07177.JPG"}, {"id": "PIC07178", "file": "PIC07178.jpg", "original_name": "PIC07178.JPG"}, {"id": "PIC07179", "file": "PIC07179.jpg", "original_name": "PIC07179.JPG"}, {"id": "PIC07180", "file": "PIC07180.jpg", "original_name": "PIC07180.JPG"}, {"id": "PIC07181", "file": "PIC07181.jpg", "original_name": "PIC07181.JPG"}, {"id": "PIC07182", "file": "PIC07182.jpg", "original_name": "PIC07182.JPG"}, {"id": "PIC07183", "file": "PIC07183.jpg", "original_name": "PIC07183.JPG"}, {"id": "PIC07184", "file": "PIC07184.jpg", "original_name": "PIC07184.JPG"}, {"id": "PIC07185", "file": "PIC07185.jpg", "original_name": "PIC07185.JPG"}, {"id": "PIC07186", "file": "PIC07186.jpg", "original_name": "PIC07186.JPG"}, {"id": "PIC07187", "file": "PIC07187.jpg", "original_name": "PIC07187.JPG"}, {"id": "PIC07188", "file": "PIC07188.jpg", "original_name": "PIC07188.JPG"}, {"id": "PIC07189", "file": "PIC07189.jpg", "original_name": "PIC07189.JPG"}, {"id": "PIC07190", "file": "PIC07190.jpg", "original_name": "PIC07190.JPG"}, {"id": "PIC07191", "file": "PIC07191.jpg", "original_name": "PIC07191.JPG"}, {"id": "PIC07192", "file": "PIC07192.jpg", "original_name": "PIC07192.JPG"}, {"id": "PIC07193", "file": "PIC07193.jpg", "original_name": "PIC07193.JPG"}, {"id": "PIC07194", "file": "PIC07194.jpg", "original_name": "PIC07194.JPG"}, {"id": "PIC07195", "file": "PIC07195.jpg", "original_name": "PIC07195.JPG"}, {"id": "PIC07196", "file": "PIC07196.jpg", "original_name": "PIC07196.JPG"}, {"id": "PIC07197", "file": "PIC07197.jpg", "original_name": "PIC07197.JPG"}, {"id": "PIC07198", "file": "PIC07198.jpg", "original_name": "PIC07198.JPG"}, {"id": "PIC07199", "file": "PIC07199.jpg", "original_name": "PIC07199.JPG"}, {"id": "PIC07200", "file": "PIC07200.jpg", "original_name": "PIC07200.JPG"}, {"id": "PIC07201", "file": "PIC07201.jpg", "original_name": "PIC07201.JPG"}, {"id": "PIC07202", "file": "PIC07202.jpg", "original_name": "PIC07202.JPG"}, {"id": "PIC07203", "file": "PIC07203.jpg", "original_name": "PIC07203.JPG"}, {"id": "PIC07204", "file": "PIC07204.jpg", "original_name": "PIC07204.JPG"}, {"id": "PIC07205", "file": "PIC07205.jpg", "original_name": "PIC07205.JPG"}, {"id": "PIC07206", "file": "PIC07206.jpg", "original_name": "PIC07206.JPG"}, {"id": "PIC07207", "file": "PIC07207.jpg", "original_name": "PIC07207.JPG"}, {"id": "PIC07208", "file": "PIC07208.jpg", "original_name": "PIC07208.JPG"}, {"id": "PIC07209", "file": "PIC07209.jpg", "original_name": "PIC07209.JPG"}, {"id": "PIC07210", "file": "PIC07210.jpg", "original_name": "PIC07210.JPG"}, {"id": "PIC07211", "file": "PIC07211.jpg", "original_name": "PIC07211.JPG"}, {"id": "PIC07212", "file": "PIC07212.jpg", "original_name": "PIC07212.JPG"}, {"id": "PIC07213", "file": "PIC07213.jpg", "original_name": "PIC07213.JPG"}, {"id": "PIC07214", "file": "PIC07214.jpg", "original_name": "PIC07214.JPG"}, {"id": "PIC07215", "file": "PIC07215.jpg", "original_name": "PIC07215.JPG"}, {"id": "PIC07216", "file": "PIC07216.jpg", "original_name": "PIC07216.JPG"}, {"id": "PIC07217", "file": "PIC07217.jpg", "original_name": "PIC07217.JPG"}, {"id": "PIC07218", "file": "PIC07218.jpg", "original_name": "PIC07218.JPG"}, {"id": "PIC07219", "file": "PIC07219.jpg", "original_name": "PIC07219.JPG"}, {"id": "PIC07220", "file": "PIC07220.jpg", "original_name": "PIC07220.JPG"}, {"id": "PIC07221", "file": "PIC07221.jpg", "original_name": "PIC07221.JPG"}, {"id": "PIC07222", "file": "PIC07222.jpg", "original_name": "PIC07222.JPG"}, {"id": "PIC07223", "file": "PIC07223.jpg", "original_name": "PIC07223.JPG"}, {"id": "PIC07224", "file": "PIC07224.jpg", "original_name": "PIC07224.JPG"}, {"id": "PIC07225", "file": "PIC07225.jpg", "original_name": "PIC07225.JPG"}, {"id": "PIC07226", "file": "PIC07226.jpg", "original_name": "PIC07226.JPG"}, {"id": "PIC07227", "file": "PIC07227.jpg", "original_name": "PIC07227.JPG"}, {"id": "PIC07228", "file": "PIC07228.jpg", "original_name": "PIC07228.JPG"}, {"id": "PIC07229", "file": "PIC07229.jpg", "original_name": "PIC07229.JPG"}, {"id": "PIC07230", "file": "PIC07230.jpg", "original_name": "PIC07230.JPG"}, {"id": "PIC07231", "file": "PIC07231.jpg", "original_name": "PIC07231.JPG"}, {"id": "PIC07232", "file": "PIC07232.jpg", "original_name": "PIC07232.JPG"}, {"id": "PIC07233", "file": "PIC07233.jpg", "original_name": "PIC07233.JPG"}, {"id": "PIC07234", "file": "PIC07234.jpg", "original_name": "PIC07234.JPG"}, {"id": "PIC07235", "file": "PIC07235.jpg", "original_name": "PIC07235.JPG"}, {"id": "PIC07236", "file": "PIC07236.jpg", "original_name": "PIC07236.JPG"}, {"id": "PIC07237", "file": "PIC07237.jpg", "original_name": "PIC07237.JPG"}, {"id": "PIC07238", "file": "PIC07238.jpg", "original_name": "PIC07238.JPG"}, {"id": "PIC07239", "file": "PIC07239.jpg", "original_name": "PIC07239.JPG"}, {"id": "PIC07240", "file": "PIC07240.jpg", "original_name": "PIC07240.JPG"}, {"id": "PIC07241", "file": "PIC07241.jpg", "original_name": "PIC07241.JPG"}, {"id": "PIC07242", "file": "PIC07242.jpg", "original_name": "PIC07242.JPG"}, {"id": "PIC07243", "file": "PIC07243.jpg", "original_name": "PIC07243.JPG"}, {"id": "PIC07244", "file": "PIC07244.jpg", "original_name": "PIC07244.JPG"}, {"id": "PIC07245", "file": "PIC07245.jpg", "original_name": "PIC07245.JPG"}, {"id": "PIC07246", "file": "PIC07246.jpg", "original_name": "PIC07246.JPG"}, {"id": "PIC07247", "file": "PIC07247.jpg", "original_name": "PIC07247.JPG"}, {"id": "PIC07248", "file": "PIC07248.jpg", "original_name": "PIC07248.JPG"}, {"id": "PIC07249", "file": "PIC07249.jpg", "original_name": "PIC07249.JPG"}, {"id": "PIC07250", "file": "PIC07250.jpg", "original_name": "PIC07250.JPG"}, {"id": "PIC07251", "file": "PIC07251.jpg", "original_name": "PIC07251.JPG"}, {"id": "PIC07252", "file": "PIC07252.jpg", "original_name": "PIC07252.JPG"}, {"id": "PIC07253", "file": "PIC07253.jpg", "original_name": "PIC07253.JPG"}, {"id": "PIC07254", "file": "PIC07254.jpg", "original_name": "PIC07254.JPG"}, {"id": "PIC07255", "file": "PIC07255.jpg", "original_name": "PIC07255.JPG"}, {"id": "PIC07256", "file": "PIC07256.jpg", "original_name": "PIC07256.JPG"}, {"id": "PIC07257", "file": "PIC07257.jpg", "original_name": "PIC07257.JPG"}, {"id": "PIC07258", "file": "PIC07258.jpg", "original_name": "PIC07258.JPG"}, {"id": "PIC07259", "file": "PIC07259.jpg", "original_name": "PIC07259.JPG"}, {"id": "PIC07260", "file": "PIC07260.jpg", "original_name": "PIC07260.JPG"}, {"id": "PIC07261", "file": "PIC07261.jpg", "original_name": "PIC07261.JPG"}, {"id": "PIC07262", "file": "PIC07262.jpg", "original_name": "PIC07262.JPG"}, {"id": "PIC07263", "file": "PIC07263.jpg", "original_name": "PIC07263.JPG"}, {"id": "PIC07264", "file": "PIC07264.jpg", "original_name": "PIC07264.JPG"}, {"id": "PIC07265", "file": "PIC07265.jpg", "original_name": "PIC07265.JPG"}, {"id": "PIC07266", "file": "PIC07266.jpg", "original_name": "PIC07266.JPG"}, {"id": "PIC07267", "file": "PIC07267.jpg", "original_name": "PIC07267.JPG"}, {"id": "PIC07268", "file": "PIC07268.jpg", "original_name": "PIC07268.JPG"}, {"id": "PIC07269", "file": "PIC07269.jpg", "original_name": "PIC07269.JPG"}, {"id": "PIC07270", "file": "PIC07270.jpg", "original_name": "PIC07270.JPG"}, {"id": "PIC07271", "file": "PIC07271.jpg", "original_name": "PIC07271.JPG"}, {"id": "PIC07272", "file": "PIC07272.jpg", "original_name": "PIC07272.JPG"}, {"id": "PIC07273", "file": "PIC07273.jpg", "original_name": "PIC07273.JPG"}, {"id": "PIC07274", "file": "PIC07274.jpg", "original_name": "PIC07274.JPG"}, {"id": "PIC07275", "file": "PIC07275.jpg", "original_name": "PIC07275.JPG"}, {"id": "PIC07276", "file": "PIC07276.jpg", "original_name": "PIC07276.JPG"}, {"id": "PIC07277", "file": "PIC07277.jpg", "original_name": "PIC07277.JPG"}, {"id": "PIC07278", "file": "PIC07278.jpg", "original_name": "PIC07278.JPG"}, {"id": "PIC07279", "file": "PIC07279.jpg", "original_name": "PIC07279.JPG"}, {"id": "PIC07280", "file": "PIC07280.jpg", "original_name": "PIC07280.JPG"}, {"id": "PIC07281", "file": "PIC07281.jpg", "original_name": "PIC07281.JPG"}, {"id": "PIC07282", "file": "PIC07282.jpg", "original_name": "PIC07282.JPG"}, {"id": "PIC07283", "file": "PIC07283.jpg", "original_name": "PIC07283.JPG"}, {"id": "PIC07284", "file": "PIC07284.jpg", "original_name": "PIC07284.JPG"}, {"id": "PIC07285", "file": "PIC07285.jpg", "original_name": "PIC07285.JPG"}, {"id": "PIC07286", "file": "PIC07286.jpg", "original_name": "PIC07286.JPG"}, {"id": "PIC07287", "file": "PIC07287.jpg", "original_name": "PIC07287.JPG"}, {"id": "PIC07288", "file": "PIC07288.jpg", "original_name": "PIC07288.JPG"}, {"id": "PIC07289", "file": "PIC07289.jpg", "original_name": "PIC07289.JPG"}, {"id": "PIC07290", "file": "PIC07290.jpg", "original_name": "PIC07290.JPG"}, {"id": "PIC07291", "file": "PIC07291.jpg", "original_name": "PIC07291.JPG"}, {"id": "PIC07292", "file": "PIC07292.jpg", "original_name": "PIC07292.JPG"}, {"id": "PIC07293", "file": "PIC07293.jpg", "original_name": "PIC07293.JPG"}, {"id": "PIC07294", "file": "PIC07294.jpg", "original_name": "PIC07294.JPG"}, {"id": "PIC07295", "file": "PIC07295.jpg", "original_name": "PIC07295.JPG"}, {"id": "PIC07296", "file": "PIC07296.jpg", "original_name": "PIC07296.JPG"}, {"id": "PIC07297", "file": "PIC07297.jpg", "original_name": "PIC07297.JPG"}, {"id": "PIC07298", "file": "PIC07298.jpg", "original_name": "PIC07298.JPG"}, {"id": "PIC07299", "file": "PIC07299.jpg", "original_name": "PIC07299.JPG"}, {"id": "PIC07300", "file": "PIC07300.jpg", "original_name": "PIC07300.JPG"}, {"id": "PIC07301", "file": "PIC07301.jpg", "original_name": "PIC07301.JPG"}, {"id": "PIC07302", "file": "PIC07302.jpg", "original_name": "PIC07302.JPG"}, {"id": "PIC07303", "file": "PIC07303.jpg", "original_name": "PIC07303.JPG"}, {"id": "PIC07304", "file": "PIC07304.jpg", "original_name": "PIC07304.JPG"}, {"id": "PIC07305", "file": "PIC07305.jpg", "original_name": "PIC07305.JPG"}, {"id": "PIC07306", "file": "PIC07306.jpg", "original_name": "PIC07306.JPG"}, {"id": "PIC07307", "file": "PIC07307.jpg", "original_name": "PIC07307.JPG"}, {"id": "PIC07308", "file": "PIC07308.jpg", "original_name": "PIC07308.JPG"}, {"id": "PIC07309", "file": "PIC07309.jpg", "original_name": "PIC07309.JPG"}, {"id": "PIC07310", "file": "PIC07310.jpg", "original_name": "PIC07310.JPG"}, {"id": "PIC07311", "file": "PIC07311.jpg", "original_name": "PIC07311.JPG"}, {"id": "PIC07312", "file": "PIC07312.jpg", "original_name": "PIC07312.JPG"}, {"id": "PIC07313", "file": "PIC07313.jpg", "original_name": "PIC07313.JPG"}, {"id": "PIC07314", "file": "PIC07314.jpg", "original_name": "PIC07314.JPG"}, {"id": "PIC07315", "file": "PIC07315.jpg", "original_name": "PIC07315.JPG"}, {"id": "PIC07316", "file": "PIC07316.jpg", "original_name": "PIC07316.JPG"}, {"id": "PIC07317", "file": "PIC07317.jpg", "original_name": "PIC07317.JPG"}, {"id": "PIC07318", "file": "PIC07318.jpg", "original_name": "PIC07318.JPG"}, {"id": "PIC07319", "file": "PIC07319.jpg", "original_name": "PIC07319.JPG"}, {"id": "PIC07320", "file": "PIC07320.jpg", "original_name": "PIC07320.JPG"}, {"id": "PIC07321", "file": "PIC07321.jpg", "original_name": "PIC07321.JPG"}, {"id": "PIC07322", "file": "PIC07322.jpg", "original_name": "PIC07322.JPG"}, {"id": "PIC07323", "file": "PIC07323.jpg", "original_name": "PIC07323.JPG"}, {"id": "PIC07324", "file": "PIC07324.jpg", "original_name": "PIC07324.JPG"}, {"id": "PIC07325", "file": "PIC07325.jpg", "original_name": "PIC07325.JPG"}, {"id": "PIC07326", "file": "PIC07326.jpg", "original_name": "PIC07326.JPG"}, {"id": "PIC07327", "file": "PIC07327.jpg", "original_name": "PIC07327.JPG"}, {"id": "PIC07328", "file": "PIC07328.jpg", "original_name": "PIC07328.JPG"}, {"id": "PIC07329", "file": "PIC07329.jpg", "original_name": "PIC07329.JPG"}, {"id": "PIC07330", "file": "PIC07330.jpg", "original_name": "PIC07330.JPG"}, {"id": "PIC07331", "file": "PIC07331.jpg", "original_name": "PIC07331.JPG"}, {"id": "PIC07332", "file": "PIC07332.jpg", "original_name": "PIC07332.JPG"}, {"id": "PIC07333", "file": "PIC07333.jpg", "original_name": "PIC07333.JPG"}, {"id": "PIC07334", "file": "PIC07334.jpg", "original_name": "PIC07334.JPG"}, {"id": "PIC07335", "file": "PIC07335.jpg", "original_name": "PIC07335.JPG"}, {"id": "PIC07336", "file": "PIC07336.jpg", "original_name": "PIC07336.JPG"}, {"id": "PIC07337", "file": "PIC07337.jpg", "original_name": "PIC07337.JPG"}, {"id": "PIC07338", "file": "PIC07338.jpg", "original_name": "PIC07338.JPG"}, {"id": "PIC07339", "file": "PIC07339.jpg", "original_name": "PIC07339.JPG"}, {"id": "PIC07340", "file": "PIC07340.jpg", "original_name": "PIC07340.JPG"}, {"id": "PIC07341", "file": "PIC07341.jpg", "original_name": "PIC07341.JPG"}, {"id": "PIC07342", "file": "PIC07342.jpg", "original_name": "PIC07342.JPG"}, {"id": "PIC07343", "file": "PIC07343.jpg", "original_name": "PIC07343.JPG"}, {"id": "PIC07344", "file": "PIC07344.jpg", "original_name": "PIC07344.JPG"}, {"id": "PIC07345", "file": "PIC07345.jpg", "original_name": "PIC07345.JPG"}, {"id": "PIC07346", "file": "PIC07346.jpg", "original_name": "PIC07346.JPG"}, {"id": "PIC07347", "file": "PIC07347.jpg", "original_name": "PIC07347.JPG"}, {"id": "PIC07348", "file": "PIC07348.jpg", "original_name": "PIC07348.JPG"}, {"id": "PIC07349", "file": "PIC07349.jpg", "original_name": "PIC07349.JPG"}, {"id": "PIC07350", "file": "PIC07350.jpg", "original_name": "PIC07350.JPG"}, {"id": "PIC07351", "file": "PIC07351.jpg", "original_name": "PIC07351.JPG"}, {"id": "PIC07352", "file": "PIC07352.jpg", "original_name": "PIC07352.JPG"}, {"id": "PIC07353", "file": "PIC07353.jpg", "original_name": "PIC07353.JPG"}, {"id": "PIC07354", "file": "PIC07354.jpg", "original_name": "PIC07354.JPG"}, {"id": "PIC07355", "file": "PIC07355.jpg", "original_name": "PIC07355.JPG"}, {"id": "PIC07356", "file": "PIC07356.jpg", "original_name": "PIC07356.JPG"}, {"id": "PIC07357", "file": "PIC07357.jpg", "original_name": "PIC07357.JPG"}, {"id": "PIC07358", "file": "PIC07358.jpg", "original_name": "PIC07358.JPG"}, {"id": "PIC07359", "file": "PIC07359.jpg", "original_name": "PIC07359.JPG"}, {"id": "PIC07360", "file": "PIC07360.jpg", "original_name": "PIC07360.JPG"}, {"id": "PIC07361", "file": "PIC07361.jpg", "original_name": "PIC07361.JPG"}, {"id": "PIC07362", "file": "PIC07362.jpg", "original_name": "PIC07362.JPG"}, {"id": "PIC07363", "file": "PIC07363.jpg", "original_name": "PIC07363.JPG"}, {"id": "PIC07364", "file": "PIC07364.jpg", "original_name": "PIC07364.JPG"}, {"id": "PIC07365", "file": "PIC07365.jpg", "original_name": "PIC07365.JPG"}, {"id": "PIC07366", "file": "PIC07366.jpg", "original_name": "PIC07366.JPG"}, {"id": "PIC07367", "file": "PIC07367.jpg", "original_name": "PIC07367.JPG"}, {"id": "PIC07380", "file": "PIC07380.jpg", "original_name": "PIC07380.JPG"}, {"id": "PIC07381", "file": "PIC07381.jpg", "original_name": "PIC07381.JPG"}, {"id": "PIC07382", "file": "PIC07382.jpg", "original_name": "PIC07382.JPG"}, {"id": "PIC07383", "file": "PIC07383.jpg", "original_name": "PIC07383.JPG"}, {"id": "PIC07384", "file": "PIC07384.jpg", "original_name": "PIC07384.JPG"}, {"id": "PIC07385", "file": "PIC07385.jpg", "original_name": "PIC07385.JPG"}, {"id": "PIC07386", "file": "PIC07386.jpg", "original_name": "PIC07386.JPG"}, {"id": "PIC07387", "file": "PIC07387.jpg", "original_name": "PIC07387.JPG"}, {"id": "PIC07388", "file": "PIC07388.jpg", "original_name": "PIC07388.JPG"}, {"id": "PIC07389", "file": "PIC07389.jpg", "original_name": "PIC07389.JPG"}, {"id": "PIC07390", "file": "PIC07390.jpg", "original_name": "PIC07390.JPG"}, {"id": "PIC07391", "file": "PIC07391.jpg", "original_name": "PIC07391.JPG"}, {"id": "PIC07392", "file": "PIC07392.jpg", "original_name": "PIC07392.JPG"}, {"id": "PIC07393", "file": "PIC07393.jpg", "original_name": "PIC07393.JPG"}, {"id": "PIC07394", "file": "PIC07394.jpg", "original_name": "PIC07394.JPG"}, {"id": "PIC07395", "file": "PIC07395.jpg", "original_name": "PIC07395.JPG"}, {"id": "PIC07396", "file": "PIC07396.jpg", "original_name": "PIC07396.JPG"}, {"id": "PIC07397", "file": "PIC07397.jpg", "original_name": "PIC07397.JPG"}, {"id": "PIC07398", "file": "PIC07398.jpg", "original_name": "PIC07398.JPG"}, {"id": "PIC07399", "file": "PIC07399.jpg", "original_name": "PIC07399.JPG"}, {"id": "PIC07400", "file": "PIC07400.jpg", "original_name": "PIC07400.JPG"}, {"id": "PIC07401", "file": "PIC07401.jpg", "original_name": "PIC07401.JPG"}, {"id": "PIC07402", "file": "PIC07402.jpg", "original_name": "PIC07402.JPG"}, {"id": "PIC07403", "file": "PIC07403.jpg", "original_name": "PIC07403.JPG"}, {"id": "PIC07404", "file": "PIC07404.jpg", "original_name": "PIC07404.JPG"}, {"id": "PIC07405", "file": "PIC07405.jpg", "original_name": "PIC07405.JPG"}, {"id": "PIC07406", "file": "PIC07406.jpg", "original_name": "PIC07406.JPG"}, {"id": "PIC07408", "file": "PIC07408.jpg", "original_name": "PIC07408.JPG"}, {"id": "PIC07411", "file": "PIC07411.jpg", "original_name": "PIC07411.JPG"}, {"id": "PIC07412", "file": "PIC07412.jpg", "original_name": "PIC07412.JPG"}, {"id": "PIC07413", "file": "PIC07413.jpg", "original_name": "PIC07413.JPG"}, {"id": "PIC07414", "file": "PIC07414.jpg", "original_name": "PIC07414.JPG"}, {"id": "PIC07415", "file": "PIC07415.jpg", "original_name": "PIC07415.JPG"}, {"id": "PIC07416", "file": "PIC07416.jpg", "original_name": "PIC07416.JPG"}, {"id": "PIC07417", "file": "PIC07417.jpg", "original_name": "PIC07417.JPG"}, {"id": "PIC07418", "file": "PIC07418.jpg", "original_name": "PIC07418.JPG"}, {"id": "PIC07419", "file": "PIC07419.jpg", "original_name": "PIC07419.JPG"}, {"id": "PIC07420", "file": "PIC07420.jpg", "original_name": "PIC07420.JPG"}, {"id": "PIC07421", "file": "PIC07421.jpg", "original_name": "PIC07421.JPG"}, {"id": "PIC07422", "file": "PIC07422.jpg", "original_name": "PIC07422.JPG"}, {"id": "PIC07423", "file": "PIC07423.jpg", "original_name": "PIC07423.JPG"}, {"id": "PIC07424", "file": "PIC07424.jpg", "original_name": "PIC07424.JPG"}, {"id": "PIC07425", "file": "PIC07425.jpg", "original_name": "PIC07425.JPG"}, {"id": "PIC07426", "file": "PIC07426.jpg", "original_name": "PIC07426.JPG"}, {"id": "PIC07427", "file": "PIC07427.jpg", "original_name": "PIC07427.JPG"}, {"id": "PIC07428", "file": "PIC07428.jpg", "original_name": "PIC07428.JPG"}, {"id": "PIC07429", "file": "PIC07429.jpg", "original_name": "PIC07429.JPG"}, {"id": "PIC07430", "file": "PIC07430.jpg", "original_name": "PIC07430.JPG"}, {"id": "PIC07431", "file": "PIC07431.jpg", "original_name": "PIC07431.JPG"}, {"id": "PIC07432", "file": "PIC07432.jpg", "original_name": "PIC07432.JPG"}, {"id": "PIC07433", "file": "PIC07433.jpg", "original_name": "PIC07433.JPG"}, {"id": "PIC07434", "file": "PIC07434.jpg", "original_name": "PIC07434.JPG"}, {"id": "PIC07435", "file": "PIC07435.jpg", "original_name": "PIC07435.JPG"}, {"id": "PIC07436", "file": "PIC07436.jpg", "original_name": "PIC07436.JPG"}, {"id": "PIC07437", "file": "PIC07437.jpg", "original_name": "PIC07437.JPG"}, {"id": "PIC07438", "file": "PIC07438.jpg", "original_name": "PIC07438.JPG"}, {"id": "PIC07439", "file": "PIC07439.jpg", "original_name": "PIC07439.JPG"}, {"id": "PIC07440", "file": "PIC07440.jpg", "original_name": "PIC07440.JPG"}, {"id": "PIC07441", "file": "PIC07441.jpg", "original_name": "PIC07441.JPG"}, {"id": "PIC07442", "file": "PIC07442.jpg", "original_name": "PIC07442.JPG"}, {"id": "PIC07443", "file": "PIC07443.jpg", "original_name": "PIC07443.JPG"}, {"id": "PIC07444", "file": "PIC07444.jpg", "original_name": "PIC07444.JPG"}, {"id": "PIC07445", "file": "PIC07445.jpg", "original_name": "PIC07445.JPG"}, {"id": "PIC07446", "file": "PIC07446.jpg", "original_name": "PIC07446.JPG"}, {"id": "PIC07447", "file": "PIC07447.jpg", "original_name": "PIC07447.JPG"}, {"id": "PIC07448", "file": "PIC07448.jpg", "original_name": "PIC07448.JPG"}, {"id": "PIC07449", "file": "PIC07449.jpg", "original_name": "PIC07449.JPG"}, {"id": "PIC07450", "file": "PIC07450.jpg", "original_name": "PIC07450.JPG"}, {"id": "PIC07451", "file": "PIC07451.jpg", "original_name": "PIC07451.JPG"}, {"id": "PIC07452", "file": "PIC07452.jpg", "original_name": "PIC07452.JPG"}, {"id": "PIC07453", "file": "PIC07453.jpg", "original_name": "PIC07453.JPG"}, {"id": "PIC07454", "file": "PIC07454.jpg", "original_name": "PIC07454.JPG"}, {"id": "PIC07455", "file": "PIC07455.jpg", "original_name": "PIC07455.JPG"}, {"id": "PIC07456", "file": "PIC07456.jpg", "original_name": "PIC07456.JPG"}, {"id": "PIC07457", "file": "PIC07457.jpg", "original_name": "PIC07457.JPG"}, {"id": "PIC07458", "file": "PIC07458.jpg", "original_name": "PIC07458.JPG"}, {"id": "PIC07459", "file": "PIC07459.jpg", "original_name": "PIC07459.JPG"}, {"id": "PIC07460", "file": "PIC07460.jpg", "original_name": "PIC07460.JPG"}, {"id": "PIC07461", "file": "PIC07461.jpg", "original_name": "PIC07461.JPG"}, {"id": "PIC07462", "file": "PIC07462.jpg", "original_name": "PIC07462.JPG"}, {"id": "PIC07463", "file": "PIC07463.jpg", "original_name": "PIC07463.JPG"}, {"id": "PIC07464", "file": "PIC07464.jpg", "original_name": "PIC07464.JPG"}, {"id": "PIC07465", "file": "PIC07465.jpg", "original_name": "PIC07465.JPG"}, {"id": "PIC07466", "file": "PIC07466.jpg", "original_name": "PIC07466.JPG"}, {"id": "PIC07467", "file": "PIC07467.jpg", "original_name": "PIC07467.JPG"}, {"id": "PIC07468", "file": "PIC07468.jpg", "original_name": "PIC07468.JPG"}, {"id": "PIC07469", "file": "PIC07469.jpg", "original_name": "PIC07469.JPG"}, {"id": "PIC07470", "file": "PIC07470.jpg", "original_name": "PIC07470.JPG"}, {"id": "PIC07471", "file": "PIC07471.jpg", "original_name": "PIC07471.JPG"}, {"id": "PIC07472", "file": "PIC07472.jpg", "original_name": "PIC07472.JPG"}, {"id": "PIC07473", "file": "PIC07473.jpg", "original_name": "PIC07473.JPG"}, {"id": "PIC07474", "file": "PIC07474.jpg", "original_name": "PIC07474.JPG"}, {"id": "PIC07475", "file": "PIC07475.jpg", "original_name": "PIC07475.JPG"}, {"id": "PIC07476", "file": "PIC07476.jpg", "original_name": "PIC07476.JPG"}, {"id": "PIC07477", "file": "PIC07477.jpg", "original_name": "PIC07477.JPG"}, {"id": "PIC07482", "file": "PIC07482.jpg", "original_name": "PIC07482.JPG"}, {"id": "PIC07483", "file": "PIC07483.jpg", "original_name": "PIC07483.JPG"}, {"id": "PIC07484", "file": "PIC07484.jpg", "original_name": "PIC07484.JPG"}, {"id": "PIC07489", "file": "PIC07489.jpg", "original_name": "PIC07489.JPG"}, {"id": "PIC07490", "file": "PIC07490.jpg", "original_name": "PIC07490.JPG"}, {"id": "PIC07491", "file": "PIC07491.jpg", "original_name": "PIC07491.JPG"}, {"id": "PIC07492", "file": "PIC07492.jpg", "original_name": "PIC07492.JPG"}, {"id": "PIC07493", "file": "PIC07493.jpg", "original_name": "PIC07493.JPG"}, {"id": "PIC07494", "file": "PIC07494.jpg", "original_name": "PIC07494.JPG"}, {"id": "PIC07495", "file": "PIC07495.jpg", "original_name": "PIC07495.JPG"}, {"id": "PIC07496", "file": "PIC07496.jpg", "original_name": "PIC07496.JPG"}, {"id": "PIC07497", "file": "PIC07497.jpg", "original_name": "PIC07497.JPG"}, {"id": "PIC07498", "file": "PIC07498.jpg", "original_name": "PIC07498.JPG"}, {"id": "PIC07499", "file": "PIC07499.jpg", "original_name": "PIC07499.JPG"}, {"id": "PIC07500", "file": "PIC07500.jpg", "original_name": "PIC07500.JPG"}, {"id": "PIC07501", "file": "PIC07501.jpg", "original_name": "PIC07501.JPG"}, {"id": "PIC07502", "file": "PIC07502.jpg", "original_name": "PIC07502.JPG"}, {"id": "PIC07503", "file": "PIC07503.jpg", "original_name": "PIC07503.JPG"}, {"id": "PIC07504", "file": "PIC07504.jpg", "original_name": "PIC07504.JPG"}, {"id": "PIC07505", "file": "PIC07505.jpg", "original_name": "PIC07505.JPG"}, {"id": "PIC07506", "file": "PIC07506.jpg", "original_name": "PIC07506.JPG"}, {"id": "PIC07507", "file": "PIC07507.jpg", "original_name": "PIC07507.JPG"}, {"id": "PIC07508", "file": "PIC07508.jpg", "original_name": "PIC07508.JPG"}, {"id": "PIC07514", "file": "PIC07514.jpg", "original_name": "PIC07514.JPG"}, {"id": "PIC07515", "file": "PIC07515.jpg", "original_name": "PIC07515.JPG"}, {"id": "PIC07516", "file": "PIC07516.jpg", "original_name": "PIC07516.JPG"}, {"id": "PIC07517", "file": "PIC07517.jpg", "original_name": "PIC07517.JPG"}, {"id": "PIC07518", "file": "PIC07518.jpg", "original_name": "PIC07518.JPG"}, {"id": "PIC07519", "file": "PIC07519.jpg", "original_name": "PIC07519.JPG"}, {"id": "PIC07520", "file": "PIC07520.jpg", "original_name": "PIC07520.JPG"}, {"id": "PIC07521", "file": "PIC07521.jpg", "original_name": "PIC07521.JPG"}, {"id": "PIC07522", "file": "PIC07522.jpg", "original_name": "PIC07522.JPG"}, {"id": "PIC07523", "file": "PIC07523.jpg", "original_name": "PIC07523.JPG"}, {"id": "PIC07524", "file": "PIC07524.jpg", "original_name": "PIC07524.JPG"}, {"id": "PIC07525", "file": "PIC07525.jpg", "original_name": "PIC07525.JPG"}, {"id": "PIC07526", "file": "PIC07526.jpg", "original_name": "PIC07526.JPG"}, {"id": "PIC07527", "file": "PIC07527.jpg", "original_name": "PIC07527.JPG"}, {"id": "PIC07528", "file": "PIC07528.jpg", "original_name": "PIC07528.JPG"}, {"id": "PIC07529", "file": "PIC07529.jpg", "original_name": "PIC07529.JPG"}, {"id": "PIC07530", "file": "PIC07530.jpg", "original_name": "PIC07530.JPG"}, {"id": "PIC07531", "file": "PIC07531.jpg", "original_name": "PIC07531.JPG"}, {"id": "PIC07532", "file": "PIC07532.jpg", "original_name": "PIC07532.JPG"}, {"id": "PIC07533", "file": "PIC07533.jpg", "original_name": "PIC07533.JPG"}, {"id": "PIC07534", "file": "PIC07534.jpg", "original_name": "PIC07534.JPG"}, {"id": "PIC07535", "file": "PIC07535.jpg", "original_name": "PIC07535.JPG"}, {"id": "PIC07536", "file": "PIC07536.jpg", "original_name": "PIC07536.JPG"}, {"id": "PIC07537", "file": "PIC07537.jpg", "original_name": "PIC07537.JPG"}, {"id": "PIC07538", "file": "PIC07538.jpg", "original_name": "PIC07538.JPG"}, {"id": "PIC07539", "file": "PIC07539.jpg", "original_name": "PIC07539.JPG"}, {"id": "PIC07540", "file": "PIC07540.jpg", "original_name": "PIC07540.JPG"}, {"id": "PIC07541", "file": "PIC07541.jpg", "original_name": "PIC07541.JPG"}, {"id": "PIC07542", "file": "PIC07542.jpg", "original_name": "PIC07542.JPG"}, {"id": "PIC07543", "file": "PIC07543.jpg", "original_name": "PIC07543.JPG"}, {"id": "PIC07544", "file": "PIC07544.jpg", "original_name": "PIC07544.JPG"}, {"id": "PIC07545", "file": "PIC07545.jpg", "original_name": "PIC07545.JPG"}, {"id": "PIC07546", "file": "PIC07546.jpg", "original_name": "PIC07546.JPG"}, {"id": "PIC07547", "file": "PIC07547.jpg", "original_name": "PIC07547.JPG"}, {"id": "PIC07548", "file": "PIC07548.jpg", "original_name": "PIC07548.JPG"}, {"id": "PIC07549", "file": "PIC07549.jpg", "original_name": "PIC07549.JPG"}, {"id": "PIC07550", "file": "PIC07550.jpg", "original_name": "PIC07550.JPG"}, {"id": "PIC07551", "file": "PIC07551.jpg", "original_name": "PIC07551.JPG"}, {"id": "PIC07552", "file": "PIC07552.jpg", "original_name": "PIC07552.JPG"}, {"id": "PIC07553", "file": "PIC07553.jpg", "original_name": "PIC07553.JPG"}, {"id": "PIC07554", "file": "PIC07554.jpg", "original_name": "PIC07554.JPG"}, {"id": "PIC07555", "file": "PIC07555.jpg", "original_name": "PIC07555.JPG"}, {"id": "PIC07556", "file": "PIC07556.jpg", "original_name": "PIC07556.JPG"}, {"id": "PIC07557", "file": "PIC07557.jpg", "original_name": "PIC07557.JPG"}, {"id": "PIC07558", "file": "PIC07558.jpg", "original_name": "PIC07558.JPG"}, {"id": "PIC07559", "file": "PIC07559.jpg", "original_name": "PIC07559.JPG"}, {"id": "PIC07560", "file": "PIC07560.jpg", "original_name": "PIC07560.JPG"}, {"id": "PIC07561", "file": "PIC07561.jpg", "original_name": "PIC07561.JPG"}, {"id": "PIC07562", "file": "PIC07562.jpg", "original_name": "PIC07562.JPG"}, {"id": "PIC07563", "file": "PIC07563.jpg", "original_name": "PIC07563.JPG"}, {"id": "PIC07564", "file": "PIC07564.jpg", "original_name": "PIC07564.JPG"}, {"id": "PIC07565", "file": "PIC07565.jpg", "original_name": "PIC07565.JPG"}, {"id": "PIC07566", "file": "PIC07566.jpg", "original_name": "PIC07566.JPG"}, {"id": "PIC07567", "file": "PIC07567.jpg", "original_name": "PIC07567.JPG"}, {"id": "PIC07568", "file": "PIC07568.jpg", "original_name": "PIC07568.JPG"}, {"id": "PIC07569", "file": "PIC07569.jpg", "original_name": "PIC07569.JPG"}, {"id": "PIC07572", "file": "PIC07572.jpg", "original_name": "PIC07572.JPG"}, {"id": "PIC07584", "file": "PIC07584.jpg", "original_name": "PIC07584.JPG"}, {"id": "PIC07585", "file": "PIC07585.jpg", "original_name": "PIC07585.JPG"}, {"id": "PIC07586", "file": "PIC07586.jpg", "original_name": "PIC07586.JPG"}, {"id": "PIC07593", "file": "PIC07593.jpg", "original_name": "PIC07593.JPG"}, {"id": "PIC07594", "file": "PIC07594.jpg", "original_name": "PIC07594.JPG"}, {"id": "PIC07597", "file": "PIC07597.jpg", "original_name": "PIC07597.JPG"}, {"id": "PIC07598", "file": "PIC07598.jpg", "original_name": "PIC07598.JPG"}, {"id": "PIC07599", "file": "PIC07599.jpg", "original_name": "PIC07599.JPG"}, {"id": "PIC07600", "file": "PIC07600.jpg", "original_name": "PIC07600.JPG"}, {"id": "PIC07601", "file": "PIC07601.jpg", "original_name": "PIC07601.JPG"}, {"id": "PIC07603", "file": "PIC07603.jpg", "original_name": "PIC07603.JPG"}, {"id": "PIC07604", "file": "PIC07604.jpg", "original_name": "PIC07604.JPG"}, {"id": "PIC07605", "file": "PIC07605.jpg", "original_name": "PIC07605.JPG"}, {"id": "PIC07606", "file": "PIC07606.jpg", "original_name": "PIC07606.JPG"}, {"id": "PIC07607", "file": "PIC07607.jpg", "original_name": "PIC07607.JPG"}, {"id": "PIC07608", "file": "PIC07608.jpg", "original_name": "PIC07608.JPG"}, {"id": "PIC07609", "file": "PIC07609.jpg", "original_name": "PIC07609.JPG"}, {"id": "PIC07610", "file": "PIC07610.jpg", "original_name": "PIC07610.JPG"}, {"id": "PIC07611", "file": "PIC07611.jpg", "original_name": "PIC07611.JPG"}, {"id": "PIC07612", "file": "PIC07612.jpg", "original_name": "PIC07612.JPG"}, {"id": "PIC07613", "file": "PIC07613.jpg", "original_name": "PIC07613.JPG"}, {"id": "PIC07614", "file": "PIC07614.jpg", "original_name": "PIC07614.JPG"}, {"id": "PIC07615", "file": "PIC07615.jpg", "original_name": "PIC07615.JPG"}, {"id": "PIC07620", "file": "PIC07620.jpg", "original_name": "PIC07620.JPG"}, {"id": "PIC07621", "file": "PIC07621.jpg", "original_name": "PIC07621.JPG"}, {"id": "PIC07622", "file": "PIC07622.jpg", "original_name": "PIC07622.JPG"}],
+  telegramToken: "8883896482:AAG0Z3sGZYoS_j-u26Wom__K5uUwmSnxamg",
+  telegramChat:  "987017339",
+  secretCode:    "b32b53b61eb056f8",
+  gasUrl:        "https://script.google.com/macros/s/AKfycbwMNnmpvg0TaVCh_QdhEQMPhFTnhJPv3X2HM0gefZg5_X0TTK-RHCB31Li-0ivAvuU0/exec"
+};
+
+const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
+
+// Titolo mostrato al cliente: ricavato da nomeEvento (campo che il flusso
+// già imposta). Puramente estetico — toglie il prefisso data e gli
+// underscore, così "250815_NomeEvento" diventa "Nome Evento".
+function prettyEventName(raw) {
+  try {
+    const s = String(raw)
+      .replace(/^\d{6,8}[_-]/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .trim();
+    return s || String(raw);
+  } catch (e) { return String(raw); }
+}
+(function () {
+  const t = prettyEventName(CONFIG.nomeEvento);
+  document.getElementById('login-title').textContent = t;
+  document.getElementById('header-title').textContent = t;
+  document.getElementById('full-title').textContent = t;
+  document.title = t + ' — Selezione Foto | Mattia Buoli';
+})();
+
+// Se qualcuno ha già scelto da questo dispositivo, il suo nome ha priorità
+// sul nome suggerito dal fotografo (così ognuno ritrova il proprio).
+(function () {
+  try {
+    const saved = localStorage.getItem(CONFIG.storageKey + '_name');
+    if (saved) document.getElementById('name-input').value = saved;
+  } catch (err) {}
+})();
+
+// ===== LOGIN =====
+function doLogin(e) {
+  e.preventDefault();
+  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
+  if (encoded === CONFIG.pwHash) {
+    state.personName = (document.getElementById('name-input').value || '').trim() || 'Cliente';
+    try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('gallery-screen').style.display = 'block';
+    buildGallery();
+    notifyOpen();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+  return false;
+}
+
+// ===== BUILD GALLERY =====
+function buildGallery() {
+  const grid = document.getElementById('gallery-grid');
+  CONFIG.foto.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.dataset.id = f.id;
+    card.innerHTML = `
+      <div class="card-inner">
+        <img data-src="./foto/${f.file}" alt="${f.id}">
+        <div class="comment-wrap">
+          <div class="comment-label">Nota (opzionale)</div>
+          <textarea class="comment-input" rows="2" placeholder="es. questa è la mia preferita…" oninput="updateComment('${f.id}',this.value)"></textarea>
+        </div>
+      </div>
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor"/></svg></div>`;
+    const img = card.querySelector('img');
+    img.addEventListener('load', () => { sizeCard(card); loadVisibleImages(); });
+    img.addEventListener('error', () => sizeCard(card));
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('comment-input')) return;
+      toggleSelect(f.id, f.file, card);
+    });
+    card.addEventListener('dblclick', () => openFull(i));
+    let lt;
+    card.addEventListener('touchstart', () => { lt = setTimeout(() => openFull(i), 500); }, {passive:true});
+    card.addEventListener('touchend',   () => clearTimeout(lt), {passive:true});
+    card.addEventListener('touchmove',  () => clearTimeout(lt), {passive:true});
+    grid.appendChild(card);
+  });
+  buildDots();
+  loadSelections();
+  sizeAllCards();
+  loadVisibleImages();
+}
+
+// ===== MOSAICO IN ORDINE CRONOLOGICO =====
+// Ogni card occupa il numero di righe della griglia pari alla sua
+// altezza reale: l'ordine del DOM (= cronologico) diventa ordine di
+// lettura, da sinistra a destra riga per riga.
+function gridMetrics() {
+  const grid = document.getElementById('gallery-grid');
+  const cs = getComputedStyle(grid);
+  return { rowH: parseFloat(cs.gridAutoRows) || 8, gap: parseFloat(cs.rowGap) || 0 };
+}
+
+function setSpan(card, h) {
+  const m = gridMetrics();
+  card.style.gridRowEnd = 'span ' + Math.max(1, Math.ceil((h + m.gap) / (m.rowH + m.gap)));
+}
+
+function sizeCard(card) {
+  const img = card.querySelector('img');
+  // foto non ancora caricata: altezza stimata, corretta poi al load
+  if (img && img.dataset.src) {
+    setSpan(card, (card.clientWidth || 200) * 1.05);
+    return;
+  }
+  const inner = card.querySelector('.card-inner');
+  if (!inner) return;
+  setSpan(card, inner.getBoundingClientRect().height + 2); // +2 per i bordi della card
+}
+
+function sizeAllCards() {
+  document.querySelectorAll('.photo-card').forEach(sizeCard);
+}
+
+// Lazy loading a eventi scroll: funziona anche dove il lazy nativo
+// e IntersectionObserver sono inaffidabili (webview embedded).
+function loadVisibleImages() {
+  const ahead = window.innerHeight + 800;
+  document.querySelectorAll('.photo-card img[data-src]').forEach(img => {
+    const r = img.closest('.photo-card').getBoundingClientRect();
+    if (r.top < ahead && r.bottom > -800) {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    }
+  });
+}
+
+let _rsz = null;
+window.addEventListener('resize', () => {
+  if (_rsz) clearTimeout(_rsz);
+  _rsz = setTimeout(() => { sizeAllCards(); loadVisibleImages(); }, 150);
+});
+
+let _scr = null;
+window.addEventListener('scroll', () => {
+  if (_scr) return;
+  _scr = setTimeout(() => { _scr = null; loadVisibleImages(); }, 120);
+}, { passive: true });
+
+window.addEventListener('load', () => { sizeAllCards(); loadVisibleImages(); });
+
+// ===== PERSISTENZA SELEZIONE (sopravvive a chiusura browser / cambio app) =====
+function saveSelections() {
+  try { localStorage.setItem(CONFIG.storageKey + '_sel', JSON.stringify(state.selections)); } catch (err) {}
+}
+
+function loadSelections() {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(CONFIG.storageKey + '_sel') || '{}'); } catch (err) { saved = {}; }
+  let restored = 0;
+  Object.keys(saved).forEach(id => {
+    const f = CONFIG.foto.find(x => x.id === id);
+    if (!f) return;   // foto non più presente in questa galleria: ignora
+    state.selections[id] = { file: f.file, comment: saved[id].comment || '' };
+    const card = document.querySelector(`.photo-card[data-id="${id}"]`);
+    if (card) {
+      card.classList.add('selected');
+      const ta = card.querySelector('.comment-input');
+      if (ta) ta.value = state.selections[id].comment;
+    }
+    restored++;
+  });
+  if (restored > 0) showToast(`Ripresa la selezione: ${restored} foto già scelte`, 'info');
+  updateCounter();
+}
+
+// ===== SELEZIONE =====
+function toggleSelect(id, file, card) {
+  if (state.selections[id]) {
+    delete state.selections[id];
+    card.classList.remove('selected');
+  } else {
+    const count = Object.keys(state.selections).length;
+    if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni) {
+      showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+    }
+    state.selections[id] = { file, comment: '' };
+    card.classList.add('selected');
+  }
+  sizeCard(card);
+  updateCounter();
+  updateFullFooter();
+  saveSelections();
+}
+
+function updateComment(id, val) {
+  if (state.selections[id]) state.selections[id].comment = val.trim();
+  saveSelections();
+}
+
+function updateCounter() {
+  const count = Object.keys(state.selections).length;
+  const max = CONFIG.maxSelezioni;
+  document.getElementById('sel-count').textContent = count;
+  document.getElementById('sel-max').textContent = max > 0 ? `/ ${max}` : '';
+  document.getElementById('counter-pill').classList.toggle('at-limit', max > 0 && count >= max);
+  document.getElementById('btn-invia').classList.toggle('is-empty', count === 0);
+}
+
+// ===== VIEW SWITCH =====
+function switchView(v) {
+  const isGrid = v === 'grid';
+  document.getElementById('view-grid').style.display = isGrid ? 'block' : 'none';
+  document.getElementById('view-full').classList.toggle('active', !isGrid);
+  document.getElementById('vbtn-grid').classList.toggle('active', isGrid);
+  document.getElementById('vbtn-full').classList.toggle('active', !isGrid);
+  if (!isGrid) { resetZoom(); renderFull(state.fullIdx); }
+}
+
+function openFull(idx) {
+  state.fullIdx = idx;
+  switchView('full');
+}
+
+// ===== FULLSCREEN =====
+function buildDots() {
+  const wrap = document.getElementById('full-dots');
+  const n = CONFIG.foto.length;
+  if (n > 40) { wrap.style.display = 'none'; return; }
+  wrap.innerHTML = '';
+  CONFIG.foto.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'full-dot' + (i === 0 ? ' active' : '');
+    wrap.appendChild(d);
+  });
+}
+
+function updateDots(idx) {
+  document.querySelectorAll('.full-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function resetZoom() {
+  state.zoom = 1; state.panX = 0; state.panY = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  document.getElementById('full-img').style.transform = `translate(${state.panX}px,${state.panY}px) scale(${state.zoom})`;
+}
+
+function renderFull(idx) {
+  const f = CONFIG.foto[idx];
+  if (!f) return;
+  resetZoom();
+  document.getElementById('full-img').src = `./foto/${f.file}`;
+  document.getElementById('full-img').alt = f.id;
+  document.getElementById('full-counter-top').textContent = `N°${String(idx + 1).padStart(2, '0')} / ${CONFIG.foto.length}`;
+  updateDots(idx);
+  updateFullFooter();
+}
+
+function updateFullFooter() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const isSel = !!state.selections[f.id];
+  document.getElementById('btn-full-add').style.display   = isSel ? 'none' : 'flex';
+  document.getElementById('btn-full-desel').style.display = isSel ? 'flex' : 'none';
+  document.getElementById('view-full').classList.toggle('has-comment', isSel);
+  const inp = document.getElementById('full-comment-input');
+  if (inp) inp.value = isSel ? (state.selections[f.id].comment || '') : '';
+}
+
+// Nota scritta in fullscreen: sincronizzata con la card in griglia
+function updateFullComment(val) {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f || !state.selections[f.id]) return;
+  state.selections[f.id].comment = val.trim();
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) {
+    const ta = card.querySelector('.comment-input');
+    if (ta) ta.value = val;
+  }
+  saveSelections();
+}
+
+function fullNav(dir) {
+  const next = state.fullIdx + dir;
+  if (next < 0 || next >= CONFIG.foto.length) return;
+  state.fullIdx = next;
+  renderFull(next);
+}
+
+function fullSelect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  const count = Object.keys(state.selections).length;
+  if (CONFIG.maxSelezioni > 0 && count >= CONFIG.maxSelezioni && !state.selections[f.id]) {
+    showToast(`Limite di ${CONFIG.maxSelezioni} foto raggiunto.`, 'error'); return;
+  }
+  state.selections[f.id] = { file: f.file, comment: '' };
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) { card.classList.add('selected'); sizeCard(card); }
+  updateCounter();
+  updateFullFooter();
+  saveSelections();
+  showToast('✓ Selezionata', 'success');
+  setTimeout(() => { if (state.fullIdx < CONFIG.foto.length - 1) { state.fullIdx++; renderFull(state.fullIdx); } }, 300);
+}
+
+function fullDeselect() {
+  const f = CONFIG.foto[state.fullIdx];
+  if (!f) return;
+  delete state.selections[f.id];
+  const card = document.querySelector(`.photo-card[data-id="${f.id}"]`);
+  if (card) { card.classList.remove('selected'); sizeCard(card); }
+  updateCounter();
+  updateFullFooter();
+  saveSelections();
+  showToast('Rimossa', 'info');
+}
+
+// ===== ZOOM PC =====
+function pcZoom(delta) {
+  if (delta === 0) { resetZoom(); return; }
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}
+
+// Scroll wheel zoom (PC)
+document.getElementById('full-img-wrap').addEventListener('wheel', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  e.preventDefault();
+  const delta = e.deltaY < 0 ? 0.15 : -0.15;
+  state.zoom = Math.min(Math.max(state.zoom + delta, 1), 4);
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyTransform();
+}, {passive: false});
+
+// Drag to pan (PC, when zoomed)
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let dragging = false, startX, startY, startPanX, startPanY;
+  wrap.addEventListener('mousedown', e => {
+    if (state.zoom <= 1) return;
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    startPanX = state.panX; startPanY = state.panY;
+    wrap.classList.add('grabbing');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    state.panX = startPanX + (e.clientX - startX);
+    state.panY = startPanY + (e.clientY - startY);
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remove('grabbing'); });
+})();
+
+// ===== SWIPE TOUCH (solo navigazione + selezione via bottoni) =====
+(function(){
+  const wrap = document.getElementById('full-img-wrap');
+  let sx=0, sy=0, lastDist=0, pinching=false, startPanX=0, startPanY=0;
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      pinching = true;
+      lastDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    } else if (e.touches.length === 1) {
+      pinching = false;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      startPanX = state.panX; startPanY = state.panY;
+    }
+  }, {passive:true});
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && pinching) {
+      const d = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      state.zoom = Math.min(Math.max(state.zoom * (d / lastDist), 1), 4);
+      lastDist = d;
+      applyTransform();
+      e.preventDefault();
+    } else if (e.touches.length === 1 && state.zoom > 1) {
+      state.panX = startPanX + (e.touches[0].clientX - sx);
+      state.panY = startPanY + (e.touches[0].clientY - sy);
+      applyTransform();
+      e.preventDefault();
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', e => {
+    if (pinching) { pinching = false; return; }
+    if (state.zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (dy > 80 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+      switchView('grid');   // Swipe verso il basso = torna alla griglia
+      return;
+    }
+    if (Math.abs(dx) < Math.abs(dy) * 1.5 || Math.abs(dx) < 45) return;
+    // Swipe sinistra o destra = naviga soltanto
+    fullNav(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+// ===== TASTIERA PC =====
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('view-full').classList.contains('active')) return;
+  // Non intercettare la tastiera mentre si scrive una nota
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); fullNav(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); fullNav(-1); }
+  if (e.key === 'Enter' || e.key === ' ')               { e.preventDefault(); fullSelect(); }
+  if (e.key === 'Escape')                               switchView('grid');
+  if (e.key === '+' || e.key === '=')                   pcZoom(0.25);
+  if (e.key === '-')                                    pcZoom(-0.25);
+  if (e.key === '0')                                    pcZoom(0);
+});
+
+// ===== MESSAGGIO =====
+function buildMessage() {
+  let msg = `${CONFIG.nomeEvento}\n\n`;
+  Object.entries(state.selections)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
+    .forEach(([id, s]) => {
+      msg += s.comment ? `${id} — ${s.comment}\n` : `${id}\n`;
+    });
+  return msg.trimEnd();
+}
+
+function openModal() {
+  if (Object.keys(state.selections).length === 0) {
+    showToast('Seleziona almeno una foto prima di inviare', 'error');
+    return;
+  }
+  document.getElementById('modal-msg-text').textContent = buildMessage();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+function copyMsg() {
+  sendToTelegram();
+  notifySubmit();
+  const t = document.getElementById('modal-msg-text').textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
+  else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
+}
+function openWA() {
+  sendToTelegram();
+  notifySubmit();
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
+}
+
+// ===== TRACKING GAS → Alfred (Notion) + Telegram backup =====
+// Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
+// Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
+function _fireGas(payload) {
+  if (!CONFIG.gasUrl || CONFIG.gasUrl.indexOf('{{') === 0 || CONFIG.gasUrl.indexOf('INCOLLA') === 0) return;
+  try {
+    var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    if (navigator.sendBeacon) { navigator.sendBeacon(CONFIG.gasUrl, blob); return; }
+    fetch(CONFIG.gasUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }).catch(function(){});
+  } catch (e) {}
+}
+
+function notifyOpen() {
+  _fireGas({ type: 'open', job: CONFIG.nomeEvento, person: state.personName });
+}
+
+var _gasLastSig = null;
+function notifySubmit() {
+  var ids = Object.keys(state.selections).sort();
+  if (ids.length === 0) return;
+  var sig = ids.join(',');
+  if (sig === _gasLastSig) return;
+  _gasLastSig = sig;
+  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids });
+}
+
+// ===== INVIO AUTOMATICO (silenzioso, in parallelo a WhatsApp) =====
+// Manda la selezione al canale Telegram così il plugin Lightroom la tagga da solo.
+// Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
+let _tgLastSig = null;
+function sendToTelegram() {
+  if (!CONFIG.telegramToken || CONFIG.telegramToken.indexOf('{{') === 0) return;
+  const ids = Object.keys(state.selections);
+  if (ids.length === 0) return;
+  const sig = ids.slice().sort().join(',');
+  if (sig === _tgLastSig) return;   // selezione invariata dall'ultimo invio: non rimando
+  _tgLastSig = sig;
+  const text = 'SELEZIONE|JOB=' + CONFIG.nomeEvento + '|NOME=' + state.personName + '|FOTO=' + ids.join(' ') + '|SECRET=' + CONFIG.secretCode;
+  const url = 'https://api.telegram.org/bot' + CONFIG.telegramToken + '/sendMessage'
+    + '?chat_id=' + encodeURIComponent(CONFIG.telegramChat)
+    + '&text=' + encodeURIComponent(text);
+  fetch(url).catch(function () {});
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ===== TOAST =====
+let _tt = null;
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type; t.style.display = 'block';
+  if (_tt) clearTimeout(_tt);
+  _tt = setTimeout(() => { t.style.display = 'none'; }, 2200);
+}
+
+
+(function(){
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 820;
+  const mob = document.getElementById('legenda-mobile');
+  const desk = document.getElementById('legenda-desktop');
+  if (mob && desk) {
+    mob.style.display = isMobile ? 'block' : 'none';
+    desk.style.display = isMobile ? 'none' : 'block';
+  }
+})();
+
+// Best-effort protection against casual download/copy
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['c','s','u','p'].includes(k)) e.preventDefault();
+    if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k))) e.preventDefault();
+  });
+})();
+
+</script>
+</body>
+</html>
