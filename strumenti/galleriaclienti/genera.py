@@ -1,320 +1,274 @@
 #!/usr/bin/env python3
-# genera.py v2.1 - Mattia Buoli Photo Selection System
-# Avvio: python3 genera.py
+# genera.py v3 - Mattia Buoli Photo Selection System
+#
+# Uso normale: l'app "Galleria Clienti" (doppio clic) chiama questo script.
+#   python3 genera.py                 wizard da terminale (backup)
+#   python3 genera.py --app           legge i parametri JSON da stdin, scrive progresso JSON su stdout
+#   python3 genera.py --rigenera DIR  ricostruisce una galleria gia' pubblicata col template attuale
 
-import hmac as _hmac, hashlib, json, os, re, shutil, subprocess, sys
+import base64, hashlib, hmac, html, json, os, re, secrets, shutil, subprocess, sys, tempfile
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 try:
-    from PIL import Image
-except ImportError:
-    print()
-    print("  Pillow non trovato. Installa con: pip install Pillow")
+    from PIL import Image, ImageOps
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+except ImportError as e:
+    print("Libreria mancante (" + e.name + "). Installa con: pip3 install --user Pillow cryptography")
     sys.exit(1)
 
 # -----------------------------------------------------------
-WHATSAPP_NUM    = '393348493876'
-REPO_DIR        = Path(__file__).resolve().parents[2]   # radice di PortfolioFotografico
-GALLERY_DIR     = 'galleriaclienti'
-SITO_BASE       = 'https://mattiabuoli.it'
-OUTPUT_DIR      = Path(__file__).resolve().parent / 'progetti'
+WHATSAPP_NUM = '393348493876'
+QUI          = Path(__file__).resolve().parent
+REPO_DIR     = QUI.parents[1]          # radice di PortfolioFotografico
+GALLERY_DIR  = 'galleriaclienti'
+SITO_BASE    = 'https://mattiabuoli.it'
+TEMPLATE     = QUI / 'template.html'
 
 # Segreti in segreti.py (ignorato da git — la repo e' pubblica). Modello: segreti.example.py
+sys.path.insert(0, str(QUI))
 try:
     from segreti import TELEGRAM_TOKEN, TELEGRAM_CHAT, MASTER_KEY, GAS_URL
 except ImportError:
-    print()
-    print("  segreti.py non trovato. Copia segreti.example.py in segreti.py e compila i valori.")
+    print("segreti.py non trovato. Copia segreti.example.py in segreti.py e compila i valori.")
     sys.exit(1)
-
-def make_secret(job_name):
-    return _hmac.new(MASTER_KEY.encode(), job_name.encode(), hashlib.sha256).hexdigest()[:16]
 # -----------------------------------------------------------
 
-IMG_EXTS = {'.jpg', '.jpeg', '.png', '.webp', '.tiff', '.bmp'}
-MAX_SIDE = 1600
-QUALITY  = 82
-MAX_KB   = 450
+IMG_EXTS    = {'.jpg', '.jpeg', '.png', '.webp', '.tiff', '.tif', '.bmp'}
+MAX_SIDE    = 1600
+QUALITY     = 82
+MAX_KB      = 450
+PBKDF2_ITER = 200_000   # deve restare ragionevole anche sui telefoni (decifra il browser)
+FORMATO_JOB = re.compile(r'^\d{6}_')
 
-def clear(): os.system('clear')
 
-def header():
-    print()
-    print("  +==========================================+")
-    print("  | MATTIA BUOLI - Galleria Selezione Foto  |")
-    print("  |              v2.1                       |")
-    print("  +==========================================+")
-    print()
+def make_secret(job):
+    return hmac.new(MASTER_KEY.encode(), job.encode(), hashlib.sha256).hexdigest()[:16]
 
-def step_banner(n, tot, titolo):
-    clear(); header()
-    print("  STEP " + str(n) + " di " + str(tot) + " -- " + titolo)
-    print("  " + "-" * 46)
-    print()
-
-def ok(msg):   print(); print("  OK  " + msg)
-def warn(msg): print("  ATTENZIONE: " + msg)
-
-def ask(prompt, hint=None):
-    if hint: print("  (" + hint + ")")
-    while True:
-        val = input("  > " + prompt + ": ").strip()
-        if val: return val
-        warn("Campo obbligatorio. Riprova.")
-
-def ask_int(prompt, default=0, hint=None):
-    if hint: print("  (" + hint + ")")
-    while True:
-        val = input("  > " + prompt + f" (default: {default}): ").strip()
-        if not val: return default
-        try:
-            return int(val)
-        except ValueError:
-            warn("Inserisci un numero intero. Riprova.")
-
-def ask_path():
-    print("  Trascina la cartella dal Finder in questa finestra,")
-    print("  oppure incolla il percorso a mano.")
-    print()
-    while True:
-        raw = input('  > Percorso cartella foto: ').strip().strip("'").strip('"')
-        p = Path(raw).expanduser()
-        if not p.exists():
-            warn("Cartella non trovata: " + str(p)); print(); continue
-        if not p.is_dir():
-            warn("Non e' una cartella. Riprova."); print(); continue
-        foto = sorted(
-            [f for f in p.iterdir()
-             if f.is_file()
-             and f.suffix.lower() in IMG_EXTS
-             and not f.name.startswith('.')],   # ignora file ._macOS
-            key=lambda x: x.name.lower()
-        )
-        if not foto:
-            warn("Nessuna foto trovata in quella cartella."); print(); continue
-        return p, foto
-
-def html_attr_escape(text):
-    return (text.replace('&', '&amp;').replace('"', '&quot;')
-                .replace('<', '&lt;').replace('>', '&gt;'))
-
-def pw_encode(text):
-    import base64
-    return base64.b64encode(text.encode('utf-8')).decode('ascii')
 
 def slugify(text):
-    s = text.strip().replace(' ', '_')
-    return re.sub(r'[^A-Za-z0-9_-]', '', s)
+    return re.sub(r'[^A-Za-z0-9_-]', '', text.strip().replace(' ', '_'))
 
-def fix_orientation(img):
-    try:
-        exif = img._getexif()
-        if exif:
-            for o, deg in {3:180, 6:270, 8:90}.items():
-                if exif.get(274) == o:
-                    return img.rotate(deg, expand=True)
-    except Exception:
-        pass
-    return img
+
+def trova_foto(cartella):
+    return sorted((f for f in Path(cartella).iterdir()
+                   if f.is_file() and f.suffix.lower() in IMG_EXTS and not f.name.startswith('.')),
+                  key=lambda f: f.name.lower())
+
 
 def compress(src, dst):
-    img = Image.open(src)
-    img = fix_orientation(img)
-    img = img.convert("RGB")
-    w, h = img.size
-    if max(w, h) > MAX_SIDE:
-        s = MAX_SIDE / max(w, h)
-        img = img.resize((int(w*s), int(h*s)), Image.LANCZOS)
+    """Ridimensiona a MAX_SIDE e comprime sotto MAX_KB. Nessun EXIF in uscita (niente GPS/dati camera)."""
+    with Image.open(src) as im:
+        icc = im.info.get('icc_profile')
+        img = ImageOps.exif_transpose(im).convert('RGB')
+    img.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
     q = QUALITY
     while True:
-        img.save(dst, "JPEG", quality=q, optimize=True, progressive=True)
-        if dst.stat().st_size <= MAX_KB * 1024 or q <= 55:
-            break
+        img.save(dst, 'JPEG', quality=q, optimize=True, progressive=True, icc_profile=icc)
+        if os.path.getsize(dst) <= MAX_KB * 1024 or q <= 55:
+            return
         q -= 5
-    kb = dst.stat().st_size // 1024
-    print("  " + src.name + " -> " + dst.name + " (" + str(kb) + " KB)")
 
-def git_run(cmd, cwd, ignore_if=None):
-    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+
+def cifra_vault(password, dati):
+    """PBKDF2-SHA256 + AES-256-GCM: stesso schema che il template decifra con WebCrypto."""
+    salt, iv = secrets.token_bytes(16), secrets.token_bytes(12)
+    key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, PBKDF2_ITER, 32)
+    data = AESGCM(key).encrypt(iv, json.dumps(dati, ensure_ascii=False).encode('utf-8'), None)
+    b64 = lambda b: base64.b64encode(b).decode('ascii')
+    return {'salt': b64(salt), 'iv': b64(iv), 'iter': PBKDF2_ITER, 'data': b64(data)}
+
+
+def render_html(nome_evento, cliente, password, max_sel, foto_json, storage_key=None):
+    config = {
+        'nomeEvento':   nome_evento,
+        'maxSelezioni': max_sel,
+        'whatsapp':     WHATSAPP_NUM,
+        'storageKey':   storage_key or slugify(nome_evento).replace('-', '_'),
+        'vault':        cifra_vault(password, {
+            'foto':          foto_json,
+            'telegramToken': TELEGRAM_TOKEN,
+            'telegramChat':  TELEGRAM_CHAT,
+            'secretCode':    make_secret(nome_evento),
+            'gasUrl':        GAS_URL,
+        }),
+    }
+    # "</" non deve mai chiudere lo <script> che contiene il JSON
+    config_js = json.dumps(config, ensure_ascii=False).replace('</', '<\\/')
+    return (TEMPLATE.read_text(encoding='utf-8')
+            .replace('{{CONFIG_JSON}}', config_js)
+            .replace('{{NOME_EVENTO}}', html.escape(nome_evento))
+            .replace('{{CLIENTE_DEFAULT}}', html.escape(cliente)))
+
+
+def git(*args):
+    r = subprocess.run(['git', *args], cwd=REPO_DIR, capture_output=True, text=True)
     if r.returncode != 0:
-        msg = r.stderr.strip() or r.stdout.strip() or "(nessun dettaglio)"
-        if ignore_if and ignore_if in msg:
-            return msg
-        print("  ERRORE git [" + " ".join(cmd) + "]:")
-        print("  " + msg)
-        sys.exit(1)
+        raise RuntimeError('git ' + args[0] + ': ' + (r.stderr.strip() or r.stdout.strip()))
     return r.stdout.strip()
 
-def main():
-    TOT = 5   # uno step in meno: slug auto-generato
 
-    # STEP 1
-    step_banner(1, TOT, "Dove si trovano le foto?")
-    foto_dir, foto_files = ask_path()
-    ok("Trovate " + str(len(foto_files)) + " foto")
-    input("\n  Premi Invio per continuare...")
+def pubblica(percorsi, messaggio):
+    """Commit solo dei percorsi indicati (mai altri file della repo) e push."""
+    rel = [str(Path(p).relative_to(REPO_DIR)) for p in percorsi]
+    git('add', '-A', '--', *rel)
+    if not git('diff', '--cached', '--name-only', '--', *rel):
+        return
+    git('commit', '-m', messaggio, '--', *rel)
+    try:
+        git('push')
+    except RuntimeError:
+        git('pull', '--rebase', '--autostash')
+        git('push')
 
-    # STEP 2
-    step_banner(2, TOT, "Chi e' il cliente?")
-    cliente = ask("Nome del cliente", hint="es. Luigi Mastroianni")
-    ok("Cliente: " + cliente)
-    input("\n  Premi Invio per continuare...")
 
-    # STEP 3
-    step_banner(3, TOT, "Nome dell'evento / progetto")
-    print("  Questo sara' il titolo in cima alla galleria, nel messaggio WhatsApp")
-    print("  e nell'URL della pagina web.")
-    print()
-    print("  Esempi: Battesimo Dario  /  Matrimonio Rossi  /  Compleanno Laura")
-    print()
-    nome_evento = ask("Nome evento")
-    if not re.match(r"^\d{6}_", nome_evento):
-        warn("Non sembra nel formato AAMMGG_NomeEvento (es. 260612_Cherimoya).")
-        warn("Il riconoscimento automatico delle foto in Lightroom si basa su questo nome:")
-        warn("se non e' preciso rischi di non trovare le foto, non di trovare quelle sbagliate.")
-        if input("\n  Continuo comunque? [s/N] ").strip().lower() != "s":
-            print("\n  Annullato."); sys.exit(0)
-    slug    = slugify(nome_evento)
-    storage = slug.replace("-", "_")
-    ok("Nome evento : " + nome_evento)
-    ok("Slug URL    : " + slug)
-    ok("Link finale : " + SITO_BASE + "/" + GALLERY_DIR + "/" + slug + "/")
-    input("\n  Premi Invio per continuare...")
-
-    # STEP 4
-    step_banner(4, TOT, "Limite foto selezionabili")
-    print("  Quante foto puo' selezionare il cliente?")
-    print("  Scrivi 0 per nessun limite.")
-    print()
-    max_sel = ask_int("Numero massimo selezioni", default=0)
+def messaggio_whatsapp(cliente, link, password, max_sel):
+    msg = ('Ciao ' + cliente.split()[0] + '! Ho caricato le tue foto.\n'
+           'Scegli le tue preferite aprendo questo link:\n\n' + link + '\n\n'
+           'Password: *' + password + '*')
     if max_sel > 0:
-        ok(f"Limite: {max_sel} foto")
-    else:
-        ok("Nessun limite impostato")
-    input("\n  Premi Invio per continuare...")
+        msg += '\n\nPuoi selezionare fino a *' + str(max_sel) + ' foto*.'
+    return msg
 
-    # STEP 5
-    step_banner(5, TOT, "Password per il cliente")
-    print("  Scegli una password da mandare al cliente su WhatsApp.")
-    print("  Deve essere semplice da digitare (es. fiori2026, luna, mattia).")
-    print()
-    password = ask("Password")
-    pw_hash  = pw_encode(password)
-    ok("Password impostata")
-    input("\n  Premi Invio per continuare...")
 
-    # RIEPILOGO
-    step_banner("R", TOT, "Riepilogo -- controlla prima di procedere")
-    proj_dir = OUTPUT_DIR / slug
-    dest     = REPO_DIR / GALLERY_DIR / slug
-    link     = SITO_BASE + "/" + GALLERY_DIR + "/" + slug + "/"
-    template = Path(__file__).parent / "template.html"
-    print("  Cliente      : " + cliente)
-    print("  Evento       : " + nome_evento)
-    print("  Slug URL     : " + slug)
-    print("  Foto         : " + str(len(foto_files)) + " immagini")
-    print("  Max selezioni: " + (str(max_sel) if max_sel > 0 else "nessun limite"))
-    print("  Link         : " + link)
-    print()
-    conferma = input('  Tutto ok? Vuoi procedere? [s/N] ').strip().lower()
-    if conferma != "s":
-        print(); print("  Annullato."); sys.exit(0)
+def copia_appunti(testo):
+    try:
+        subprocess.run(['pbcopy'], input=testo.encode('utf-8'), check=True)
+        return True
+    except Exception:
+        return False
 
-    # ELABORAZIONE
-    clear(); header()
-    print("  Elaborazione e pubblicazione in corso...")
-    print()
-    if not template.exists():
-        print("  ERRORE: template.html non trovato accanto a genera.py")
+
+def crea_galleria(cartella, cliente, nome_evento, password, max_sel=0, avanza=lambda *a: None):
+    """Comprime, genera, pubblica. avanza(fase, fatto, totale) riceve il progresso."""
+    cliente, nome_evento, password = cliente.strip(), nome_evento.strip(), password.strip()
+    if not (cliente and nome_evento and password):
+        raise ValueError('Cliente, nome evento e password sono obbligatori.')
+    foto = trova_foto(cartella)
+    if not foto:
+        raise ValueError('Nessuna foto trovata in ' + str(cartella))
+
+    slug = slugify(nome_evento)
+    dest = REPO_DIR / GALLERY_DIR / slug
+    link = SITO_BASE + '/' + GALLERY_DIR + '/' + slug + '/'
+
+    # Si lavora in una cartella temporanea: la galleria pubblicata viene sostituita solo a lavoro finito
+    tmp = Path(tempfile.mkdtemp(prefix='galleria_'))
+    try:
+        (tmp / 'foto').mkdir()
+        foto_json, lavori, usati = [], [], set()
+        for src in foto:
+            fname, c = src.stem + '.jpg', 2
+            while fname.lower() in usati:
+                fname, c = src.stem + '-' + str(c) + '.jpg', c + 1
+            usati.add(fname.lower())
+            foto_json.append({'id': src.stem, 'file': fname, 'original_name': src.name})
+            lavori.append((src, tmp / 'foto' / fname))
+
+        avanza('Compressione foto', 0, len(lavori))
+        with ProcessPoolExecutor() as ex:
+            futuri = [ex.submit(compress, s, d) for s, d in lavori]
+            for i, f in enumerate(as_completed(futuri), 1):
+                f.result()
+                avanza('Compressione foto', i, len(lavori))
+
+        (tmp / 'index.html').write_text(render_html(nome_evento, cliente, password, max_sel, foto_json),
+                                        encoding='utf-8')
+        avanza('Pubblicazione', 0, 1)
+        if dest.exists():
+            shutil.rmtree(dest)
+        shutil.move(str(tmp), str(dest))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    pubblica([dest], 'Galleria ' + cliente + ' (' + slug + ')')
+    avanza('Pubblicazione', 1, 1)
+    msg = messaggio_whatsapp(cliente, link, password, max_sel)
+    copia_appunti(msg)
+    return {'link': link, 'messaggio': msg, 'foto': len(foto)}
+
+
+# ---------- rigenerazione gallerie gia' pubblicate ----------
+
+def leggi_galleria(cartella):
+    """Estrae i dati da un index.html di qualsiasi versione precedente (password in base64)."""
+    h = (Path(cartella) / 'index.html').read_text(encoding='utf-8')
+    campo = lambda nome: (re.search(nome + r'\s*[:=]\s*["\']([^"\']*)["\']', h) or [None, None])[1]
+    pw_b64 = campo('pwHash') or campo('PW_B64')
+    if not pw_b64:
+        raise ValueError('password non trovata (galleria gia\' cifrata?)')
+    cliente = re.search(r'id="name-input"[^>]*value="([^"]*)"', h)
+    maxsel = re.search(r'maxSelezioni\s*:\s*(\d+)', h)
+    return {
+        'nome_evento': campo('nomeEvento') or Path(cartella).name,
+        'storage_key': campo('storageKey') or campo('storage'),
+        'max_sel':     int(maxsel[1]) if maxsel else 0,
+        'cliente':     html.unescape(cliente[1]) if cliente else (campo('cliente') or ''),
+        'password':    base64.b64decode(pw_b64).decode('utf-8'),
+        'foto':        json.loads(re.search(r'foto\s*:\s*(\[.*?\])\s*,?\s*\n', h, re.S)[1]),
+    }
+
+
+def rigenera(cartelle):
+    fatte = []
+    for c in cartelle:
+        c = Path(c).resolve()
+        d = leggi_galleria(c)
+        (c / 'index.html').write_text(render_html(d['nome_evento'], d['cliente'], d['password'],
+                                                  d['max_sel'], d['foto'], d['storage_key']), encoding='utf-8')
+        fatte.append(c)
+        print('OK  ' + c.name + '  (' + str(len(d['foto'])) + ' foto)')
+    return fatte
+
+
+# ---------- modalita' app (JSON su stdin/stdout) ----------
+
+def main_app():
+    def emetti(**kw):
+        print(json.dumps(kw, ensure_ascii=False), flush=True)
+    try:
+        p = json.load(sys.stdin)
+        r = crea_galleria(p['cartella'], p['cliente'], p['evento'], p['password'], int(p.get('max') or 0),
+                          avanza=lambda fase, fatto, tot: emetti(tipo='progresso', fase=fase, fatto=fatto, totale=tot))
+        emetti(tipo='fine', **r)
+    except Exception as e:
+        emetti(tipo='errore', testo=str(e))
         sys.exit(1)
 
-    foto_out = proj_dir / "foto"
-    if proj_dir.exists(): shutil.rmtree(proj_dir)
-    foto_out.mkdir(parents=True, exist_ok=True)
 
-    print("  Compressione foto in corso...")
-    print()
-    foto_json = []
-    for src in foto_files:
-        fname = src.stem + ".jpg"
-        dst   = foto_out / fname
-        c = 2
-        while dst.exists():
-            fname = src.stem + "-" + str(c) + ".jpg"; dst = foto_out / fname; c += 1
-        compress(src, dst)
-        foto_json.append({"id": src.stem, "file": fname, "original_name": src.name})
+# ---------- wizard da terminale (backup) ----------
 
-    total_mb = round(sum(f.stat().st_size for f in foto_out.iterdir()) / 1024 / 1024, 1)
-    ok(str(len(foto_files)) + " foto elaborate -- " + str(total_mb) + " MB totali")
-    print()
+def main_terminale():
+    def chiedi(prompt, default=''):
+        while True:
+            v = input('  > ' + prompt + (' [' + default + ']' if default else '') + ': ').strip() or default
+            if v: return v
 
-    html = template.read_text(encoding="utf-8")
-    replacements = [
-        ("{{NOME_EVENTO}}",    nome_evento),
-        ("{{MAX_SELEZIONI}}", str(max_sel)),
-        ("{{WHATSAPP}}",       WHATSAPP_NUM),
-        ("{{STORAGE_KEY}}",    storage),
-        ("{{PW_HASH}}",        pw_hash),
-        ("{{FOTO_JSON}}",      json.dumps(foto_json, ensure_ascii=False)),
-        ("{{TELEGRAM_TOKEN}}", TELEGRAM_TOKEN),
-        ("{{TELEGRAM_CHAT}}",  TELEGRAM_CHAT),
-        ("{{SECRET_CODE}}",    make_secret(nome_evento)),
-        ("{{CLIENTE_DEFAULT}}", html_attr_escape(cliente)),
-        ("{{GAS_URL}}",        GAS_URL),
-    ]
-    for k, v in replacements:
-        html = html.replace(k, v)
-    (proj_dir / "index.html").write_text(html, encoding="utf-8")
+    print('\n  MATTIA BUOLI - Galleria Selezione Foto v3\n')
+    while True:
+        cartella = Path(chiedi('Cartella foto (trascinala qui)').strip('\'"')).expanduser()
+        if cartella.is_dir() and trova_foto(cartella): break
+        print('  Nessuna foto trovata in quella cartella.')
+    print('  ' + str(len(trova_foto(cartella))) + ' foto')
+    evento = chiedi('Nome evento (AAMMGG_NomeEvento)', cartella.name)
+    if not FORMATO_JOB.match(evento):
+        print('  ATTENZIONE: senza il formato AAMMGG_ il watcher di Lightroom non trova le foto.')
+    cliente = chiedi('Nome cliente')
+    password = chiedi('Password')
+    max_sel = int(chiedi('Max selezioni (0 = nessun limite)', '0'))
 
-    if not REPO_DIR.exists():
-        warn("Repo non trovata in " + str(REPO_DIR))
-        warn("La galleria e' pronta localmente in: " + str(proj_dir))
-        sys.exit(0)
+    def avanza(fase, fatto, tot):
+        print('\r  ' + fase + ': ' + str(fatto) + '/' + str(tot) + '   ', end='' if fatto < tot else '\n', flush=True)
+    r = crea_galleria(cartella, cliente, evento, password, max_sel, avanza)
+    print('\n' + r['messaggio'] + '\n\n  (messaggio copiato negli appunti)\n')
 
-    print("  Copia nella repo...")
-    (REPO_DIR / GALLERY_DIR).mkdir(parents=True, exist_ok=True)
-    if dest.exists(): shutil.rmtree(dest)
-    shutil.copytree(proj_dir, dest)
-    ok("Copiata in repo")
-    print()
-    print("  Pubblicazione su GitHub...")
-    git_run(["git", "add", str(dest)], REPO_DIR)
-    git_run(["git", "commit", "-m", "Galleria " + cliente + " (" + slug + ") v2"], REPO_DIR,
-            ignore_if="nothing to commit")
-    git_run(["git", "push"], REPO_DIR)
-    ok("Push completato")
-    print()
-    print("  " + "-" * 46)
-    print()
-    print("  TUTTO FATTO!")
-    print()
-    print("  " + "=" * 46)
-    print()
-    print("  COPIA E MANDA SU WHATSAPP:")
-    print()
-    wa_msg = (
-        "Ciao " + cliente.split()[0] + "! Ho caricato le tue foto.\n"
-        "Scegli le tue preferite aprendo questo link:\n\n"
-        + link + "\n\n"
-        "Password: *" + password + "*"
-    )
-    if max_sel > 0:
-        wa_msg += f"\n\nPuoi selezionare fino a *{max_sel} foto*."
 
-    sep = "  " + "-" * 46
-    print(sep)
-    for line in wa_msg.splitlines():
-        print("  " + line)
-    print(sep)
-    print()
-    try:
-        import subprocess as sp
-        proc = sp.Popen(["pbcopy"], stdin=sp.PIPE)
-        proc.communicate(wa_msg.encode("utf-8"))
-        print("  Messaggio copiato negli appunti! Incollalo direttamente su WhatsApp.")
-    except Exception:
-        print("  (copia manuale: seleziona il testo tra i trattini)")
-    print()
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    if '--app' in sys.argv:
+        main_app()
+    elif '--rigenera' in sys.argv:
+        cartelle = rigenera([a for a in sys.argv[sys.argv.index('--rigenera') + 1:] if not a.startswith('--')])
+        if cartelle and '--pubblica' in sys.argv:
+            pubblica(cartelle, 'Gallerie: password cifrata (' + str(len(cartelle)) + ')')
+    else:
+        main_terminale()

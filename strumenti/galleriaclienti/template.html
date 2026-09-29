@@ -439,7 +439,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <div id="login-screen">
   <div class="login-card">
     <div class="evento-subtitle">Mattia Buoli — Selezione foto</div>
-    <h1 id="login-title">Shooting Catering</h1>
+    <h1 id="login-title"></h1>
 
     <!-- LEGENDA -->
     <div class="legenda" id="legenda-box">
@@ -457,7 +457,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       <div class="legenda-row legenda-note"><span class="legenda-icon">—</span><span>Le immagini mostrate sono solo un'anteprima.</span></div>
     </div>
 
-    <form id="login-form" onsubmit="return doLogin(event)">
+    <form id="login-form" onsubmit="doLogin(event); return false">
       <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="{{CLIENTE_DEFAULT}}" required>
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra</button>
@@ -472,7 +472,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <header class="site-header">
     <div class="header-left">
       <span class="header-brand">Mattia Buoli — Consegna cliente</span>
-      <h1 id="header-title">Shooting Catering</h1>
+      <h1 id="header-title"></h1>
     </div>
     <div class="counter-pill" id="counter-pill">
       <span class="count-num" id="sel-count">0</span>
@@ -496,7 +496,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <!-- FULLSCREEN -->
 <div id="view-full">
   <div class="full-header">
-    <span class="full-title" id="full-title">Shooting Catering</span>
+    <span class="full-title" id="full-title"></span>
     <span class="full-counter-top" id="full-counter-top">1 / 1</span>
     <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
   </div>
@@ -549,29 +549,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <script>
 /* ============================================================
-   CONFIG — struttura IDENTICA alle gallerie attuali: il flusso
-   (Lightroom / generatore) imposta questi stessi campi come sempre.
-   Cambia solo la grafica, non i campi né i loro nomi.
-     nomeEvento    codice job (titolo mostrato + messaggio + tag Telegram)
-     maxSelezioni  limite selezione
-     whatsapp      numero destinatario
-     storageKey    chiave localStorage (= nomeEvento)
-     pwHash        btoa della password
-     foto          lista immagini (cartella ./foto/)
-     telegramToken/telegramChat/secretCode  notifica plugin Lightroom
+   CONFIG — lo compila genera.py.
+   In chiaro solo i dati innocui. Lista foto, token e codici sono nel
+   "vault", cifrato con la password del cliente (PBKDF2 + AES-GCM):
+   senza password dal sorgente della pagina non si ricava nulla.
+   Dopo il login il contenuto del vault viene unito a CONFIG
+   (foto, telegramToken, telegramChat, secretCode, gasUrl).
    ============================================================ */
-const CONFIG = {
-  nomeEvento:    "{{NOME_EVENTO}}",
-  maxSelezioni:  {{MAX_SELEZIONI}},
-  whatsapp:      "{{WHATSAPP}}",
-  storageKey:    "{{STORAGE_KEY}}",
-  pwHash:        "{{PW_HASH}}",
-  foto:          {{FOTO_JSON}},
-  telegramToken: "{{TELEGRAM_TOKEN}}",
-  telegramChat:  "{{TELEGRAM_CHAT}}",
-  secretCode:    "{{SECRET_CODE}}",
-  gasUrl:        "{{GAS_URL}}"
-};
+const CONFIG = {{CONFIG_JSON}};
 
 const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
 
@@ -606,11 +591,29 @@ function prettyEventName(raw) {
 })();
 
 // ===== LOGIN =====
-function doLogin(e) {
+function _b64(s) { return Uint8Array.from(atob(s), c => c.charCodeAt(0)); }
+
+async function openVault(password) {
+  const v = CONFIG.vault;
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: _b64(v.salt), iterations: v.iter, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: _b64(v.iv) }, key, _b64(v.data));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+async function doLogin(e) {
   e.preventDefault();
-  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
-  if (encoded === CONFIG.pwHash) {
-    state.personName = (document.getElementById('name-input').value || '').trim() || 'Cliente';
+  const btn = document.querySelector('.btn-login');
+  btn.disabled = true;
+  let segreti = null;
+  try { segreti = await openVault(document.getElementById('pw-input').value); } catch (err) {}
+  btn.disabled = false;
+  if (segreti) {
+    Object.assign(CONFIG, segreti);
+    // "|" separa i campi del messaggio Telegram: non deve comparire nel nome
+    state.personName = (document.getElementById('name-input').value || '').replace(/\|/g, ' ').trim() || 'Cliente';
     try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
@@ -1029,7 +1032,7 @@ function openWA() {
 // Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
 // Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
 function _fireGas(payload) {
-  if (!CONFIG.gasUrl || CONFIG.gasUrl.indexOf('{{') === 0 || CONFIG.gasUrl.indexOf('INCOLLA') === 0) return;
+  if (!CONFIG.gasUrl) return;
   try {
     var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
     if (navigator.sendBeacon) { navigator.sendBeacon(CONFIG.gasUrl, blob); return; }
@@ -1058,7 +1061,7 @@ function notifySubmit() {
 // Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
 let _tgLastSig = null;
 function sendToTelegram() {
-  if (!CONFIG.telegramToken || CONFIG.telegramToken.indexOf('{{') === 0) return;
+  if (!CONFIG.telegramToken) return;
   const ids = Object.keys(state.selections);
   if (ids.length === 0) return;
   const sig = ids.slice().sort().join(',');

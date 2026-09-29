@@ -439,7 +439,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <div id="login-screen">
   <div class="login-card">
     <div class="evento-subtitle">Mattia Buoli — Selezione foto</div>
-    <h1 id="login-title">Shooting Catering</h1>
+    <h1 id="login-title"></h1>
 
     <!-- LEGENDA -->
     <div class="legenda" id="legenda-box">
@@ -457,7 +457,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       <div class="legenda-row legenda-note"><span class="legenda-icon">—</span><span>Le immagini mostrate sono solo un'anteprima.</span></div>
     </div>
 
-    <form id="login-form" onsubmit="return doLogin(event)">
+    <form id="login-form" onsubmit="doLogin(event); return false">
       <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="ByTiffany" required>
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra</button>
@@ -472,7 +472,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <header class="site-header">
     <div class="header-left">
       <span class="header-brand">Mattia Buoli — Consegna cliente</span>
-      <h1 id="header-title">Shooting Catering</h1>
+      <h1 id="header-title"></h1>
     </div>
     <div class="counter-pill" id="counter-pill">
       <span class="count-num" id="sel-count">0</span>
@@ -496,7 +496,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <!-- FULLSCREEN -->
 <div id="view-full">
   <div class="full-header">
-    <span class="full-title" id="full-title">Shooting Catering</span>
+    <span class="full-title" id="full-title"></span>
     <span class="full-counter-top" id="full-counter-top">1 / 1</span>
     <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
   </div>
@@ -549,29 +549,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <script>
 /* ============================================================
-   CONFIG — struttura IDENTICA alle gallerie attuali: il flusso
-   (Lightroom / generatore) imposta questi stessi campi come sempre.
-   Cambia solo la grafica, non i campi né i loro nomi.
-     nomeEvento    codice job (titolo mostrato + messaggio + tag Telegram)
-     maxSelezioni  limite selezione
-     whatsapp      numero destinatario
-     storageKey    chiave localStorage (= nomeEvento)
-     pwHash        btoa della password
-     foto          lista immagini (cartella ./foto/)
-     telegramToken/telegramChat/secretCode  notifica plugin Lightroom
+   CONFIG — lo compila genera.py.
+   In chiaro solo i dati innocui. Lista foto, token e codici sono nel
+   "vault", cifrato con la password del cliente (PBKDF2 + AES-GCM):
+   senza password dal sorgente della pagina non si ricava nulla.
+   Dopo il login il contenuto del vault viene unito a CONFIG
+   (foto, telegramToken, telegramChat, secretCode, gasUrl).
    ============================================================ */
-const CONFIG = {
-  nomeEvento:    "260919_ByTiffany_Zanzara",
-  maxSelezioni:  15,
-  whatsapp:      "393348493876",
-  storageKey:    "260919_ByTiffany_Zanzara",
-  pwHash:        "WmFuemFyYTEyLg==",
-  foto:          [{"id": "PIC08287", "file": "PIC08287.jpg", "original_name": "PIC08287.JPG"}, {"id": "PIC08292", "file": "PIC08292.jpg", "original_name": "PIC08292.JPG"}, {"id": "PIC08293", "file": "PIC08293.jpg", "original_name": "PIC08293.JPG"}, {"id": "PIC08294", "file": "PIC08294.jpg", "original_name": "PIC08294.JPG"}, {"id": "PIC08295", "file": "PIC08295.jpg", "original_name": "PIC08295.JPG"}, {"id": "PIC08297", "file": "PIC08297.jpg", "original_name": "PIC08297.JPG"}, {"id": "PIC08298", "file": "PIC08298.jpg", "original_name": "PIC08298.JPG"}, {"id": "PIC08299", "file": "PIC08299.jpg", "original_name": "PIC08299.JPG"}, {"id": "PIC08300", "file": "PIC08300.jpg", "original_name": "PIC08300.JPG"}, {"id": "PIC08301", "file": "PIC08301.jpg", "original_name": "PIC08301.JPG"}, {"id": "PIC08304", "file": "PIC08304.jpg", "original_name": "PIC08304.JPG"}, {"id": "PIC08305", "file": "PIC08305.jpg", "original_name": "PIC08305.JPG"}, {"id": "PIC08306", "file": "PIC08306.jpg", "original_name": "PIC08306.JPG"}, {"id": "PIC08309", "file": "PIC08309.jpg", "original_name": "PIC08309.JPG"}, {"id": "PIC08311", "file": "PIC08311.jpg", "original_name": "PIC08311.JPG"}, {"id": "PIC08315", "file": "PIC08315.jpg", "original_name": "PIC08315.JPG"}, {"id": "PIC08316", "file": "PIC08316.jpg", "original_name": "PIC08316.JPG"}, {"id": "PIC08317", "file": "PIC08317.jpg", "original_name": "PIC08317.JPG"}, {"id": "PIC08319", "file": "PIC08319.jpg", "original_name": "PIC08319.JPG"}, {"id": "PIC08321", "file": "PIC08321.jpg", "original_name": "PIC08321.JPG"}, {"id": "PIC08322", "file": "PIC08322.jpg", "original_name": "PIC08322.JPG"}, {"id": "PIC08323", "file": "PIC08323.jpg", "original_name": "PIC08323.JPG"}, {"id": "PIC08325", "file": "PIC08325.jpg", "original_name": "PIC08325.JPG"}, {"id": "PIC08326", "file": "PIC08326.jpg", "original_name": "PIC08326.JPG"}, {"id": "PIC08327", "file": "PIC08327.jpg", "original_name": "PIC08327.JPG"}, {"id": "PIC08328", "file": "PIC08328.jpg", "original_name": "PIC08328.JPG"}, {"id": "PIC08330", "file": "PIC08330.jpg", "original_name": "PIC08330.JPG"}, {"id": "PIC08331", "file": "PIC08331.jpg", "original_name": "PIC08331.JPG"}, {"id": "PIC08332", "file": "PIC08332.jpg", "original_name": "PIC08332.JPG"}, {"id": "PIC08333", "file": "PIC08333.jpg", "original_name": "PIC08333.JPG"}, {"id": "PIC08334", "file": "PIC08334.jpg", "original_name": "PIC08334.JPG"}, {"id": "PIC08335", "file": "PIC08335.jpg", "original_name": "PIC08335.JPG"}, {"id": "PIC08338", "file": "PIC08338.jpg", "original_name": "PIC08338.JPG"}, {"id": "PIC08339", "file": "PIC08339.jpg", "original_name": "PIC08339.JPG"}, {"id": "PIC08340", "file": "PIC08340.jpg", "original_name": "PIC08340.JPG"}, {"id": "PIC08341", "file": "PIC08341.jpg", "original_name": "PIC08341.JPG"}, {"id": "PIC08342", "file": "PIC08342.jpg", "original_name": "PIC08342.JPG"}, {"id": "PIC08343", "file": "PIC08343.jpg", "original_name": "PIC08343.JPG"}, {"id": "PIC08348", "file": "PIC08348.jpg", "original_name": "PIC08348.JPG"}, {"id": "PIC08351", "file": "PIC08351.jpg", "original_name": "PIC08351.JPG"}, {"id": "PIC08352", "file": "PIC08352.jpg", "original_name": "PIC08352.JPG"}, {"id": "PIC08353", "file": "PIC08353.jpg", "original_name": "PIC08353.JPG"}, {"id": "PIC08354", "file": "PIC08354.jpg", "original_name": "PIC08354.JPG"}, {"id": "PIC08355", "file": "PIC08355.jpg", "original_name": "PIC08355.JPG"}, {"id": "PIC08356", "file": "PIC08356.jpg", "original_name": "PIC08356.JPG"}, {"id": "PIC08357", "file": "PIC08357.jpg", "original_name": "PIC08357.JPG"}, {"id": "PIC08358", "file": "PIC08358.jpg", "original_name": "PIC08358.JPG"}, {"id": "PIC08360", "file": "PIC08360.jpg", "original_name": "PIC08360.JPG"}, {"id": "PIC08361", "file": "PIC08361.jpg", "original_name": "PIC08361.JPG"}, {"id": "PIC08362", "file": "PIC08362.jpg", "original_name": "PIC08362.JPG"}, {"id": "PIC08363", "file": "PIC08363.jpg", "original_name": "PIC08363.JPG"}, {"id": "PIC08364", "file": "PIC08364.jpg", "original_name": "PIC08364.JPG"}, {"id": "PIC08370", "file": "PIC08370.jpg", "original_name": "PIC08370.JPG"}, {"id": "PIC08371", "file": "PIC08371.jpg", "original_name": "PIC08371.JPG"}, {"id": "PIC08376", "file": "PIC08376.jpg", "original_name": "PIC08376.JPG"}, {"id": "PIC08378", "file": "PIC08378.jpg", "original_name": "PIC08378.JPG"}, {"id": "PIC08379", "file": "PIC08379.jpg", "original_name": "PIC08379.JPG"}, {"id": "PIC08380", "file": "PIC08380.jpg", "original_name": "PIC08380.JPG"}, {"id": "PIC08381", "file": "PIC08381.jpg", "original_name": "PIC08381.JPG"}, {"id": "PIC08385", "file": "PIC08385.jpg", "original_name": "PIC08385.JPG"}, {"id": "PIC08386", "file": "PIC08386.jpg", "original_name": "PIC08386.JPG"}, {"id": "PIC08387", "file": "PIC08387.jpg", "original_name": "PIC08387.JPG"}, {"id": "PIC08388", "file": "PIC08388.jpg", "original_name": "PIC08388.JPG"}, {"id": "PIC08393", "file": "PIC08393.jpg", "original_name": "PIC08393.JPG"}, {"id": "PIC08394", "file": "PIC08394.jpg", "original_name": "PIC08394.JPG"}, {"id": "PIC08395", "file": "PIC08395.jpg", "original_name": "PIC08395.JPG"}, {"id": "PIC08396", "file": "PIC08396.jpg", "original_name": "PIC08396.JPG"}, {"id": "PIC08397", "file": "PIC08397.jpg", "original_name": "PIC08397.JPG"}],
-  telegramToken: "8883896482:AAG0Z3sGZYoS_j-u26Wom__K5uUwmSnxamg",
-  telegramChat:  "987017339",
-  secretCode:    "a7f66248f035cf76",
-  gasUrl:        "https://script.google.com/macros/s/AKfycbwMNnmpvg0TaVCh_QdhEQMPhFTnhJPv3X2HM0gefZg5_X0TTK-RHCB31Li-0ivAvuU0/exec"
-};
+const CONFIG = {"nomeEvento": "260919_ByTiffany_Zanzara", "maxSelezioni": 15, "whatsapp": "393348493876", "storageKey": "260919_ByTiffany_Zanzara", "vault": {"salt": "FMK4uCqQ2+mIeopTqk++eg==", "iv": "5eiuo7NdPerFq49K", "iter": 200000, "data": "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"}};
 
 const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
 
@@ -606,11 +591,29 @@ function prettyEventName(raw) {
 })();
 
 // ===== LOGIN =====
-function doLogin(e) {
+function _b64(s) { return Uint8Array.from(atob(s), c => c.charCodeAt(0)); }
+
+async function openVault(password) {
+  const v = CONFIG.vault;
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: _b64(v.salt), iterations: v.iter, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: _b64(v.iv) }, key, _b64(v.data));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+async function doLogin(e) {
   e.preventDefault();
-  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
-  if (encoded === CONFIG.pwHash) {
-    state.personName = (document.getElementById('name-input').value || '').trim() || 'Cliente';
+  const btn = document.querySelector('.btn-login');
+  btn.disabled = true;
+  let segreti = null;
+  try { segreti = await openVault(document.getElementById('pw-input').value); } catch (err) {}
+  btn.disabled = false;
+  if (segreti) {
+    Object.assign(CONFIG, segreti);
+    // "|" separa i campi del messaggio Telegram: non deve comparire nel nome
+    state.personName = (document.getElementById('name-input').value || '').replace(/\|/g, ' ').trim() || 'Cliente';
     try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
@@ -1029,7 +1032,7 @@ function openWA() {
 // Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
 // Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
 function _fireGas(payload) {
-  if (!CONFIG.gasUrl || CONFIG.gasUrl.indexOf('{{') === 0 || CONFIG.gasUrl.indexOf('INCOLLA') === 0) return;
+  if (!CONFIG.gasUrl) return;
   try {
     var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
     if (navigator.sendBeacon) { navigator.sendBeacon(CONFIG.gasUrl, blob); return; }
@@ -1045,10 +1048,12 @@ var _gasLastSig = null;
 function notifySubmit() {
   var ids = Object.keys(state.selections).sort();
   if (ids.length === 0) return;
-  var sig = ids.join(',');
+  // Sig include i commenti: se il cliente aggiorna una nota e reinvia, viene loggato di nuovo
+  var sig = ids.map(function(id) { return id + ':' + (state.selections[id].comment || ''); }).join(',');
   if (sig === _gasLastSig) return;
   _gasLastSig = sig;
-  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids });
+  var sels = ids.map(function(id) { return { id: id, comment: state.selections[id].comment || '' }; });
+  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids, selections: sels });
 }
 
 // ===== INVIO AUTOMATICO (silenzioso, in parallelo a WhatsApp) =====
@@ -1056,7 +1061,7 @@ function notifySubmit() {
 // Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
 let _tgLastSig = null;
 function sendToTelegram() {
-  if (!CONFIG.telegramToken || CONFIG.telegramToken.indexOf('{{') === 0) return;
+  if (!CONFIG.telegramToken) return;
   const ids = Object.keys(state.selections);
   if (ids.length === 0) return;
   const sig = ids.slice().sort().join(',');

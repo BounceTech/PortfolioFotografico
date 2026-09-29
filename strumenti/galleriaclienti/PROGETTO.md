@@ -1,4 +1,4 @@
-# Galleria Clienti v2.4b — Documentazione completa
+# Galleria Clienti v3 — Documentazione completa
 **Mattia Buoli — Sistema automatico shooting → selezione → editing**
 
 ---
@@ -33,10 +33,8 @@ Notifica Telegram: "✅ Carlo — 260612_Cherimoya — 15/15 foto elaborate"
 strumenti/galleriaclienti/   (dentro la repo PortfolioFotografico)
 ├── genera.py                        # Script principale — genera e pubblica la galleria
 ├── template.html                    # Template HTML della galleria (non toccare a mano)
-├── progetti/                        # Output locale (cartelle per ogni lavoro)
-│   └── 260612_Cherimoya/
-│       ├── index.html
-│       └── foto/
+├── segreti.py                       # Segreti (ignorato da git)
+├── app/                             # App Mac (SwiftUI) + build.sh
 └── ScelteCliente.lrplugin/         # Plugin Lightroom
     ├── Info.lua                     # Manifest del plugin
     ├── Watcher.lua                  # Cuore del sistema — polling Telegram + elaborazione
@@ -106,22 +104,21 @@ git clone https://github.com/BounceTech/PortfolioFotografico.git \
 
 ---
 
-## Utilizzo quotidiano — `genera.py`
+## Utilizzo quotidiano — app "Galleria Clienti"
 
-```bash
-python3 ~/Documents/GitHub/PortfolioFotografico/strumenti/galleriaclienti/genera.py
-```
+Doppio clic su **Galleria Clienti** (in Applicazioni / Launchpad / Dock):
+1. Trascina la cartella delle foto esportate nella finestra (o sull'icona nel Dock)
+2. Il nome evento si compila dal nome della cartella → nomina le cartelle `AAMMGG_NomeEvento`
+3. Scrivi il nome del cliente (la password viene proposta, puoi cambiarla)
+4. **Crea e pubblica** (⏎)
 
-Il wizard fa 5 step:
-1. **Cartella foto** — trascina la cartella dal Finder nel terminale
-2. **Nome cliente** — es. `Luigi Mastroianni`
-3. **Nome evento** — **obbligatorio formato `AAMMGG_NomeEvento`** (es. `260612_Cherimoya_TrattoriaDaMario`)
-   - Il watcher usa questo nome per trovare le foto nel catalogo LR
-   - Se il formato non è corretto le foto non vengono trovate
-4. **Limite selezioni** — 0 = nessun limite
-5. **Password** — semplice, la mandi al cliente su WhatsApp
+Comprime le foto in parallelo, genera la pagina, fa commit + push solo di quella galleria
+e mette il messaggio WhatsApp negli appunti.
 
-Output: comprime le foto, genera `index.html`, fa `git push` sulla repo, copia il link WhatsApp negli appunti.
+- Ricompilare l'app (solo se cambi `app/GalleriaClienti.swift` o sposti la repo): `./app/build.sh`
+- Backup da terminale: `python3 genera.py`
+- Ricostruire gallerie già pubblicate col template attuale: `python3 genera.py --rigenera ../../galleriaclienti/NOME/ [--pubblica]`
+- Dipendenze Python: `pip3 install --user Pillow cryptography`
 
 ---
 
@@ -145,11 +142,17 @@ HMAC-SHA256(MASTER_KEY, nome_evento)[:16]
 Il watcher rifiuta qualsiasi messaggio Telegram che non abbia il SECRET corretto.
 → Chiunque vedesse il token del bot nel sorgente HTML non può forgiare messaggi validi senza conoscere il `MASTER_KEY`.
 
-### GitHub repo pubblica
-La repo `PortfolioFotografico` è attualmente **pubblica** su GitHub.
-Questo significa che le foto compresse (1600px) sono accessibili via URL diretto, anche se la galleria è protetta da password (la password protegge solo il JavaScript, non i file).
+### Password e dati della galleria
+La pagina contiene in chiaro solo nome evento, limite e numero WhatsApp.
+Lista foto, token Telegram, SECRET e URL Apps Script sono in un **vault cifrato con la password**
+(PBKDF2-SHA256 200k iterazioni + AES-256-GCM, decifrato nel browser con WebCrypto).
+Password sbagliata = decifratura fallita: non esiste una password "da confrontare" nel sorgente.
+Le foto compresse non hanno EXIF (niente GPS / dati camera).
 
-**Soluzione consigliata**: migrare su **Cloudflare Pages** che supporta repo private gratuitamente e custom domain come GitHub Pages.
+### Limite noto: repo pubblica
+Le foto compresse restano scaricabili da chi conosce l'URL esatto o sfoglia la repo su GitHub.
+Nella cronologia git restano anche le vecchie password in base64 (gallerie precedenti alla v3).
+Per chiudere davvero: repo privata + hosting che la supporti (es. Cloudflare Pages).
 
 ---
 

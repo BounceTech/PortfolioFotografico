@@ -439,7 +439,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <div id="login-screen">
   <div class="login-card">
     <div class="evento-subtitle">Mattia Buoli — Selezione foto</div>
-    <h1 id="login-title">Shooting Catering</h1>
+    <h1 id="login-title"></h1>
 
     <!-- LEGENDA -->
     <div class="legenda" id="legenda-box">
@@ -457,7 +457,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       <div class="legenda-row legenda-note"><span class="legenda-icon">—</span><span>Le immagini mostrate sono solo un'anteprima.</span></div>
     </div>
 
-    <form id="login-form" onsubmit="return doLogin(event)">
+    <form id="login-form" onsubmit="doLogin(event); return false">
       <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="Wegloo" required>
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra</button>
@@ -472,7 +472,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <header class="site-header">
     <div class="header-left">
       <span class="header-brand">Mattia Buoli — Consegna cliente</span>
-      <h1 id="header-title">Shooting Catering</h1>
+      <h1 id="header-title"></h1>
     </div>
     <div class="counter-pill" id="counter-pill">
       <span class="count-num" id="sel-count">0</span>
@@ -496,7 +496,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <!-- FULLSCREEN -->
 <div id="view-full">
   <div class="full-header">
-    <span class="full-title" id="full-title">Shooting Catering</span>
+    <span class="full-title" id="full-title"></span>
     <span class="full-counter-top" id="full-counter-top">1 / 1</span>
     <button class="full-close" onclick="switchView('grid')" title="Torna alla griglia">✕</button>
   </div>
@@ -549,29 +549,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <script>
 /* ============================================================
-   CONFIG — struttura IDENTICA alle gallerie attuali: il flusso
-   (Lightroom / generatore) imposta questi stessi campi come sempre.
-   Cambia solo la grafica, non i campi né i loro nomi.
-     nomeEvento    codice job (titolo mostrato + messaggio + tag Telegram)
-     maxSelezioni  limite selezione
-     whatsapp      numero destinatario
-     storageKey    chiave localStorage (= nomeEvento)
-     pwHash        btoa della password
-     foto          lista immagini (cartella ./foto/)
-     telegramToken/telegramChat/secretCode  notifica plugin Lightroom
+   CONFIG — lo compila genera.py.
+   In chiaro solo i dati innocui. Lista foto, token e codici sono nel
+   "vault", cifrato con la password del cliente (PBKDF2 + AES-GCM):
+   senza password dal sorgente della pagina non si ricava nulla.
+   Dopo il login il contenuto del vault viene unito a CONFIG
+   (foto, telegramToken, telegramChat, secretCode, gasUrl).
    ============================================================ */
-const CONFIG = {
-  nomeEvento:    "260919_DomesticaCatering_CortePeron",
-  maxSelezioni:  40,
-  whatsapp:      "393348493876",
-  storageKey:    "260919_DomesticaCatering_CortePeron",
-  pwHash:        "Q29ydGUuUGVyb24=",
-  foto:          [{"id": "PIC08035", "file": "PIC08035.jpg", "original_name": "PIC08035.JPG"}, {"id": "PIC08036", "file": "PIC08036.jpg", "original_name": "PIC08036.JPG"}, {"id": "PIC08037", "file": "PIC08037.jpg", "original_name": "PIC08037.JPG"}, {"id": "PIC08038", "file": "PIC08038.jpg", "original_name": "PIC08038.JPG"}, {"id": "PIC08039", "file": "PIC08039.jpg", "original_name": "PIC08039.JPG"}, {"id": "PIC08040", "file": "PIC08040.jpg", "original_name": "PIC08040.JPG"}, {"id": "PIC08042", "file": "PIC08042.jpg", "original_name": "PIC08042.JPG"}, {"id": "PIC08043", "file": "PIC08043.jpg", "original_name": "PIC08043.JPG"}, {"id": "PIC08044", "file": "PIC08044.jpg", "original_name": "PIC08044.JPG"}, {"id": "PIC08045", "file": "PIC08045.jpg", "original_name": "PIC08045.JPG"}, {"id": "PIC08046", "file": "PIC08046.jpg", "original_name": "PIC08046.JPG"}, {"id": "PIC08048", "file": "PIC08048.jpg", "original_name": "PIC08048.JPG"}, {"id": "PIC08049", "file": "PIC08049.jpg", "original_name": "PIC08049.JPG"}, {"id": "PIC08050", "file": "PIC08050.jpg", "original_name": "PIC08050.JPG"}, {"id": "PIC08051", "file": "PIC08051.jpg", "original_name": "PIC08051.JPG"}, {"id": "PIC08052", "file": "PIC08052.jpg", "original_name": "PIC08052.JPG"}, {"id": "PIC08053", "file": "PIC08053.jpg", "original_name": "PIC08053.JPG"}, {"id": "PIC08054", "file": "PIC08054.jpg", "original_name": "PIC08054.JPG"}, {"id": "PIC08055", "file": "PIC08055.jpg", "original_name": "PIC08055.JPG"}, {"id": "PIC08056", "file": "PIC08056.jpg", "original_name": "PIC08056.JPG"}, {"id": "PIC08057", "file": "PIC08057.jpg", "original_name": "PIC08057.JPG"}, {"id": "PIC08058", "file": "PIC08058.jpg", "original_name": "PIC08058.JPG"}, {"id": "PIC08059", "file": "PIC08059.jpg", "original_name": "PIC08059.JPG"}, {"id": "PIC08060", "file": "PIC08060.jpg", "original_name": "PIC08060.JPG"}, {"id": "PIC08061", "file": "PIC08061.jpg", "original_name": "PIC08061.JPG"}, {"id": "PIC08062", "file": "PIC08062.jpg", "original_name": "PIC08062.JPG"}, {"id": "PIC08063", "file": "PIC08063.jpg", "original_name": "PIC08063.JPG"}, {"id": "PIC08064", "file": "PIC08064.jpg", "original_name": "PIC08064.JPG"}, {"id": "PIC08065", "file": "PIC08065.jpg", "original_name": "PIC08065.JPG"}, {"id": "PIC08066", "file": "PIC08066.jpg", "original_name": "PIC08066.JPG"}, {"id": "PIC08067", "file": "PIC08067.jpg", "original_name": "PIC08067.JPG"}, {"id": "PIC08068", "file": "PIC08068.jpg", "original_name": "PIC08068.JPG"}, {"id": "PIC08069", "file": "PIC08069.jpg", "original_name": "PIC08069.JPG"}, {"id": "PIC08070", "file": "PIC08070.jpg", "original_name": "PIC08070.JPG"}, {"id": "PIC08071", "file": "PIC08071.jpg", "original_name": "PIC08071.JPG"}, {"id": "PIC08072", "file": "PIC08072.jpg", "original_name": "PIC08072.JPG"}, {"id": "PIC08073", "file": "PIC08073.jpg", "original_name": "PIC08073.JPG"}, {"id": "PIC08074", "file": "PIC08074.jpg", "original_name": "PIC08074.JPG"}, {"id": "PIC08075", "file": "PIC08075.jpg", "original_name": "PIC08075.JPG"}, {"id": "PIC08076", "file": "PIC08076.jpg", "original_name": "PIC08076.JPG"}, {"id": "PIC08077", "file": "PIC08077.jpg", "original_name": "PIC08077.JPG"}, {"id": "PIC08078", "file": "PIC08078.jpg", "original_name": "PIC08078.JPG"}, {"id": "PIC08079", "file": "PIC08079.jpg", "original_name": "PIC08079.JPG"}, {"id": "PIC08080", "file": "PIC08080.jpg", "original_name": "PIC08080.JPG"}, {"id": "PIC08081", "file": "PIC08081.jpg", "original_name": "PIC08081.JPG"}, {"id": "PIC08083", "file": "PIC08083.jpg", "original_name": "PIC08083.JPG"}, {"id": "PIC08084", "file": "PIC08084.jpg", "original_name": "PIC08084.JPG"}, {"id": "PIC08085", "file": "PIC08085.jpg", "original_name": "PIC08085.JPG"}, {"id": "PIC08086", "file": "PIC08086.jpg", "original_name": "PIC08086.JPG"}, {"id": "PIC08087", "file": "PIC08087.jpg", "original_name": "PIC08087.JPG"}, {"id": "PIC08088", "file": "PIC08088.jpg", "original_name": "PIC08088.JPG"}, {"id": "PIC08089", "file": "PIC08089.jpg", "original_name": "PIC08089.JPG"}, {"id": "PIC08090", "file": "PIC08090.jpg", "original_name": "PIC08090.JPG"}, {"id": "PIC08091", "file": "PIC08091.jpg", "original_name": "PIC08091.JPG"}, {"id": "PIC08092", "file": "PIC08092.jpg", "original_name": "PIC08092.JPG"}, {"id": "PIC08093", "file": "PIC08093.jpg", "original_name": "PIC08093.JPG"}, {"id": "PIC08094", "file": "PIC08094.jpg", "original_name": "PIC08094.JPG"}, {"id": "PIC08096", "file": "PIC08096.jpg", "original_name": "PIC08096.JPG"}, {"id": "PIC08097", "file": "PIC08097.jpg", "original_name": "PIC08097.JPG"}, {"id": "PIC08098", "file": "PIC08098.jpg", "original_name": "PIC08098.JPG"}, {"id": "PIC08099", "file": "PIC08099.jpg", "original_name": "PIC08099.JPG"}, {"id": "PIC08101", "file": "PIC08101.jpg", "original_name": "PIC08101.JPG"}, {"id": "PIC08102", "file": "PIC08102.jpg", "original_name": "PIC08102.JPG"}, {"id": "PIC08103", "file": "PIC08103.jpg", "original_name": "PIC08103.JPG"}, {"id": "PIC08104", "file": "PIC08104.jpg", "original_name": "PIC08104.JPG"}, {"id": "PIC08105", "file": "PIC08105.jpg", "original_name": "PIC08105.JPG"}, {"id": "PIC08106", "file": "PIC08106.jpg", "original_name": "PIC08106.JPG"}, {"id": "PIC08108", "file": "PIC08108.jpg", "original_name": "PIC08108.JPG"}, {"id": "PIC08109", "file": "PIC08109.jpg", "original_name": "PIC08109.JPG"}, {"id": "PIC08110", "file": "PIC08110.jpg", "original_name": "PIC08110.JPG"}, {"id": "PIC08111", "file": "PIC08111.jpg", "original_name": "PIC08111.JPG"}, {"id": "PIC08112", "file": "PIC08112.jpg", "original_name": "PIC08112.JPG"}, {"id": "PIC08113", "file": "PIC08113.jpg", "original_name": "PIC08113.JPG"}, {"id": "PIC08114", "file": "PIC08114.jpg", "original_name": "PIC08114.JPG"}, {"id": "PIC08115", "file": "PIC08115.jpg", "original_name": "PIC08115.JPG"}, {"id": "PIC08116", "file": "PIC08116.jpg", "original_name": "PIC08116.JPG"}, {"id": "PIC08118", "file": "PIC08118.jpg", "original_name": "PIC08118.JPG"}, {"id": "PIC08119", "file": "PIC08119.jpg", "original_name": "PIC08119.JPG"}, {"id": "PIC08120", "file": "PIC08120.jpg", "original_name": "PIC08120.JPG"}, {"id": "PIC08122", "file": "PIC08122.jpg", "original_name": "PIC08122.JPG"}, {"id": "PIC08123", "file": "PIC08123.jpg", "original_name": "PIC08123.JPG"}, {"id": "PIC08124", "file": "PIC08124.jpg", "original_name": "PIC08124.JPG"}, {"id": "PIC08125", "file": "PIC08125.jpg", "original_name": "PIC08125.JPG"}, {"id": "PIC08126", "file": "PIC08126.jpg", "original_name": "PIC08126.JPG"}, {"id": "PIC08128", "file": "PIC08128.jpg", "original_name": "PIC08128.JPG"}, {"id": "PIC08129", "file": "PIC08129.jpg", "original_name": "PIC08129.JPG"}, {"id": "PIC08130", "file": "PIC08130.jpg", "original_name": "PIC08130.JPG"}, {"id": "PIC08133", "file": "PIC08133.jpg", "original_name": "PIC08133.JPG"}, {"id": "PIC08135", "file": "PIC08135.jpg", "original_name": "PIC08135.JPG"}, {"id": "PIC08136", "file": "PIC08136.jpg", "original_name": "PIC08136.JPG"}, {"id": "PIC08137", "file": "PIC08137.jpg", "original_name": "PIC08137.JPG"}, {"id": "PIC08139", "file": "PIC08139.jpg", "original_name": "PIC08139.JPG"}, {"id": "PIC08140", "file": "PIC08140.jpg", "original_name": "PIC08140.JPG"}, {"id": "PIC08142", "file": "PIC08142.jpg", "original_name": "PIC08142.JPG"}, {"id": "PIC08144", "file": "PIC08144.jpg", "original_name": "PIC08144.JPG"}, {"id": "PIC08145", "file": "PIC08145.jpg", "original_name": "PIC08145.JPG"}, {"id": "PIC08146", "file": "PIC08146.jpg", "original_name": "PIC08146.JPG"}, {"id": "PIC08147", "file": "PIC08147.jpg", "original_name": "PIC08147.JPG"}, {"id": "PIC08148", "file": "PIC08148.jpg", "original_name": "PIC08148.JPG"}, {"id": "PIC08149", "file": "PIC08149.jpg", "original_name": "PIC08149.JPG"}],
-  telegramToken: "8883896482:AAG0Z3sGZYoS_j-u26Wom__K5uUwmSnxamg",
-  telegramChat:  "987017339",
-  secretCode:    "e99a61495ee694ed",
-  gasUrl:        "https://script.google.com/macros/s/AKfycbwMNnmpvg0TaVCh_QdhEQMPhFTnhJPv3X2HM0gefZg5_X0TTK-RHCB31Li-0ivAvuU0/exec"
-};
+const CONFIG = {"nomeEvento": "260919_DomesticaCatering_CortePeron", "maxSelezioni": 40, "whatsapp": "393348493876", "storageKey": "260919_DomesticaCatering_CortePeron", "vault": {"salt": "81PC4aOLSethcSJogqmliA==", "iv": "iUvXlfy/bm3rBgsZ", "iter": 200000, "data": "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"}};
 
 const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
 
@@ -606,11 +591,29 @@ function prettyEventName(raw) {
 })();
 
 // ===== LOGIN =====
-function doLogin(e) {
+function _b64(s) { return Uint8Array.from(atob(s), c => c.charCodeAt(0)); }
+
+async function openVault(password) {
+  const v = CONFIG.vault;
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: _b64(v.salt), iterations: v.iter, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: _b64(v.iv) }, key, _b64(v.data));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+async function doLogin(e) {
   e.preventDefault();
-  const encoded = btoa(unescape(encodeURIComponent(document.getElementById('pw-input').value)));
-  if (encoded === CONFIG.pwHash) {
-    state.personName = (document.getElementById('name-input').value || '').trim() || 'Cliente';
+  const btn = document.querySelector('.btn-login');
+  btn.disabled = true;
+  let segreti = null;
+  try { segreti = await openVault(document.getElementById('pw-input').value); } catch (err) {}
+  btn.disabled = false;
+  if (segreti) {
+    Object.assign(CONFIG, segreti);
+    // "|" separa i campi del messaggio Telegram: non deve comparire nel nome
+    state.personName = (document.getElementById('name-input').value || '').replace(/\|/g, ' ').trim() || 'Cliente';
     try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
@@ -1029,7 +1032,7 @@ function openWA() {
 // Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
 // Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
 function _fireGas(payload) {
-  if (!CONFIG.gasUrl || CONFIG.gasUrl.indexOf('{{') === 0 || CONFIG.gasUrl.indexOf('INCOLLA') === 0) return;
+  if (!CONFIG.gasUrl) return;
   try {
     var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
     if (navigator.sendBeacon) { navigator.sendBeacon(CONFIG.gasUrl, blob); return; }
@@ -1045,10 +1048,12 @@ var _gasLastSig = null;
 function notifySubmit() {
   var ids = Object.keys(state.selections).sort();
   if (ids.length === 0) return;
-  var sig = ids.join(',');
+  // Sig include i commenti: se il cliente aggiorna una nota e reinvia, viene loggato di nuovo
+  var sig = ids.map(function(id) { return id + ':' + (state.selections[id].comment || ''); }).join(',');
   if (sig === _gasLastSig) return;
   _gasLastSig = sig;
-  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids });
+  var sels = ids.map(function(id) { return { id: id, comment: state.selections[id].comment || '' }; });
+  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids, selections: sels });
 }
 
 // ===== INVIO AUTOMATICO (silenzioso, in parallelo a WhatsApp) =====
@@ -1056,7 +1061,7 @@ function notifySubmit() {
 // Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
 let _tgLastSig = null;
 function sendToTelegram() {
-  if (!CONFIG.telegramToken || CONFIG.telegramToken.indexOf('{{') === 0) return;
+  if (!CONFIG.telegramToken) return;
   const ids = Object.keys(state.selections);
   if (ids.length === 0) return;
   const sig = ids.slice().sort().join(',');
