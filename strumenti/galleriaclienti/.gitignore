@@ -1,0 +1,8 @@
+# Segreti (la repo è pubblica)
+segreti.py
+ScelteCliente.lrplugin/Segreti.lua
+# Output locale: la copia pubblicata sta in /galleriaclienti
+progetti/
+*.bak*
+__pycache__/
+.claude/
