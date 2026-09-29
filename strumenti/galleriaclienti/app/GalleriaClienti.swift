@@ -31,7 +31,8 @@ final class Modello: ObservableObject {
     @Published var evento = ""
     @Published var cliente = ""
     @Published var password = ""
-    @Published var maxSel = 0
+    @Published var maxTesto = "0"
+    var maxSel: Int { Int(maxTesto.filter(\.isNumber)) ?? 0 }
     @Published var fase: Fase = .compila
 
     var formatoOk: Bool { evento.range(of: #"^\d{6}_"#, options: .regularExpression) != nil }
@@ -39,14 +40,21 @@ final class Modello: ObservableObject {
         cartella != nil && numFoto > 0 && !evento.trimmed.isEmpty && !cliente.trimmed.isEmpty && !password.trimmed.isEmpty
     }
 
+    // Struttura dei lavori: AAMMGG_NomeEvento/{ARW, JPG, Edit}.
+    // Si trascina la cartella JPG → evento = nome della cartella padre.
+    // Se si trascina direttamente la cartella del lavoro, si usa la sua sottocartella JPG.
     func impostaCartella(_ url: URL) {
+        let fm = FileManager.default
         var isDir: ObjCBool = false
-        guard FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir), isDir.boolValue else { return }
-        cartella = url
-        let files = (try? FileManager.default.contentsOfDirectory(atPath: url.path)) ?? []
+        guard fm.fileExists(atPath: url.path, isDirectory: &isDir), isDir.boolValue else { return }
+        let sotto = ((try? fm.contentsOfDirectory(atPath: url.path)) ?? []).first { $0.lowercased() == "jpg" }
+        let foto = sotto.map { url.appendingPathComponent($0) } ?? url
+        cartella = foto
+        let files = (try? fm.contentsOfDirectory(atPath: foto.path)) ?? []
         numFoto = files.filter { !$0.hasPrefix(".") && estensioniFoto.contains(($0 as NSString).pathExtension.lowercased()) }.count
-        evento = url.lastPathComponent
-        password = Modello.suggerisciPassword(evento)
+        evento = foto.deletingLastPathComponent().lastPathComponent
+        // La password proposta non sovrascrive mai quella gia' scritta
+        if password.trimmed.isEmpty { password = Modello.suggerisciPassword(evento) }
         fase = .compila
     }
 
@@ -62,7 +70,8 @@ final class Modello: ObservableObject {
         p.canChooseDirectories = true
         p.canChooseFiles = false
         p.prompt = "Scegli"
-        p.message = "Cartella con le foto esportate da Lightroom"
+        p.message = "Cartella JPG del lavoro (o la cartella del lavoro)"
+        p.directoryURL = URL(fileURLWithPath: "/Volumes/HD_Foto/Foto/Finiti")
         if p.runModal() == .OK, let url = p.url { impostaCartella(url) }
     }
 
@@ -161,11 +170,11 @@ struct Contenuto: View {
                     Image(systemName: m.cartella == nil ? "folder.badge.plus" : "photo.stack")
                         .font(.system(size: 28, weight: .light))
                     if let c = m.cartella {
-                        Text(c.lastPathComponent).font(.headline)
+                        Text(c.deletingLastPathComponent().lastPathComponent + " / " + c.lastPathComponent).font(.headline)
                         Text(m.numFoto == 0 ? "Nessuna foto in questa cartella" : "\(m.numFoto) foto")
                             .foregroundStyle(m.numFoto == 0 ? .red : .secondary)
                     } else {
-                        Text("Trascina qui la cartella delle foto").font(.headline)
+                        Text("Trascina qui la cartella JPG del lavoro").font(.headline)
                         Text("oppure clicca per sceglierla").foregroundStyle(.secondary)
                     }
                 }
@@ -184,23 +193,13 @@ struct Contenuto: View {
                     Text("Senza il formato AAMMGG_ Lightroom non ritrova le foto scelte.")
                         .font(.caption).foregroundStyle(.orange)
                 }
-                HStack {
-                    TextField("Password", text: $m.password)
-                    Button { m.password = Modello.suggerisciPassword(m.evento) } label: { Image(systemName: "arrow.clockwise") }
-                        .buttonStyle(.borderless).help("Nuova password")
-                }
-                Stepper(value: $m.maxSel, in: 0...999) {
-                    HStack {
-                        Text("Max selezioni")
-                        Spacer()
-                        Text(m.maxSel == 0 ? "nessun limite" : "\(m.maxSel)").foregroundStyle(.secondary)
-                    }
-                }
+                TextField("Password", text: $m.password, prompt: Text("scrivila o usa quella proposta"))
+                TextField("Max selezioni", text: $m.maxTesto, prompt: Text("0 = nessun limite"))
             }
             .formStyle(.grouped)
             .scrollDisabled(true)
             .padding(.horizontal, -20)
-            .frame(height: m.formatoOk || m.evento.isEmpty ? 196 : 224)
+            .frame(height: m.formatoOk || m.evento.isEmpty ? 190 : 218)
 
             Button(action: m.avvia) {
                 Text("Crea e pubblica").frame(maxWidth: .infinity)
@@ -249,7 +248,7 @@ struct Contenuto: View {
                     NSWorkspace.shared.open(c.url!)
                 }
                 Spacer()
-                Button("Nuova") { m.cartella = nil; m.cliente = ""; m.evento = ""; m.password = ""; m.maxSel = 0; m.fase = .compila }
+                Button("Nuova") { m.cartella = nil; m.cliente = ""; m.evento = ""; m.password = ""; m.maxTesto = "0"; m.fase = .compila }
                     .keyboardShortcut(.defaultAction)
             }
             Text("Il sito si aggiorna in 1–2 minuti dopo la pubblicazione.").font(.caption).foregroundStyle(.secondary)

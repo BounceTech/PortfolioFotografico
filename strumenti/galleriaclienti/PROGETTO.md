@@ -107,9 +107,10 @@ git clone https://github.com/BounceTech/PortfolioFotografico.git \
 ## Utilizzo quotidiano — app "Galleria Clienti"
 
 Doppio clic su **Galleria Clienti** (in Applicazioni / Launchpad / Dock):
-1. Trascina la cartella delle foto esportate nella finestra (o sull'icona nel Dock)
-2. Il nome evento si compila dal nome della cartella → nomina le cartelle `AAMMGG_NomeEvento`
-3. Scrivi il nome del cliente (la password viene proposta, puoi cambiarla)
+1. Trascina la cartella `JPG` del lavoro nella finestra (o sull'icona nel Dock).
+   Struttura attesa: `AAMMGG_NomeEvento/{ARW, JPG, Edit}` — il nome evento viene dalla cartella padre.
+   Trascinando la cartella del lavoro intera, l'app usa da sola la sottocartella `JPG`.
+2. Scrivi il nome del cliente. Password proposta (modificabile, non cambia da sola), limite 0 = nessuno
 4. **Crea e pubblica** (⏎)
 
 Comprime le foto in parallelo, genera la pagina, fa commit + push solo di quella galleria
