@@ -1,214 +1,208 @@
 /**
- * Cassetta postale selezioni — Google Apps Script
+ * Log galleria clienti — Google Apps Script
  * by Mattia Buoli
  *
- * - La galleria invia qui gli eventi (doPost):
- *     type=open   → cliente ha aperto la galleria
- *     type=submit → cliente ha inviato la selezione
- * - Notifica Alfred: trova la pagina corrispondente nel DB "Lavori" di Notion
- *   (stessa identica stringa del nomeEvento) e appende un blocco nel corpo.
- * - Notifica Telegram come backup.
- * - Il plugin Lightroom legge le selezioni nuove e le segna fatte (doGet).
+ * La galleria invia qui gli eventi (doPost, JSON):
+ *   { type: 'open',   job, person }                         → il cliente ha aperto la galleria
+ *   { type: 'submit', job, person, names, selections, text } → il cliente ha inviato la selezione
  *
- * Deploy: vedi DEPLOY.md
+ * Per ogni evento:
+ *   1. Notion: nella pagina del DB "Lavori" con Nome servizio = job appende
+ *        🕐 30/09/2026 15:23 — 👀 Il cliente ha aperto la galleria
+ *        🕐 30/09/2026 15:40 — ✅ Il cliente ha inviato la selezione (12 foto)
+ *        Selezione:
+ *        [blocco codice con il testo da copiare — pulsante "Copia" di Notion]
+ *      Se la pagina non esiste la crea, così il log non si perde mai.
+ *      Su submit porta lo Status a "Selezione fatta".
+ *   2. Telegram: notifica di backup (e avviso se Notion fallisce).
+ *   3. Foglio "Log": una riga per evento (archivio).
+ *
+ * Configurazione: Impostazioni progetto → Proprietà script
+ *   NOTION_TOKEN    token dell'integrazione Notion (collegata al DB Lavori)
+ *   TELEGRAM_TOKEN  token del bot
+ *   TELEGRAM_CHAT   id della chat dove ricevere le notifiche
+ * Prova: esegui la funzione verifica() dall'editor. Deploy: vedi DEPLOY.md
  */
 
-// ===== CONFIG — riempi questi valori =====
-var TELEGRAM_TOKEN = 'INCOLLA_QUI_IL_TOKEN_DI_BOTFATHER';
-var TELEGRAM_CHAT  = '-100xxxxxxxxxx';                   // id canale (numero negativo lungo)
-var READ_KEY       = 'cambiami-con-una-stringa-segreta'; // stessa del plugin
+var NOTION_DB_LAVORI = '18a937f0-1525-8106-87ab-f6eae3a2d196';   // DB Lavori (non cambiare)
+var TITLE_PROP       = 'Nome servizio';
+var STATUS_PROP      = 'Status';
+var STATUS_SCELTA    = 'Selezione fatta';
+var FUSO             = 'Europe/Rome';
+var SHEET_NAME       = 'Log';
 
-// Alfred — Notion (stesso token usato dall'app)
-// Incolla il token dell'integrazione Notion condivisa con il DB Lavori
-var NOTION_TOKEN   = 'YOUR_NOTION_INTEGRATION_TOKEN';   // secret_...
-// =========================================
+function conf_(k) { return PropertiesService.getScriptProperties().getProperty(k) || ''; }
 
-// DB Lavori (ID fisso — non cambiare)
-var NOTION_DB_LAVORI = '18a937f0-1525-8106-87ab-f6eae3a2d196';
+// ===== ENTRATA =====
 
-var SHEET_NAME = 'Selezioni';
-
-function sheet_() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sh = ss.getSheetByName(SHEET_NAME);
-  if (!sh) {
-    sh = ss.insertSheet(SHEET_NAME);
-    sh.appendRow(['id', 'timestamp', 'job', 'person', 'names', 'status']);
-  }
-  return sh;
-}
-
-// La galleria chiama questo ad ogni evento (open o submit)
 function doPost(e) {
+  var esito = { ok: true };
   try {
-    var data   = JSON.parse(e.postData.contents);
-    var type   = String(data.type || 'submit');
-    var job    = String(data.job    || '').slice(0, 200);
-    var person = String(data.person || 'Cliente').slice(0, 80);
-    var names  = Array.isArray(data.names) ? data.names : [];
-    var nCount = names.length;
+    var d      = JSON.parse(e.postData.contents);
+    var type   = d.type === 'open' ? 'open' : 'submit';
+    var job    = String(d.job || '').trim().slice(0, 200);
+    var person = String(d.person || 'Cliente').trim().slice(0, 80) || 'Cliente';
+    if (!job) throw new Error('job mancante');
 
-    if (type === 'open') {
-      notifyTelegram_('open', job, person, 0);
-      notifyAlfred_('open', job, person, 0);
-      return json_({ ok: true });
+    var sels = Array.isArray(d.selections) ? d.selections
+             : (Array.isArray(d.names) ? d.names : []).map(function (n) { return { id: n, comment: '' }; });
+    sels = sels.map(function (s) { return { id: String(s.id), comment: String(s.comment || '') }; })
+               .sort(function (a, b) { return a.id.localeCompare(b.id, undefined, { numeric: true }); });
+    var testo = String(d.text || '').trim() || testoSelezione_(job, sels);
+    var ora   = Utilities.formatDate(new Date(), FUSO, 'dd/MM/yyyy HH:mm');
+
+    try { archivia_(ora, type, job, person, sels.length, testo); } catch (err) {}
+
+    try {
+      esito.notion = logNotion_(type, job, person, ora, sels.length, testo);
+    } catch (err) {
+      esito.ok = false;
+      esito.notion = 'ERRORE: ' + err.message;
     }
-
-    // type === 'submit'
-    var selections = Array.isArray(data.selections)
-      ? data.selections
-      : names.map(function(n) { return { id: n, comment: '' }; });
-    var sh = sheet_();
-    sh.appendRow([Utilities.getUuid(), new Date().toISOString(), job, person, names.join(' '), 'pending']);
-    notifyTelegram_('submit', job, person, nCount);
-    notifyAlfred_('submit', job, person, nCount, selections);
-    return json_({ ok: true });
+    esito.telegram = notifyTelegram_(type, job, person, ora, sels.length, testo, esito.ok ? '' : esito.notion);
   } catch (err) {
-    return json_({ ok: false, error: String(err) });
+    esito = { ok: false, error: String(err.message || err) };
+    notifyTelegram_('errore', '', '', '', 0, '', esito.error);
   }
+  return json_(esito);
 }
 
-// Il plugin chiama questo per leggere le selezioni nuove o segnarle fatte
-function doGet(e) {
-  var p = e.parameter || {};
-  if (p.key !== READ_KEY) return json_({ ok: false, error: 'unauthorized' });
+function doGet() { return json_({ ok: true, servizio: 'log galleria clienti' }); }
 
-  var sh = sheet_();
-  var rows = sh.getDataRange().getValues();
+// Stesso formato del messaggio WhatsApp della galleria: è quello che incolli in Lightroom
+function testoSelezione_(job, sels) {
+  return job + '\n\n' + sels.map(function (s) { return s.comment ? s.id + ' — ' + s.comment : s.id; }).join('\n');
+}
 
-  if (p.action === 'done' && p.id) {
-    for (var i = 1; i < rows.length; i++) {
-      if (rows[i][0] === p.id) { sh.getRange(i + 1, 6).setValue('done'); break; }
-    }
-    return json_({ ok: true });
+// ===== NOTION =====
+
+function logNotion_(type, job, person, ora, n, testo) {
+  if (!conf_('NOTION_TOKEN')) throw new Error('NOTION_TOKEN non impostato nelle proprietà script');
+
+  var pagina = trovaPagina_(job), creata = false;
+  if (!pagina) { pagina = creaPagina_(job); creata = true; }
+
+  var chi = person && person !== 'Cliente' ? ' (' + person + ')' : '';
+  var blocchi = [];
+  if (!haIntestazioneLog_(pagina)) {
+    blocchi.push({ object: 'block', type: 'heading_3', heading_3: { rich_text: rt_('📋 Log galleria') } });
   }
-
-  var out = [];
-  for (var j = 1; j < rows.length; j++) {
-    if (rows[j][5] === 'pending') {
-      out.push({
-        id: rows[j][0],
-        job: rows[j][2],
-        person: rows[j][3],
-        names: String(rows[j][4]).split(/\s+/).filter(function (s) { return s; })
-      });
-    }
+  if (type === 'open') {
+    blocchi.push(par_('🕐 ' + ora + ' — 👀 Il cliente ha aperto la galleria' + chi));
+  } else {
+    blocchi.push(par_('🕐 ' + ora + ' — ✅ Il cliente ha inviato la selezione' + chi + ' — ' + n + ' foto', true));
+    blocchi.push(par_('Selezione:'));
+    blocchi.push({ object: 'block', type: 'code', code: { language: 'plain text', rich_text: rt_(testo) } });
   }
-  return json_({ ok: true, pending: out });
+  notion_('patch', '/blocks/' + pagina + '/children', { children: blocchi });
+
+  if (type === 'submit') {
+    var props = {};
+    props[STATUS_PROP] = { status: { name: STATUS_SCELTA } };
+    notion_('patch', '/pages/' + pagina, { properties: props });
+  }
+  return (creata ? 'pagina creata e ' : '') + 'log scritto';
 }
 
-// ===== NOTIFICHE =====
-
-function notifyTelegram_(type, job, person, n) {
-  if (!TELEGRAM_TOKEN || TELEGRAM_TOKEN.indexOf('INCOLLA') === 0) return;
-  var text = type === 'open'
-    ? '👀 Galleria aperta\n' + job + '\nDa: ' + person
-    : '📸 Selezione inviata\n' + job + '\nDa: ' + person + '\nFoto: ' + n;
-  try {
-    UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage', {
-      method: 'post',
-      payload: { chat_id: TELEGRAM_CHAT, text: text },
-      muteHttpExceptions: true
-    });
-  } catch (err) {}
+function trovaPagina_(job) {
+  var filtro = { property: TITLE_PROP, title: { equals: job } };
+  var r = notion_('post', '/databases/' + NOTION_DB_LAVORI + '/query', { filter: filtro, page_size: 1 });
+  return r.results && r.results.length ? r.results[0].id : null;
 }
 
-// Trova la pagina nel DB Lavori con Nome servizio = job,
-// appende il log nel corpo e (su submit) aggiorna lo Status a "Selezione fatta".
-function notifyAlfred_(type, job, person, nCount, selections) {
-  if (!NOTION_TOKEN || NOTION_TOKEN.indexOf('YOUR') === 0) return;
+function creaPagina_(job) {
+  var props = {};
+  props[TITLE_PROP] = { title: rt_(job) };
+  var r = notion_('post', '/pages', { parent: { database_id: NOTION_DB_LAVORI }, icon: { type: 'emoji', emoji: '📷' }, properties: props });
+  return r.id;
+}
 
-  var now = Utilities.formatDate(new Date(), 'Europe/Rome', 'dd/MM/yyyy HH:mm');
-
-  try {
-    // 1. Cerca la pagina Lavori con Nome servizio = job
-    var queryRes = UrlFetchApp.fetch('https://api.notion.com/v1/databases/' + NOTION_DB_LAVORI + '/query', {
-      method: 'post',
-      headers: notionHeaders_(),
-      payload: JSON.stringify({
-        filter: { property: 'Nome servizio', title: { equals: job } },
-        page_size: 1
-      }),
-      muteHttpExceptions: true
-    });
-
-    var queryData = JSON.parse(queryRes.getContentText());
-    if (!queryData.results || queryData.results.length === 0) return;
-
-    var pageId = queryData.results[0].id;
-
-    if (type === 'open') {
-      // Solo apertura galleria: una riga semplice
-      UrlFetchApp.fetch('https://api.notion.com/v1/blocks/' + pageId + '/children', {
-        method: 'patch',
-        headers: notionHeaders_(),
-        payload: JSON.stringify({
-          children: [{
-            object: 'block', type: 'paragraph',
-            paragraph: { rich_text: [{ type: 'text', text: { content: '👀 Galleria aperta — ' + person + ' — ' + now } }] }
-          }]
-        }),
-        muteHttpExceptions: true
-      });
-      return;
+function haIntestazioneLog_(pagina) {
+  var cursor = null;
+  do {
+    var r = notion_('get', '/blocks/' + pagina + '/children?page_size=100' + (cursor ? '&start_cursor=' + cursor : ''));
+    for (var i = 0; i < r.results.length; i++) {
+      var b = r.results[i];
+      if (b.type === 'heading_3' && b.heading_3.rich_text.map(function (t) { return t.plain_text; }).join('') === '📋 Log galleria') return true;
     }
-
-    // type === 'submit': intestazione in grassetto + lista puntata foto/commenti
-    var children = [];
-
-    // Riga intestazione
-    children.push({
-      object: 'block', type: 'paragraph',
-      paragraph: {
-        rich_text: [{
-          type: 'text',
-          text: { content: '📸 Selezione inviata — ' + person + ' — ' + nCount + ' foto — ' + now },
-          annotations: { bold: true }
-        }]
-      }
-    });
-
-    // Una voce per ogni foto (con commento se presente)
-    var sels = Array.isArray(selections) ? selections : [];
-    sels.sort(function(a, b) { return String(a.id).localeCompare(String(b.id), undefined, { numeric: true }); });
-    sels.forEach(function(s) {
-      var text = s.id + (s.comment ? '  →  ' + s.comment : '');
-      children.push({
-        object: 'block', type: 'bulleted_list_item',
-        bulleted_list_item: { rich_text: [{ type: 'text', text: { content: text } }] }
-      });
-    });
-
-    // 2. Appende i blocchi nel corpo della pagina
-    UrlFetchApp.fetch('https://api.notion.com/v1/blocks/' + pageId + '/children', {
-      method: 'patch',
-      headers: notionHeaders_(),
-      payload: JSON.stringify({ children: children }),
-      muteHttpExceptions: true
-    });
-
-    // 3. Aggiorna Status → "Selezione fatta"
-    UrlFetchApp.fetch('https://api.notion.com/v1/pages/' + pageId, {
-      method: 'patch',
-      headers: notionHeaders_(),
-      payload: JSON.stringify({
-        properties: { 'Status': { status: { name: 'Selezione fatta' } } }
-      }),
-      muteHttpExceptions: true
-    });
-
-  } catch (err) {}
+    cursor = r.has_more ? r.next_cursor : null;
+  } while (cursor);
+  return false;
 }
 
-function notionHeaders_() {
-  return {
-    'Authorization':  'Bearer ' + NOTION_TOKEN,
-    'Notion-Version': '2022-06-28',
-    'Content-Type':   'application/json'
+// Notion accetta max 2000 caratteri per pezzo di testo: le selezioni lunghe vengono spezzate
+function rt_(testo) {
+  var out = [], s = String(testo);
+  for (var i = 0; i < s.length && out.length < 100; i += 2000) out.push({ type: 'text', text: { content: s.slice(i, i + 2000) } });
+  return out.length ? out : [{ type: 'text', text: { content: '' } }];
+}
+
+function par_(testo, grassetto) {
+  var r = rt_(testo);
+  if (grassetto) r.forEach(function (t) { t.annotations = { bold: true }; });
+  return { object: 'block', type: 'paragraph', paragraph: { rich_text: r } };
+}
+
+function notion_(metodo, percorso, corpo) {
+  var opt = {
+    method: metodo,
+    headers: { 'Authorization': 'Bearer ' + conf_('NOTION_TOKEN'), 'Notion-Version': '2022-06-28' },
+    contentType: 'application/json',
+    muteHttpExceptions: true
   };
+  if (corpo) opt.payload = JSON.stringify(corpo);
+  var res = UrlFetchApp.fetch('https://api.notion.com/v1' + percorso, opt);
+  var data = JSON.parse(res.getContentText() || '{}');
+  if (res.getResponseCode() >= 300) throw new Error('Notion ' + res.getResponseCode() + ': ' + (data.message || res.getContentText()));
+  return data;
+}
+
+// ===== TELEGRAM (backup) =====
+
+function notifyTelegram_(type, job, person, ora, n, testo, errore) {
+  var token = conf_('TELEGRAM_TOKEN'), chat = conf_('TELEGRAM_CHAT');
+  if (!token || !chat) return 'non configurato';
+  var msg;
+  if (type === 'open')        msg = '👀 Galleria aperta\n' + job + '\n' + person + ' — ' + ora;
+  else if (type === 'submit') msg = '✅ Selezione inviata (' + n + ' foto)\n' + person + ' — ' + ora + '\n\n' + testo;
+  else if (type === 'prova')  msg = '🧪 Prova collegamento log galleria: Telegram funziona';
+  else                        msg = '⚠️ Errore log galleria';
+  if (errore) msg += '\n\n⚠️ Notion: ' + errore;
+  try {
+    var r = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+      method: 'post', payload: { chat_id: chat, text: msg.slice(0, 4000) }, muteHttpExceptions: true
+    });
+    return r.getResponseCode() === 200 ? 'inviato' : 'errore ' + r.getResponseCode();
+  } catch (err) { return 'errore'; }
+}
+
+// ===== ARCHIVIO =====
+
+function archivia_(ora, type, job, person, n, testo) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) return;
+  var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+  if (sh.getLastRow() === 0) sh.appendRow(['ora', 'evento', 'lavoro', 'cliente', 'foto', 'selezione']);
+  sh.appendRow([ora, type, job, person, n, type === 'submit' ? testo : '']);
 }
 
 function json_(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ===== PROVA DALL'EDITOR =====
+// Seleziona "verifica" in alto e premi Esegui: il risultato compare nel registro di esecuzione.
+function verifica() {
+  var righe = [];
+  righe.push('NOTION_TOKEN: '   + (conf_('NOTION_TOKEN')   ? 'impostato' : 'MANCANTE'));
+  righe.push('TELEGRAM_TOKEN: ' + (conf_('TELEGRAM_TOKEN') ? 'impostato' : 'mancante'));
+  righe.push('TELEGRAM_CHAT: '  + (conf_('TELEGRAM_CHAT')  ? 'impostato' : 'mancante'));
+  try {
+    notion_('post', '/databases/' + NOTION_DB_LAVORI + '/query', { page_size: 1 });
+    righe.push('Notion: DB Lavori raggiungibile ✅');
+  } catch (err) {
+    righe.push('Notion: ' + err.message + '  → controlla il token e che l\'integrazione sia collegata al DB Lavori (••• → Connessioni)');
+  }
+  righe.push('Telegram: ' + notifyTelegram_('prova', '', '', '', 0, '', '') );
+  Logger.log(righe.join('\n'));
 }

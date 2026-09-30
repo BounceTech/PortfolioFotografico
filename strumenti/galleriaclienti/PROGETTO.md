@@ -31,7 +31,7 @@ strumenti/galleriaclienti/   (dentro la repo PortfolioFotografico)
 ├── template.html              # Template della galleria
 ├── segreti.py                 # GAS_URL (ignorato da git) — modello: segreti.example.py
 ├── app/                       # App Mac (SwiftUI) + build.sh
-├── automazione/               # Google Apps Script: riceve aperture/selezioni → Notion
+├── automazione/               # Google Apps Script: log aperture/selezioni → Notion + Telegram (vedi DEPLOY.md)
 └── ScelteCliente.lrplugin/    # Plugin Lightroom (comandi manuali)
     ├── Info.lua
     ├── ImportaScelte.lua      # "Selezione cliente": legge il messaggio dagli appunti

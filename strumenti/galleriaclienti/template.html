@@ -1015,14 +1015,18 @@ function openWA() {
 }
 
 // ===== TRACKING GAS → Alfred (Notion) =====
-// Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
-// Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
+// sendBeacon parte anche se il cliente chiude la pagina subito dopo (es. apre WhatsApp).
+// text/plain: unico tipo che i browser inviano ad Apps Script senza bloccarlo (CORS).
+// Se sendBeacon non c'è o rifiuta, fetch no-cors. Best-effort: non blocca mai la galleria.
 function _fireGas(payload) {
   if (!CONFIG.gasUrl) return;
+  var body = JSON.stringify(payload);
   try {
-    var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-    if (navigator.sendBeacon) { navigator.sendBeacon(CONFIG.gasUrl, blob); return; }
-    fetch(CONFIG.gasUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }).catch(function(){});
+    if (navigator.sendBeacon && navigator.sendBeacon(CONFIG.gasUrl, new Blob([body], { type: 'text/plain;charset=utf-8' }))) return;
+  } catch (e) {}
+  try {
+    fetch(CONFIG.gasUrl, { method: 'POST', mode: 'no-cors', keepalive: true,
+                           headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: body }).catch(function(){});
   } catch (e) {}
 }
 
@@ -1039,7 +1043,7 @@ function notifySubmit() {
   if (sig === _gasLastSig) return;
   _gasLastSig = sig;
   var sels = ids.map(function(id) { return { id: id, comment: state.selections[id].comment || '' }; });
-  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids, selections: sels });
+  _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids, selections: sels, text: buildMessage() });
 }
 
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
