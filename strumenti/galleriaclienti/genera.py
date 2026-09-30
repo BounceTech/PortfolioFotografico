@@ -4,9 +4,10 @@
 # Uso normale: l'app "Galleria Clienti" (doppio clic) chiama questo script.
 #   python3 genera.py                 wizard da terminale (backup)
 #   python3 genera.py --app           legge i parametri JSON da stdin, scrive progresso JSON su stdout
-#   python3 genera.py --rigenera DIR  ricostruisce una galleria gia' pubblicata col template attuale
+#   python3 genera.py --rigenera DIR --password PW [--cliente NOME] [--pubblica]
+#                                     ricostruisce una galleria gia' pubblicata col template attuale
 
-import base64, hashlib, hmac, html, json, os, re, secrets, shutil, subprocess, sys, tempfile
+import base64, hashlib, html, json, os, re, secrets, shutil, subprocess, sys, tempfile
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
@@ -28,7 +29,7 @@ TEMPLATE     = QUI / 'template.html'
 # Segreti in segreti.py (ignorato da git — la repo e' pubblica). Modello: segreti.example.py
 sys.path.insert(0, str(QUI))
 try:
-    from segreti import TELEGRAM_TOKEN, TELEGRAM_CHAT, MASTER_KEY, GAS_URL
+    from segreti import GAS_URL
 except ImportError:
     print("segreti.py non trovato. Copia segreti.example.py in segreti.py e compila i valori.")
     sys.exit(1)
@@ -40,10 +41,6 @@ QUALITY     = 82
 MAX_KB      = 450
 PBKDF2_ITER = 200_000   # deve restare ragionevole anche sui telefoni (decifra il browser)
 FORMATO_JOB = re.compile(r'^\d{6}_')
-
-
-def make_secret(job):
-    return hmac.new(MASTER_KEY.encode(), job.encode(), hashlib.sha256).hexdigest()[:16]
 
 
 def slugify(text):
@@ -79,6 +76,12 @@ def cifra_vault(password, dati):
     return {'salt': b64(salt), 'iv': b64(iv), 'iter': PBKDF2_ITER, 'data': b64(data)}
 
 
+def apri_vault(vault, password):
+    key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), base64.b64decode(vault['salt']), vault['iter'], 32)
+    plain = AESGCM(key).decrypt(base64.b64decode(vault['iv']), base64.b64decode(vault['data']), None)
+    return json.loads(plain)
+
+
 def render_html(nome_evento, cliente, password, max_sel, foto_json, storage_key=None):
     config = {
         'nomeEvento':   nome_evento,
@@ -86,19 +89,16 @@ def render_html(nome_evento, cliente, password, max_sel, foto_json, storage_key=
         'whatsapp':     WHATSAPP_NUM,
         'storageKey':   storage_key or slugify(nome_evento).replace('-', '_'),
         'vault':        cifra_vault(password, {
-            'foto':          foto_json,
-            'telegramToken': TELEGRAM_TOKEN,
-            'telegramChat':  TELEGRAM_CHAT,
-            'secretCode':    make_secret(nome_evento),
-            'gasUrl':        GAS_URL,
+            'foto':    foto_json,
+            'cliente': cliente,
+            'gasUrl':  GAS_URL,
         }),
     }
     # "</" non deve mai chiudere lo <script> che contiene il JSON
     config_js = json.dumps(config, ensure_ascii=False).replace('</', '<\\/')
     return (TEMPLATE.read_text(encoding='utf-8')
             .replace('{{CONFIG_JSON}}', config_js)
-            .replace('{{NOME_EVENTO}}', html.escape(nome_evento))
-            .replace('{{CLIENTE_DEFAULT}}', html.escape(cliente)))
+            .replace('{{NOME_EVENTO}}', html.escape(nome_evento)))
 
 
 def git(*args):
@@ -190,35 +190,32 @@ def crea_galleria(cartella, cliente, nome_evento, password, max_sel=0, avanza=la
 
 # ---------- rigenerazione gallerie gia' pubblicate ----------
 
-def leggi_galleria(cartella):
-    """Estrae i dati da un index.html di qualsiasi versione precedente (password in base64)."""
+def leggi_galleria(cartella, password):
+    """Riapre una galleria pubblicata (serve la sua password: i dati sono nel vault cifrato)."""
     h = (Path(cartella) / 'index.html').read_text(encoding='utf-8')
-    campo = lambda nome: (re.search(nome + r'\s*[:=]\s*["\']([^"\']*)["\']', h) or [None, None])[1]
-    pw_b64 = campo('pwHash') or campo('PW_B64')
-    if not pw_b64:
-        raise ValueError('password non trovata (galleria gia\' cifrata?)')
-    cliente = re.search(r'id="name-input"[^>]*value="([^"]*)"', h)
-    maxsel = re.search(r'maxSelezioni\s*:\s*(\d+)', h)
+    cfg = json.loads(re.search(r'const CONFIG = (\{.*?\});\n', h)[1])
+    try:
+        dati = apri_vault(cfg['vault'], password)
+    except Exception:
+        raise ValueError('password sbagliata per ' + Path(cartella).name)
     return {
-        'nome_evento': campo('nomeEvento') or Path(cartella).name,
-        'storage_key': campo('storageKey') or campo('storage'),
-        'max_sel':     int(maxsel[1]) if maxsel else 0,
-        'cliente':     html.unescape(cliente[1]) if cliente else (campo('cliente') or ''),
-        'password':    base64.b64decode(pw_b64).decode('utf-8'),
-        'foto':        json.loads(re.search(r'foto\s*:\s*(\[.*?\])\s*,?\s*\n', h, re.S)[1]),
+        'nome_evento': cfg['nomeEvento'],
+        'storage_key': cfg['storageKey'],
+        'max_sel':     cfg['maxSelezioni'],
+        # gallerie precedenti: il nome stava nel campo di login
+        'cliente':     dati.get('cliente') or html.unescape((re.search(r'id="name-input"[^>]*value="([^"]*)"', h) or ['', ''])[1]),
+        'password':    password,
+        'foto':        dati['foto'],
     }
 
 
-def rigenera(cartelle):
-    fatte = []
-    for c in cartelle:
-        c = Path(c).resolve()
-        d = leggi_galleria(c)
-        (c / 'index.html').write_text(render_html(d['nome_evento'], d['cliente'], d['password'],
-                                                  d['max_sel'], d['foto'], d['storage_key']), encoding='utf-8')
-        fatte.append(c)
-        print('OK  ' + c.name + '  (' + str(len(d['foto'])) + ' foto)')
-    return fatte
+def rigenera(cartella, password, cliente=None):
+    c = Path(cartella).resolve()
+    d = leggi_galleria(c, password)
+    (c / 'index.html').write_text(render_html(d['nome_evento'], cliente or d['cliente'], d['password'],
+                                              d['max_sel'], d['foto'], d['storage_key']), encoding='utf-8')
+    print('OK  ' + c.name + '  (' + str(len(d['foto'])) + ' foto)')
+    return c
 
 
 # ---------- modalita' app (JSON su stdin/stdout) ----------
@@ -252,7 +249,7 @@ def main_terminale():
     print('  ' + str(len(trova_foto(cartella))) + ' foto')
     evento = chiedi('Nome evento (AAMMGG_NomeEvento)', cartella.name)
     if not FORMATO_JOB.match(evento):
-        print('  ATTENZIONE: senza il formato AAMMGG_ il watcher di Lightroom non trova le foto.')
+        print('  ATTENZIONE: senza il formato AAMMGG_ il plugin di Lightroom non trova le foto.')
     cliente = chiedi('Nome cliente')
     password = chiedi('Password')
     max_sel = int(chiedi('Max selezioni (0 = nessun limite)', '0'))
@@ -267,8 +264,9 @@ if __name__ == '__main__':
     if '--app' in sys.argv:
         main_app()
     elif '--rigenera' in sys.argv:
-        cartelle = rigenera([a for a in sys.argv[sys.argv.index('--rigenera') + 1:] if not a.startswith('--')])
-        if cartelle and '--pubblica' in sys.argv:
-            pubblica(cartelle, 'Gallerie: password cifrata (' + str(len(cartelle)) + ')')
+        arg = lambda k: sys.argv[sys.argv.index(k) + 1] if k in sys.argv else None
+        c = rigenera(arg('--rigenera'), arg('--password'), arg('--cliente'))
+        if '--pubblica' in sys.argv:
+            pubblica([c], 'Galleria rigenerata (' + c.name + ')')
     else:
         main_terminale()

@@ -458,7 +458,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     </div>
 
     <form id="login-form" onsubmit="doLogin(event); return false">
-      <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="" required>
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra</button>
       <div id="login-error">Password errata. Riprova.</div>
@@ -554,9 +553,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    "vault", cifrato con la password del cliente (PBKDF2 + AES-GCM):
    senza password dal sorgente della pagina non si ricava nulla.
    Dopo il login il contenuto del vault viene unito a CONFIG
-   (foto, telegramToken, telegramChat, secretCode, gasUrl).
+   (foto, cliente, gasUrl).
    ============================================================ */
-const CONFIG = {"nomeEvento": "260522_ByTiffany_MulinoDiOz", "maxSelezioni": 0, "whatsapp": "393348493876", "storageKey": "260522_ByTiffany_MulinoDiOz", "vault": {"salt": "8wFdh0Z7OL+nh1aJdgkfWg==", "iv": "fRnbnbglc9OPTmsU", "iter": 200000, "data": "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"}};
+const CONFIG = {"nomeEvento": "260522_ByTiffany_MulinoDiOz", "maxSelezioni": 0, "whatsapp": "393348493876", "storageKey": "260522_ByTiffany_MulinoDiOz", "vault": {"salt": "0Lu3r8V7NzYgX/0y82uQ0Q==", "iv": "+rvUrFdygRWbbk8t", "iter": 200000, "data": "kdQQ6N5NqLOZE7ncdXVo05tDUhTXAFJTJykLSYvZmZ+L9Ha5B/zuaH4yHAHotXX7ELYjGcSckYFcIWDW9w+uNAb8o4y+/naCGgRW9W+wLjqUJl4rOQCu32GZHT6hy/0JM4TiwkdSB2CptNtlLQXv6Ix0euZgG6769fdsAcUrKnkhGgSRJggjKQ5zniLP/BP2r7zBts4Al3xfK1h8IdvD5yJ3cl0ebzAT/K2GsB0YSjAWqoQ+ApeAZYs+JzxSC760YqEOHXLNcflnDuMGeRc/Uy09qmCMLCXBj6/yb2bUPuqwH/vC/dcghJr4rgLKtdobJG08/1Jv7TDk1jrldRtl2bhBh+gHIN8WPJi6TzO/EFPXzGjICg1t+x2m349IZUY1qvbBY8g2Rdt1N84u7ze8JCwsfWLp1/BjHcthOmNSRnRAEkTQSRDweBo+W2sbT3bswp+j28GB/cOpv95LkRq/90dEZ5VFISUbV6RLSwR4dPnaAtYl3pemzwQlkyjKBnJNhz5zB2ZCxlnYPXsN4jbAzLeyA6ubVgF4rIfrBIBfN2vo5lNAOz4+MwXIcBwDrN1X+M3qtHA1JBIBLrQuWXcyjjKWnA3WfGcBah76NBYZchoUBR9Yc7v5gYp57r+fZwLjO+81SjjGnTe3P/VrWF/RHYbAj2EwZVcvpkp60Xu0rLbJiJjpXmS3BbLSnvhX7O+6kDroEuI2mYuiRdbGyfcBOGHZomAn94hD5KxVp7mebYl/lToNPBeQshv7cKRceDbkLM6lY0yLr+b7frXnP0kLhdLZn80OsKGp1A5S5a1eMwzlGy3br0cE2zlDRYroyebEqa2lP0cl8scEiYrDshE2daTQv0OBCP2yKBbafvj/ObXwYG8iDKE62+JAjz2COa5BC1GMJXy7xpuaB5Svc/C3bw6beKif2lWR3gBsIH24gCyqPt2kZzXhvRfJYT78SSMNT5eQc+uN8mwdQrSAC6ncgDvKQ4ax0d/c4dfmV77YfFnFbGY8oICUVCPCxeTF3Sad4tfZ+9+DB5Nl4ISq//nhdVFzjtsCZckRH5vTNafCyvLrmsG8d5RcjwV3SBcpH4cRyPQT/BwryBVtW7qCVs0oif6Rn9lyY9oB+XJjAYunbBOGwnXjNWL3bMZgkNTQmXa0xanr8jnpXMcCqmJS+vJBIqQ3C/0TCYSmlj7ypRu8cDyThPyN2hMnE9AsRLSHLCdywal1fanzKIvOY7wxTc/UCYEjpfvrwVhCxSXG6u2NJ774Qpmi3ibKYazjqPrOd0UsLAov/MnaTTG8l9TsT/yX3zmBIuePHcTNFsR/blIHEX+amsjkMUvTpggWnz+GUyb0diSRjNMZj+erQmNf3sNyRn7iYqzsHKrn5ZFaHqqLp7JSsWmegly1aDKBBbcFGYt0wFC8tZEifFvQUbUTngjaR2dXKDIfFaOuLhTXnrNq+L1nJyV5xA15fkb0UQDPcEuCi1nChuGe3+dc0zQM/UGv7mermYgar+HKVqoYAjRzYxsUv8B+07TAz80yrQ9WnRhA7s/4f9zlRQ8ZIJE6K/9iE5uK1LKbj/sgA7p2u/joQUV1FvmKRtu21VGXmHmTm1klfu87gtT9Vm8J1FqsVL6k8cXPSzFOzPkeTmsTNvOQkQm/6AcGUG89I+pWPBpFh0AoGijHHXbKK5la8Xz5TFcNIetg+WQxylbGy6R0zv73AXDSk0CL0ckcp0VTrmNutdqYP3Fq9qrSdivAMtXMznjTv70BvA3ZehgY3S6z6jY7hii2L88OTqjh3LYkUeHihyai6jm5d8sGU/3AQiNZo+HJvALdhyeJ6qPBBEtilTXfNgAeMIgKNpTPeeFuHo3U5+Lgv7I95IOvqMH9fcVQbWe3bFmPFKBGxlHgrPNXM7zsbOzsRkikhk+GW3omXysBc11lU9HM7nx5jz0Hc+wLYEVpjYfLgLQiKwyO6CjrFbR5Vjc8GDAKbxXBaKJOhZfm"}};
 
 const state = { selections: {}, fullIdx: 0, zoom: 1, panX: 0, panY: 0, personName: '' };
 
@@ -581,15 +580,6 @@ function prettyEventName(raw) {
   document.title = t + ' — Selezione Foto | Mattia Buoli';
 })();
 
-// Se qualcuno ha già scelto da questo dispositivo, il suo nome ha priorità
-// sul nome suggerito dal fotografo (così ognuno ritrova il proprio).
-(function () {
-  try {
-    const saved = localStorage.getItem(CONFIG.storageKey + '_name');
-    if (saved) document.getElementById('name-input').value = saved;
-  } catch (err) {}
-})();
-
 // ===== LOGIN =====
 function _b64(s) { return Uint8Array.from(atob(s), c => c.charCodeAt(0)); }
 
@@ -612,9 +602,7 @@ async function doLogin(e) {
   btn.disabled = false;
   if (segreti) {
     Object.assign(CONFIG, segreti);
-    // "|" separa i campi del messaggio Telegram: non deve comparire nel nome
-    state.personName = (document.getElementById('name-input').value || '').replace(/\|/g, ' ').trim() || 'Cliente';
-    try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
+    state.personName = CONFIG.cliente || 'Cliente';   // nome impostato dal fotografo
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
     buildGallery();
@@ -1016,19 +1004,17 @@ function openModal() {
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function copyMsg() {
-  sendToTelegram();
   notifySubmit();
   const t = document.getElementById('modal-msg-text').textContent;
   if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
   else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
 }
 function openWA() {
-  sendToTelegram();
   notifySubmit();
   window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
 }
 
-// ===== TRACKING GAS → Alfred (Notion) + Telegram backup =====
+// ===== TRACKING GAS → Alfred (Notion) =====
 // Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
 // Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
 function _fireGas(payload) {
@@ -1056,23 +1042,6 @@ function notifySubmit() {
   _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids, selections: sels });
 }
 
-// ===== INVIO AUTOMATICO (silenzioso, in parallelo a WhatsApp) =====
-// Manda la selezione al canale Telegram così il plugin Lightroom la tagga da solo.
-// Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
-let _tgLastSig = null;
-function sendToTelegram() {
-  if (!CONFIG.telegramToken) return;
-  const ids = Object.keys(state.selections);
-  if (ids.length === 0) return;
-  const sig = ids.slice().sort().join(',');
-  if (sig === _tgLastSig) return;   // selezione invariata dall'ultimo invio: non rimando
-  _tgLastSig = sig;
-  const text = 'SELEZIONE|JOB=' + CONFIG.nomeEvento + '|NOME=' + state.personName + '|FOTO=' + ids.join(' ') + '|SECRET=' + CONFIG.secretCode;
-  const url = 'https://api.telegram.org/bot' + CONFIG.telegramToken + '/sendMessage'
-    + '?chat_id=' + encodeURIComponent(CONFIG.telegramChat)
-    + '&text=' + encodeURIComponent(text);
-  fetch(url).catch(function () {});
-}
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
 // ===== TOAST =====

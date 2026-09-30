@@ -1,5 +1,5 @@
 --[[
-  MatchUtils.lua — logica di ricerca foto condivisa tra ImportaScelte e Watcher.
+  MatchUtils.lua — logica di ricerca foto usata da ImportaScelte.
 
   cercaFoto(catalog, names, isInScope)
     catalog   : LrApplication.activeCatalog()

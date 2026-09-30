@@ -458,7 +458,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     </div>
 
     <form id="login-form" onsubmit="doLogin(event); return false">
-      <input class="login-input" type="text" id="name-input" placeholder="Il tuo nome" autocomplete="name" value="{{CLIENTE_DEFAULT}}" required>
       <input class="login-input" type="password" id="pw-input" placeholder="Password" autocomplete="current-password" required>
       <button class="btn-login" type="submit">Entra</button>
       <div id="login-error">Password errata. Riprova.</div>
@@ -554,7 +553,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    "vault", cifrato con la password del cliente (PBKDF2 + AES-GCM):
    senza password dal sorgente della pagina non si ricava nulla.
    Dopo il login il contenuto del vault viene unito a CONFIG
-   (foto, telegramToken, telegramChat, secretCode, gasUrl).
+   (foto, cliente, gasUrl).
    ============================================================ */
 const CONFIG = {{CONFIG_JSON}};
 
@@ -581,15 +580,6 @@ function prettyEventName(raw) {
   document.title = t + ' — Selezione Foto | Mattia Buoli';
 })();
 
-// Se qualcuno ha già scelto da questo dispositivo, il suo nome ha priorità
-// sul nome suggerito dal fotografo (così ognuno ritrova il proprio).
-(function () {
-  try {
-    const saved = localStorage.getItem(CONFIG.storageKey + '_name');
-    if (saved) document.getElementById('name-input').value = saved;
-  } catch (err) {}
-})();
-
 // ===== LOGIN =====
 function _b64(s) { return Uint8Array.from(atob(s), c => c.charCodeAt(0)); }
 
@@ -612,9 +602,7 @@ async function doLogin(e) {
   btn.disabled = false;
   if (segreti) {
     Object.assign(CONFIG, segreti);
-    // "|" separa i campi del messaggio Telegram: non deve comparire nel nome
-    state.personName = (document.getElementById('name-input').value || '').replace(/\|/g, ' ').trim() || 'Cliente';
-    try { localStorage.setItem(CONFIG.storageKey + '_name', state.personName); } catch (err) {}
+    state.personName = CONFIG.cliente || 'Cliente';   // nome impostato dal fotografo
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
     buildGallery();
@@ -1016,19 +1004,17 @@ function openModal() {
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function copyMsg() {
-  sendToTelegram();
   notifySubmit();
   const t = document.getElementById('modal-msg-text').textContent;
   if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => showToast('Copiato!', 'success'));
   else { const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);showToast('Copiato!','success'); }
 }
 function openWA() {
-  sendToTelegram();
   notifySubmit();
   window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(buildMessage())}`, '_blank');
 }
 
-// ===== TRACKING GAS → Alfred (Notion) + Telegram backup =====
+// ===== TRACKING GAS → Alfred (Notion) =====
 // Usa sendBeacon (fire-and-forget, sopravvive ai redirect GAS).
 // Fallback a fetch no-cors. Best-effort: se fallisce non blocca nulla.
 function _fireGas(payload) {
@@ -1056,23 +1042,6 @@ function notifySubmit() {
   _fireGas({ type: 'submit', job: CONFIG.nomeEvento, person: state.personName, names: ids, selections: sels });
 }
 
-// ===== INVIO AUTOMATICO (silenzioso, in parallelo a WhatsApp) =====
-// Manda la selezione al canale Telegram così il plugin Lightroom la tagga da solo.
-// Best-effort: se fallisce (rete, ad-blocker) WhatsApp/Copia funzionano comunque.
-let _tgLastSig = null;
-function sendToTelegram() {
-  if (!CONFIG.telegramToken) return;
-  const ids = Object.keys(state.selections);
-  if (ids.length === 0) return;
-  const sig = ids.slice().sort().join(',');
-  if (sig === _tgLastSig) return;   // selezione invariata dall'ultimo invio: non rimando
-  _tgLastSig = sig;
-  const text = 'SELEZIONE|JOB=' + CONFIG.nomeEvento + '|NOME=' + state.personName + '|FOTO=' + ids.join(' ') + '|SECRET=' + CONFIG.secretCode;
-  const url = 'https://api.telegram.org/bot' + CONFIG.telegramToken + '/sendMessage'
-    + '?chat_id=' + encodeURIComponent(CONFIG.telegramChat)
-    + '&text=' + encodeURIComponent(text);
-  fetch(url).catch(function () {});
-}
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
 // ===== TOAST =====
