@@ -17,7 +17,8 @@
  *   2. Telegram: notifica di backup (e avviso se Notion fallisce).
  *   3. Foglio "Log": una riga per evento (archivio).
  *
- * Configurazione: Impostazioni progetto → Proprietà script
+ * Configurazione: Proprietà script (Impostazioni progetto) oppure file Config.gs con
+ *   var CONFIG = { NOTION_TOKEN: '…', TELEGRAM_TOKEN: '…', TELEGRAM_CHAT: '…' };
  *   NOTION_TOKEN    token dell'integrazione Notion (collegata al DB Lavori)
  *   TELEGRAM_TOKEN  token del bot
  *   TELEGRAM_CHAT   id della chat dove ricevere le notifiche
@@ -31,7 +32,12 @@ var STATUS_SCELTA    = 'Selezione fatta';
 var FUSO             = 'Europe/Rome';
 var SHEET_NAME       = 'Log';
 
-function conf_(k) { return PropertiesService.getScriptProperties().getProperty(k) || ''; }
+// Valori: Proprietà script, oppure il file Config.gs (solo su Google, mai nella repo pubblica)
+function conf_(k) {
+  var v = PropertiesService.getScriptProperties().getProperty(k);
+  if (v) return v;
+  return (typeof CONFIG !== 'undefined' && CONFIG[k]) || '';
+}
 
 // ===== ENTRATA =====
 
