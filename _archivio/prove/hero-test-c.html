@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST C — Ingresso cinetico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --color-bg: #0e0e0e;
+        --color-text: #f2efe9;
+        --color-text-light: #9b968e;
+        --color-accent: #6fa3bf;
+        --color-accent-deep: #1f3d4d;
+        --color-heritage: #b08a5c;
+        --color-heritage-light: #d9c3a0;
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-mono: 'Space Mono', 'SF Mono', Monaco, monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
+
+    .test-banner {
+        position: relative;
+        z-index: 10;
+        background: var(--color-accent);
+        color: #0e0e0e;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+    }
+
+    #replayBtn {
+        border: 1px solid #0e0e0e;
+        background: transparent;
+        color: #0e0e0e;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 5px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .hero-image { position: absolute; inset: 0; z-index: 0; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); }
+
+    .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(180deg, rgba(14, 14, 14, 0.35) 0%, rgba(31, 61, 77, 0.2) 32%, rgba(14, 14, 14, 0.35) 60%, rgba(14, 14, 14, 0.94) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 0 clamp(20px, 4vw, 56px) 8vh;
+        padding-top: 22vh;
+    }
+
+    .location {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--color-accent);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        overflow: hidden;
+    }
+    .location span { display: inline-block; }
+
+    .kinetic-title {
+        overflow: hidden;
+        line-height: 0.95;
+    }
+
+    .kinetic-title .row {
+        overflow: hidden;
+    }
+
+    .kinetic-title h1 {
+        font-family: var(--font-display);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        font-size: clamp(3.6rem, 12.5vw, 10.5rem);
+        display: block;
+    }
+
+    .kinetic-title .row:nth-child(2) h1 {
+        background: linear-gradient(100deg, var(--color-heritage-light), var(--color-heritage));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-style: italic;
+        font-weight: 500;
+    }
+
+    .subtitle {
+        margin-top: 22px;
+        font-size: clamp(1rem, 1.6vw, 1.15rem);
+        color: rgba(242, 239, 233, 0.82);
+        max-width: 520px;
+        overflow: hidden;
+    }
+    .subtitle span { display: inline-block; }
+
+    .cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; overflow: hidden; }
+    .cta > div { display: flex; gap: 14px; }
+
+    .btn {
+        padding: 16px 34px;
+        border-radius: 2px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+    }
+    .btn-primary { background: var(--color-text); color: #0e0e0e; }
+    .btn-secondary { background: transparent; border: 1px solid rgba(242, 239, 233, 0.4); color: var(--color-text); }
+
+    /* Animazione: ogni pezzo entra sfalsato dal basso, con un piccolo overshoot */
+    .in-el {
+        transform: translateY(115%);
+        opacity: 0;
+    }
+    .play .in-el {
+        animation: kineticIn 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .play .hero-image img {
+        animation: kineticZoom 1600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes kineticIn {
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes kineticZoom {
+        from { transform: scale(1.15); }
+        to { transform: scale(1.02); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .in-el { transform: none; opacity: 1; animation: none; }
+        .hero-image img { transform: none; animation: none; }
+    }
+</style>
+</head>
+<body>
+    <div class="test-banner">Opzione C — L'impatto è nel movimento d'ingresso, non nella composizione statica
+        <button id="replayBtn">▶ Rivedi l'animazione</button>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="hero-image"><img src="../../images/sito/hero.jpg" alt="Mattia Buoli fotografo"></div>
+        <div class="hero-content">
+            <p class="location"><span class="in-el">Mantova · 45.15°N 10.79°E</span></p>
+            <div class="kinetic-title">
+                <div class="row"><h1 class="in-el">MATTIA</h1></div>
+                <div class="row"><h1 class="in-el">BUOLI</h1></div>
+            </div>
+            <p class="subtitle"><span class="in-el">Fotografo professionista — Business &amp; Eventi, Motorsport. Mantova e provincia.</span></p>
+            <div class="cta"><div>
+                <a href="#" class="btn btn-primary in-el">Guarda i miei lavori</a>
+                <a href="#" class="btn btn-secondary in-el">Contattami</a>
+            </div></div>
+        </div>
+    </section>
+
+    <script>
+        const hero = document.getElementById('hero');
+        const elements = hero.querySelectorAll('.in-el');
+        function playAnimation() {
+            hero.classList.remove('play');
+            void hero.offsetWidth; // forza il reflow per poter ripartire da capo
+            elements.forEach((el, i) => {
+                el.style.animationDelay = (120 + i * 90) + 'ms';
+            });
+            hero.classList.add('play');
+        }
+        document.getElementById('replayBtn').addEventListener('click', playAnimation);
+        window.addEventListener('load', playAnimation);
+    </script>
+</body>
+</html>

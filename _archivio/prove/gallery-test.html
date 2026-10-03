@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST v2 — Galleria a scorrimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600@1,9..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --color-bg: #0e0e0e;
+        --color-text: #f2efe9;
+        --color-text-light: #9b968e;
+        --color-accent: #6fa3bf;
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-mono: 'Space Mono', 'SF Mono', Monaco, monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: var(--color-bg); color: var(--color-text); overflow-x: hidden; }
+    body { font-family: var(--font-mono); cursor: default; }
+
+    .test-banner {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 30;
+        background: var(--color-accent);
+        color: #0e0e0e;
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+
+    .gt-track {
+        display: flex;
+        align-items: center;
+        gap: 3vw;
+        padding: 0 6vw;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        height: 100vh;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+    .gt-track::-webkit-scrollbar { display: none; }
+
+    /* Larghezza automatica in base alle proporzioni reali della foto: verticali e orizzontali convivono senza ritagli */
+    .gt-slide {
+        position: relative;
+        flex: 0 0 auto;
+        height: 86vh;
+        max-width: 92vw;
+        scroll-snap-align: center;
+        overflow: hidden;
+    }
+
+    .gt-photo {
+        display: block;
+        height: 100%;
+        width: auto;
+        max-width: 92vw;
+        object-fit: contain;
+        transform: scale(1);
+        transition: transform 600ms ease;
+    }
+
+    /* Foto viva: leggerissimo respiro solo sulla foto attiva, mai un elemento che la nasconde */
+    .gt-slide.is-active .gt-photo {
+        animation: gtBreathe 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes gtBreathe {
+        from { transform: scale(1); }
+        to { transform: scale(1.045); }
+    }
+
+    .gt-slide::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(14, 14, 14, 0.5) 0%, transparent 20%, transparent 78%, rgba(14, 14, 14, 0.25) 100%);
+        pointer-events: none;
+    }
+
+    .gt-counter {
+        position: absolute;
+        left: 28px;
+        bottom: 28px;
+        z-index: 2;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+    }
+    .gt-counter span { color: var(--color-accent); }
+
+    .gt-label {
+        position: absolute;
+        left: 28px;
+        top: 28px;
+        z-index: 2;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 20px;
+    }
+
+    .gt-vf {
+        position: absolute;
+        inset: 24px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .gt-vf::before, .gt-vf::after {
+        content: '';
+        position: absolute;
+        width: 22px;
+        height: 22px;
+    }
+    .gt-vf::before { top: 0; left: 0; border-top: 1px solid var(--color-accent); border-left: 1px solid var(--color-accent); }
+    .gt-vf::after { bottom: 0; right: 0; border-bottom: 1px solid var(--color-accent); border-right: 1px solid var(--color-accent); }
+
+    /* Zone di click invisibili per navigare senza mai coprire la foto */
+    .gt-zone {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        z-index: 3;
+        cursor: none;
+    }
+    .gt-zone--prev { left: 0; }
+    .gt-zone--next { right: 0; }
+
+    /* Etichetta che segue il cursore, appare solo sopra le zone di click */
+    .gt-cursor-label {
+        position: fixed;
+        z-index: 40;
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: rgba(14, 14, 14, 0.75);
+        border: 1px solid var(--color-accent);
+        border-radius: 50px;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--color-text);
+        opacity: 0;
+        transition: opacity 200ms ease;
+        pointer-events: none;
+        backdrop-filter: blur(6px);
+        white-space: nowrap;
+    }
+    .gt-cursor-label.visible { opacity: 1; }
+
+    .gt-progress {
+        position: fixed;
+        left: 0; right: 0; bottom: 0;
+        z-index: 25;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.08);
+    }
+    .gt-progress-bar {
+        height: 100%;
+        background: var(--color-accent);
+        width: 12.5%;
+        transition: width 400ms ease;
+    }
+
+    @media (hover: none) {
+        .gt-zone { display: none; }
+        .gt-cursor-label { display: none; }
+    }
+</style>
+</head>
+<body>
+    <div class="test-banner">Solo test v3 — foto verticali e orizzontali ora convivono senza ritagli: la larghezza si adatta alla foto vera, mai forzata a riempire lo schermo</div>
+    <div class="gt-cursor-label" id="gtCursorLabel"></div>
+    <div class="gt-progress"><div class="gt-progress-bar" id="gtProgressBar"></div></div>
+
+    <div class="gt-track" id="gtTrack"></div>
+
+    <script>
+        const photos = [
+            '../../images/Motori/Motori-1.jpg',
+            '../../images/Motori/Motori-2.jpg',
+            '../../images/Motori/Motori-3.jpg',
+            '../../images/Motori/Motori-4.jpg',
+            '../../images/Motori/Motori-5.jpg',
+            '../../images/Motori/Motori-6.jpg',
+            '../../images/Motori/Motori-7.jpg',
+            '../../images/Motori/Motori-8.jpg'
+        ];
+
+        const track = document.getElementById('gtTrack');
+        const cursorLabel = document.getElementById('gtCursorLabel');
+        const progressBar = document.getElementById('gtProgressBar');
+        const slides = [];
+
+        photos.forEach((src, i) => {
+            const slide = document.createElement('div');
+            slide.className = 'gt-slide';
+
+            const photo = document.createElement('img');
+            photo.className = 'gt-photo';
+            photo.src = src;
+            photo.alt = `Motorsport — scatto ${i + 1}`;
+            photo.loading = i < 2 ? 'eager' : 'lazy';
+
+            const vf = document.createElement('div');
+            vf.className = 'gt-vf';
+
+            const label = document.createElement('div');
+            label.className = 'gt-label';
+            label.textContent = 'Motorsport';
+
+            const counter = document.createElement('div');
+            counter.className = 'gt-counter';
+            counter.innerHTML = `<span>N°${String(i + 1).padStart(2, '0')}</span> / ${String(photos.length).padStart(2, '0')}`;
+
+            const zonePrev = document.createElement('div');
+            zonePrev.className = 'gt-zone gt-zone--prev';
+            const zoneNext = document.createElement('div');
+            zoneNext.className = 'gt-zone gt-zone--next';
+
+            slide.append(photo, vf, label, counter, zonePrev, zoneNext);
+            track.appendChild(slide);
+            slides.push(slide);
+
+            const goTo = (delta) => {
+                const target = Math.min(Math.max(i + delta, 0), photos.length - 1);
+                slides[target].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+            };
+
+            zonePrev.addEventListener('click', () => goTo(-1));
+            zoneNext.addEventListener('click', () => goTo(1));
+
+            [zonePrev, zoneNext].forEach((zone, zi) => {
+                zone.addEventListener('mousemove', (e) => {
+                    cursorLabel.textContent = zi === 0 ? '← Precedente' : 'Successiva →';
+                    cursorLabel.style.left = e.clientX + 'px';
+                    cursorLabel.style.top = e.clientY + 'px';
+                    cursorLabel.classList.add('visible');
+                });
+                zone.addEventListener('mouseleave', () => cursorLabel.classList.remove('visible'));
+            });
+        });
+
+        // La foto centrata "respira" (zoom lentissimo); le altre restano ferme
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                entry.target.classList.toggle('is-active', entry.isIntersecting);
+            });
+            const activeIndex = slides.findIndex((s) => s.classList.contains('is-active'));
+            if (activeIndex >= 0) {
+                progressBar.style.width = ((activeIndex + 1) / slides.length) * 100 + '%';
+            }
+        }, { threshold: 0.6 });
+
+        slides.forEach((s) => observer.observe(s));
+
+        // Frecce da tastiera, comodo su desktop
+        document.addEventListener('keydown', (e) => {
+            const activeIndex = slides.findIndex((s) => s.classList.contains('is-active'));
+            if (activeIndex < 0) return;
+            if (e.key === 'ArrowRight') slides[Math.min(activeIndex + 1, slides.length - 1)].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+            if (e.key === 'ArrowLeft') slides[Math.max(activeIndex - 1, 0)].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+        });
+    </script>
+</body>
+</html>

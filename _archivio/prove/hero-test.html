@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST — Hero con ritratto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --color-bg: #0e0e0e;
+        --color-text: #f2efe9;
+        --color-text-light: #9b968e;
+        --color-border: #262626;
+        --color-accent: #6fa3bf;
+        --color-heritage: #b08a5c;
+        --color-heritage-light: #d9c3a0;
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-mono: 'Space Mono', 'SF Mono', Monaco, monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+    }
+
+    .test-banner {
+        background: var(--color-heritage);
+        color: #0e0e0e;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+
+    .ht-hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Grana pellicola, coerente col resto del sito */
+    .ht-hero::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 5;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .ht-topbar {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 36px clamp(20px, 4vw, 56px) 0;
+    }
+
+    .ht-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .ht-brand .ht-name {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(18px, 2vw, 22px);
+        color: var(--color-text);
+    }
+
+    .ht-brand .ht-role {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-heritage-light);
+    }
+
+    .ht-tagline {
+        text-align: right;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgba(242, 239, 233, 0.75);
+        max-width: 220px;
+    }
+
+    .ht-stage {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        min-height: 82vh;
+    }
+
+    /* Vignetta leggera per dare profondità alla scena */
+    .ht-stage::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(14, 14, 14, 0.55) 100%);
+    }
+
+    .ht-giant {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 4vh;
+        z-index: 1;
+        text-align: center;
+        font-family: var(--font-display);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 0.82;
+        font-size: clamp(5.5rem, 21vw, 17rem);
+        background: linear-gradient(100deg, var(--color-heritage-light) 0%, var(--color-heritage) 45%, rgba(176, 138, 92, 0.15) 80%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: var(--color-heritage);
+        user-select: none;
+    }
+
+    /* Bagliore azzurro dietro al soggetto, per staccarlo ulteriormente dallo sfondo */
+    .ht-glow {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        bottom: 0;
+        width: 70vw;
+        max-width: 900px;
+        height: 70vh;
+        transform: translateX(-50%);
+        background: radial-gradient(ellipse at 50% 100%, rgba(31, 61, 77, 0.55) 0%, rgba(31, 61, 77, 0) 70%);
+        filter: blur(10px);
+        pointer-events: none;
+    }
+
+    .ht-portrait {
+        position: relative;
+        z-index: 2;
+        width: min(46vw, 620px);
+        height: 92vh;
+        -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 90%, transparent 100%);
+    }
+
+    .ht-portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+        filter: contrast(1.12) saturate(0.82) brightness(0.97);
+    }
+
+    /* Grading cinematografico coerente con l'azzurro del sito, non un colore piatto sopra la foto */
+    .ht-portrait::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(155deg, rgba(31, 61, 77, 0.4) 0%, rgba(14, 14, 14, 0) 55%);
+        mix-blend-mode: overlay;
+        pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+        .ht-portrait {
+            width: min(78vw, 460px);
+            height: 88vh;
+        }
+        .ht-giant {
+            font-size: clamp(4rem, 19vw, 8rem);
+        }
+        .ht-tagline { display: none; }
+    }
+
+    .ht-bottombar {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        padding: 0 clamp(20px, 4vw, 56px) 48px;
+    }
+
+    .ht-ticker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 22px;
+        border: 1px solid var(--color-heritage);
+        border-radius: 50px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--color-heritage-light);
+    }
+
+    .ht-cta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .ht-btn {
+        padding: 15px 32px;
+        border-radius: 2px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .ht-btn-primary {
+        background: var(--color-text);
+        color: #0e0e0e;
+    }
+
+    .ht-btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(242, 239, 233, 0.4);
+        color: var(--color-text);
+    }
+
+    .ht-frame {
+        position: absolute;
+        inset: 18px;
+        border: 1px solid rgba(176, 138, 92, 0.3);
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .ht-note {
+        max-width: 720px;
+        margin: 60px auto;
+        padding: 0 24px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--color-text-light);
+    }
+
+    .ht-note h2 {
+        font-family: var(--font-display);
+        font-size: 22px;
+        color: var(--color-text);
+        margin-bottom: 12px;
+    }
+
+    .ht-note code {
+        font-family: var(--font-mono);
+        background: #1a1a1a;
+        padding: 2px 6px;
+        border-radius: 3px;
+    }
+</style>
+</head>
+<body>
+    <div class="test-banner">Solo test — foto placeholder da Unsplash (Esther Masscheleyn), ritagliata davvero (non più un rettangolo sfumato), da sostituire con una tua foto</div>
+
+    <section class="ht-hero">
+        <div class="ht-frame"></div>
+        <div class="ht-topbar">
+            <div class="ht-brand">
+                <span class="ht-name">Mattia Buoli</span>
+                <span class="ht-role">Fotografo Professionista</span>
+            </div>
+            <p class="ht-tagline">Immagini che raccontano.<br>Risultati che restano.</p>
+        </div>
+
+        <div class="ht-stage">
+            <h1 class="ht-giant">FOTOGRAFO</h1>
+            <div class="ht-glow"></div>
+            <div class="ht-portrait">
+                <img src="test-placeholder/hero-portrait-cutout.png" alt="Foto placeholder di test, ritagliata">
+            </div>
+        </div>
+
+        <div class="ht-bottombar">
+            <p class="ht-ticker">Business &amp; Eventi · Catering · Motorsport</p>
+            <div class="ht-cta">
+                <a href="#" class="ht-btn ht-btn-primary">Guarda i miei lavori</a>
+                <a href="#" class="ht-btn ht-btn-secondary">Contattami</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="ht-note">
+        <h2>Cos'è questa pagina</h2>
+        <p>Versione 2 del test — su tua indicazione: ritaglio vero del soggetto (non più un rettangolo sfumato), testo molto più grande, bagliore azzurro dietro al soggetto, grading colore cinematografico sulla foto, vignetta sulla scena. Non è collegata al resto del sito, non tocca <code>demo-redesign.html</code>.</p>
+        <p style="margin-top:10px">Il ritaglio è stato fatto con uno strumento di segmentazione automatica (rembg, rete neurale open source) sulla foto placeholder — stesso procedimento che useremo sulla tua foto vera quando sarà pronta. I bordi (capelli, spalle) sono puliti ma non perfetti al 100%: su una foto scattata apposta con sfondo pulito il risultato sarà ancora più netto.</p>
+        <p style="margin-top:10px">Prossimo passo se la direzione ti convince: una tua foto con le stesse caratteristiche (sfondo scuro/pulito, sguardo in camera, buona luce) per rifare il ritaglio con la foto vera.</p>
+    </div>
+</body>
+</html>

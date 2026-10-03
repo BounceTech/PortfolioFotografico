@@ -1,3 +1,13 @@
 .claude/
 .DS_Store
 desktop.ini
+__pycache__/
+.fuse_hidden*
+
+# le tue foto: restano sul Mac, online vanno solo le versioni leggere in images/galleria/
+FOTO/
+
+# file di lavoro dello script foto
+strumenti/sito/automatico.log
+strumenti/sito/.aggiorna.lock
+_archivio/research/_tmp/

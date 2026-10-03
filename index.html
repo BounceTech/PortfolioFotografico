@@ -3,29 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mattia Buoli | Fotografo Mantova</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <meta name="description" content="Mattia Buoli, fotografo professionista a Mantova. Foto per aziende, eventi, auto e moto.">
+    <title>Mattia Buoli | Fotografo Professionista — Mantova</title>
+    <link rel="icon" type="image/png" href="images/sito/favicon.png">
+    <link rel="canonical" href="https://mattiabuoli.it/">
+    <meta name="description" content="Mattia Buoli, fotografo professionista a Mantova. Business & Eventi, Motorsport.">
 
     <!-- Open Graph: anteprima link su WhatsApp, Instagram, ecc. -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Mattia Buoli Fotografo">
-    <meta property="og:title" content="Mattia Buoli | Fotografo Mantova">
-    <meta property="og:description" content="Foto per aziende, eventi, auto e moto. Mantova e provincia.">
+    <meta property="og:title" content="Mattia Buoli | Fotografo Professionista — Mantova">
+    <meta property="og:description" content="Fotografia Business & Eventi e Motorsport. Mantova e provincia.">
     <meta property="og:url" content="https://mattiabuoli.it/">
-    <meta property="og:image" content="https://mattiabuoli.it/images/og-cover.jpg">
+    <meta property="og:image" content="https://mattiabuoli.it/images/sito/og-cover.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="it_IT">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mattia Buoli | Fotografo Mantova">
-    <meta name="twitter:description" content="Foto per aziende, eventi, auto e moto. Mantova e provincia.">
-    <meta name="twitter:image" content="https://mattiabuoli.it/images/og-cover.jpg">
+    <meta name="twitter:title" content="Mattia Buoli | Fotografo Professionista — Mantova">
+    <meta name="twitter:description" content="Fotografia Business & Eventi e Motorsport. Mantova e provincia.">
+    <meta name="twitter:image" content="https://mattiabuoli.it/images/sito/og-cover.jpg">
 
     <meta name="theme-color" content="#0e0e0e">
-    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/sito/favicon.png">
 
-    <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="images/sito/hero.jpg" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -35,9 +36,24 @@
             --color-surface: #151515;
             --color-text: #f2efe9;
             --color-text-light: #9b968e;
-            --color-accent: #c9a97c;
-            --color-accent-dark: #b8956a;
             --color-border: #262626;
+
+            /* PRIMARIO — Azzurro: nav, CTA, link, kicker, tutto ciò che è "voce del sito".
+               Rampa più ricca (chiaro → profondo) per dare carattere senza aggiungere altre tinte. */
+            --color-accent: #6fa3bf;         /* principale */
+            --color-accent-dark: #4a7891;    /* hover/pressed */
+            --color-accent-light: #a9cbdd;   /* highlight acceso, selezione testo */
+            --color-accent-muted: #3d5a68;   /* dettaglio quieto: bordi segnaposto, ghost numbers */
+            --color-accent-deep: #1f3d4d;    /* nota profonda/drammatica: Motorsport, sfumature, momenti a più contrasto */
+            --color-accent-deep-dark: #142731; /* hover sulla nota profonda */
+
+            /* SECONDARIO — Bronzo/ottone: credibilità, valori, prova sociale, calore heritage/vintage.
+               Stessa logica di rampa del primario, usato sempre come dettaglio, mai come sfondo dominante. */
+            --color-heritage: #b08a5c;        /* principale */
+            --color-heritage-dark: #8f6d45;   /* hover/pressed */
+            --color-heritage-light: #d9c3a0;  /* nota delicata, quasi champagne */
+            --color-heritage-deep: #5c4429;   /* nota profonda, quasi espresso, per contrasto importante */
+
             --spacing-xs: 8px;
             --spacing-sm: 16px;
             --spacing-md: 24px;
@@ -93,6 +109,13 @@
             font-family: var(--font-display);
             font-weight: 500;
             line-height: 1.15;
+        }
+
+        /* Accento editoriale/calligrafico: corsivo di Fraunces su singole parole scelte */
+        .accent-italic {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
         }
 
         /* Grana pellicola su tutto il sito */
@@ -237,7 +260,8 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(14, 14, 14, 0.3) 0%, rgba(14, 14, 14, 0.08) 35%, rgba(14, 14, 14, 0.88) 100%);
+            /* Velatura azzurro-profondo (--color-accent-deep) invece del nero piatto: lega l'hero all'identità cromatica */
+            background: linear-gradient(180deg, rgba(14, 14, 14, 0.35) 0%, rgba(31, 61, 77, 0.22) 32%, rgba(20, 39, 49, 0.4) 60%, rgba(14, 14, 14, 0.92) 100%);
             pointer-events: none;
             z-index: 1;
         }
@@ -253,6 +277,30 @@
             max-width: 1400px;
             padding-bottom: 7vh;
             padding-top: 20vh;
+        }
+
+        /* Barra "capability": nota bronzo/heritage, come i punti di credibilità del sito */
+        .hero-ticker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border: 1px solid var(--color-heritage);
+            border-radius: 50px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--color-heritage-light);
+            animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 60ms both;
+        }
+
+        @media (max-width: 600px) {
+            .hero-ticker {
+                font-size: 9px;
+                padding: 8px 14px;
+                letter-spacing: 0.08em;
+            }
         }
 
         .hero .location {
@@ -280,8 +328,50 @@
             font-weight: 500;
             letter-spacing: -0.03em;
             line-height: 0.95;
+            /* Riempimento sfumato: bronzo caldo che si scioglie nel colore testo, accento editoriale sul nome */
             color: var(--color-text);
+            background: linear-gradient(100deg, var(--color-heritage-light) 0%, var(--color-text) 45%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 280ms both;
+        }
+
+        /* Cornice sottile che inquadra l'hero come una lastra/certificato */
+        .hero-frame {
+            position: absolute;
+            inset: 20px;
+            border: 1px solid rgba(176, 138, 92, 0.32);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-frame {
+                inset: 10px;
+            }
+        }
+
+        /* Tagline in alto a destra, eco discreta del kicker in basso a sinistra */
+        .hero-tagline {
+            position: absolute;
+            top: 120px;
+            right: var(--spacing-md);
+            z-index: 2;
+            text-align: right;
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 14px;
+            line-height: 1.55;
+            color: rgba(242, 239, 233, 0.75);
+            max-width: 230px;
+            animation: riseIn 900ms ease 400ms both;
+        }
+
+        @media (max-width: 900px) {
+            .hero-tagline {
+                display: none;
+            }
         }
 
         .hero .subtitle {
@@ -404,6 +494,7 @@
 
         /* Portfolio Grid */
         .portfolio {
+            position: relative;
             padding: var(--spacing-2xl) var(--spacing-md);
             background: var(--color-bg);
         }
@@ -417,13 +508,79 @@
             letter-spacing: -0.015em;
         }
 
+        .portfolio-intro {
+            font-size: 15px;
+            color: var(--color-text-light);
+            margin-top: var(--spacing-xs);
+            max-width: 480px;
+        }
+
         .divider {
             display: none;
         }
 
+        /* Motorsport (card e galleria) usa la nota azzurro profondo: stesso colore primario, più carattere, niente terza tinta */
+        .portfolio-card--motorsport,
+        .gallery-page--motorsport {
+            --color-accent: var(--color-accent-deep);
+            --color-accent-dark: var(--color-accent-deep-dark);
+        }
+
+        /* Filmstrip: assaggio del lavoro sempre visibile, nessun click richiesto */
+        .filmstrip {
+            overflow: hidden;
+            margin: var(--spacing-lg) 0 var(--spacing-xl);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+        }
+
+        .filmstrip-track {
+            display: flex;
+            gap: 12px;
+            width: max-content;
+            animation: filmstripScroll 46s linear infinite;
+        }
+
+        .filmstrip:hover .filmstrip-track {
+            animation-play-state: paused;
+        }
+
+        .filmstrip-item {
+            flex: 0 0 auto;
+            width: 240px;
+            aspect-ratio: 4 / 5;
+            border-radius: 2px;
+            overflow: hidden;
+            background: var(--color-surface);
+        }
+
+        .filmstrip-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes filmstripScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 768px) {
+            .filmstrip-item {
+                width: 160px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .filmstrip-track {
+                animation: none;
+            }
+        }
+
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
             gap: 20px;
         }
 
@@ -450,8 +607,13 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(180deg, rgba(14, 14, 14, 0) 40%, rgba(14, 14, 14, 0.85) 100%);
-            transition: opacity 400ms ease;
+            transition: background 600ms ease;
             pointer-events: none;
+        }
+
+        /* Tocco cromatico all'hover: velatura azzurro-profonda invece del semplice scurimento */
+        .portfolio-card:hover::after {
+            background: linear-gradient(165deg, rgba(31, 61, 77, 0.34) 0%, rgba(14, 14, 14, 0.15) 45%, rgba(14, 14, 14, 0.88) 100%);
         }
 
         .portfolio-card:hover .portfolio-card-image {
@@ -532,6 +694,111 @@
             line-height: 1.6;
         }
 
+        /* Extra: galleria secondaria, una riga sotto le due card invece di una card alla pari */
+        .extra-row {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md) 0;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .extra-row[hidden] {
+            display: none;
+        }
+
+        .extra-thumbs {
+            display: flex;
+            flex: 0 0 auto;
+        }
+
+        .extra-thumbs img {
+            width: 64px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 2px solid var(--color-bg);
+            display: block;
+            transition: transform 400ms cubic-bezier(0.2, 0.6, 0.2, 1);
+        }
+
+        .extra-thumbs img + img {
+            margin-left: -18px;
+        }
+
+        .extra-row:hover .extra-thumbs img:nth-child(1) { transform: translateX(-6px) rotate(-3deg); }
+        .extra-row:hover .extra-thumbs img:nth-child(3) { transform: translateX(6px) rotate(3deg); }
+
+        .extra-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .extra-kicker {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--color-accent);
+            margin-bottom: 4px;
+        }
+
+        .extra-text h3 {
+            font-size: 22px;
+            margin-bottom: 4px;
+            transition: color 300ms ease;
+        }
+
+        .extra-row:hover .extra-text h3 {
+            color: var(--color-accent-light);
+        }
+
+        .extra-text p:last-child {
+            font-size: 14px;
+            color: var(--color-text-light);
+        }
+
+        /* Telefono: miniature più piccole, testo accanto, link sotto il testo */
+        @media (max-width: 600px) {
+            .extra-row {
+                flex-wrap: wrap;
+                align-items: flex-start;
+                column-gap: var(--spacing-sm);
+                row-gap: 12px;
+            }
+
+            .extra-thumbs img {
+                width: 44px;
+                height: 56px;
+            }
+
+            .extra-thumbs img + img {
+                margin-left: -14px;
+            }
+
+            .extra-text {
+                flex: 1 1 calc(100% - 104px - var(--spacing-sm));
+            }
+
+            .extra-text h3 {
+                font-size: 19px;
+            }
+
+            .extra-row .btn-small {
+                margin-left: calc(104px + var(--spacing-sm));
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .extra-thumbs img {
+                transition: none;
+            }
+        }
+
         .btn-small {
             color: var(--color-text);
             font-size: 11px;
@@ -586,7 +853,7 @@
             font-family: var(--font-mono);
             font-size: 56px;
             font-weight: 400;
-            color: rgba(242, 239, 233, 0.13);
+            color: rgba(111, 163, 191, 0.16);
             line-height: 1;
             margin-bottom: var(--spacing-md);
         }
@@ -664,6 +931,9 @@
         }
 
         .philosophy {
+            /* Nota heritage: i valori sono un punto di credibilità, non di navigazione — accento bronzo invece che azzurro */
+            --color-accent: var(--color-heritage);
+            --color-accent-dark: var(--color-heritage-dark);
             border-top: 1px solid var(--color-border);
             padding-top: var(--spacing-md);
             margin-top: var(--spacing-md);
@@ -702,9 +972,45 @@
 
         /* Reviews Section */
         .reviews {
+            /* Nota heritage: la prova sociale/testimonianza è credibilità, stesso registro bronzo dei Valori */
+            --color-accent: var(--color-heritage);
+            --color-accent-dark: var(--color-heritage-dark);
+            position: relative;
             padding: var(--spacing-2xl) var(--spacing-md);
             background: var(--color-bg);
             border-top: 1px solid var(--color-border);
+        }
+
+        /* Numerazione laterale editoriale: firma "contact sheet" che accompagna le sezioni principali, solo su schermi larghi */
+        .side-index {
+            position: absolute;
+            left: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            writing-mode: vertical-rl;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--color-text-light);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .side-index::before {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: var(--color-accent-muted);
+        }
+
+        @media (max-width: 1300px) {
+            .side-index {
+                display: none;
+            }
         }
 
         .reviews h2 {
@@ -966,6 +1272,22 @@
             transition: transform 600ms cubic-bezier(0.2, 0.6, 0.2, 1), opacity 300ms ease;
         }
 
+        /* Tocco cromatico all'hover, coerente con le card in home */
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(165deg, rgba(31, 61, 77, 0.3), rgba(14, 14, 14, 0) 65%);
+            opacity: 0;
+            transition: opacity 500ms ease;
+            pointer-events: none;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
         /* Numerazione da provino a contatto */
         .gallery-item::after {
             content: 'N°' counter(shot, decimal-leading-zero);
@@ -1124,7 +1446,7 @@
         /* Footer */
         footer {
             background: var(--color-bg);
-            color: #6f6a63;
+            color: #8a857d;
             padding: var(--spacing-lg) var(--spacing-md);
             text-align: center;
             font-family: var(--font-mono);
@@ -1185,8 +1507,13 @@
 
         footer .footer-update {
             margin-top: var(--spacing-sm);
-            color: #4a4741;
+            color: #807b73;
             font-size: 10px;
+        }
+
+        footer .footer-piva {
+            margin-top: var(--spacing-sm);
+            color: var(--color-text-light);
         }
 
         /* Accessibilità: focus visibile da tastiera */
@@ -1203,6 +1530,8 @@
             }
 
             .hero-image img,
+            .hero-ticker,
+            .hero-tagline,
             .hero .location,
             .hero h1,
             .hero .subtitle,
@@ -1224,6 +1553,7 @@
                 transition: none;
             }
         }
+
     </style>
 </head>
 <body>
@@ -1241,12 +1571,15 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-image">
-            <img src="images/hero.jpg" alt="Mattia Buoli fotografo a Mantova" fetchpriority="high">
+            <img src="images/sito/hero.jpg" alt="Mattia Buoli fotografo a Mantova" fetchpriority="high">
         </div>
+        <div class="hero-frame"></div>
+        <p class="hero-tagline">Immagini che raccontano.<br>Risultati che restano.</p>
         <div class="container">
-            <p class="location">Mantova · 45.15°N 10.79°E · Sony A7III</p>
+            <p class="hero-ticker">Business &amp; Eventi · Catering · Motorsport</p>
+            <p class="location">Mantova · 45.15°N 10.79°E</p>
             <h1>Mattia Buoli</h1>
-            <p class="subtitle">Foto per aziende, eventi, auto e moto.</p>
+            <p class="subtitle">Fotografo professionista — <span class="accent-italic">Business &amp; Eventi</span>, <span class="accent-italic">Motorsport</span>. Mantova e provincia.</p>
             <div class="cta-buttons">
                 <a href="#mini-mostra" class="btn btn-primary">Guarda i miei lavori</a>
                 <a href="#contact" class="btn btn-secondary">Contattami</a>
@@ -1257,49 +1590,60 @@
 
     <!-- Portfolio Grid (Tutte le gallerie) -->
     <section class="portfolio" id="mini-mostra">
+        <div class="side-index">01 — Portfolio</div>
         <div class="container">
             <div class="portfolio-header reveal">
                 <p class="section-kicker">01 — Portfolio</p>
-                <h2>Lavori selezionati</h2>
+                <h2>Lavori <span class="accent-italic">selezionati</span></h2>
+                <p class="portfolio-intro">Un assaggio dei miei ultimi scatti, prima ancora di scegliere dove guardare.</p>
             </div>
             <div class="divider"></div>
+
+            <div class="filmstrip reveal">
+                <div class="filmstrip-track" id="filmstrip-track">
+                    <!-- riempita in automatico con le prime foto di Business e Motorsport (vedi riempiFilmstrip) -->
+                </div>
+            </div>
+
+            <!-- Le due specialità: card grandi (cartelle FOTO/Business e eventi, FOTO/Motorsport) -->
             <div class="portfolio-grid">
-                <div class="portfolio-card gallery-card reveal" data-gallery="Aziende" onclick="openGallery('Aziende');">
+                <div class="portfolio-card gallery-card reveal" data-gallery="Business" onclick="openGallery('Business');">
                     <div class="portfolio-card-image"></div>
                     <div class="vf"></div>
                     <div class="portfolio-card-content">
-                        <h3>Aziende</h3>
-                        <p>Sessioni per aziende che vogliono raccontare il proprio lavoro, gli spazi e le persone.</p>
-                        <a href="#" class="btn-small" onclick="event.stopPropagation();">Esplora la galleria</a>
+                        <h3>Business &amp; Eventi</h3>
+                        <p>Aziende, eventi e catering: spazi, persone e prodotti raccontati con cura.</p>
+                        <a href="#" class="btn-small" onclick="event.preventDefault();">Esplora la galleria</a>
                     </div>
                 </div>
-
-                <div class="portfolio-card gallery-card reveal" data-gallery="Motori" onclick="openGallery('Motori');">
+                <div class="portfolio-card gallery-card portfolio-card--motorsport reveal" data-gallery="Motori" onclick="openGallery('Motori');">
                     <div class="portfolio-card-image"></div>
                     <div class="vf"></div>
                     <div class="portfolio-card-content">
-                        <h3>Motori</h3>
+                        <h3>Motorsport</h3>
                         <p>Auto, moto e motori raccontati con passione, dettagli e una luce cinematografica.</p>
-                        <a href="#" class="btn-small" onclick="event.stopPropagation();">Esplora la galleria</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card gallery-card reveal" data-gallery="Sport" onclick="openGallery('Sport');">
-                    <div class="portfolio-card-image"></div>
-                    <div class="vf"></div>
-                    <div class="portfolio-card-content">
-                        <h3>Sport</h3>
-                        <p>Contenuti fotografici per eventi sportivi e competizioni locali, pieni di energia.</p>
-                        <a href="#" class="btn-small" onclick="event.stopPropagation();">Esplora la galleria</a>
+                        <a href="#" class="btn-small" onclick="event.preventDefault();">Esplora la galleria</a>
                     </div>
                 </div>
             </div>
+
+            <!-- Galleria secondaria (FOTO/Extra): lavori occasionali, volutamente più discreta delle due card -->
+            <a href="#galleria-Extra" class="extra-row reveal" id="extra-row" onclick="event.preventDefault(); openGallery('Extra');">
+                <div class="extra-thumbs" id="extra-thumbs" aria-hidden="true"></div>
+                <div class="extra-text">
+                    <p class="extra-kicker">Extra</p>
+                    <h3>Non solo aziende e motori</h3>
+                    <p>Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente.</p>
+                </div>
+                <span class="btn-small">Vedi la galleria</span>
+            </a>
         </div>
     </section>
 
 
     <!-- Come Lavoro Section -->
     <section class="come-lavoro section-divider" id="come-lavoro">
+        <div class="side-index">02 — Metodo</div>
         <div class="container">
             <div class="come-lavoro-header reveal">
                 <p class="section-kicker">02 — Metodo</p>
@@ -1310,17 +1654,17 @@
                 <div class="step reveal">
                     <div class="step-number">01</div>
                     <h3>Ci sentiamo</h3>
-                    <p>Mi scrivi su WhatsApp o per email. Mi racconti cosa vuoi fotografare, il tuo mood, gli obiettivi. Zero fretta, zero pressione. Ascolto e consiglio.</p>
+                    <p>Mi scrivi su WhatsApp o via email: mi racconti cosa vuoi fotografare, il mood, gli obiettivi. Ti ascolto e ti consiglio, con un piano chiaro fin da subito — niente fretta, ma niente lasciato al caso.</p>
                 </div>
                 <div class="step reveal">
                     <div class="step-number">02</div>
                     <h3>Pianifichiamo</h3>
-                    <p>Insieme scegliamo location, orario, stile. Penso al dettaglio, tu pensi a stare a tuo agio. Trasparenza totale su tempi e risultati attesi.</p>
+                    <p>Insieme scegliamo location, orario e stile. Penso io al dettaglio tecnico, tu pensi a stare a tuo agio: tempi e risultati attesi sono chiari da subito, per iscritto se serve.</p>
                 </div>
                 <div class="step reveal">
                     <div class="step-number">03</div>
                     <h3>Scatto e consegno</h3>
-                    <p>Sessione fluida, naturale, senza rigidità. Editing preciso, stile coerente. Foto pronte in una settimana, consegna via gallery online.</p>
+                    <p>Sessione fluida e naturale, mai rigida. Editing preciso, stile coerente con il resto del portfolio. Foto pronte in una settimana, consegna tramite galleria online privata.</p>
                 </div>
             </div>
         </div>
@@ -1328,21 +1672,22 @@
 
     <!-- About Section -->
     <section class="about section-divider" id="about">
+        <div class="side-index">03 — Chi sono</div>
         <div class="container">
             <div class="about-image reveal">
-                <img src="images/profile.jpg" alt="Ritratto di Mattia Buoli fotografo" loading="lazy">
+                <img src="images/sito/profile.jpg" alt="Ritratto di Mattia Buoli fotografo" loading="lazy">
             </div>
             <div class="about-content reveal">
                 <p class="section-kicker">03 — Chi sono</p>
                 <h2>Chi Sono</h2>
-                <p>Sono Mattia, fotografo professionista basato a Pegognaga in provincia di Mantova. La fotografia per me è raccontare storie vere, senza artifizi.</p>
-                <p>Lavoro con una Sony A7III, creando immagini calde, emozionali e cinematografiche. Mi piace lavorare con persone e attività che credono nell'autenticità.</p>
+                <p>Sono Mattia, fotografo professionista basato a Pegognaga, in provincia di Mantova. Mi sono specializzato in due mondi che sento miei: la fotografia per aziende ed eventi, e il motorsport, la mia più grande passione — due anime dello stesso modo di lavorare.</p>
+                <p>Creo immagini calde, emozionali e cinematografiche, con la cura per il dettaglio che fa la differenza tra una foto e un ricordo. Mi piace lavorare con persone e attività che credono nell'autenticità.</p>
                 <div class="philosophy">
                     <h3>I Miei Valori</h3>
                     <p>
                         <strong>Energia:</strong> dinamismo e passione in ogni progetto. <br>
                         <strong>Trasparenza:</strong> niente sorprese, tutto chiaro da subito. <br>
-                        <strong>Precisione:</strong> dettagli curati, deadline rispettati, qualità garantita.
+                        <strong>Precisione:</strong> dettagli curati, deadline rispettate, qualità garantita.
                     </p>
                 </div>
             </div>
@@ -1351,6 +1696,7 @@
 
     <!-- Reviews Section -->
     <section class="reviews" id="reviews">
+        <div class="side-index">04 — Recensioni</div>
         <div class="container">
             <h2>Dicono di me</h2>
             <div class="divider"></div>
@@ -1366,14 +1712,15 @@
 
     <!-- Contact Section -->
     <section class="contact section-divider" id="contact">
+        <div class="side-index">05 — Contatti</div>
         <div class="container">
             <div class="reveal">
-                <h2>Pronto per il Tuo Progetto?</h2>
-                <p class="contact-intro">Aziende, eventi, motorsport, sport: scegli il tuo modo di contattarmi e raccontiamo insieme la tua storia o i tuoi progetti. <br> Rispondo entro 24 ore.</p>
+                <h2>Pronto per il Tuo <span class="accent-italic">Progetto</span>?</h2>
+                <p class="contact-intro">Business &amp; Eventi, Motorsport: scegli il tuo modo di contattarmi e raccontiamo insieme la tua storia o i tuoi progetti. <br> Rispondo entro 24 ore.</p>
             </div>
 
             <div class="contact-cards-wrapper">
-                <a href="https://wa.me/3348493876?text=Ciao%20Mattia%2C%20ho%20visto%20il%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico." class="contact-card whatsapp-card reveal">
+                <a href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20il%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico." class="contact-card whatsapp-card reveal">
                     <h3>WhatsApp</h3>
                     <p class="contact-card-text">Il più veloce. Scrivi direttamente e rispondo subito.</p>
                     <div class="contact-card-cta">Mandami un messaggio</div>
@@ -1395,98 +1742,109 @@
     </section>
 
     <!-- Gallery Pages - Popolate dinamicamente -->
-    <div class="gallery-page" id="gallery-Aziende">
+    <div class="gallery-page" id="gallery-Business">
         <div class="container">
             <div class="gallery-header">
                 <a href="#" class="gallery-back" onclick="closeGallery(); return false;">← Torna ai Lavori</a>
-                <h1 id="gallery-Aziende-title">Aziende</h1>
-                <p id="gallery-Aziende-desc">Sessioni fotografiche per aziende che vogliono raccontare il proprio lavoro, gli spazi e le persone.</p>
-                <p class="gallery-meta" id="gallery-Aziende-meta"></p>
+                <h1 id="gallery-Business-title">Business &amp; Eventi</h1>
+                <p id="gallery-Business-desc">Aziende, eventi e catering: spazi, persone e prodotti raccontati con luce calda e cura del dettaglio.</p>
+                <p class="gallery-meta" id="gallery-Business-meta"></p>
             </div>
-            <div class="gallery-grid" id="grid-Aziende"></div>
+            <div class="gallery-grid" id="grid-Business"></div>
             <div class="gallery-cta">
                 <p class="gallery-cta-title">Ti piace questo stile?</p>
-                <p class="gallery-cta-text">Raccontami la tua attività: rispondo entro 24 ore.</p>
-                <a class="btn btn-primary" href="https://wa.me/3348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Aziende%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico%20per%20la%20mia%20attivit%C3%A0.">Parliamone su WhatsApp</a>
+                <p class="gallery-cta-text">Raccontami la tua attività o il tuo evento: rispondo entro 24 ore.</p>
+                <a class="btn btn-primary" href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Business%20%26%20Eventi%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico.">Parliamone su WhatsApp</a>
             </div>
         </div>
     </div>
 
-    <div class="gallery-page" id="gallery-Motori">
+    <div class="gallery-page gallery-page--motorsport" id="gallery-Motori">
         <div class="container">
             <div class="gallery-header">
                 <a href="#" class="gallery-back" onclick="closeGallery(); return false;">← Torna ai Lavori</a>
-                <h1 id="gallery-Motori-title">Motori</h1>
-                <p id="gallery-Motori-desc">Auto, moto e motori raccontati con dinamismo, dettagli e stile.</p>
+                <h1 id="gallery-Motori-title">Motorsport</h1>
+                <p id="gallery-Motori-desc">Auto, moto e motorsport raccontati con dinamismo, dettagli e stile.</p>
                 <p class="gallery-meta" id="gallery-Motori-meta"></p>
             </div>
             <div class="gallery-grid" id="grid-Motori"></div>
             <div class="gallery-cta">
                 <p class="gallery-cta-title">Ti piace questo stile?</p>
                 <p class="gallery-cta-text">Raccontami il tuo progetto: rispondo entro 24 ore.</p>
-                <a class="btn btn-primary" href="https://wa.me/3348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Motori%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico%20per%20auto%20o%20moto.">Parliamone su WhatsApp</a>
+                <a class="btn btn-primary" href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Motorsport%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico%20per%20auto%20o%20moto.">Parliamone su WhatsApp</a>
             </div>
         </div>
     </div>
 
-    <div class="gallery-page" id="gallery-Sport">
+    <div class="gallery-page" id="gallery-Extra">
         <div class="container">
             <div class="gallery-header">
                 <a href="#" class="gallery-back" onclick="closeGallery(); return false;">← Torna ai Lavori</a>
-                <h1 id="gallery-Sport-title">Sport</h1>
-                <p id="gallery-Sport-desc">Contenuti fotografici per eventi sportivi e competizioni locali, con focus sul momento decisivo.</p>
-                <p class="gallery-meta" id="gallery-Sport-meta"></p>
+                <h1 id="gallery-Extra-title">Extra</h1>
+                <p id="gallery-Extra-desc">Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente.</p>
+                <p class="gallery-meta" id="gallery-Extra-meta"></p>
             </div>
-            <div class="gallery-grid" id="grid-Sport"></div>
+            <div class="gallery-grid" id="grid-Extra"></div>
             <div class="gallery-cta">
                 <p class="gallery-cta-title">Ti piace questo stile?</p>
-                <p class="gallery-cta-text">Raccontami il tuo evento: rispondo entro 24 ore.</p>
-                <a class="btn btn-primary" href="https://wa.me/3348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Sport%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20la%20copertura%20di%20un%20evento%20sportivo.">Parliamone su WhatsApp</a>
+                <p class="gallery-cta-text">Hai in mente qualcosa di diverso? Scrivimi e vediamo insieme se fa per me: rispondo entro 24 ore.</p>
+                <a class="btn btn-primary" href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Extra%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico.">Parliamone su WhatsApp</a>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Mattia Buoli — Fotografo, Mantova | Energia • Trasparenza • Precisione.</p>
+        <p>&copy; 2026 Mattia Buoli — Fotografo Professionista, Pegognaga (Mantova) | Energia • Trasparenza • Precisione.</p>
+        <p class="footer-piva">P.IVA 02793490208</p>
         <p class="footer-links"><a href="mailto:buolimattia@gmail.com">buolimattia@gmail.com</a> &nbsp;·&nbsp; <a href="https://instagram.com/quellochefalefotobelle">@quellochefalefotobelle</a></p>
-        <p class="footer-update">Ultimo aggiornamento — 07.2026</p>
+        <p class="footer-update">Ultimo aggiornamento — 10.2026</p>
     </footer>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="lightbox">
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Foto ingrandita">
         <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
-        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Chiudi">✕</button>
-        <button class="lightbox-nav lightbox-prev" onclick="lightboxPrev()" aria-label="Foto precedente">‹</button>
+        <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="Chiudi">✕</button>
+        <button type="button" class="lightbox-nav lightbox-prev" onclick="lightboxPrev()" aria-label="Foto precedente">‹</button>
         <div class="lightbox-content">
-            <img id="lightbox-image" src="" alt="">
+            <img id="lightbox-image" alt="">
         </div>
-        <button class="lightbox-nav lightbox-next" onclick="lightboxNext()" aria-label="Foto successiva">›</button>
+        <button type="button" class="lightbox-nav lightbox-next" onclick="lightboxNext()" aria-label="Foto successiva">›</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
     </div>
 
+    <script src="images/gallerie.js"></script>
     <script>
         // === CONFIGURAZIONE GALLERIE ===
         const galleryConfig = {
-            Aziende: {
-                folderName: "Aziende",
-                count: 17,
-                title: "Aziende",
-                desc: "Sessioni fotografiche per aziende che vogliono raccontare il proprio lavoro, gli spazi e le persone."
+            Business: {
+                folderName: "business",
+                title: "Business & Eventi",
+                desc: "Aziende, eventi e catering: spazi, persone e prodotti raccontati con luce calda e cura del dettaglio."
             },
             Motori: {
-                folderName: "Motori",
-                count: 11,
-                title: "Motori",
-                desc: "Auto, moto e motori raccontati con dinamismo, dettagli e stile."
+                folderName: "motorsport",
+                title: "Motorsport",
+                desc: "Auto, moto e motorsport raccontati con dinamismo, dettagli e stile."
             },
-            Sport: {
-                folderName: "Sport",
-                count: 15,
-                title: "Sport",
-                desc: "Contenuti fotografici per eventi sportivi e competizioni locali."
+            Extra: {
+                folderName: "extra",
+                title: "Extra",
+                desc: "Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente."
             }
         };
+
+        // vecchi link condivisi (sito precedente) → galleria attuale
+        const galleryAlias = { Aziende: 'Business', Eventi: 'Business', Sport: 'Extra' };
+
+        // Le foto NON si elencano qui: arrivano da images/gallerie.js, generato in automatico
+        // dalla cartella FOTO/ (vedi COME-AGGIUNGERE-FOTO.md). Ordine = ordine dei nomi file.
+        const GALLERIE = window.GALLERIE || {};
+        Object.values(galleryConfig).forEach(c => {
+            c.foto = GALLERIE[c.folderName] || [];
+            c.count = c.foto.length;
+        });
+
 
         function populateGalleries() {
             Object.keys(galleryConfig).forEach(galleryKey => {
@@ -1512,18 +1870,28 @@
 
                     const img = document.createElement('img');
                     // miniatura leggera nella griglia, originale solo nel lightbox
-                    img.src = `images/${config.folderName}/thumbs/${config.folderName}-${i}.jpg`;
+                    img.src = config.foto[i - 1].thumb;
                     img.alt = `${config.title} ${i}`;
                     img.loading = 'lazy';
+                    img.width = config.foto[i - 1].w;
+                    img.height = config.foto[i - 1].h;
+                    img.tabIndex = 0;
+                    img.setAttribute('role', 'button');
                     img.onerror = () => {
                         // fallback all'originale se la miniatura manca
                         img.onerror = null;
-                        img.src = `images/${config.folderName}/${config.folderName}-${i}.jpg`;
+                        img.src = config.foto[i - 1].src;
                     };
 
                     const index = i - 1;
                     img.addEventListener('click', () => {
                         openLightbox(galleryKey, index);
+                    });
+                    img.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openLightbox(galleryKey, index);
+                        }
                     });
 
                     item.appendChild(img);
@@ -1536,11 +1904,11 @@
             const cards = document.querySelectorAll('.gallery-card');
 
             cards.forEach(card => {
-                const galleryKey = card.getAttribute('data-gallery'); // es. "Aziende"
+                const galleryKey = card.getAttribute('data-gallery'); // es. "Business"
                 const config = galleryConfig[galleryKey];
                 if (!config) return;
 
-                const coverPath = `images/${config.folderName}/thumbs/${config.folderName}-1.jpg`;
+                const coverPath = (config.foto[0] ? config.foto[0].thumb : '');
                 const imageDiv = card.querySelector('.portfolio-card-image');
                 if (imageDiv) {
                     imageDiv.style.backgroundImage = `url('${coverPath}')`;
@@ -1553,6 +1921,11 @@
 
         function updateActiveNav() {
             let current = '';
+            // dentro una galleria le sezioni sono nascoste: nessuna voce va evidenziata
+            if (document.querySelector('.gallery-page.active')) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                return;
+            }
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (pageYOffset >= sectionTop - 200) {
@@ -1617,8 +1990,9 @@
         // Apre la galleria indicata nell'URL (link diretti e back/forward del browser)
         function applyGalleryHash() {
             const match = location.hash.match(/^#galleria-(\w+)$/);
-            if (match && galleryConfig[match[1]]) {
-                openGallery(match[1], false);
+            const key = match && (galleryAlias[match[1]] || match[1]);
+            if (key && galleryConfig[key] && galleryConfig[key].count > 0) {
+                openGallery(key, false);
             } else if (document.querySelector('.gallery-page.active')) {
                 closeGallery(false);
             }
@@ -1629,6 +2003,7 @@
         // === LIGHTBOX con navigazione ===
         let lightboxList = [];
         let lightboxIndex = 0;
+        let lightboxOpener = null;
 
         function showLightboxImage() {
             const item = lightboxList[lightboxIndex];
@@ -1651,13 +2026,15 @@
             lightboxList = [];
             for (let i = 1; i <= config.count; i++) {
                 lightboxList.push({
-                    src: `images/${config.folderName}/${config.folderName}-${i}.jpg`,
+                    src: config.foto[i - 1].src,
                     alt: `${config.title} ${i}`
                 });
             }
             lightboxIndex = index;
+            lightboxOpener = document.activeElement;
             showLightboxImage();
             document.getElementById('lightbox').classList.add('active');
+            document.querySelector('.lightbox-close').focus();
         }
 
         function lightboxNext() {
@@ -1675,8 +2052,11 @@
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
+            if (!lightbox.classList.contains('active')) return;
             lightbox.classList.remove('active');
-            lightboxImage.src = '';
+            lightboxImage.removeAttribute('src');
+            // la tastiera torna sulla foto da cui si era partiti
+            if (lightboxOpener) lightboxOpener.focus();
         }
 
         // Tastiera: Esc chiude, frecce navigano
@@ -1727,6 +2107,48 @@
         window.addEventListener('scroll', updateActiveNav);
         window.addEventListener('scroll', toggleNavVisibility);
 
+        // Striscia "Lavori selezionati": alterna le prime 6 foto di Business & Eventi e di Motorsport.
+        // Per cambiarle basta cambiare l'ordine dei file nelle cartelle FOTO/.
+        function riempiFilmstrip() {
+            const track = document.getElementById('filmstrip-track');
+            if (!track) return;
+            const a = galleryConfig.Business.foto.slice(0, 6), m = galleryConfig.Motori.foto.slice(0, 6);
+            const scelte = [];
+            for (let i = 0; i < Math.max(a.length, m.length); i++) {
+                if (a[i]) scelte.push({ f: a[i], t: 'Business' });
+                if (m[i]) scelte.push({ f: m[i], t: 'Motorsport' });
+            }
+            // due copie identiche per il loop continuo; la seconda è nascosta agli screen reader
+            [false, true].forEach(copia => scelte.forEach((x, i) => {
+                const item = document.createElement('div');
+                item.className = 'filmstrip-item';
+                if (copia) item.setAttribute('aria-hidden', 'true');
+                const img = document.createElement('img');
+                img.src = x.f.thumb;
+                img.alt = copia ? '' : `${x.t} — scatto ${i + 1}`;
+                img.loading = 'lazy';
+                item.appendChild(img);
+                track.appendChild(item);
+            }));
+        }
+
+        // Riga Extra: prime 3 foto della cartella FOTO/Extra; sparisce se la cartella è vuota
+        function riempiExtra() {
+            const row = document.getElementById('extra-row');
+            const foto = galleryConfig.Extra.foto;
+            if (!foto.length) { row.hidden = true; return; }
+            const box = document.getElementById('extra-thumbs');
+            foto.slice(0, 3).forEach(f => {
+                const img = document.createElement('img');
+                img.src = f.thumb;
+                img.alt = '';
+                img.loading = 'lazy';
+                box.appendChild(img);
+            });
+        }
+
+        riempiFilmstrip();
+        riempiExtra();
         populateGalleries();
         setGalleryCovers();
         applyGalleryHash();

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST D — Split grafico + ingresso cinetico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --color-bg: #0e0e0e;
+        --color-text: #f2efe9;
+        --color-text-light: #9b968e;
+        --color-accent: #6fa3bf;
+        --color-accent-deep: #1f3d4d;
+        --color-heritage: #b08a5c;
+        --color-heritage-light: #d9c3a0;
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-mono: 'Space Mono', 'SF Mono', Monaco, monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
+
+    .test-banner {
+        position: relative;
+        z-index: 10;
+        background: var(--color-heritage);
+        color: #0e0e0e;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+    }
+
+    #replayBtn {
+        border: 1px solid #0e0e0e;
+        background: transparent;
+        color: #0e0e0e;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 5px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 58% 42%;
+        overflow: hidden;
+    }
+
+    .hero-photo {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.12);
+        opacity: 0;
+    }
+
+    .play .hero-photo img {
+        animation: photoIn 1500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
+    }
+
+    @keyframes photoIn {
+        from { transform: scale(1.12); opacity: 0; }
+        to { transform: scale(1.02); opacity: 1; }
+    }
+
+    .hero-photo::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(14, 14, 14, 0) 55%, rgba(14, 14, 14, 0.9) 100%), linear-gradient(0deg, rgba(31, 61, 77, 0.35), rgba(14, 14, 14, 0) 45%);
+    }
+
+    .hero-divider {
+        position: absolute;
+        left: 58%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(180deg, transparent, var(--color-heritage) 30%, var(--color-heritage) 70%, transparent);
+        z-index: 3;
+        transform: scaleY(0);
+        transform-origin: center;
+    }
+
+    .play .hero-divider {
+        animation: dividerIn 900ms cubic-bezier(0.16, 1, 0.3, 1) 500ms forwards;
+    }
+
+    @keyframes dividerIn {
+        to { transform: scaleY(1); }
+    }
+
+    .hero-panel {
+        position: relative;
+        background: var(--color-bg);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(28px, 4vw, 56px);
+        overflow: hidden;
+    }
+
+    /* La tua foto come sfondo del pannello, cosi' si capisce subito chi sta parlando */
+    .panel-photo {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+    .panel-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 18%;
+        display: block;
+        transform: scale(1.12);
+        opacity: 0;
+    }
+    .play .panel-photo img {
+        animation: photoIn 1500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
+    }
+    .panel-photo::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(180deg, rgba(14, 14, 14, 0.35) 0%, rgba(14, 14, 14, 0.55) 45%, rgba(14, 14, 14, 0.92) 100%),
+            linear-gradient(100deg, rgba(31, 61, 77, 0.3), rgba(14, 14, 14, 0) 60%);
+    }
+
+    .panel-top {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--color-heritage-light);
+        overflow: hidden;
+    }
+    .panel-top span { display: inline-block; }
+
+    .panel-mid { position: relative; z-index: 2; margin: auto 0; }
+
+    .kicker {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        overflow: hidden;
+    }
+    .kicker::before { content: ''; width: 30px; height: 1px; background: var(--color-accent); flex-shrink: 0; }
+    .kicker span { display: inline-block; }
+
+    .panel-mid h1 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.02;
+        font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+        margin-bottom: 20px;
+    }
+
+    .panel-mid h1 .row { overflow: hidden; }
+    .panel-mid h1 .row span { display: inline-block; }
+
+    .panel-mid h1 em {
+        font-style: italic;
+        font-weight: 500;
+        background: linear-gradient(100deg, var(--color-heritage-light), var(--color-heritage));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .panel-mid p.desc {
+        font-size: 15px;
+        color: var(--color-text-light);
+        max-width: 380px;
+        line-height: 1.7;
+        overflow: hidden;
+    }
+    .panel-mid p.desc span { display: inline-block; }
+
+    .cta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        overflow: hidden;
+    }
+    .cta > div { display: flex; gap: 14px; }
+
+    .btn {
+        padding: 15px 30px;
+        border-radius: 2px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+    }
+    .btn-primary { background: var(--color-text); color: #0e0e0e; }
+    .btn-secondary { background: transparent; border: 1px solid rgba(242, 239, 233, 0.4); color: var(--color-text); }
+
+    .panel-bottom {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 18px;
+        border: 1px solid var(--color-heritage);
+        border-radius: 50px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-heritage-light);
+        align-self: flex-start;
+        overflow: hidden;
+    }
+    .panel-bottom span { display: inline-block; }
+
+    /* Ingresso a scatti: ogni pezzo di testo sale dal basso, sfalsato */
+    .in-el {
+        transform: translateY(120%);
+        opacity: 0;
+    }
+    .play .in-el {
+        animation: kineticIn 850ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes kineticIn {
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; grid-template-rows: 42vh auto; }
+        .hero-divider { display: none; }
+        .hero-photo::after { background: linear-gradient(0deg, var(--color-bg) 0%, transparent 30%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .in-el, .hero-photo img, .hero-divider { animation: none !important; transform: none !important; opacity: 1 !important; }
+    }
+</style>
+</head>
+<body>
+    <div class="test-banner">Opzione D v2 — ora con una tua foto vera sul pannello destro (per ora hero.jpg, quella candida che hai già)
+        <button id="replayBtn">▶ Rivedi l'animazione</button>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="hero-photo">
+            <img src="../../images/Motori/Motori-2.jpg" alt="Motorsport — scatto">
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-panel">
+            <div class="panel-photo"><img src="../../images/sito/hero.jpg" alt="Mattia Buoli"></div>
+            <div class="panel-top">
+                <span class="in-el">Mattia Buoli</span>
+                <span class="in-el">Mantova · 45.15°N 10.79°E</span>
+            </div>
+            <div class="panel-mid">
+                <p class="kicker"><span class="in-el">Fotografo Professionista</span></p>
+                <h1>
+                    <div class="row"><span class="in-el">Immagini che <em>raccontano</em>.</span></div>
+                    <div class="row"><span class="in-el">Risultati che restano.</span></div>
+                </h1>
+                <p class="desc"><span class="in-el">Fotografia Business &amp; Eventi e Motorsport. Racconto storie vere, senza artifizi.</span></p>
+                <div class="cta"><div>
+                    <a href="#" class="btn btn-primary in-el">Guarda i miei lavori</a>
+                    <a href="#" class="btn btn-secondary in-el">Contattami</a>
+                </div></div>
+            </div>
+            <div class="panel-bottom"><span class="in-el">Business &amp; Eventi · Catering · Motorsport</span></div>
+        </div>
+    </section>
+
+    <script>
+        const hero = document.getElementById('hero');
+        const elements = hero.querySelectorAll('.in-el');
+        function playAnimation() {
+            hero.classList.remove('play');
+            void hero.offsetWidth;
+            elements.forEach((el, i) => {
+                el.style.animationDelay = (150 + i * 70) + 'ms';
+            });
+            hero.classList.add('play');
+        }
+        document.getElementById('replayBtn').addEventListener('click', playAnimation);
+        window.addEventListener('load', playAnimation);
+    </script>
+</body>
+</html>
