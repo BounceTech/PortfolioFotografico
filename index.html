@@ -1957,6 +1957,7 @@
             document.querySelectorAll('section').forEach(section => {
                 section.style.display = 'none';
             });
+            document.querySelectorAll('.gallery-page').forEach(p => p.classList.remove('active'));
             const page = document.getElementById('gallery-' + galleryName);
             if (page) {
                 page.classList.add('active');
