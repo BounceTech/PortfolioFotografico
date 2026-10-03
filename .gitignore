@@ -11,3 +11,6 @@ FOTO/
 strumenti/sito/automatico.log
 strumenti/sito/.aggiorna.lock
 _archivio/research/_tmp/
+
+# tavole di design (PDF): restano sul Mac, non vanno sul sito pubblico
+_design/

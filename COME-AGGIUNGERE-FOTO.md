@@ -16,13 +16,15 @@ FOTO/
 | **aggiungere** una foto | trascinala nella cartella giusta |
 | **toglierla** dal sito | cancellala dalla cartella |
 | **spostarla** di galleria | spostala in un'altra cartella |
-| **cambiare l'ordine** | rinomina con un numero davanti: `01 barman.jpg`, `02 tartare.jpg`, `03 …` |
-| scegliere la **copertina** della galleria | è sempre la prima foto: dalle il numero più basso |
+| **cambiare l'ordine** | rinomina con un numero davanti: `01 Bancone.jpg`, `02 Artigianato.jpg`, `03 …` |
+| cambiare la **didascalia** | è il nome del file senza numero: `05 Su strada.jpg` sul sito diventa **N°05 — Su strada** |
+| scegliere la **copertina** della galleria | è sempre la prima foto: dalle il numero più basso (meglio una verticale) |
 
 - Le foto con il numero vanno per prime, in ordine di numero (`2` viene prima di `10`). Quelle senza numero vanno in coda, in ordine alfabetico.
 - Per infilare una foto tra la `03` e la `04` chiamala `03b …`, oppure rinumera.
-- Il resto del nome è libero: usalo per ricordarti cos'è (`05 ByTiffany sala.jpg`).
-- Le prime 6 foto di **Business e eventi** e di **Motorsport** scorrono anche nella striscia "Lavori selezionati" in home.
+- Il nome dopo il numero è la didascalia che si vede sul sito: scrivilo breve e come lo vuoi leggere (`Ristorazione`, `In curva`, `Auto d'epoca`). Se il file ha un nome automatico (`IMG_1234`) la foto resta senza didascalia, solo con il numero.
+- Nella pagina della galleria, la foto grande in alto è **la prima foto orizzontale** della cartella.
+- In home, "Lavori selezionati" mostra le foto **dalla 2 alla 5 di Business e eventi** e **dalla 2 alla 4 di Motorsport** (la 1 è già la copertina). Per cambiarle, cambia l'ordine.
 - **Extra** è la galleria secondaria: in home non ha una card grande ma una riga più discreta sotto le due specialità, con le sue prime 3 foto come miniature.
 
 **Solo quelle tre cartelle vanno online.** Se metti foto in una sottocartella, in una cartella nuova o sciolte in `FOTO/`, quelle foto non vengono pubblicate e ricevi un avviso. Una galleria nuova sul sito va creata insieme a Claude.
@@ -33,8 +35,8 @@ Stanno in `images/sito/`. Per cambiarne una, sostituisci il file **tenendo lo st
 
 | File | Dove si vede |
 |---|---|
-| `hero.jpg` | la foto grande in apertura del sito |
-| `profile.jpg` | il ritratto nella sezione "Chi sono" |
+| `hero-cutout.webp` e `hero-cutout.png` | la tua figura scontornata in apertura, davanti alla scritta BUOLI (servono tutte e due: per cambiarla chiedi a Claude) |
+| `profile.jpg` | la foto nella sezione "Chi sono" |
 | `og-cover.jpg` | l'anteprima quando mandi il link su WhatsApp o sui social (1200×630) |
 
 ## Una volta sola: accendi l'automatico
@@ -78,6 +80,7 @@ PortfolioFotografico/
 ├── strumenti/
 │   ├── galleriaclienti/        ← app e script delle gallerie clienti
 │   └── sito/                   ← motore delle foto (aggiorna_foto.py) e design-system.md
+├── _design/tavole/             ← tavole del redesign in PDF (solo sul Mac)
 └── _archivio/                  ← prove, ricerche, vecchie istruzioni
 ```
 

@@ -6,7 +6,8 @@ La cartella FOTO/ è l'unica fonte: tre cartelle, una per galleria del sito
 (Business e eventi · Motorsport · Extra).
   - aggiungi una foto    → compare sul sito
   - cancella una foto    → sparisce dal sito
-  - rinomina una foto    → cambia l'ordine (01 …, 02 …, 03 …)
+  - rinomina una foto    → cambia l'ordine (01 …, 02 …, 03 …) e la didascalia:
+                           "05 Su strada.jpg" sul sito diventa "N°05 — Su strada"
 
 Lo script crea in images/galleria/<galleria>/ la versione web (2400 px) e la
 miniatura (800 px), toglie i dati GPS/EXIF e scrive images/gallerie.js, l'elenco
@@ -52,6 +53,14 @@ def log(msg):
 def slug(testo):
     testo = unicodedata.normalize('NFKD', testo).encode('ascii', 'ignore').decode()
     return re.sub(r'[^a-zA-Z0-9]+', '-', testo).strip('-').lower()
+
+
+def didascalia(stem):
+    """Il nome del file senza numero è la didascalia; i nomi automatici (IMG_1234, aziende-3) non ne hanno."""
+    testo = ORDINE.sub('', stem).strip()
+    if not re.search(r'[A-Za-zÀ-ÿ]{3}', testo) or re.fullmatch(r'(?i)(img|dsc|_dsc|pxl|foto|[a-z]+)[-_ ]?\d+.*', testo):
+        return ''
+    return testo
 
 
 def chiave_ordine(nome):
@@ -166,7 +175,7 @@ def sincronizza():
             usate.add(chiave)
             voci.append({'src': f'images/galleria/{gid}/{chiave}.jpg',
                          'thumb': f'images/galleria/{gid}/thumbs/{chiave}.jpg',
-                         'w': w, 'h': h})
+                         'w': w, 'h': h, 'titolo': didascalia(stem)})
 
         # foto tolte da FOTO/ → via anche dal sito
         for cartella in (out_dir, os.path.join(out_dir, 'thumbs')):

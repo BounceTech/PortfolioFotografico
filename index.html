@@ -3,2181 +3,1855 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mattia Buoli | Fotografo Professionista — Mantova</title>
-    <link rel="icon" type="image/png" href="images/sito/favicon.png">
+    <title>Mattia Buoli — Fotografo a Mantova | Business &amp; Eventi, Motorsport</title>
     <link rel="canonical" href="https://mattiabuoli.it/">
-    <meta name="description" content="Mattia Buoli, fotografo professionista a Mantova. Business & Eventi, Motorsport.">
+    <meta name="description" content="Fotografia per aziende che lavorano bene, dal ristorante al paddock. Mattia Buoli, fotografo a Mantova: Business &amp; Eventi e Motorsport. Foto pronte in una settimana.">
+    <link rel="icon" type="image/png" href="images/sito/favicon.png">
+    <link rel="apple-touch-icon" href="images/sito/favicon.png">
 
     <!-- Open Graph: anteprima link su WhatsApp, Instagram, ecc. -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Mattia Buoli Fotografo">
-    <meta property="og:title" content="Mattia Buoli | Fotografo Professionista — Mantova">
-    <meta property="og:description" content="Fotografia Business & Eventi e Motorsport. Mantova e provincia.">
+    <meta property="og:title" content="Mattia Buoli — Fotografo a Mantova">
+    <meta property="og:description" content="Fotografia per aziende che lavorano bene, dal ristorante al paddock. Business &amp; Eventi e Motorsport.">
     <meta property="og:url" content="https://mattiabuoli.it/">
     <meta property="og:image" content="https://mattiabuoli.it/images/sito/og-cover.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="it_IT">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mattia Buoli | Fotografo Professionista — Mantova">
-    <meta name="twitter:description" content="Fotografia Business & Eventi e Motorsport. Mantova e provincia.">
+    <meta name="twitter:title" content="Mattia Buoli — Fotografo a Mantova">
+    <meta name="twitter:description" content="Fotografia per aziende che lavorano bene, dal ristorante al paddock.">
     <meta name="twitter:image" content="https://mattiabuoli.it/images/sito/og-cover.jpg">
+    <meta name="theme-color" content="#0E0C0A">
 
-    <meta name="theme-color" content="#0e0e0e">
-    <link rel="apple-touch-icon" href="images/sito/favicon.png">
-
-    <link rel="preload" as="image" href="images/sito/hero.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="images/sito/hero-cutout.webp" type="image/webp" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
+        /* =====================================================================
+           DESIGN SYSTEM "Bronzo & Pellicola" — v2 · 10.2026
+           Nero caldo come una camera oscura, oro-bronzo come firma, carta per
+           le pause. Le foto sono l'unico colore saturo della pagina.
+           Riferimento completo: strumenti/sito/design-system.md
+           ===================================================================== */
         :root {
-            --color-bg: #0e0e0e;
-            --color-surface: #151515;
-            --color-text: #f2efe9;
-            --color-text-light: #9b968e;
-            --color-border: #262626;
+            /* Palette */
+            --ink: #0E0C0A;            /* fondo pagina */
+            --surface: #171410;        /* card, contatti */
+            --line: #2E2820;           /* bordi */
+            --line-strong: #5A4A33;    /* bordo bottoni */
+            --bone: #EFE6D6;           /* testo */
+            --bone-2: #B8AE9C;         /* testo secondario */
+            --paper: #EEE6D8;          /* sezione chiara */
+            --paper-ink: #1A1612;      /* testo su carta */
+            --paper-ink-2: #4A4237;    /* testo secondario su carta */
+            --gold: #C9A46A;           /* PRIMARIO: CTA, kicker, link, parola hero */
+            --gold-light: #E3CB9C;     /* hover */
+            --bronze: #8E6A3E;         /* dettagli, ✦ (solo decorativo) */
+            --bronze-text: #A47E4C;    /* bronzo leggibile per testi piccoli su nero */
+            --bronze-dark: #7A5A32;    /* oro su carta */
 
-            /* PRIMARIO — Azzurro: nav, CTA, link, kicker, tutto ciò che è "voce del sito".
-               Rampa più ricca (chiaro → profondo) per dare carattere senza aggiungere altre tinte. */
-            --color-accent: #6fa3bf;         /* principale */
-            --color-accent-dark: #4a7891;    /* hover/pressed */
-            --color-accent-light: #a9cbdd;   /* highlight acceso, selezione testo */
-            --color-accent-muted: #3d5a68;   /* dettaglio quieto: bordi segnaposto, ghost numbers */
-            --color-accent-deep: #1f3d4d;    /* nota profonda/drammatica: Motorsport, sfumature, momenti a più contrasto */
-            --color-accent-deep-dark: #142731; /* hover sulla nota profonda */
+            /* Tipografia */
+            --serif: 'Instrument Serif', 'Times New Roman', serif;
+            --sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+            --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-            /* SECONDARIO — Bronzo/ottone: credibilità, valori, prova sociale, calore heritage/vintage.
-               Stessa logica di rampa del primario, usato sempre come dettaglio, mai come sfondo dominante. */
-            --color-heritage: #b08a5c;        /* principale */
-            --color-heritage-dark: #8f6d45;   /* hover/pressed */
-            --color-heritage-light: #d9c3a0;  /* nota delicata, quasi champagne */
-            --color-heritage-deep: #5c4429;   /* nota profonda, quasi espresso, per contrasto importante */
-
-            --spacing-xs: 8px;
-            --spacing-sm: 16px;
-            --spacing-md: 24px;
-            --spacing-lg: 48px;
-            --spacing-xl: 72px;
-            --spacing-2xl: 140px;
-            --font-display: 'Fraunces', Georgia, serif;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            --font-mono: 'Space Mono', 'SF Mono', Monaco, monospace;
+            /* Spazi */
+            --gutter: clamp(20px, 4.45vw, 64px);
+            --max: 1312px;
+            --section: clamp(88px, 11vw, 160px);
+            --header-h: 100px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
         body {
-            font-family: var(--font-sans);
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.7;
+            background: var(--ink);
+            color: var(--bone);
+            font-family: var(--sans);
             font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        ::selection {
-            background: var(--color-accent);
-            color: #0e0e0e;
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--color-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #2e2e2e;
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--color-accent-dark);
-        }
-
-        h1, h2, h3 {
-            font-family: var(--font-display);
-            font-weight: 500;
-            line-height: 1.15;
-        }
-
-        /* Accento editoriale/calligrafico: corsivo di Fraunces su singole parole scelte */
-        .accent-italic {
-            font-family: var(--font-display);
-            font-style: italic;
-            font-weight: 400;
-        }
-
-        /* Grana pellicola su tutto il sito */
+        /* Grana pellicola su tutta la pagina */
         body::after {
             content: '';
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 500;
-            opacity: 0.055;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 200;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* Etichette editoriali */
-        .section-kicker {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--color-accent);
-            margin-bottom: var(--spacing-sm);
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+        button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+        [hidden] { display: none !important; }
+
+        ::selection { background: var(--gold); color: var(--ink); }
+
+        a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
         }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 600;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 400ms ease;
-        }
-
-        nav.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        nav .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-            padding: 14px 28px;
-            background: rgba(14, 14, 14, 0.82);
-            border-radius: 50px;
-            border: 1px solid var(--color-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--color-text-light);
-            font-family: var(--font-mono);
-            font-size: 10px;
-            font-weight: 400;
-            transition: color 300ms ease;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            position: relative;
-            padding-bottom: 3px;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 1px;
-            background: var(--color-accent);
-            transition: width 300ms ease;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: var(--color-text);
-        }
-
-        nav a:hover::after,
-        nav a.active::after {
+        .wrap {
             width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                top: 10px;
-                width: calc(100% - 20px);
-            }
-
-            nav .nav-links {
-                gap: 14px;
-                padding: 10px 16px;
-                justify-content: center;
-            }
-
-            nav a {
-                font-size: 9px;
-                letter-spacing: 0.08em;
-            }
-        }
-
-        .container {
-            max-width: 1280px;
+            max-width: calc(var(--max) + 2 * var(--gutter));
             margin: 0 auto;
-            padding: 0 var(--spacing-md);
+            padding-inline: var(--gutter);
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 0;
-            position: relative;
-            overflow: hidden;
-            min-height: 100vh;
-            display: flex;
-            align-items: flex-end;
+        /* Versioni brevi dei testi per il telefono (come da tavola mobile) */
+        .m { display: none; }
+        @media (max-width: 768px) {
+            .d { display: none; }
+            .m { display: inline; }
         }
 
-        .hero-image {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            animation: heroZoom 9s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
-        }
-
-        @keyframes heroZoom {
-            from { transform: scale(1.08); }
-            to { transform: scale(1); }
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            /* Velatura azzurro-profondo (--color-accent-deep) invece del nero piatto: lega l'hero all'identità cromatica */
-            background: linear-gradient(180deg, rgba(14, 14, 14, 0.35) 0%, rgba(31, 61, 77, 0.22) 32%, rgba(20, 39, 49, 0.4) 60%, rgba(14, 14, 14, 0.92) 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hero .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 1400px;
-            padding-bottom: 7vh;
-            padding-top: 20vh;
-        }
-
-        /* Barra "capability": nota bronzo/heritage, come i punti di credibilità del sito */
-        .hero-ticker {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 22px;
-            border: 1px solid var(--color-heritage);
-            border-radius: 50px;
-            font-family: var(--font-mono);
-            font-size: 10px;
+        /* ---------- Elementi ricorrenti ---------- */
+        .kicker {
+            font-family: var(--mono);
+            font-size: 12px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--color-heritage-light);
-            animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 60ms both;
+            color: var(--gold);
         }
 
-        @media (max-width: 600px) {
-            .hero-ticker {
-                font-size: 9px;
-                padding: 8px 14px;
-                letter-spacing: 0.08em;
-            }
-        }
-
-        .hero .location {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--color-accent);
+        .title {
+            font-family: var(--serif);
             font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.22em;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 150ms both;
-        }
-
-        .hero .location::before {
-            content: '';
-            width: 36px;
-            height: 1px;
-            background: var(--color-accent);
-        }
-
-        .hero h1 {
-            font-size: clamp(3.4rem, 12vw, 10.5rem);
-            font-weight: 500;
-            letter-spacing: -0.03em;
+            font-size: clamp(48px, 7.2vw, 104px);
             line-height: 0.95;
-            /* Riempimento sfumato: bronzo caldo che si scioglie nel colore testo, accento editoriale sul nome */
-            color: var(--color-text);
-            background: linear-gradient(100deg, var(--color-heritage-light) 0%, var(--color-text) 45%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 280ms both;
+            letter-spacing: -0.01em;
         }
 
-        /* Cornice sottile che inquadra l'hero come una lastra/certificato */
-        .hero-frame {
-            position: absolute;
-            inset: 20px;
-            border: 1px solid rgba(176, 138, 92, 0.32);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        @media (max-width: 768px) {
-            .hero-frame {
-                inset: 10px;
-            }
-        }
-
-        /* Tagline in alto a destra, eco discreta del kicker in basso a sinistra */
-        .hero-tagline {
-            position: absolute;
-            top: 120px;
-            right: var(--spacing-md);
-            z-index: 2;
-            text-align: right;
-            font-family: var(--font-display);
+        /* Una sola parola/frase in corsivo oro per titolo: è la voce di Mattia */
+        .title em, .em {
             font-style: italic;
-            font-size: 14px;
-            line-height: 1.55;
-            color: rgba(242, 239, 233, 0.75);
-            max-width: 230px;
-            animation: riseIn 900ms ease 400ms both;
-        }
-
-        @media (max-width: 900px) {
-            .hero-tagline {
-                display: none;
-            }
-        }
-
-        .hero .subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: rgba(242, 239, 233, 0.82);
-            max-width: 540px;
-            font-weight: 400;
-            animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 410ms both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-            margin-top: var(--spacing-md);
-            animation: riseIn 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 540ms both;
-        }
-
-        @keyframes riseIn {
-            from {
-                opacity: 0;
-                transform: translateY(28px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-scroll {
-            position: absolute;
-            right: 32px;
-            bottom: 7vh;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 0.3em;
-            color: var(--color-text-light);
-            writing-mode: vertical-rl;
-            animation: riseIn 900ms ease 800ms both;
-        }
-
-        .hero-scroll::after {
-            content: '';
-            width: 1px;
-            height: 44px;
-            background: var(--color-accent);
-            animation: scrollPulse 2.2s ease-in-out infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% { transform: scaleY(0.35); transform-origin: top; opacity: 0.4; }
-            50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .hero-scroll {
-                display: none;
-            }
+            color: var(--gold);
         }
 
         .btn {
-            padding: 16px 36px;
-            border: none;
-            border-radius: 2px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            cursor: pointer;
-            transition: all 300ms ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--color-text);
-            color: #0e0e0e;
-        }
-
-        .btn-primary:hover {
-            background: var(--color-accent);
-            color: #0e0e0e;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(242, 239, 233, 0.4);
-            color: var(--color-text);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-        }
-
-        /* Mini Mostra - removed */
-        .mini-mostra {
-            display: none;
-        }
-
-        /* Reveal allo scroll (solo presentazione) */
-        body.js .reveal {
-            opacity: 0;
-            transform: translateY(26px);
-            transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1);
-        }
-
-        body.js .reveal.in {
-            opacity: 1;
-            transform: none;
-        }
-
-        body.js .reveal:nth-child(2) { transition-delay: 90ms; }
-        body.js .reveal:nth-child(3) { transition-delay: 180ms; }
-
-        /* Portfolio Grid */
-        .portfolio {
-            position: relative;
-            padding: var(--spacing-2xl) var(--spacing-md);
-            background: var(--color-bg);
-        }
-
-        .portfolio-header {
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .portfolio h2 {
-            font-size: clamp(2.4rem, 5vw, 4rem);
-            letter-spacing: -0.015em;
-        }
-
-        .portfolio-intro {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 52px;
+            padding: 0 26px;
+            font-family: var(--sans);
             font-size: 15px;
-            color: var(--color-text-light);
-            margin-top: var(--spacing-xs);
-            max-width: 480px;
+            font-weight: 500;
+            border: 1px solid var(--line-strong);
+            color: var(--bone);
+            transition: background 250ms ease, border-color 250ms ease, color 250ms ease;
         }
 
-        .divider {
-            display: none;
+        .btn:hover { border-color: var(--gold); color: var(--gold-light); }
+
+        /* Un solo bottone oro per schermata: è sempre WhatsApp */
+        .btn-gold {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--ink);
+            font-weight: 600;
         }
 
-        /* Motorsport (card e galleria) usa la nota azzurro profondo: stesso colore primario, più carattere, niente terza tinta */
-        .portfolio-card--motorsport,
-        .gallery-page--motorsport {
-            --color-accent: var(--color-accent-deep);
-            --color-accent-dark: var(--color-accent-deep-dark);
+        .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); color: var(--ink); }
+
+        .btn svg { width: 18px; height: 18px; flex: 0 0 auto; }
+
+        .link-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--gold);
+            transition: gap 250ms ease, color 250ms ease;
         }
 
-        /* Filmstrip: assaggio del lavoro sempre visibile, nessun click richiesto */
-        .filmstrip {
-            overflow: hidden;
-            margin: var(--spacing-lg) 0 var(--spacing-xl);
-            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-            mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+        .link-arrow:hover { gap: 14px; color: var(--gold-light); }
+        .link-arrow svg { width: 16px; height: 16px; }
+
+        .star { color: var(--bronze); }
+
+        /* Mirino: parentesi angolari oro al passaggio sulle foto */
+        .vf::before, .vf::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 0 solid var(--gold);
+            opacity: 0;
+            transition: opacity 300ms ease, transform 400ms cubic-bezier(0.2, 0.6, 0.2, 1);
+            pointer-events: none;
+            z-index: 3;
+        }
+        .vf::before { top: 14px; left: 14px; border-top-width: 2px; border-left-width: 2px; transform: translate(6px, 6px); }
+        .vf::after { bottom: 14px; right: 14px; border-bottom-width: 2px; border-right-width: 2px; transform: translate(-6px, -6px); }
+        .vf:hover::before, .vf:hover::after, .vf:focus-visible::before, .vf:focus-visible::after { opacity: 1; transform: none; }
+
+        /* ---------- Header ---------- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: background 300ms ease, border-color 300ms ease;
+            border-bottom: 1px solid transparent;
         }
 
-        .filmstrip-track {
+        .site-header.solid {
+            background: rgba(14, 12, 10, 0.94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom-color: var(--line);
+        }
+
+        .header-inner {
             display: flex;
-            gap: 12px;
-            width: max-content;
-            animation: filmstripScroll 46s linear infinite;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            height: var(--header-h);
+            transition: height 300ms ease;
         }
 
-        .filmstrip:hover .filmstrip-track {
-            animation-play-state: paused;
-        }
+        .site-header.solid .header-inner { height: 76px; }
 
-        .filmstrip-item {
-            flex: 0 0 auto;
-            width: 240px;
-            aspect-ratio: 4 / 5;
-            border-radius: 2px;
-            overflow: hidden;
-            background: var(--color-surface);
-        }
+        .brand { display: block; line-height: 1.2; }
 
-        .filmstrip-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .brand-name {
             display: block;
+            font-family: var(--sans);
+            font-stretch: 112%;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
         }
 
-        @keyframes filmstripScroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+        .brand-sub {
+            display: block;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bone-2);
+            margin-top: 2px;
+        }
+
+        .nav { display: flex; gap: 40px; list-style: none; }
+
+        .nav a {
+            font-family: var(--mono);
+            font-size: 12.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bone);
+            transition: color 250ms ease;
+        }
+
+        .nav a:hover, .nav a.active { color: var(--gold); }
+
+        .header-cta {
+            font-family: var(--mono);
+            font-size: 12.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 0 22px;
+            min-height: 46px;
+        }
+
+        /* In galleria non c'è un altro bottone oro in alto: il "Parliamone" diventa oro */
+        body.in-gallery .header-cta { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+        .menu-toggle {
+            display: none;
+            width: 46px;
+            height: 46px;
+            border: 1px solid var(--line-strong);
+            position: relative;
+        }
+
+        .menu-toggle span {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            height: 1.5px;
+            background: var(--bone);
+            transition: transform 300ms ease, top 300ms ease;
+        }
+        .menu-toggle span:nth-child(1) { top: 18px; }
+        .menu-toggle span:nth-child(2) { top: 26px; }
+        .menu-toggle[aria-expanded="true"] span:nth-child(1) { top: 22px; transform: rotate(45deg); }
+        .menu-toggle[aria-expanded="true"] span:nth-child(2) { top: 22px; transform: rotate(-45deg); }
+
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            background: var(--ink);
+            padding: 120px var(--gutter) 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-menu a.mm-link {
+            font-family: var(--serif);
+            font-size: 48px;
+            line-height: 1.2;
+            border-bottom: 1px solid var(--line);
+            padding: 6px 0;
+        }
+
+        .mobile-menu .btn { margin-top: auto; }
+
+        @media (max-width: 900px) {
+            .nav, .header-cta { display: none; }
+            .menu-toggle { display: block; }
+            :root { --header-h: 88px; }
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            position: relative;
+            /* altezza: scritta BUOLI + spazio per il testo sotto, mai meno dello schermo */
+            min-height: max(100vh, calc(min(34.7vw, 500px) * 0.8 + 720px));
+            padding: calc(var(--header-h) + 20px) 0 64px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 40% 50% at 64% 58%, rgba(201, 164, 106, 0.10), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero .wrap {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .hero-name {
+            position: absolute;
+            top: 0;
+            left: calc(var(--gutter) + 6.6%);
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: min(34.7vw, 500px);
+            line-height: 0.8;
+            letter-spacing: -0.005em;
+            color: var(--gold);
+            z-index: 1;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .hero-name .first {
+            position: absolute;
+            top: 0.02em;
+            left: -0.15em;
+            font-size: 0.144em;
+            font-style: italic;
+            color: var(--bone);
+            line-height: 1;
+        }
+
+        .hero-name .last { display: block; text-transform: uppercase; }
+
+        .hero-figure {
+            position: absolute;
+            top: 9%;
+            left: 44%;
+            width: min(47vw, 680px);
+            height: auto;
+            z-index: 2;
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
+            mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
+            animation: heroIn 1.4s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+        }
+
+        @keyframes heroIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        .hero-coords {
+            position: absolute;
+            top: 0;
+            right: var(--gutter);
+            text-align: right;
+            font-family: var(--mono);
+            font-size: 12.5px;
+            letter-spacing: 0.12em;
+            line-height: 1.9;
+            text-transform: uppercase;
+            color: var(--bone-2);
+            text-shadow: 0 0 10px var(--ink), 0 0 3px var(--ink);
+            z-index: 3;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 3;
+            max-width: 580px;
+        }
+
+        .hero-claim {
+            font-family: var(--serif);
+            font-size: clamp(40px, 4.45vw, 64px);
+            line-height: 0.92;
+            margin: 22px 0 26px;
+        }
+
+        .hero-claim em { font-style: italic; color: var(--gold); }
+
+        .hero-text {
+            color: var(--bone-2);
+            font-size: 17px;
+            line-height: 1.65;
+            max-width: 460px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 34px;
+        }
+
+        .hero-reply {
+            position: absolute;
+            right: var(--gutter);
+            bottom: 0;
+            z-index: 3;
+            font-family: var(--mono);
+            font-size: 12.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bone-2);
+            text-align: right;
+        }
+
+        .hero-reply::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 56px;
+            background: var(--bone-2);
+            margin: 16px 0 0 auto;
         }
 
         @media (max-width: 768px) {
-            .filmstrip-item {
-                width: 160px;
+            .hero { min-height: 0; padding-bottom: 48px; }
+            .hero::before { background: radial-gradient(ellipse 70% 30% at 50% 32%, rgba(201, 164, 106, 0.10), transparent 70%); }
+            .hero .wrap { display: block; }
+            .hero-name {
+                position: relative;
+                left: auto;
+                font-size: 40vw;
+                margin-top: 18vw;
             }
+            .hero-name .first { left: 0; top: -0.27em; font-size: 0.25em; }
+            .hero-figure {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 86%;
+                max-width: 460px;
+                margin: -21vw -2vw 0 auto;
+                -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 97%);
+                mask-image: linear-gradient(180deg, #000 70%, transparent 97%);
+            }
+            .hero-coords { top: 6px; font-size: 11.5px; }
+            .hero-copy { margin-top: -6vw; max-width: none; }
+            .hero-claim { font-size: clamp(38px, 11.5vw, 56px); }
+            .hero-actions { flex-direction: column; }
+            .hero-actions .btn { width: 100%; }
+            .hero-reply { display: none; }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .filmstrip-track {
-                animation: none;
-            }
+        /* ---------- Clienti ---------- */
+        .clients {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding: 34px 0 32px;
         }
 
-        .portfolio-grid {
+        .clients .kicker { color: var(--bone-2); font-size: 11.5px; }
+
+        .clients-list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 34px;
+            list-style: none;
+            margin-top: 14px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(28px, 2.6vw, 36px);
+            line-height: 1.2;
+        }
+
+        .clients-list li + li::before {
+            content: '✦';
+            font-style: normal;
+            font-size: 0.7em;
+            color: var(--bronze);
+            margin-right: 34px;
+            vertical-align: 0.12em;
+        }
+
+        @media (max-width: 768px) {
+            .clients-list { gap: 6px 16px; }
+            .clients-list li + li::before { margin-right: 16px; }
+        }
+
+        /* ---------- Sezioni ---------- */
+        .section { padding: var(--section) 0; }
+        .section-tight { padding-top: 0; }
+        .sprite { position: absolute; width: 0; height: 0; }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 32px 64px;
+            flex-wrap: wrap;
+            margin-bottom: clamp(40px, 4.4vw, 64px);
+        }
+
+        .section-head .kicker { margin-bottom: 18px; }
+
+        .section-aside {
+            max-width: 400px;
+            color: var(--bone-2);
+            font-size: 16.5px;
+            padding-bottom: 12px;
+        }
+
+        /* ---------- 01 Cosa faccio: due specialità ---------- */
+        .worlds {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
         }
 
-        .portfolio-card {
+        .world {
             position: relative;
+            display: block;
             aspect-ratio: 4 / 5;
-            border-radius: 2px;
             overflow: hidden;
-            cursor: pointer;
-            background: var(--color-surface);
+            background: var(--surface);
         }
 
-        .portfolio-card-image {
+        .world-img {
             position: absolute;
             inset: 0;
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            transition: transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1);
+            transition: transform 900ms cubic-bezier(0.2, 0.6, 0.2, 1);
         }
 
-        .portfolio-card::after {
+        .world-img::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(14, 14, 14, 0) 40%, rgba(14, 14, 14, 0.85) 100%);
-            transition: background 600ms ease;
-            pointer-events: none;
+            background: linear-gradient(180deg, rgba(14, 12, 10, 0) 45%, rgba(14, 12, 10, 0.92) 100%);
         }
 
-        /* Tocco cromatico all'hover: velatura azzurro-profonda invece del semplice scurimento */
-        .portfolio-card:hover::after {
-            background: linear-gradient(165deg, rgba(31, 61, 77, 0.34) 0%, rgba(14, 14, 14, 0.15) 45%, rgba(14, 14, 14, 0.88) 100%);
-        }
+        .world:hover .world-img { transform: scale(1.04); }
 
-        .portfolio-card:hover .portfolio-card-image {
-            transform: scale(1.05);
-        }
-
-        /* Mirino: parentesi angolari firma */
-        .vf {
+        .world-body {
             position: absolute;
-            inset: 14px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
             z-index: 2;
-            pointer-events: none;
-            opacity: 0;
-            transform: scale(1.03);
-            transition: opacity 400ms ease, transform 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
         }
 
-        .vf::before,
-        .vf::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
+        .world .world-num {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            color: var(--bone-2);
         }
 
-        .vf::before {
-            top: 0;
-            left: 0;
-            border-top: 1px solid var(--color-accent);
-            border-left: 1px solid var(--color-accent);
+        .world h3 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(44px, 4.45vw, 64px);
+            line-height: 1;
+            margin: 8px 0 16px;
         }
 
-        .vf::after {
-            bottom: 0;
-            right: 0;
-            border-bottom: 1px solid var(--color-accent);
-            border-right: 1px solid var(--color-accent);
+        .world p {
+            font-size: 15.5px;
+            color: var(--bone);
+            max-width: 430px;
+            margin-bottom: 20px;
         }
 
-        .portfolio-card:hover .vf {
-            opacity: 1;
-            transform: scale(1);
+        @media (max-width: 768px) {
+            .worlds { grid-template-columns: 1fr; gap: 20px; }
+            .world-body { left: 24px; right: 24px; bottom: 26px; }
         }
 
-        /* Indice monospace sulle card */
-        .portfolio-card-content::before {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            color: var(--color-accent);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .portfolio-card:nth-child(1) .portfolio-card-content::before { content: '01'; }
-        .portfolio-card:nth-child(2) .portfolio-card-content::before { content: '02'; }
-        .portfolio-card:nth-child(3) .portfolio-card-content::before { content: '03'; }
-
-        .portfolio-card-content {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 28px;
-            z-index: 1;
-        }
-
-        .portfolio-card h3 {
-            font-size: 30px;
-            margin-bottom: var(--spacing-xs);
-            color: var(--color-text);
-        }
-
-        .portfolio-card p {
-            font-size: 14px;
-            color: rgba(242, 239, 233, 0.72);
-            margin-bottom: var(--spacing-sm);
-            line-height: 1.6;
-        }
-
-        /* Extra: galleria secondaria, una riga sotto le due card invece di una card alla pari */
+        /* Extra: galleria secondaria, una riga sotto le due specialità */
         .extra-row {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-lg);
-            padding: var(--spacing-md) 0;
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
-            color: inherit;
-            text-decoration: none;
+            gap: 28px;
+            margin-top: 40px;
+            padding: 26px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
         }
 
-        .extra-row[hidden] {
-            display: none;
-        }
-
-        .extra-thumbs {
-            display: flex;
-            flex: 0 0 auto;
-        }
+        .extra-thumbs { display: flex; flex: 0 0 auto; }
 
         .extra-thumbs img {
             width: 64px;
             height: 80px;
             object-fit: cover;
-            border-radius: 2px;
-            border: 2px solid var(--color-bg);
-            display: block;
+            border: 2px solid var(--ink);
             transition: transform 400ms cubic-bezier(0.2, 0.6, 0.2, 1);
         }
 
-        .extra-thumbs img + img {
-            margin-left: -18px;
-        }
-
+        .extra-thumbs img + img { margin-left: -18px; }
         .extra-row:hover .extra-thumbs img:nth-child(1) { transform: translateX(-6px) rotate(-3deg); }
         .extra-row:hover .extra-thumbs img:nth-child(3) { transform: translateX(6px) rotate(3deg); }
 
-        .extra-text {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .extra-kicker {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--color-accent);
-            margin-bottom: 4px;
-        }
+        .extra-text { flex: 1; min-width: 0; }
+        .extra-text .kicker { font-size: 11.5px; }
 
         .extra-text h3 {
-            font-size: 22px;
-            margin-bottom: 4px;
-            transition: color 300ms ease;
-        }
-
-        .extra-row:hover .extra-text h3 {
-            color: var(--color-accent-light);
-        }
-
-        .extra-text p:last-child {
-            font-size: 14px;
-            color: var(--color-text-light);
-        }
-
-        /* Telefono: miniature più piccole, testo accanto, link sotto il testo */
-        @media (max-width: 600px) {
-            .extra-row {
-                flex-wrap: wrap;
-                align-items: flex-start;
-                column-gap: var(--spacing-sm);
-                row-gap: 12px;
-            }
-
-            .extra-thumbs img {
-                width: 44px;
-                height: 56px;
-            }
-
-            .extra-thumbs img + img {
-                margin-left: -14px;
-            }
-
-            .extra-text {
-                flex: 1 1 calc(100% - 104px - var(--spacing-sm));
-            }
-
-            .extra-text h3 {
-                font-size: 19px;
-            }
-
-            .extra-row .btn-small {
-                margin-left: calc(104px + var(--spacing-sm));
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .extra-thumbs img {
-                transition: none;
-            }
-        }
-
-        .btn-small {
-            color: var(--color-text);
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            text-decoration: none;
-            border-bottom: 1px solid var(--color-accent);
-            padding-bottom: 3px;
-            transition: color 300ms ease;
-            cursor: pointer;
-        }
-
-        .btn-small:hover {
-            color: var(--color-accent);
-        }
-
-        /* Come Lavoro Section */
-        .come-lavoro {
-            padding: var(--spacing-2xl) var(--spacing-md);
-            background: var(--color-bg);
-            border-top: 1px solid var(--color-border);
-        }
-
-        .come-lavoro-header {
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .come-lavoro h2 {
-            font-size: clamp(2.4rem, 5vw, 4rem);
-            letter-spacing: -0.015em;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
-        }
-
-        .step {
-            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) var(--spacing-md);
-            text-align: left;
-            border-left: 1px solid var(--color-border);
-        }
-
-        .step:first-child {
-            border-left: none;
-            padding-left: 0;
-        }
-
-        .step-number {
-            font-family: var(--font-mono);
-            font-size: 56px;
+            font-family: var(--serif);
             font-weight: 400;
-            color: rgba(111, 163, 191, 0.16);
-            line-height: 1;
-            margin-bottom: var(--spacing-md);
+            font-size: 30px;
+            line-height: 1.1;
+            margin: 4px 0 4px;
         }
 
-        .step h3 {
-            font-size: 22px;
-            margin-bottom: var(--spacing-sm);
+        .extra-text p { font-size: 15px; color: var(--bone-2); }
+
+        @media (max-width: 600px) {
+            .extra-row { flex-wrap: wrap; align-items: flex-start; column-gap: 16px; row-gap: 12px; }
+            .extra-thumbs img { width: 44px; height: 56px; }
+            .extra-thumbs img + img { margin-left: -14px; }
+            .extra-text { flex: 1 1 calc(100% - 120px); }
+            .extra-text h3 { font-size: 25px; }
+            .extra-row .link-arrow { margin-left: 120px; }
         }
 
-        .step p {
-            font-size: 14px;
-            color: var(--color-text-light);
-            line-height: 1.8;
-        }
-
-        @media (max-width: 900px) {
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-lg);
-            }
-
-            .step {
-                border-left: none;
-                border-top: 1px solid var(--color-border);
-                padding: var(--spacing-md) 0 0;
-            }
-
-            .step:first-child {
-                border-top: none;
-                padding-top: 0;
-            }
-        }
-
-        /* About Section */
-        .about {
-            padding: var(--spacing-2xl) var(--spacing-md);
-            background: var(--color-bg);
-            border-top: 1px solid var(--color-border);
-        }
-
-        .about .container {
+        /* ---------- 02 Lavori selezionati: provino a contatto ---------- */
+        .mosaic {
             display: grid;
-            grid-template-columns: 2fr 3fr;
-            gap: var(--spacing-xl);
-            align-items: center;
-            max-width: 1080px;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 48px 16px;
         }
 
-        .about-image {
-            width: 100%;
-            aspect-ratio: 3 / 4;
-            border-radius: 2px;
-            overflow: hidden;
+        .shot { position: relative; }
+        .shot .frame {
             position: relative;
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            background: var(--surface);
+            cursor: zoom-in;
         }
 
-        .about-image img {
+        .shot img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            transition: transform 900ms cubic-bezier(0.2, 0.6, 0.2, 1);
         }
 
-        .about-content h2 {
-            font-size: clamp(2rem, 3.5vw, 2.8rem);
-            margin-bottom: var(--spacing-md);
-            letter-spacing: -0.01em;
-        }
+        .shot:hover img { transform: scale(1.03); }
 
-        .about-content p {
-            font-size: 15px;
-            color: var(--color-text-light);
-            margin-bottom: var(--spacing-sm);
-            line-height: 1.8;
-        }
-
-        .philosophy {
-            /* Nota heritage: i valori sono un punto di credibilità, non di navigazione — accento bronzo invece che azzurro */
-            --color-accent: var(--color-heritage);
-            --color-accent-dark: var(--color-heritage-dark);
-            border-top: 1px solid var(--color-border);
-            padding-top: var(--spacing-md);
-            margin-top: var(--spacing-md);
-        }
-
-        .philosophy h3 {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 400;
+        .caption {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 12px;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            letter-spacing: 0.18em;
-            margin-bottom: var(--spacing-sm);
-            color: var(--color-accent);
+            color: var(--bone-2);
         }
 
-        .philosophy p {
+        .caption .cat { color: var(--bronze-text); }
+
+        /* righe del mosaico: 7/5 · 4/8 · 5/4/3 colonne, altezze fisse per riga */
+        .mosaic .shot:nth-child(1) { grid-column: span 7; }
+        .mosaic .shot:nth-child(2) { grid-column: span 5; }
+        .mosaic .shot:nth-child(3) { grid-column: span 4; }
+        .mosaic .shot:nth-child(4) { grid-column: span 8; }
+        .mosaic .shot:nth-child(5) { grid-column: span 5; }
+        .mosaic .shot:nth-child(6) { grid-column: span 4; }
+        .mosaic .shot:nth-child(7) { grid-column: span 3; }
+        .mosaic .shot:nth-child(-n+2) .frame { height: min(36vw, 520px); }
+        .mosaic .shot:nth-child(3) .frame, .mosaic .shot:nth-child(4) .frame { height: min(43vw, 620px); }
+        .mosaic .shot:nth-child(n+5) .frame { height: min(30.5vw, 440px); }
+
+        .mosaic-more { display: none; }
+
+        @media (max-width: 768px) {
+            .mosaic { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .mosaic .shot { grid-column: span 1 !important; }
+            .mosaic .shot:nth-child(3n+1) { grid-column: span 2 !important; }
+            .mosaic .shot .frame { height: auto !important; aspect-ratio: 3 / 4; }
+            .mosaic .shot:nth-child(3n+1) .frame { aspect-ratio: 3 / 2; }
+            .mosaic .caption { display: none; }
+            .section-head .head-link { display: none; }
+            .mosaic-more { display: flex; width: 100%; margin-top: 32px; }
+        }
+
+        /* ---------- 03 Come lavoro: l'unica sezione su carta ---------- */
+        .paper {
+            background: var(--paper);
+            color: var(--paper-ink);
+        }
+
+        .paper .kicker { color: var(--bronze-dark); }
+        .paper .title em { color: var(--bronze-dark); }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .step { border-top: 1px solid rgba(122, 90, 50, 0.45); padding-top: 34px; }
+
+        .step .step-num {
+            font-family: var(--serif);
+            font-size: clamp(72px, 7.2vw, 104px);
+            line-height: 0.9;
+            color: var(--bronze-dark);
+            margin-bottom: 18px;
+        }
+
+        .step h3 {
+            font-family: var(--sans);
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .step p { color: var(--paper-ink-2); font-size: 16px; }
+
+        .promises {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 56px;
+            list-style: none;
+            margin-top: 72px;
+            padding-top: 30px;
+            border-top: 1px solid var(--paper-ink);
+            font-family: var(--mono);
             font-size: 13px;
-            margin: 0;
-            line-height: 2;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
         }
 
-        .philosophy strong {
-            color: var(--color-text);
-            font-weight: 500;
+        .promises li::before { content: '✦  '; white-space: pre; color: var(--bronze-dark); }
+
+        @media (max-width: 768px) {
+            .steps { grid-template-columns: 1fr; gap: 0; }
+            .step {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                column-gap: 22px;
+                padding: 28px 0;
+            }
+            .step .step-num { grid-row: span 2; font-size: 64px; margin: 0; }
+            .step h3 { margin-bottom: 6px; }
+            .promises { margin-top: 32px; flex-direction: column; }
+        }
+
+        /* ---------- 04 Chi sono ---------- */
+        .about {
+            display: grid;
+            grid-template-columns: 624fr 624fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .about-img { aspect-ratio: 3 / 2; overflow: hidden; }
+        .about-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .about .title { margin: 18px 0 34px; }
+
+        .about-text p { font-size: 17px; line-height: 1.7; }
+        .about-text p + p { margin-top: 22px; color: var(--bone-2); }
+
+        .values { list-style: none; margin-top: 38px; border-top: 1px solid var(--line); }
+
+        .values li {
+            display: grid;
+            grid-template-columns: 164px 1fr;
+            gap: 16px;
+            align-items: baseline;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 16px;
+        }
+
+        .values b {
+            font-family: var(--mono);
+            font-weight: 400;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        @media (max-width: 900px) {
+            .about { grid-template-columns: 1fr; gap: 40px; }
+            .about .title { margin-bottom: 24px; }
+            .about-text p + p { display: none; }
+            .values { display: flex; flex-wrap: wrap; gap: 10px; border: 0; margin-top: 30px; }
+            .values li { display: block; padding: 10px 16px; border: 1px solid var(--line-strong); }
+            .values li span { display: none; }
+        }
+
+        /* ---------- 05 Dicono di me ---------- */
+        .review {
+            text-align: center;
+            border-top: 1px solid var(--line);
+        }
+
+        .review blockquote {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 1.08;
+            max-width: 940px;
+            margin: 36px auto 40px;
+        }
+
+        .review cite { display: block; font-style: normal; font-weight: 600; font-size: 16px; }
+
+        .review .where {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bone-2);
+            margin-top: 6px;
         }
 
         @media (max-width: 768px) {
-            .about .container {
-                grid-template-columns: 1fr;
-            }
-
-            .about-image {
-                max-width: 320px;
-            }
+            .review { text-align: left; }
         }
 
-        /* Reviews Section */
-        .reviews {
-            /* Nota heritage: la prova sociale/testimonianza è credibilità, stesso registro bronzo dei Valori */
-            --color-accent: var(--color-heritage);
-            --color-accent-dark: var(--color-heritage-dark);
-            position: relative;
-            padding: var(--spacing-2xl) var(--spacing-md);
-            background: var(--color-bg);
-            border-top: 1px solid var(--color-border);
-        }
-
-        /* Numerazione laterale editoriale: firma "contact sheet" che accompagna le sezioni principali, solo su schermi larghi */
-        .side-index {
-            position: absolute;
-            left: 28px;
-            top: 50%;
-            transform: translateY(-50%);
-            writing-mode: vertical-rl;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--color-text-light);
-            opacity: 0.8;
-            pointer-events: none;
-        }
-
-        .side-index::before {
-            content: '';
-            width: 1px;
-            height: 40px;
-            background: var(--color-accent-muted);
-        }
-
-        @media (max-width: 1300px) {
-            .side-index {
-                display: none;
-            }
-        }
-
-        .reviews h2 {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--color-accent);
-            text-align: center;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .reviews-grid {
-            display: block;
-            max-width: 760px;
-            margin: 0 auto;
-        }
-
-        .review-card {
-            text-align: center;
-        }
-
-        .review-quote {
-            font-family: var(--font-display);
-            font-style: italic;
-            font-size: clamp(1.5rem, 3vw, 2.1rem);
-            color: var(--color-text);
-            line-height: 1.45;
-            margin-bottom: var(--spacing-lg);
-            position: relative;
-        }
-
-        .review-quote::before {
-            content: '\201C';
-            display: block;
-            font-size: 80px;
-            font-style: normal;
-            line-height: 0.6;
-            color: var(--color-accent);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .review-author {
-            font-weight: 500;
-            font-size: 13px;
-            color: var(--color-text);
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .review-type {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--color-text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* Contact Section */
+        /* ---------- 06 Contatti + footer ---------- */
         .contact {
-            padding: var(--spacing-2xl) var(--spacing-md);
-            background: var(--color-bg);
-            border-top: 1px solid var(--color-border);
-            text-align: center;
+            position: relative;
+            background:
+                radial-gradient(ellipse 50% 60% at 8% 22%, rgba(201, 164, 106, 0.10), transparent 70%),
+                var(--surface);
+            border-top: 1px solid var(--line);
+            padding-bottom: 56px;
         }
 
-        .contact h2 {
-            font-size: clamp(2.4rem, 5vw, 4rem);
-            margin-bottom: var(--spacing-md);
-            letter-spacing: -0.015em;
-        }
+        .contact .title { font-size: clamp(56px, 10.4vw, 150px); margin: 20px 0 24px; }
 
-        .contact-intro {
-            font-size: 15px;
-            margin-bottom: var(--spacing-xl);
-            color: var(--color-text-light);
-            max-width: 620px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.8;
-        }
+        .contact-intro { color: var(--bone-2); font-size: 18px; max-width: 520px; }
 
-        .contact-cards-wrapper {
+        .channels {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: var(--spacing-lg);
-            margin-top: var(--spacing-xl);
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 72px;
         }
 
-        .contact-card {
-            text-decoration: none;
-            color: var(--color-text);
-            padding: var(--spacing-md) 0 0;
-            border-top: 1px solid var(--color-border);
-            transition: border-color 300ms ease;
+        .channel {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-sm);
-            align-items: flex-start;
-            text-align: left;
+            justify-content: space-between;
+            min-height: 270px;
+            padding: 30px 32px;
+            border: 1px solid var(--line-strong);
+            transition: border-color 250ms ease, background 250ms ease;
         }
 
-        .contact-card:hover {
-            border-top-color: var(--color-accent);
-        }
+        .channel:hover { border-color: var(--gold); }
 
-        .contact-card h3 {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 400;
+        .channel-top {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--color-accent);
-            margin: 0;
+            color: var(--bone-2);
         }
 
-        .contact-card-text {
-            font-size: 14px;
-            color: var(--color-text-light);
-            margin: 0;
-            line-height: 1.7;
-        }
+        .channel-top svg { width: 18px; height: 18px; }
 
-        .contact-card-cta {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            color: var(--color-text);
-            border-bottom: 1px solid var(--color-accent);
-            padding-bottom: 3px;
-            transition: color 300ms ease;
-        }
-
-        .contact-card:hover .contact-card-cta {
-            color: var(--color-accent);
-        }
-
-        /* Gallery Pages */
-        .gallery-page {
-            display: none;
-            min-height: 100vh;
-            padding: var(--spacing-xl) var(--spacing-md) var(--spacing-2xl);
-            background: var(--color-bg);
-        }
-
-        .gallery-page.active {
+        .channel strong {
             display: block;
-        }
-
-        .gallery-header {
-            text-align: center;
-            margin-bottom: var(--spacing-xl);
-            position: relative;
-            padding-top: var(--spacing-lg);
-        }
-
-        .gallery-back {
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--color-text-light);
-            font-family: var(--font-mono);
-            font-size: 11px;
+            font-family: var(--serif);
             font-weight: 400;
+            font-size: 48px;
+            line-height: 1.05;
+        }
+
+        .channel small { display: block; font-size: 15px; color: var(--bone-2); margin-top: 6px; }
+
+        .channel-gold { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+        .channel-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+        .channel-gold .channel-top, .channel-gold small { color: var(--ink); }
+        .channel-top .tel { display: none; }
+
+        .footer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 72px;
+            padding-top: 40px;
+            border-top: 1px solid var(--line);
+        }
+
+        .footer-mark {
+            font-family: var(--serif);
+            font-size: clamp(72px, 7vw, 100px);
+            line-height: 0.85;
+            color: var(--gold);
+        }
+
+        .footer-legal {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
+            color: var(--bone-2);
+            text-align: right;
+            line-height: 1.9;
+        }
+
+        @media (max-width: 768px) {
+            .channels { grid-template-columns: 1fr; gap: 14px; margin-top: 40px; }
+            .channel {
+                min-height: 0;
+                flex-direction: row;
+                align-items: center;
+                padding: 22px 24px;
+            }
+            .channel-top > span { display: none; }
+            .channel-top > .tel { display: inline; font-family: var(--sans); font-size: 15px; letter-spacing: 0; }
+            .channel-top { order: 2; gap: 12px; align-items: center; }
+            .channel strong { font-size: 34px; }
+            .channel small { display: none; }
+            .footer { flex-direction: column; align-items: flex-start; margin-top: 48px; }
+            .footer-legal { text-align: left; }
+            .contact { padding-bottom: 120px; }
+        }
+
+        /* Barra fissa su telefono: risposta in 24 ore + WhatsApp */
+        .mobile-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 80;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom, 0px));
+            background: rgba(14, 12, 10, 0.96);
+            border-top: 1px solid var(--line);
+            transform: translateY(110%);
+            transition: transform 350ms ease;
+        }
+
+        .mobile-bar.show { transform: none; }
+
+        .mobile-bar p {
+            font-family: var(--mono);
+            font-size: 11.5px;
             letter-spacing: 0.14em;
-            transition: color 200ms ease;
-            text-decoration: none;
+            text-transform: uppercase;
+            color: var(--bone-2);
+            line-height: 1.6;
+        }
+
+        .mobile-bar .btn { min-height: 48px; padding: 0 20px; }
+
+        @media (max-width: 768px) {
+            .mobile-bar { display: flex; }
+        }
+
+        /* ---------- Pagina galleria ---------- */
+        .gallery-page { display: none; padding-top: calc(76px + 64px); }
+        body.in-gallery .gallery-page { display: block; }
+        body.in-gallery .home { display: none; }
+
+        .back {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid var(--color-border);
-            padding-bottom: 3px;
-        }
-
-        .gallery-back:hover {
-            color: var(--color-accent);
-            border-bottom-color: var(--color-accent);
-        }
-
-        .gallery-header h1 {
-            font-size: clamp(2.6rem, 6vw, 4.5rem);
-            margin-bottom: var(--spacing-sm);
-            letter-spacing: -0.015em;
-        }
-
-        .gallery-header p {
-            font-size: 15px;
-            color: var(--color-text-light);
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .gallery-header .gallery-meta {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.18em;
+            gap: 12px;
+            font-family: var(--mono);
+            font-size: 12.5px;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--color-accent);
-            margin-top: var(--spacing-sm);
-            display: flex;
+            color: var(--bone-2);
+            transition: color 250ms ease;
+        }
+
+        .back:hover { color: var(--gold); }
+        .back svg { width: 16px; height: 16px; }
+
+        .g-head {
+            display: grid;
+            grid-template-columns: 1fr minmax(260px, 420px);
+            gap: 32px 48px;
             align-items: center;
-            justify-content: center;
-            gap: 14px;
+            margin: 44px 0 28px;
         }
 
-        .gallery-header .gallery-meta::before,
-        .gallery-header .gallery-meta::after {
-            content: '';
-            width: 36px;
-            height: 1px;
-            background: var(--color-border);
+        .g-title {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(72px, 13vw, 190px);
+            line-height: 0.9;
+            letter-spacing: -0.01em;
         }
 
-        /* Mosaico editoriale: ogni foto mantiene le sue proporzioni native */
-        .gallery-grid {
-            columns: 3;
-            column-gap: 12px;
-            margin-top: var(--spacing-lg);
-            counter-reset: shot;
+        .g-title em { font-style: italic; color: var(--gold); }
+
+        .g-desc { font-size: 16.5px; line-height: 1.7; }
+
+        .g-for {
+            margin-top: 18px;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            line-height: 1.9;
+            text-transform: uppercase;
+            color: var(--bone-2);
         }
 
-        @media (max-width: 1000px) {
-            .gallery-grid {
-                columns: 2;
-            }
+        .tabs {
+            display: flex;
+            gap: 32px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 48px;
+            overflow-x: auto;
         }
 
-        @media (max-width: 600px) {
-            .gallery-grid {
-                columns: 1;
-            }
+        .tabs a {
+            flex: 0 0 auto;
+            font-family: var(--mono);
+            font-size: 12.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bone-2);
+            padding: 0 0 16px;
+            border-bottom: 1px solid transparent;
+            margin-bottom: -1px;
+            transition: color 250ms ease;
         }
 
-        .gallery-item {
-            border-radius: 0;
-            overflow: hidden;
-            background: var(--color-surface);
-            cursor: pointer;
-            position: relative;
-            counter-increment: shot;
-            break-inside: avoid;
-            margin-bottom: 12px;
+        .tabs a:hover { color: var(--bone); }
+        .tabs a[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
+
+        .g-feature { margin-bottom: 56px; }
+        .g-feature .frame { aspect-ratio: 2.05 / 1; }
+
+        .g-grid { columns: 3; column-gap: 16px; }
+        .g-grid .shot { break-inside: avoid; margin-bottom: 30px; }
+        .g-grid .shot img { height: auto; }
+
+        .g-cta {
+            margin-top: var(--section);
+            background: var(--surface);
+            border-top: 1px solid var(--line);
+            padding: clamp(72px, 8vw, 116px) 0;
         }
 
-        .gallery-item img {
+        .g-cta .wrap {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .g-cta .title { font-size: clamp(48px, 6.3vw, 90px); margin-top: 18px; }
+
+        .g-foot {
             width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 600ms cubic-bezier(0.2, 0.6, 0.2, 1), opacity 300ms ease;
+            margin-top: 72px;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 36px 0;
+            border-top: 1px solid var(--line);
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--bone-2);
         }
 
-        /* Tocco cromatico all'hover, coerente con le card in home */
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background: linear-gradient(165deg, rgba(31, 61, 77, 0.3), rgba(14, 14, 14, 0) 65%);
-            opacity: 0;
-            transition: opacity 500ms ease;
-            pointer-events: none;
+        @media (max-width: 900px) {
+            .g-head { grid-template-columns: 1fr; }
+            .g-grid { columns: 2; }
         }
 
-        .gallery-item:hover::before {
-            opacity: 1;
+        @media (max-width: 560px) {
+            .gallery-page { padding-top: calc(76px + 32px); }
+            .g-feature .frame { aspect-ratio: 4 / 5; }
+            .g-grid { columns: 1; }
+            .g-cta .btn { width: 100%; }
         }
 
-        /* Numerazione da provino a contatto */
-        .gallery-item::after {
-            content: 'N°' counter(shot, decimal-leading-zero);
-            position: absolute;
-            left: 12px;
-            bottom: 12px;
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 0.16em;
-            color: var(--color-text);
-            background: rgba(14, 14, 14, 0.72);
-            padding: 5px 9px;
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 300ms ease, transform 300ms ease;
-            pointer-events: none;
-        }
-
-        .gallery-item:hover::after {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.03);
-            opacity: 0.88;
-        }
-
-        /* Lightbox */
+        /* ---------- Lightbox ---------- */
         .lightbox {
             position: fixed;
             inset: 0;
+            z-index: 300;
+            background: rgba(10, 8, 6, 0.97);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 999;
         }
 
-        .lightbox.active {
-            display: flex;
-        }
+        .lightbox.active { display: flex; }
 
-        .lightbox-backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(5, 5, 5, 0.93);
-        }
-
-        .lightbox-content {
+        .lb-frame {
             position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
-            z-index: 1;
+            padding: 14px;
+            max-width: calc(100vw - 160px);
         }
 
-        /* Mirino sul lightbox */
-        .lightbox-content::before,
-        .lightbox-content::after {
+        .lb-frame img {
+            max-width: 100%;
+            max-height: calc(100vh - 140px);
+            object-fit: contain;
+        }
+
+        .lb-frame::before, .lb-frame::after {
             content: '';
             position: absolute;
             width: 26px;
             height: 26px;
-            pointer-events: none;
+            border: 0 solid var(--gold);
         }
+        .lb-frame::before { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+        .lb-frame::after { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
 
-        .lightbox-content::before {
-            top: -14px;
-            left: -14px;
-            border-top: 1px solid var(--color-accent);
-            border-left: 1px solid var(--color-accent);
-        }
-
-        .lightbox-content::after {
-            bottom: -14px;
-            right: -14px;
-            border-bottom: 1px solid var(--color-accent);
-            border-right: 1px solid var(--color-accent);
-        }
-
-        .lightbox-content img {
-            display: block;
-            max-width: 100%;
-            max-height: 90vh;
-        }
-
-        /* Controlli lightbox */
-        .lightbox-nav,
-        .lightbox-close {
+        .lb-btn {
             position: absolute;
-            z-index: 2;
-            background: rgba(14, 14, 14, 0.6);
-            border: 1px solid var(--color-border);
-            color: var(--color-text);
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            font-size: 22px;
-            line-height: 1;
-            cursor: pointer;
+            width: 52px;
+            height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--line-strong);
+            background: rgba(14, 12, 10, 0.6);
             transition: border-color 250ms ease, color 250ms ease;
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
         }
 
-        .lightbox-nav:hover,
-        .lightbox-close:hover {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-        }
+        .lb-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .lb-btn svg { width: 20px; height: 20px; }
+        .lb-close { top: 20px; right: 20px; }
+        .lb-prev { left: 24px; top: 50%; transform: translateY(-50%); }
+        .lb-next { right: 24px; top: 50%; transform: translateY(-50%); }
 
-        .lightbox-prev {
-            left: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .lightbox-next {
-            right: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .lightbox-close {
-            top: 22px;
-            right: 22px;
-            font-size: 16px;
-        }
-
-        .lightbox-counter {
+        .lb-caption {
             position: absolute;
             bottom: 22px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            color: var(--color-text-light);
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bone-2);
         }
 
         @media (max-width: 768px) {
-            .lightbox-nav,
-            .lightbox-close {
-                width: 40px;
-                height: 40px;
-            }
-
-            .lightbox-prev { left: 10px; }
-            .lightbox-next { right: 10px; }
-            .lightbox-close { top: 10px; right: 10px; }
+            .lb-frame { max-width: 100vw; padding: 10px; }
+            .lb-frame img { max-height: calc(100vh - 180px); }
+            .lb-prev, .lb-next { top: auto; bottom: 64px; transform: none; }
+            .lb-close { top: 14px; right: 14px; }
         }
 
-        /* Footer */
-        footer {
-            background: var(--color-bg);
-            color: #8a857d;
-            padding: var(--spacing-lg) var(--spacing-md);
-            text-align: center;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            border-top: 1px solid var(--color-border);
+        /* ---------- Comparsa allo scroll ---------- */
+        body.js .reveal {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 900ms ease, transform 900ms cubic-bezier(0.2, 0.6, 0.2, 1);
         }
 
-        footer a {
-            color: var(--color-accent);
-            text-decoration: none;
-        }
+        body.js .reveal.in { opacity: 1; transform: none; }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        .section-divider {
-            position: relative;
-        }
-
-        /* CTA di fine galleria */
-        .gallery-cta {
-            text-align: center;
-            border-top: 1px solid var(--color-border);
-            margin-top: var(--spacing-xl);
-            padding-top: var(--spacing-xl);
-        }
-
-        .gallery-cta-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.6rem, 3vw, 2.4rem);
-            color: var(--color-text);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .gallery-cta-text {
-            font-size: 15px;
-            color: var(--color-text-light);
-            margin-bottom: var(--spacing-md);
-        }
-
-        /* Footer esteso */
-        footer .footer-links {
-            margin-top: var(--spacing-sm);
-        }
-
-        footer .footer-links a {
-            color: var(--color-text-light);
-            transition: color 250ms ease;
-        }
-
-        footer .footer-links a:hover {
-            color: var(--color-accent);
-            text-decoration: none;
-        }
-
-        footer .footer-update {
-            margin-top: var(--spacing-sm);
-            color: #807b73;
-            font-size: 10px;
-        }
-
-        footer .footer-piva {
-            margin-top: var(--spacing-sm);
-            color: var(--color-text-light);
-        }
-
-        /* Accessibilità: focus visibile da tastiera */
-        a:focus-visible,
-        button:focus-visible {
-            outline: 2px solid var(--color-accent);
-            outline-offset: 3px;
-        }
-
-        /* Accessibilità: rispetto delle preferenze di riduzione del movimento */
         @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            .hero-image img,
-            .hero-ticker,
-            .hero-tagline,
-            .hero .location,
-            .hero h1,
-            .hero .subtitle,
-            .cta-buttons,
-            .hero-scroll,
-            .hero-scroll::after {
-                animation: none;
-            }
-
-            body.js .reveal {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-
-            .portfolio-card-image,
-            .gallery-item img,
-            .vf {
-                transition: none;
-            }
+            html { scroll-behavior: auto; }
+            body.js .reveal { opacity: 1; transform: none; transition: none; }
+            .hero-figure { animation: none; }
+            .world-img, .shot img, .extra-thumbs img, .vf::before, .vf::after { transition: none; }
         }
-
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <ul class="nav-links">
-            <li><a href="#home" class="nav-link" data-section="home"><span>Home</span></a></li>
-            <li><a href="#mini-mostra" class="nav-link" data-section="mini-mostra"><span>Lavori</span></a></li>
-            <li><a href="#come-lavoro" class="nav-link" data-section="come-lavoro"><span>Come Lavoro</span></a></li>
-            <li><a href="#about" class="nav-link" data-section="about"><span>Chi Sono</span></a></li>
-            <li><a href="#contact" class="nav-link" data-section="contact"><span>Contatti</span></a></li>
-        </ul>
-    </nav>
+    <svg class="sprite" aria-hidden="true">
+        <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z"/></symbol>
+        <symbol id="i-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+        <symbol id="i-left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M20 12H5m6-6-6 6 6 6"/></symbol>
+        <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 4v15m-6-6 6 6 6-6"/></symbol>
+        <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+    </svg>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-image">
-            <img src="images/sito/hero.jpg" alt="Mattia Buoli fotografo a Mantova" fetchpriority="high">
-        </div>
-        <div class="hero-frame"></div>
-        <p class="hero-tagline">Immagini che raccontano.<br>Risultati che restano.</p>
-        <div class="container">
-            <p class="hero-ticker">Business &amp; Eventi · Catering · Motorsport</p>
-            <p class="location">Mantova · 45.15°N 10.79°E</p>
-            <h1>Mattia Buoli</h1>
-            <p class="subtitle">Fotografo professionista — <span class="accent-italic">Business &amp; Eventi</span>, <span class="accent-italic">Motorsport</span>. Mantova e provincia.</p>
-            <div class="cta-buttons">
-                <a href="#mini-mostra" class="btn btn-primary">Guarda i miei lavori</a>
-                <a href="#contact" class="btn btn-secondary">Contattami</a>
-            </div>
-        </div>
-        <div class="hero-scroll">Scroll</div>
-    </section>
-
-    <!-- Portfolio Grid (Tutte le gallerie) -->
-    <section class="portfolio" id="mini-mostra">
-        <div class="side-index">01 — Portfolio</div>
-        <div class="container">
-            <div class="portfolio-header reveal">
-                <p class="section-kicker">01 — Portfolio</p>
-                <h2>Lavori <span class="accent-italic">selezionati</span></h2>
-                <p class="portfolio-intro">Un assaggio dei miei ultimi scatti, prima ancora di scegliere dove guardare.</p>
-            </div>
-            <div class="divider"></div>
-
-            <div class="filmstrip reveal">
-                <div class="filmstrip-track" id="filmstrip-track">
-                    <!-- riempita in automatico con le prime foto di Business e Motorsport (vedi riempiFilmstrip) -->
-                </div>
-            </div>
-
-            <!-- Le due specialità: card grandi (cartelle FOTO/Business e eventi, FOTO/Motorsport) -->
-            <div class="portfolio-grid">
-                <div class="portfolio-card gallery-card reveal" data-gallery="Business" onclick="openGallery('Business');">
-                    <div class="portfolio-card-image"></div>
-                    <div class="vf"></div>
-                    <div class="portfolio-card-content">
-                        <h3>Business &amp; Eventi</h3>
-                        <p>Aziende, eventi e catering: spazi, persone e prodotti raccontati con cura.</p>
-                        <a href="#" class="btn-small" onclick="event.preventDefault();">Esplora la galleria</a>
-                    </div>
-                </div>
-                <div class="portfolio-card gallery-card portfolio-card--motorsport reveal" data-gallery="Motori" onclick="openGallery('Motori');">
-                    <div class="portfolio-card-image"></div>
-                    <div class="vf"></div>
-                    <div class="portfolio-card-content">
-                        <h3>Motorsport</h3>
-                        <p>Auto, moto e motori raccontati con passione, dettagli e una luce cinematografica.</p>
-                        <a href="#" class="btn-small" onclick="event.preventDefault();">Esplora la galleria</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Galleria secondaria (FOTO/Extra): lavori occasionali, volutamente più discreta delle due card -->
-            <a href="#galleria-Extra" class="extra-row reveal" id="extra-row" onclick="event.preventDefault(); openGallery('Extra');">
-                <div class="extra-thumbs" id="extra-thumbs" aria-hidden="true"></div>
-                <div class="extra-text">
-                    <p class="extra-kicker">Extra</p>
-                    <h3>Non solo aziende e motori</h3>
-                    <p>Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente.</p>
-                </div>
-                <span class="btn-small">Vedi la galleria</span>
+    <!-- Header -->
+    <header class="site-header" id="header">
+        <div class="wrap header-inner">
+            <a href="#home" class="brand" data-home>
+                <span class="brand-name">Mattia Buoli</span>
+                <span class="brand-sub">Fotografo — Mantova</span>
             </a>
+            <nav aria-label="Menu principale">
+                <ul class="nav">
+                    <li><a href="#lavori" data-section="lavori">Lavori</a></li>
+                    <li><a href="#metodo" data-section="metodo">Metodo</a></li>
+                    <li><a href="#chi-sono" data-section="chi-sono">Chi sono</a></li>
+                    <li><a href="#contatti" data-section="contatti">Contatti</a></li>
+                </ul>
+            </nav>
+            <a href="#contatti" class="btn header-cta" data-section="contatti">Parliamone</a>
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Apri il menu"><span></span><span></span></button>
         </div>
-    </section>
+    </header>
 
+    <div class="mobile-menu" id="mobile-menu" hidden>
+        <a class="mm-link" href="#lavori" data-section="lavori">Lavori</a>
+        <a class="mm-link" href="#metodo" data-section="metodo">Metodo</a>
+        <a class="mm-link" href="#chi-sono" data-section="chi-sono">Chi sono</a>
+        <a class="mm-link" href="#contatti" data-section="contatti">Contatti</a>
+        <a class="btn btn-gold" data-wa="sito" href="#"><svg aria-hidden="true"><use href="#i-chat"/></svg>Scrivimi su WhatsApp</a>
+    </div>
 
-    <!-- Come Lavoro Section -->
-    <section class="come-lavoro section-divider" id="come-lavoro">
-        <div class="side-index">02 — Metodo</div>
-        <div class="container">
-            <div class="come-lavoro-header reveal">
-                <p class="section-kicker">02 — Metodo</p>
-                <h2>Come Lavoro</h2>
-            </div>
-            <div class="divider"></div>
-            <div class="steps-grid">
-                <div class="step reveal">
-                    <div class="step-number">01</div>
-                    <h3>Ci sentiamo</h3>
-                    <p>Mi scrivi su WhatsApp o via email: mi racconti cosa vuoi fotografare, il mood, gli obiettivi. Ti ascolto e ti consiglio, con un piano chiaro fin da subito — niente fretta, ma niente lasciato al caso.</p>
-                </div>
-                <div class="step reveal">
-                    <div class="step-number">02</div>
-                    <h3>Pianifichiamo</h3>
-                    <p>Insieme scegliamo location, orario e stile. Penso io al dettaglio tecnico, tu pensi a stare a tuo agio: tempi e risultati attesi sono chiari da subito, per iscritto se serve.</p>
-                </div>
-                <div class="step reveal">
-                    <div class="step-number">03</div>
-                    <h3>Scatto e consegno</h3>
-                    <p>Sessione fluida e naturale, mai rigida. Editing preciso, stile coerente con il resto del portfolio. Foto pronte in una settimana, consegna tramite galleria online privata.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <main>
+    <div class="home">
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="wrap">
+                <h1 class="hero-name"><span class="first">Mattia</span> <span class="last">Buoli</span></h1>
+                <picture>
+                    <source srcset="images/sito/hero-cutout.webp" type="image/webp">
+                    <img class="hero-figure" src="images/sito/hero-cutout.png" alt="" width="577" height="702" fetchpriority="high">
+                </picture>
+                <p class="hero-coords">45.15°N — 10.79°E<br>Lombardia, Italia</p>
 
-    <!-- About Section -->
-    <section class="about section-divider" id="about">
-        <div class="side-index">03 — Chi sono</div>
-        <div class="container">
-            <div class="about-image reveal">
-                <img src="images/sito/profile.jpg" alt="Ritratto di Mattia Buoli fotografo" loading="lazy">
-            </div>
-            <div class="about-content reveal">
-                <p class="section-kicker">03 — Chi sono</p>
-                <h2>Chi Sono</h2>
-                <p>Sono Mattia, fotografo professionista basato a Pegognaga, in provincia di Mantova. Mi sono specializzato in due mondi che sento miei: la fotografia per aziende ed eventi, e il motorsport, la mia più grande passione — due anime dello stesso modo di lavorare.</p>
-                <p>Creo immagini calde, emozionali e cinematografiche, con la cura per il dettaglio che fa la differenza tra una foto e un ricordo. Mi piace lavorare con persone e attività che credono nell'autenticità.</p>
-                <div class="philosophy">
-                    <h3>I Miei Valori</h3>
-                    <p>
-                        <strong>Energia:</strong> dinamismo e passione in ogni progetto. <br>
-                        <strong>Trasparenza:</strong> niente sorprese, tutto chiaro da subito. <br>
-                        <strong>Precisione:</strong> dettagli curati, deadline rispettate, qualità garantita.
+                <div class="hero-copy">
+                    <p class="kicker">Business &amp; Eventi · Motorsport</p>
+                    <p class="hero-claim">Fotografia per aziende che lavorano bene — <em>dal ristorante al paddock.</em></p>
+                    <p class="hero-text">
+                        <span class="d">Racconto attività, eventi e motorsport con immagini calde e cinematografiche. Ti seguo dal primo messaggio alla consegna: foto pronte in una settimana.</span>
+                        <span class="m">Immagini calde e cinematografiche per attività, eventi e motorsport. Foto pronte in una settimana.</span>
                     </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-gold" data-wa="sito" href="#"><svg aria-hidden="true"><use href="#i-chat"/></svg>Scrivimi su WhatsApp</a>
+                        <a class="btn" href="#lavori">Guarda i lavori <svg aria-hidden="true"><use href="#i-down"/></svg></a>
+                    </div>
+                </div>
+                <p class="hero-reply">Rispondo entro 24 ore</p>
+            </div>
+        </section>
+
+        <!-- Clienti -->
+        <section class="clients" aria-label="Clienti">
+            <div class="wrap">
+                <p class="kicker">Hanno scelto di lavorare con me</p>
+                <!-- clienti reali dal database "Lavori" su Notion: aziende con lavori consegnati, in ordine di numero di lavori -->
+                <ul class="clients-list">
+                    <li>ByTiffany</li>
+                    <li>Wegloo</li>
+                    <li>Bar Venezia Mantova</li>
+                    <li>MarkThink</li>
+                    <li>Cherimoya</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 01 Cosa faccio -->
+        <section class="section" id="lavori">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div>
+                        <p class="kicker">01 — Cosa faccio</p>
+                        <h2 class="title">Due mondi,<br><em>un solo sguardo.</em></h2>
+                    </div>
+                    <p class="section-aside">Che sia la sala di un ristorante o un rettilineo, cerco la stessa cosa: la luce giusta, le persone vere, il dettaglio che fa capire chi sei.</p>
+                </div>
+
+                <!-- Le due specialità: cartelle FOTO/Business e eventi e FOTO/Motorsport (copertina = prima foto) -->
+                <div class="worlds">
+                    <a class="world vf reveal" href="#galleria-Business" data-gallery="Business">
+                        <div class="world-img"></div>
+                        <div class="world-body">
+                            <p class="world-num">N°01</p>
+                            <h3>Business &amp; Eventi</h3>
+                            <p><span class="d">Spazi, persone e prodotto per ristoranti, catering, artigiani e brand locali. Immagini pronte per sito, social e stampa.</span><span class="m">Ristoranti, catering, artigiani e brand locali.</span></p>
+                            <span class="link-arrow">Vedi la galleria <svg aria-hidden="true"><use href="#i-right"/></svg></span>
+                        </div>
+                    </a>
+                    <a class="world vf reveal" href="#galleria-Motori" data-gallery="Motori">
+                        <div class="world-img"></div>
+                        <div class="world-body">
+                            <p class="world-num">N°02</p>
+                            <h3>Motorsport</h3>
+                            <p><span class="d">Per team, concessionari, officine ed eventi del motore. La macchina, le persone dietro, e la velocità resa in un fotogramma.</span><span class="m">Team, concessionari, officine ed eventi del motore.</span></p>
+                            <span class="link-arrow">Vedi la galleria <svg aria-hidden="true"><use href="#i-right"/></svg></span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Galleria secondaria (FOTO/Extra): volutamente più discreta delle due specialità -->
+                <a class="extra-row reveal" id="extra-row" href="#galleria-Extra" data-gallery="Extra">
+                    <div class="extra-thumbs" id="extra-thumbs" aria-hidden="true"></div>
+                    <div class="extra-text">
+                        <p class="kicker">Extra</p>
+                        <h3>Non solo aziende e motori</h3>
+                        <p>Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente.</p>
+                    </div>
+                    <span class="link-arrow">Vedi la galleria <svg aria-hidden="true"><use href="#i-right"/></svg></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 02 Lavori selezionati -->
+        <section class="section section-tight" id="selezione">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div>
+                        <p class="kicker">02 — Lavori selezionati</p>
+                        <h2 class="title">Ogni foto,<br><em>una storia vera.</em></h2>
+                    </div>
+                    <a class="link-arrow head-link" href="#galleria-Business" data-gallery="Business">Tutte le gallerie <svg aria-hidden="true"><use href="#i-right"/></svg></a>
+                </div>
+                <!-- foto 2–5 di Business e 2–4 di Motorsport, alternate (vedi riempiSelezione) -->
+                <div class="mosaic" id="mosaic"></div>
+                <a class="btn mosaic-more" href="#galleria-Business" data-gallery="Business">Tutte le gallerie <svg aria-hidden="true"><use href="#i-right"/></svg></a>
+            </div>
+        </section>
+
+        <!-- 03 Come lavoro -->
+        <section class="section paper" id="metodo">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div>
+                        <p class="kicker">03 — Come lavoro</p>
+                        <h2 class="title">Tu pensi alla tua attività.<br><em>Al resto penso io.</em></h2>
+                    </div>
+                </div>
+                <div class="steps">
+                    <div class="step reveal">
+                        <p class="step-num">01</p>
+                        <h3>Ci sentiamo</h3>
+                        <p><span class="d">Mi scrivi su WhatsApp o via email e mi racconti cosa vuoi fotografare, il mood, gli obiettivi. Ti ascolto e ti propongo un piano chiaro.</span><span class="m">Mi racconti cosa vuoi fotografare. Ti propongo un piano chiaro.</span></p>
+                    </div>
+                    <div class="step reveal">
+                        <p class="step-num">02</p>
+                        <h3>Pianifichiamo</h3>
+                        <p><span class="d">Scegliamo insieme location, orario e stile. Io penso alla parte tecnica, tu a stare a tuo agio. Tempi e risultati chiari da subito, per iscritto.</span><span class="m">Location, orario e stile. Tempi e risultati chiari, per iscritto.</span></p>
+                    </div>
+                    <div class="step reveal">
+                        <p class="step-num">03</p>
+                        <h3>Scatto e consegno</h3>
+                        <p><span class="d">Sessione fluida e naturale, editing preciso e coerente. Le foto arrivano in una galleria privata online, dove scegli le tue preferite.</span><span class="m">Galleria privata online in 7 giorni: scegli tu le preferite.</span></p>
+                    </div>
+                </div>
+                <ul class="promises reveal">
+                    <li>Risposta entro 24 ore</li>
+                    <li>Foto pronte in 7 giorni</li>
+                    <li>Galleria privata online</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 04 Chi sono -->
+        <section class="section" id="chi-sono">
+            <div class="wrap about">
+                <div class="about-img reveal">
+                    <img src="images/sito/profile.jpg" alt="Mattia Buoli mentre fotografa lungo il fiume" width="1616" height="1080" loading="lazy">
+                </div>
+                <div class="reveal">
+                    <p class="kicker">04 — Chi sono</p>
+                    <h2 class="title">Piacere,<br><em>Mattia.</em></h2>
+                    <div class="about-text">
+                        <p><span class="d">Sono un fotografo di Pegognaga, in provincia di Mantova. Lavoro in due mondi che sento miei: le aziende e gli eventi, e il motorsport, la mia più grande passione.</span><span class="m">Fotografo di Pegognaga (MN). Lavoro con aziende ed eventi, e nel motorsport, la mia più grande passione.</span></p>
+                        <p>Creo immagini calde ed emozionali, con la cura per il dettaglio che fa la differenza tra una foto e un ricordo. Mi piace lavorare con chi crede nell'autenticità.</p>
+                    </div>
+                    <ul class="values">
+                        <li><b>Energia</b><span>Dinamismo e passione in ogni progetto.</span></li>
+                        <li><b>Trasparenza</b><span>Niente sorprese, tutto chiaro da subito.</span></li>
+                        <li><b>Precisione</b><span>Dettagli curati, scadenze rispettate.</span></li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Reviews Section -->
-    <section class="reviews" id="reviews">
-        <div class="side-index">04 — Recensioni</div>
-        <div class="container">
-            <h2>Dicono di me</h2>
-            <div class="divider"></div>
-            <div class="reviews-grid">
-                <div class="review-card reveal">
-                    <div class="review-quote">Le foto comunque, sono perfette sei stato veramente molto bravo</div>
-                    <div class="review-author">Alessandro</div>
-                    <div class="review-type">Azienda - ByTiffany Mantova</div>
+        <!-- 05 Dicono di me -->
+        <section class="section review" id="recensioni">
+            <div class="wrap reveal">
+                <p class="kicker">05 — Dicono di me</p>
+                <blockquote>“Le foto comunque sono perfette, sei stato veramente molto bravo.”</blockquote>
+                <cite>Alessandro</cite>
+                <p class="where">ByTiffany — Mantova</p>
+            </div>
+        </section>
+
+        <!-- 06 Contatti -->
+        <section class="section contact" id="contatti">
+            <div class="wrap">
+                <div class="reveal">
+                    <p class="kicker">06 — Contatti</p>
+                    <h2 class="title">Parliamo del tuo<br><em>progetto.</em></h2>
+                    <p class="contact-intro"><span class="d">Raccontami la tua attività, il tuo evento o il tuo team. Ti rispondo entro 24 ore con un'idea concreta.</span><span class="m">Ti rispondo entro 24 ore con un'idea concreta.</span></p>
+                </div>
+                <div class="channels reveal">
+                    <a class="channel channel-gold" data-wa="sito" href="#">
+                        <span class="channel-top"><span>Il più veloce</span><span class="tel">334 849 3876</span><svg aria-hidden="true"><use href="#i-out"/></svg></span>
+                        <span><strong>WhatsApp</strong><small>334 849 3876</small></span>
+                    </a>
+                    <a class="channel" href="mailto:buolimattia@gmail.com">
+                        <span class="channel-top"><span>Per brief dettagliati</span><svg aria-hidden="true"><use href="#i-out"/></svg></span>
+                        <span><strong>Email</strong><small>buolimattia@gmail.com</small></span>
+                    </a>
+                    <a class="channel" href="https://instagram.com/quellochefalefotobelle" rel="noopener">
+                        <span class="channel-top"><span>Il dietro le quinte</span><svg aria-hidden="true"><use href="#i-out"/></svg></span>
+                        <span><strong>Instagram</strong><small>@quellochefalefotobelle</small></span>
+                    </a>
+                </div>
+                <footer class="footer">
+                    <p class="footer-mark">Buoli</p>
+                    <p class="footer-legal">© 2026 Mattia Buoli — Fotografo · Pegognaga (MN)<br>P.IVA 02793490208</p>
+                </footer>
+            </div>
+        </section>
+    </div>
+
+    <!-- Pagina galleria: una sola, riempita dalla galleria scelta (vedi apriGalleria) -->
+    <section class="gallery-page" id="gallery-page" aria-labelledby="g-title">
+        <div class="wrap">
+            <a href="#lavori" class="back" data-section="lavori"><svg aria-hidden="true"><use href="#i-left"/></svg>Tutti i lavori</a>
+            <div class="g-head">
+                <h1 class="g-title" id="g-title">Galleria</h1>
+                <div>
+                    <p class="g-desc" id="g-desc"></p>
+                    <p class="g-for" id="g-for"></p>
                 </div>
             </div>
+            <nav class="tabs" id="g-tabs" aria-label="Gallerie"></nav>
+            <div id="g-feature"></div>
+            <div class="g-grid" id="g-grid"></div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact section-divider" id="contact">
-        <div class="side-index">05 — Contatti</div>
-        <div class="container">
-            <div class="reveal">
-                <h2>Pronto per il Tuo <span class="accent-italic">Progetto</span>?</h2>
-                <p class="contact-intro">Business &amp; Eventi, Motorsport: scegli il tuo modo di contattarmi e raccontiamo insieme la tua storia o i tuoi progetti. <br> Rispondo entro 24 ore.</p>
+        <div class="g-cta">
+            <div class="wrap">
+                <div>
+                    <p class="kicker">Ti piace questo stile?</p>
+                    <h2 class="title" id="g-cta-title"><em>Raccontamelo.</em></h2>
+                </div>
+                <a class="btn btn-gold" id="g-cta-btn" href="#"><svg aria-hidden="true"><use href="#i-chat"/></svg>Parliamone su WhatsApp</a>
             </div>
-
-            <div class="contact-cards-wrapper">
-                <a href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20il%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico." class="contact-card whatsapp-card reveal">
-                    <h3>WhatsApp</h3>
-                    <p class="contact-card-text">Il più veloce. Scrivi direttamente e rispondo subito.</p>
-                    <div class="contact-card-cta">Mandami un messaggio</div>
-                </a>
-
-                <a href="mailto:buolimattia@gmail.com" class="contact-card email-card reveal">
-                    <h3>Email</h3>
-                    <p class="contact-card-text">Per brief dettagliati e progetti importanti.</p>
-                    <div class="contact-card-cta">Scrivi una Email</div>
-                </a>
-
-                <a href="https://instagram.com/quellochefalefotobelle" class="contact-card instagram-card reveal">
-                    <h3>Instagram</h3>
-                    <p class="contact-card-text">Vedi altri lavori e resta aggiornato.</p>
-                    <div class="contact-card-cta">Vai al Profilo</div>
-                </a>
+            <div class="wrap">
+                <p class="g-foot"><span>© 2026 Mattia Buoli — Fotografo · Pegognaga (MN)</span><span>Rispondo entro 24 ore</span></p>
             </div>
         </div>
     </section>
+    </main>
 
-    <!-- Gallery Pages - Popolate dinamicamente -->
-    <div class="gallery-page" id="gallery-Business">
-        <div class="container">
-            <div class="gallery-header">
-                <a href="#" class="gallery-back" onclick="closeGallery(); return false;">← Torna ai Lavori</a>
-                <h1 id="gallery-Business-title">Business &amp; Eventi</h1>
-                <p id="gallery-Business-desc">Aziende, eventi e catering: spazi, persone e prodotti raccontati con luce calda e cura del dettaglio.</p>
-                <p class="gallery-meta" id="gallery-Business-meta"></p>
-            </div>
-            <div class="gallery-grid" id="grid-Business"></div>
-            <div class="gallery-cta">
-                <p class="gallery-cta-title">Ti piace questo stile?</p>
-                <p class="gallery-cta-text">Raccontami la tua attività o il tuo evento: rispondo entro 24 ore.</p>
-                <a class="btn btn-primary" href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Business%20%26%20Eventi%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico.">Parliamone su WhatsApp</a>
-            </div>
-        </div>
+    <!-- Barra fissa su telefono -->
+    <div class="mobile-bar" id="mobile-bar">
+        <p>Rispondo<br>entro 24 ore</p>
+        <a class="btn btn-gold" data-wa="sito" href="#"><svg aria-hidden="true"><use href="#i-chat"/></svg>Scrivimi</a>
     </div>
 
-    <div class="gallery-page gallery-page--motorsport" id="gallery-Motori">
-        <div class="container">
-            <div class="gallery-header">
-                <a href="#" class="gallery-back" onclick="closeGallery(); return false;">← Torna ai Lavori</a>
-                <h1 id="gallery-Motori-title">Motorsport</h1>
-                <p id="gallery-Motori-desc">Auto, moto e motorsport raccontati con dinamismo, dettagli e stile.</p>
-                <p class="gallery-meta" id="gallery-Motori-meta"></p>
-            </div>
-            <div class="gallery-grid" id="grid-Motori"></div>
-            <div class="gallery-cta">
-                <p class="gallery-cta-title">Ti piace questo stile?</p>
-                <p class="gallery-cta-text">Raccontami il tuo progetto: rispondo entro 24 ore.</p>
-                <a class="btn btn-primary" href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Motorsport%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico%20per%20auto%20o%20moto.">Parliamone su WhatsApp</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="gallery-page" id="gallery-Extra">
-        <div class="container">
-            <div class="gallery-header">
-                <a href="#" class="gallery-back" onclick="closeGallery(); return false;">← Torna ai Lavori</a>
-                <h1 id="gallery-Extra-title">Extra</h1>
-                <p id="gallery-Extra-desc">Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente.</p>
-                <p class="gallery-meta" id="gallery-Extra-meta"></p>
-            </div>
-            <div class="gallery-grid" id="grid-Extra"></div>
-            <div class="gallery-cta">
-                <p class="gallery-cta-title">Ti piace questo stile?</p>
-                <p class="gallery-cta-text">Hai in mente qualcosa di diverso? Scrivimi e vediamo insieme se fa per me: rispondo entro 24 ore.</p>
-                <a class="btn btn-primary" href="https://wa.me/393348493876?text=Ciao%20Mattia%2C%20ho%20visto%20la%20galleria%20Extra%20sul%20tuo%20sito%20e%20vorrei%20informazioni%20per%20un%20servizio%20fotografico.">Parliamone su WhatsApp</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Mattia Buoli — Fotografo Professionista, Pegognaga (Mantova) | Energia • Trasparenza • Precisione.</p>
-        <p class="footer-piva">P.IVA 02793490208</p>
-        <p class="footer-links"><a href="mailto:buolimattia@gmail.com">buolimattia@gmail.com</a> &nbsp;·&nbsp; <a href="https://instagram.com/quellochefalefotobelle">@quellochefalefotobelle</a></p>
-        <p class="footer-update">Ultimo aggiornamento — 10.2026</p>
-    </footer>
-
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Foto ingrandita">
-        <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
-        <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="Chiudi">✕</button>
-        <button type="button" class="lightbox-nav lightbox-prev" onclick="lightboxPrev()" aria-label="Foto precedente">‹</button>
-        <div class="lightbox-content">
-            <img id="lightbox-image" alt="">
-        </div>
-        <button type="button" class="lightbox-nav lightbox-next" onclick="lightboxNext()" aria-label="Foto successiva">›</button>
-        <div class="lightbox-counter" id="lightbox-counter"></div>
+    <!-- Foto ingrandita -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ingrandita">
+        <div class="lb-frame"><img id="lb-img" alt=""></div>
+        <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Chiudi"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+        <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Foto precedente"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
+        <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Foto successiva"><svg aria-hidden="true"><use href="#i-right"/></svg></button>
+        <p class="lb-caption" id="lb-caption"></p>
     </div>
 
     <script src="images/gallerie.js"></script>
     <script>
-        // === CONFIGURAZIONE GALLERIE ===
+        // ===================================================================
+        // GALLERIE — le foto arrivano da images/gallerie.js, generato dalla
+        // cartella FOTO/ (vedi COME-AGGIUNGERE-FOTO.md). Ordine = nomi file,
+        // didascalia = nome del file senza numero.
+        // ===================================================================
+        const WA = 'https://wa.me/393348493876?text=';
+        const MSG = {
+            sito: 'Ciao Mattia, ho visto il tuo sito e vorrei informazioni per un servizio fotografico.',
+            Business: 'Ciao Mattia, ho visto la galleria Business & Eventi sul tuo sito e vorrei informazioni per un servizio fotografico per la mia attività o un evento.',
+            Motori: 'Ciao Mattia, ho visto la galleria Motorsport sul tuo sito e vorrei informazioni per un servizio fotografico.',
+            Extra: 'Ciao Mattia, ho visto la galleria Extra sul tuo sito e vorrei informazioni per un servizio fotografico.'
+        };
+
         const galleryConfig = {
             Business: {
-                folderName: "business",
-                title: "Business & Eventi",
-                desc: "Aziende, eventi e catering: spazi, persone e prodotti raccontati con luce calda e cura del dettaglio."
+                folderName: 'business',
+                tab: 'Business & Eventi',
+                cat: 'Business',
+                title: 'Business &amp; <em>Eventi</em>',
+                desc: 'Spazi, persone e prodotto per ristoranti, catering, artigiani e brand locali. Immagini pronte per sito, social e stampa.',
+                per: 'Per: ristoranti · catering · artigiani · brand locali · eventi',
+                cta: 'Hai un locale, un\'attività<br>o un evento? <em>Raccontamelo.</em>'
             },
             Motori: {
-                folderName: "motorsport",
-                title: "Motorsport",
-                desc: "Auto, moto e motorsport raccontati con dinamismo, dettagli e stile."
+                folderName: 'motorsport',
+                tab: 'Motorsport',
+                cat: 'Motorsport',
+                title: 'Motor<em>sport</em>',
+                desc: 'Auto, moto e motori raccontati con dinamismo e una luce cinematografica. La macchina, le persone che ci lavorano, la velocità.',
+                per: 'Per: team · concessionari · officine · eventi · brand del motore',
+                cta: 'Hai un team, un\'auto<br>o un evento? <em>Raccontamelo.</em>'
             },
             Extra: {
-                folderName: "extra",
-                title: "Extra",
-                desc: "Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente."
+                folderName: 'extra',
+                tab: 'Extra',
+                cat: 'Extra',
+                title: '<em>Extra</em>',
+                desc: 'Non è la mia specialità, ma capita: altri lavori fuori dai soliti, cose che faccio più raramente.',
+                per: '',
+                cta: 'Hai in mente qualcosa<br>di diverso? <em>Raccontamelo.</em>'
             }
         };
 
-        // vecchi link condivisi (sito precedente) → galleria attuale
+        // vecchi link condivisi (siti precedenti) → galleria attuale
         const galleryAlias = { Aziende: 'Business', Eventi: 'Business', Sport: 'Extra' };
 
-        // Le foto NON si elencano qui: arrivano da images/gallerie.js, generato in automatico
-        // dalla cartella FOTO/ (vedi COME-AGGIUNGERE-FOTO.md). Ordine = ordine dei nomi file.
         const GALLERIE = window.GALLERIE || {};
-        Object.values(galleryConfig).forEach(c => {
-            c.foto = GALLERIE[c.folderName] || [];
-            c.count = c.foto.length;
+        Object.values(galleryConfig).forEach(c => { c.foto = GALLERIE[c.folderName] || []; });
+
+        const $ = (id) => document.getElementById(id);
+        const numero = (i) => 'N°' + String(i + 1).padStart(2, '0');
+        const etichetta = (foto, i) => numero(i) + (foto.titolo ? ' — ' + foto.titolo : '');
+
+        document.querySelectorAll('[data-wa]').forEach(a => {
+            a.href = WA + encodeURIComponent(MSG[a.dataset.wa]);
+            a.rel = 'noopener';
         });
 
+        // Foto con didascalia "N°xx — Titolo"; click/Invio apre la foto ingrandita
+        function creaFoto(key, i, conCategoria) {
+            const foto = galleryConfig[key].foto[i];
+            const fig = document.createElement('figure');
+            fig.className = 'shot';
+            const frame = document.createElement('button');
+            frame.type = 'button';
+            frame.className = 'frame vf';
+            frame.setAttribute('aria-label', 'Ingrandisci ' + etichetta(foto, i));
+            const img = document.createElement('img');
+            img.src = foto.thumb;
+            img.alt = foto.titolo ? foto.titolo + ' — ' + galleryConfig[key].tab : galleryConfig[key].tab + ' ' + (i + 1);
+            img.width = foto.w;
+            img.height = foto.h;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            img.onerror = () => { img.onerror = null; img.src = foto.src; };
+            frame.appendChild(img);
+            const cap = document.createElement('figcaption');
+            cap.className = 'caption';
+            cap.innerHTML = '<span></span>' + (conCategoria ? '<span class="cat"></span>' : '');
+            cap.firstChild.textContent = etichetta(foto, i);
+            if (conCategoria) cap.lastChild.textContent = galleryConfig[key].cat;
+            fig.append(frame, cap);
+            frame.addEventListener('click', () => apriLightbox(key, i));
+            return fig;
+        }
 
-        function populateGalleries() {
-            Object.keys(galleryConfig).forEach(galleryKey => {
-                const config = galleryConfig[galleryKey];
-                const gridId = 'grid-' + galleryKey;
-                const grid = document.getElementById(gridId);
-
-                const titleEl = document.getElementById('gallery-' + galleryKey + '-title');
-                const descEl = document.getElementById('gallery-' + galleryKey + '-desc');
-
-                if (titleEl) titleEl.textContent = config.title;
-                if (descEl) descEl.textContent = config.desc;
-
-                const metaEl = document.getElementById('gallery-' + galleryKey + '-meta');
-                if (metaEl) metaEl.textContent = config.count + ' scatti';
-
-                if (!grid) return;
-
-                grid.innerHTML = '';
-                for (let i = 1; i <= config.count; i++) {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-
-                    const img = document.createElement('img');
-                    // miniatura leggera nella griglia, originale solo nel lightbox
-                    img.src = config.foto[i - 1].thumb;
-                    img.alt = `${config.title} ${i}`;
-                    img.loading = 'lazy';
-                    img.width = config.foto[i - 1].w;
-                    img.height = config.foto[i - 1].h;
-                    img.tabIndex = 0;
-                    img.setAttribute('role', 'button');
-                    img.onerror = () => {
-                        // fallback all'originale se la miniatura manca
-                        img.onerror = null;
-                        img.src = config.foto[i - 1].src;
-                    };
-
-                    const index = i - 1;
-                    img.addEventListener('click', () => {
-                        openLightbox(galleryKey, index);
-                    });
-                    img.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            openLightbox(galleryKey, index);
-                        }
-                    });
-
-                    item.appendChild(img);
-                    grid.appendChild(item);
-                }
+        // ---------- Home ----------
+        function riempiCopertine() {
+            document.querySelectorAll('.world[data-gallery]').forEach(card => {
+                const foto = galleryConfig[card.dataset.gallery].foto;
+                if (foto[0]) card.querySelector('.world-img').style.backgroundImage = `url('${foto[0].thumb}')`;
             });
         }
 
-        function setGalleryCovers() {
-            const cards = document.querySelectorAll('.gallery-card');
-
-            cards.forEach(card => {
-                const galleryKey = card.getAttribute('data-gallery'); // es. "Business"
-                const config = galleryConfig[galleryKey];
-                if (!config) return;
-
-                const coverPath = (config.foto[0] ? config.foto[0].thumb : '');
-                const imageDiv = card.querySelector('.portfolio-card-image');
-                if (imageDiv) {
-                    imageDiv.style.backgroundImage = `url('${coverPath}')`;
-                }
-            });
-        }
-
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section');
-
-        function updateActiveNav() {
-            let current = '';
-            // dentro una galleria le sezioni sono nascoste: nessuna voce va evidenziata
-            if (document.querySelector('.gallery-page.active')) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                return;
-            }
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === current) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        function toggleNavVisibility() {
-            const navElement = document.querySelector('nav');
-            const homeSection = document.getElementById('home');
-            const homeBottom = homeSection.offsetTop + homeSection.offsetHeight;
-
-            if (window.pageYOffset < homeBottom - 100) {
-                navElement.classList.remove('visible');
-            } else {
-                navElement.classList.add('visible');
-            }
-        }
-
-        function openGallery(galleryName, pushHistory = true) {
-            document.querySelectorAll('section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.querySelectorAll('.gallery-page').forEach(p => p.classList.remove('active'));
-            const page = document.getElementById('gallery-' + galleryName);
-            if (page) {
-                page.classList.add('active');
-            }
-            const navElement = document.querySelector('nav');
-            navElement.classList.remove('visible');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            window.scrollTo(0, 0);
-            // URL condivisibile: mattiabuoli.it/#galleria-Motori
-            if (pushHistory && location.hash !== '#galleria-' + galleryName) {
-                history.pushState({ gallery: galleryName }, '', '#galleria-' + galleryName);
-            }
-        }
-
-        function closeGallery(pushHistory = true) {
-            document.querySelectorAll('.gallery-page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.querySelectorAll('section').forEach(section => {
-                section.style.display = '';
-            });
-            window.scrollTo(0, 0);
-            toggleNavVisibility();
-            if (pushHistory && location.hash.startsWith('#galleria-')) {
-                history.pushState({}, '', location.pathname + location.search);
-            }
-        }
-
-        // Apre la galleria indicata nell'URL (link diretti e back/forward del browser)
-        function applyGalleryHash() {
-            const match = location.hash.match(/^#galleria-(\w+)$/);
-            const key = match && (galleryAlias[match[1]] || match[1]);
-            if (key && galleryConfig[key] && galleryConfig[key].count > 0) {
-                openGallery(key, false);
-            } else if (document.querySelector('.gallery-page.active')) {
-                closeGallery(false);
-            }
-        }
-
-        window.addEventListener('popstate', applyGalleryHash);
-
-        // === LIGHTBOX con navigazione ===
-        let lightboxList = [];
-        let lightboxIndex = 0;
-        let lightboxOpener = null;
-
-        function showLightboxImage() {
-            const item = lightboxList[lightboxIndex];
-            if (!item) return;
-            const lightboxImage = document.getElementById('lightbox-image');
-            const counter = document.getElementById('lightbox-counter');
-            lightboxImage.src = item.src;
-            lightboxImage.alt = item.alt;
-            counter.textContent = 'N°' + String(lightboxIndex + 1).padStart(2, '0') + ' / ' + lightboxList.length;
-            // precarica le foto adiacenti
-            [lightboxIndex + 1, lightboxIndex - 1].forEach(i => {
-                const n = (i + lightboxList.length) % lightboxList.length;
-                new Image().src = lightboxList[n].src;
-            });
-        }
-
-        function openLightbox(galleryKey, index) {
-            const config = galleryConfig[galleryKey];
-            if (!config) return;
-            lightboxList = [];
-            for (let i = 1; i <= config.count; i++) {
-                lightboxList.push({
-                    src: config.foto[i - 1].src,
-                    alt: `${config.title} ${i}`
-                });
-            }
-            lightboxIndex = index;
-            lightboxOpener = document.activeElement;
-            showLightboxImage();
-            document.getElementById('lightbox').classList.add('active');
-            document.querySelector('.lightbox-close').focus();
-        }
-
-        function lightboxNext() {
-            if (!lightboxList.length) return;
-            lightboxIndex = (lightboxIndex + 1) % lightboxList.length;
-            showLightboxImage();
-        }
-
-        function lightboxPrev() {
-            if (!lightboxList.length) return;
-            lightboxIndex = (lightboxIndex - 1 + lightboxList.length) % lightboxList.length;
-            showLightboxImage();
-        }
-
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightbox-image');
-            if (!lightbox.classList.contains('active')) return;
-            lightbox.classList.remove('active');
-            lightboxImage.removeAttribute('src');
-            // la tastiera torna sulla foto da cui si era partiti
-            if (lightboxOpener) lightboxOpener.focus();
-        }
-
-        // Tastiera: Esc chiude, frecce navigano
-        document.addEventListener('keydown', (e) => {
-            const lightboxActive = document.getElementById('lightbox').classList.contains('active');
-            if (e.key === 'Escape') {
-                closeLightbox();
-            } else if (lightboxActive && e.key === 'ArrowRight') {
-                lightboxNext();
-            } else if (lightboxActive && e.key === 'ArrowLeft') {
-                lightboxPrev();
-            }
-        });
-
-        // Swipe su mobile
-        let touchStartX = null;
-        document.getElementById('lightbox').addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].clientX;
-        }, { passive: true });
-        document.getElementById('lightbox').addEventListener('touchend', (e) => {
-            if (touchStartX === null) return;
-            const deltaX = e.changedTouches[0].clientX - touchStartX;
-            touchStartX = null;
-            if (Math.abs(deltaX) > 40) {
-                if (deltaX < 0) lightboxNext();
-                else lightboxPrev();
-            }
-        }, { passive: true });
-
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const currentGallery = document.querySelector('.gallery-page.active');
-                if (currentGallery) {
-                    e.preventDefault();
-                    closeGallery();
-                    setTimeout(() => {
-                        const sectionId = this.getAttribute('data-section');
-                        const section = document.getElementById(sectionId);
-                        if (section) {
-                            section.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }, 100);
-                }
-            });
-        });
-
-        window.addEventListener('scroll', updateActiveNav);
-        window.addEventListener('scroll', toggleNavVisibility);
-
-        // Striscia "Lavori selezionati": alterna le prime 6 foto di Business & Eventi e di Motorsport.
-        // Per cambiarle basta cambiare l'ordine dei file nelle cartelle FOTO/.
-        function riempiFilmstrip() {
-            const track = document.getElementById('filmstrip-track');
-            if (!track) return;
-            const a = galleryConfig.Business.foto.slice(0, 6), m = galleryConfig.Motori.foto.slice(0, 6);
-            const scelte = [];
-            for (let i = 0; i < Math.max(a.length, m.length); i++) {
-                if (a[i]) scelte.push({ f: a[i], t: 'Business' });
-                if (m[i]) scelte.push({ f: m[i], t: 'Motorsport' });
-            }
-            // due copie identiche per il loop continuo; la seconda è nascosta agli screen reader
-            [false, true].forEach(copia => scelte.forEach((x, i) => {
-                const item = document.createElement('div');
-                item.className = 'filmstrip-item';
-                if (copia) item.setAttribute('aria-hidden', 'true');
-                const img = document.createElement('img');
-                img.src = x.f.thumb;
-                img.alt = copia ? '' : `${x.t} — scatto ${i + 1}`;
-                img.loading = 'lazy';
-                item.appendChild(img);
-                track.appendChild(item);
-            }));
-        }
-
-        // Riga Extra: prime 3 foto della cartella FOTO/Extra; sparisce se la cartella è vuota
         function riempiExtra() {
-            const row = document.getElementById('extra-row');
             const foto = galleryConfig.Extra.foto;
-            if (!foto.length) { row.hidden = true; return; }
-            const box = document.getElementById('extra-thumbs');
+            if (!foto.length) { $('extra-row').hidden = true; return; }
             foto.slice(0, 3).forEach(f => {
                 const img = document.createElement('img');
                 img.src = f.thumb;
                 img.alt = '';
                 img.loading = 'lazy';
-                box.appendChild(img);
+                $('extra-thumbs').appendChild(img);
             });
         }
 
-        riempiFilmstrip();
+        // Lavori selezionati: foto 2–5 di Business e 2–4 di Motorsport (la 1 è già la copertina),
+        // nell'ordine B B M M B M B. Per cambiarle basta cambiare l'ordine dei file in FOTO/.
+        function riempiSelezione() {
+            const scelta = [['Business', 1], ['Business', 2], ['Motori', 1], ['Motori', 2], ['Business', 3], ['Motori', 3], ['Business', 4]]
+                .filter(([k, i]) => galleryConfig[k].foto[i]);
+            const box = $('mosaic');
+            scelta.forEach(([k, i], n) => {
+                const fig = creaFoto(k, i, true);
+                fig.classList.add('reveal');
+                // nel mosaico la numerazione è quella della selezione, non della galleria
+                fig.querySelector('.caption span').textContent = numero(n) + (galleryConfig[k].foto[i].titolo ? ' — ' + galleryConfig[k].foto[i].titolo : '');
+                box.appendChild(fig);
+            });
+            if (!scelta.length) $('selezione').hidden = true;
+        }
+
+        // ---------- Pagina galleria ----------
+        let galleriaAperta = null;
+
+        function apriGalleria(key, push = true) {
+            const c = galleryConfig[key];
+            if (!c || !c.foto.length) return;
+            galleriaAperta = key;
+            $('g-title').innerHTML = c.title;
+            $('g-desc').textContent = c.desc;
+            $('g-for').textContent = c.per;
+            $('g-for').hidden = !c.per;
+            $('g-cta-title').innerHTML = c.cta;
+            $('g-cta-btn').href = WA + encodeURIComponent(MSG[key]);
+
+            const tabs = $('g-tabs');
+            tabs.innerHTML = '';
+            Object.entries(galleryConfig).forEach(([k, g]) => {
+                if (!g.foto.length) return;
+                const a = document.createElement('a');
+                a.href = '#galleria-' + k;
+                a.dataset.gallery = k;
+                a.textContent = k === key ? `${g.tab} · ${g.foto.length}` : g.tab;
+                if (k === key) a.setAttribute('aria-current', 'page');
+                tabs.appendChild(a);
+            });
+
+            const feature = $('g-feature');
+            const grid = $('g-grid');
+            feature.innerHTML = '';
+            grid.innerHTML = '';
+            // foto grande in testa: la prima orizzontale (una verticale tagliata a 2:1 si rovina)
+            const grande = c.foto.findIndex(f => f.w > f.h);
+            if (grande >= 0) {
+                const fig = creaFoto(key, grande, true);
+                fig.classList.add('g-feature');
+                fig.querySelector('img').src = c.foto[grande].src;   // versione piena, non la miniatura
+                feature.appendChild(fig);
+            }
+            c.foto.forEach((f, i) => { if (i !== grande) grid.appendChild(creaFoto(key, i, false)); });
+
+            document.body.classList.add('in-gallery');
+            chiudiMenu();
+            window.scrollTo(0, 0);
+            aggiornaHeader();
+            aggiornaNav();
+            if (push && location.hash !== '#galleria-' + key) history.pushState({ gallery: key }, '', '#galleria-' + key);
+        }
+
+        function chiudiGalleria(push = true) {
+            if (!galleriaAperta) return;
+            galleriaAperta = null;
+            document.body.classList.remove('in-gallery');
+            if (push && location.hash.startsWith('#galleria-')) history.pushState({}, '', location.pathname + location.search);
+            aggiornaHeader();
+            aggiornaNav();
+        }
+
+        function leggiIndirizzo() {
+            const m = location.hash.match(/^#galleria-(\w+)$/);
+            const key = m && (galleryAlias[m[1]] || m[1]);
+            if (key && galleryConfig[key] && galleryConfig[key].foto.length) {
+                apriGalleria(key, false);
+            } else if (galleriaAperta) {
+                chiudiGalleria(false);
+            }
+        }
+
+        window.addEventListener('popstate', leggiIndirizzo);
+
+        // Tutti i link a una galleria (card, riga Extra, schede, "Tutte le gallerie")
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a[data-gallery]');
+            if (!a) return;
+            e.preventDefault();
+            apriGalleria(a.dataset.gallery);
+        });
+
+        // Link a una sezione della home: se sono in galleria, prima torno alla home
+        document.querySelectorAll('a[data-section], a[data-home]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                chiudiMenu();
+                if (!galleriaAperta) return;
+                e.preventDefault();
+                chiudiGalleria();
+                const id = a.dataset.section || 'home';
+                requestAnimationFrame(() => $(id).scrollIntoView());
+            });
+        });
+
+        // ---------- Header, menu, barra mobile ----------
+        const header = $('header');
+
+        function aggiornaHeader() {
+            header.classList.toggle('solid', !!galleriaAperta || window.scrollY > 40);
+            const bar = $('mobile-bar');
+            if (galleriaAperta) { bar.classList.add('show'); return; }
+            const oltreHero = window.scrollY > $('home').offsetHeight * 0.8;
+            const contatti = $('contatti').getBoundingClientRect().top < window.innerHeight;
+            bar.classList.toggle('show', oltreHero && !contatti);
+        }
+
+        function aggiornaNav() {
+            let attiva = '';
+            if (!galleriaAperta) {
+                ['lavori', 'metodo', 'chi-sono', 'contatti'].forEach(id => {
+                    if ($(id).getBoundingClientRect().top < window.innerHeight * 0.35) attiva = id;
+                });
+            } else {
+                attiva = 'lavori';
+            }
+            document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('active', a.dataset.section === attiva));
+        }
+
+        const toggle = $('menu-toggle');
+        const menu = $('mobile-menu');
+
+        function chiudiMenu() {
+            if (menu.hidden) return;
+            menu.hidden = true;
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Apri il menu');
+            document.body.style.overflow = '';
+            aggiornaHeader();
+        }
+
+        toggle.addEventListener('click', () => {
+            const apri = menu.hidden;
+            menu.hidden = !apri;
+            toggle.setAttribute('aria-expanded', String(apri));
+            toggle.setAttribute('aria-label', apri ? 'Chiudi il menu' : 'Apri il menu');
+            document.body.style.overflow = apri ? 'hidden' : '';
+            header.classList.add('solid');
+        });
+
+        window.addEventListener('scroll', () => { aggiornaHeader(); aggiornaNav(); }, { passive: true });
+        window.addEventListener('resize', () => { if (window.innerWidth > 900) chiudiMenu(); });
+
+        // ---------- Foto ingrandita ----------
+        let lbKey = null, lbIndex = 0, lbOpener = null;
+
+        function mostraFoto() {
+            const lista = galleryConfig[lbKey].foto;
+            const foto = lista[lbIndex];
+            const img = $('lb-img');
+            img.src = foto.src;
+            img.alt = foto.titolo || galleryConfig[lbKey].tab;
+            $('lb-caption').textContent = etichetta(foto, lbIndex) + '  /  ' + lista.length;
+            [lbIndex + 1, lbIndex - 1].forEach(i => { new Image().src = lista[(i + lista.length) % lista.length].src; });
+        }
+
+        function apriLightbox(key, index) {
+            lbKey = key;
+            lbIndex = index;
+            lbOpener = document.activeElement;
+            mostraFoto();
+            $('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            $('lb-close').focus();
+        }
+
+        function chiudiLightbox() {
+            if (!$('lightbox').classList.contains('active')) return;
+            $('lightbox').classList.remove('active');
+            $('lb-img').removeAttribute('src');
+            document.body.style.overflow = '';
+            if (lbOpener) lbOpener.focus();
+        }
+
+        function sposta(d) {
+            const n = galleryConfig[lbKey].foto.length;
+            lbIndex = (lbIndex + d + n) % n;
+            mostraFoto();
+        }
+
+        $('lb-close').addEventListener('click', chiudiLightbox);
+        $('lb-prev').addEventListener('click', () => sposta(-1));
+        $('lb-next').addEventListener('click', () => sposta(1));
+        $('lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') chiudiLightbox(); });
+
+        document.addEventListener('keydown', (e) => {
+            const lb = $('lightbox').classList.contains('active');
+            if (e.key === 'Escape') { if (lb) chiudiLightbox(); else chiudiMenu(); }
+            else if (lb && e.key === 'ArrowRight') sposta(1);
+            else if (lb && e.key === 'ArrowLeft') sposta(-1);
+        });
+
+        let touchX = null;
+        $('lightbox').addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+        $('lightbox').addEventListener('touchend', (e) => {
+            if (touchX === null) return;
+            const dx = e.changedTouches[0].clientX - touchX;
+            touchX = null;
+            if (Math.abs(dx) > 40) sposta(dx < 0 ? 1 : -1);
+        }, { passive: true });
+
+        // ---------- Avvio ----------
+        riempiCopertine();
         riempiExtra();
-        populateGalleries();
-        setGalleryCovers();
-        applyGalleryHash();
-        updateActiveNav();
-        toggleNavVisibility();
+        riempiSelezione();
+        leggiIndirizzo();
+        aggiornaHeader();
+        aggiornaNav();
     </script>
 
     <script>
-        // === PRESENTAZIONE: reveal allo scroll (nessuna logica funzionale) ===
+        // === PRESENTAZIONE: comparsa allo scroll (nessuna logica funzionale) ===
         document.body.classList.add('js');
-        const revealEls = Array.from(document.querySelectorAll('.reveal'));
-
-        function updateReveals() {
-            const limit = window.innerHeight - 40;
-            revealEls.forEach(el => {
-                if (!el.classList.contains('in') && el.getBoundingClientRect().top < limit) {
-                    el.classList.add('in');
-                }
-            });
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((voci) => {
+                voci.forEach(v => { if (v.isIntersecting) { v.target.classList.add('in'); io.unobserve(v.target); } });
+            }, { rootMargin: '0px 0px -8% 0px' });
+            document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
         }
-
-        window.addEventListener('scroll', updateReveals, { passive: true });
-        window.addEventListener('resize', updateReveals);
-        updateReveals();
     </script>
 
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f0d5e1649c69486798cca9db46cb2ec5"}'></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "f0d5e1649c69486798cca9db46cb2ec5"}'></script>
     <!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -1,112 +1,86 @@
-# Design System — mattiabuoli.it
+# Design System — mattiabuoli.it · v2 "Bronzo & Pellicola" (10.2026)
 
-Riferimento unico di tutto ciò che è stato usato per costruire il sito (il sito è `index.html`). Se cambia qualcosa nel codice, aggiorna anche questo file.
+Riferimento unico di come è costruito il sito (`index.html` e `404.html`). Le tavole originali in PDF stanno in `_design/tavole/` (solo sul Mac: 01 Home desktop, 02 Home mobile, 03 Galleria Motorsport, 04 Design system). Se cambia qualcosa nel codice, aggiorna anche questo file.
 
-## Colori
+> Nero caldo come una camera oscura, oro-bronzo come firma, carta per le pause. Le foto sono l'unico colore saturo della pagina.
 
-Tema scuro, con **due colori** in gerarchia chiara — un primario e un secondario, niente di più, per non fare confusione. Il carattere e la profondità vengono dalla rampa di sfumature dentro ciascuno dei due, non da altre tinte aggiunte.
+## Palette
 
-| Token | Hex | Ruolo |
-|---|---|---|
-| `--color-bg` | `#0e0e0e` | Sfondo di tutto il sito |
-| `--color-surface` | `#151515` | Sfondo di card, gallery-item |
-| `--color-text` | `#f2efe9` | Testo principale, titoli |
-| `--color-text-light` | `#9b968e` | Testo secondario, descrizioni |
-| `--color-border` | `#262626` | Separatori, bordi sottili |
+| Token CSS | Hex | Nome | Uso |
+|---|---|---|---|
+| `--ink` | `#0E0C0A` | Inchiostro | fondo pagina |
+| `--surface` | `#171410` | Superficie | contatti, CTA galleria, sfondo foto in caricamento |
+| `--line` | `#2E2820` | Linea | bordi, separatori |
+| `--line-strong` | `#5A4A33` | — | bordo dei bottoni secondari |
+| `--bone` | `#EFE6D6` | Osso | testo |
+| `--bone-2` | `#B8AE9C` | — | testo secondario |
+| `--paper` | `#EEE6D8` | Carta | l'unica sezione chiara (Come lavoro) |
+| `--paper-ink` / `--paper-ink-2` | `#1A1612` / `#4A4237` | — | testo su carta |
+| `--gold` | `#C9A46A` | **Oro — primario** | CTA, kicker, link, parola hero, corsivi |
+| `--gold-light` | `#E3CB9C` | Oro chiaro | hover |
+| `--bronze` | `#8E6A3E` | Bronzo | solo decorativo: ✦, dettagli (contrasto 4:1, non per testo piccolo) |
+| `--bronze-text` | `#A47E4C` | — | bronzo leggibile per testi piccoli su nero (categorie "BUSINESS"/"MOTORSPORT") |
+| `--bronze-dark` | `#7A5A32` | Bronzo scuro | oro su carta (kicker, numeri, corsivo) |
 
-**Primario — Azzurro** (tecnico, moderno, affidabile — la "voce" del sito ovunque non specificato altrimenti):
-
-| Token | Hex | Uso |
-|---|---|---|
-| **`--color-accent`** | `#6fa3bf` | Principale: nav, CTA, link, kicker |
-| `--color-accent-dark` | `#4a7891` | Hover/pressed |
-| `--color-accent-light` | `#a9cbdd` | Highlight acceso, selezione testo |
-| `--color-accent-muted` | `#3d5a68` | Dettaglio quieto: bordi segnaposto, numeri fantasma |
-| `--color-accent-deep` | `#1f3d4d` | Nota profonda/drammatica — usata sul pilastro **Motorsport** (stesso azzurro, non un terzo colore: solo più contrasto e carattere per quel mondo) |
-| `--color-accent-deep-dark` | `#142731` | Hover sulla nota profonda |
-
-**Secondario — Bronzo/ottone** (heritage, vintage, credibilità guadagnata — usato sempre come dettaglio, mai come campo di colore dominante):
-
-| Token | Hex | Uso |
-|---|---|---|
-| **`--color-heritage`** | `#b08a5c` | Principale: sezione "I Miei Valori" e "Dicono di me" |
-| `--color-heritage-dark` | `#8f6d45` | Hover/pressed |
-| `--color-heritage-light` | `#d9c3a0` | Nota delicata, quasi champagne |
-| `--color-heritage-deep` | `#5c4429` | Nota profonda, quasi espresso — per un contrasto più importante dove serve |
-
-**Regola d'uso**: azzurro = colore di base ovunque; bronzo = solo sui punti di credibilità/prova sociale (Valori, Recensioni). Il pilastro Motorsport non introduce un terzo colore: usa la stessa famiglia azzurro ma nella sua nota più profonda (`--color-accent-deep`), per dargli un'anima più drammatica senza rompere la gerarchia a due colori. Tecnicamente è una ridefinizione locale di `--color-accent`/`--color-accent-dark` dentro un contenitore specifico (`.philosophy`, `.reviews`, `.portfolio-card--motorsport`, `.gallery-page--motorsport`): tutto il resto (bottoni, link, mirino, numerazione) eredita la nota giusta senza toccare ogni singola regola.
+Contrasti verificati (WCAG AA): oro su inchiostro 8.4, osso-2 su inchiostro 8.9, bronzo scuro su carta 5.1, inchiostro su oro 8.4.
 
 ## Tipografia
 
-| Font | Ruolo | Pesi usati | Dove |
+| Font | Variabile | Ruolo | Note |
 |---|---|---|---|
-| **Fraunces** | Display / editoriale | 400, 500, 600 (+ 400 corsivo) | H1/H2/H3, titoli sezione, citazione recensione |
-| **Inter** | Testo | 400, 500, 600 | Body text, paragrafi, bottoni |
-| **Space Mono** | Monospace / dettagli editoriali | 400, 700 | Kicker ("01 — Portfolio"), etichette nav, numerazione foto, coordinate hero, footer |
+| **Instrument Serif** (+ corsivo) | `--serif` | Display: titoli, BUOLI, numeri dei passi, citazione, nomi canali | 500 · 240 · 104 · 64 · 44 px; caricato con `display=block` per non far "saltare" la scritta BUOLI |
+| **Archivo** (asse larghezza 100–125) | `--sans` | Testo e UI | 17 / 16 / 15 px · 400–600; il marchio "MATTIA BUOLI" usa larghezza 112% |
+| **IBM Plex Mono** | `--mono` | Dettagli: kicker, menu, didascalie N°, coordinate | 12–13 px, maiuscolo, spaziatura 0.12–0.18em |
 
-Caricati da Google Fonts in un'unica richiesta (vedi `<link>` in `<head>`), nessun font locale.
+## Regole
 
-## Spaziatura
+1. **L'oro è firma, non sfondo.** Parola hero, CTA, kicker, corsivi chiave. Mai grandi campiture (eccezione: il riquadro WhatsApp nei contatti).
+2. **Una parola in corsivo.** Ogni titolo ha al massimo una frase in corsivo oro (`<em>`): è la voce di Mattia.
+3. **Provino a contatto.** Ogni foto ha la sua didascalia `N°xx — Titolo` in mono. Grana pellicola su tutta la pagina.
+4. **Una pausa chiara.** Una sola sezione su carta per pagina (Come lavoro): dà respiro e fa risaltare il metodo.
+5. **Un solo bottone oro per schermata: è sempre WhatsApp.** In home l'header ha "Parliamone" a contorno; in galleria diventa oro (non c'è un altro oro in alto). La barra fissa su telefono compare solo dopo l'apertura e sparisce nei contatti.
 
-| Token | Valore |
-|---|---|
-| `--spacing-xs` | 8px |
-| `--spacing-sm` | 16px |
-| `--spacing-md` | 24px |
-| `--spacing-lg` | 48px |
-| `--spacing-xl` | 72px |
-| `--spacing-2xl` | 140px |
+## Componenti
 
-## Breakpoint
+- **Bottoni**: `.btn` (contorno `--line-strong`), `.btn-gold` (WhatsApp, icona chat), `.link-arrow` ("Vedi la galleria →").
+- **Mirino** (`.vf`): parentesi angolari oro in alto a sinistra e in basso a destra al passaggio/focus su card e foto. Anche nella foto ingrandita e nella 404.
+- **Kicker** (`.kicker`): mono oro maiuscolo, numerato per sezione ("01 — Cosa faccio").
+- **Didascalia** (`.caption`): `N°xx — TITOLO` a sinistra, categoria in `--bronze-text` a destra (solo mosaico e foto grande).
 
-| Larghezza | Dove si usa |
-|---|---|
-| 1000px | `.gallery-grid` passa da 3 a 2 colonne |
-| 900px | `.steps-grid` (Come Lavoro) passa a colonna singola |
-| 768px | Nav compatta, `.about` a colonna singola, lightbox più stretto, hero-scroll nascosto |
-| 600px | `.gallery-grid` a colonna singola |
+## Struttura della home
 
-## Struttura del portfolio (due specialità + Extra)
+| # | Sezione | id | Note |
+|---|---|---|---|
+| — | Hero | `#home` | "Mattia" corsivo + **BUOLI** gigante oro (h1), ritaglio `images/sito/hero-cutout.webp` (png di riserva) davanti alle lettere con sfumatura in basso, coordinate in alto a destra, claim "Fotografia per aziende che lavorano bene — *dal ristorante al paddock.*", WhatsApp oro + "Guarda i lavori" |
+| — | Clienti | — | "Hanno scelto di lavorare con me": ByTiffany ✦ Wegloo ✦ Bar Venezia Mantova ✦ MarkThink ✦ Cherimoya — presi dal database **Lavori** su Notion (aziende con lavori collegati, in ordine di numero di lavori; esclusi privati ed eventi di famiglia). Si aggiornano a mano |
+| 01 | Cosa faccio | `#lavori` | due card 4:5 (Business & Eventi, Motorsport) con copertina = prima foto della cartella; sotto la riga secondaria **Extra** (3 miniature, testo "Non è la mia specialità, ma capita…") |
+| 02 | Lavori selezionati | `#selezione` | mosaico di 7 foto (righe 7/5 · 4/8 · 5/4/3 colonne): foto 2–5 di Business e 2–4 di Motorsport nell'ordine B B M M B M B |
+| 03 | Come lavoro | `#metodo` | su carta; 3 passi con numeri serif, promesse ✦ in mono |
+| 04 | Chi sono | `#chi-sono` | foto `profile.jpg` + "Piacere, *Mattia.*" + tabella valori (su telefono diventano 3 etichette) |
+| 05 | Dicono di me | `#recensioni` | citazione corsiva centrata |
+| 06 | Contatti | `#contatti` | superficie con alone oro; "Parliamo del tuo *progetto.*"; 3 riquadri (WhatsApp oro, Email, Instagram); footer con "Buoli" oro e P.IVA |
 
-In home, sotto la filmstrip:
+Su telefono (≤768 px) alcuni testi hanno una versione più breve: nel codice `<span class="d">` (computer) e `<span class="m">` (telefono), come nella tavola mobile.
 
-- due **card grandi** affiancate (una colonna su mobile), le specialità:
-  - **Business & Eventi** (`Business`) — aziende, eventi, catering in un'unica galleria
-  - **Motorsport** (`Motori`) — nota azzurro profondo (`.portfolio-card--motorsport`)
-- sotto, una **riga secondaria** `.extra-row` per **Extra** (`Extra`): tre miniature sovrapposte, kicker, titolo "Non solo aziende e motori" e link. È volutamente più discreta delle card: raccoglie lavori occasionali (ritratti, squadre sportive…) che non sono la specialità. Se la cartella Extra è vuota la riga sparisce. Extra non entra nella filmstrip.
+## Pagina galleria
 
-I vecchi link del sito precedente restano validi tramite `galleryAlias`: `#galleria-Aziende` e `#galleria-Eventi` → Business, `#galleria-Sport` → Extra. Una galleria con 0 foto non si apre neanche da link diretto.
+Una sola pagina (`#gallery-page`) riempita da `apriGalleria(key)`: indietro "← Tutti i lavori", titolo gigante con una parte in corsivo (Business & *Eventi*, Motor*sport*, *Extra*), descrizione + "Per: …", schede delle tre gallerie con il conteggio su quella aperta, **foto grande = prima foto orizzontale** della cartella (le verticali tagliate a 2:1 si rovinano), poi le altre in 3 colonne (2 su tablet, 1 su telefono) con didascalia, CTA su superficie "Ti piace questo stile? … *Raccontamelo.*" + WhatsApp con messaggio specifico per galleria.
+
+Indirizzi: `#galleria-Business`, `#galleria-Motori`, `#galleria-Extra`. I vecchi link restano validi via `galleryAlias`: `#galleria-Aziende`/`#galleria-Eventi` → Business, `#galleria-Sport` → Extra. Una galleria con 0 foto non si apre (e sparisce dalle schede; la riga Extra sparisce se Extra è vuota).
 
 ## Sistema foto → sito
 
-`FOTO/` contiene **solo tre cartelle**: `Business e eventi`, `Motorsport`, `Extra` (niente sottocartelle). L'ordine sul sito è l'ordine dei nomi file (`01 …`, `02 …`), la prima foto fa da copertina della card.
+`FOTO/` contiene **solo tre cartelle**: `Business e eventi`, `Motorsport`, `Extra` (niente sottocartelle). Ordine sul sito = ordine dei nomi file (`01 …`, `02 …`); **il nome senza numero è la didascalia** (`05 Su strada.jpg` → "N°05 — Su strada"; i nomi automatici tipo `IMG_1234` restano senza didascalia).
 
-`strumenti/sito/aggiorna_foto.py` (mappa `GALLERIE`: `business`, `motorsport`, `extra`) genera `images/galleria/<id>/` (web 2400 px + thumbs 800 px) e `images/gallerie.js`; cancella le gallerie generate che non sono più in `GALLERIE` e segnala (anche con notifica) le foto messe altrove: altre cartelle, sottocartelle o foto sciolte in `FOTO/`. Le pagine leggono `window.GALLERIE` tramite `galleryConfig[*].folderName`. Con l'automatico attivo (launchd) ogni modifica a `FOTO/` viene pubblicata da sola. Guida: `COME-AGGIUNGERE-FOTO.md` nella radice.
+`strumenti/sito/aggiorna_foto.py` (mappa `GALLERIE`: `business`, `motorsport`, `extra`) genera `images/galleria/<id>/` (web 2400 px + thumbs 800 px, senza EXIF/GPS) e `images/gallerie.js` (`src`, `thumb`, `w`, `h`, `titolo`); cancella le gallerie generate che non sono più in `GALLERIE` e segnala (anche con notifica) le foto messe altrove. Le pagine leggono `window.GALLERIE` tramite `galleryConfig[*].folderName`. Con l'automatico attivo (launchd) ogni modifica a `FOTO/` viene pubblicata da sola. Guida per Mattia: `COME-AGGIUNGERE-FOTO.md` nella radice.
 
-Le foto fisse (hero, profilo, cover social, favicon) stanno in `images/sito/` e si cambiano sovrascrivendo il file con lo stesso nome.
+Foto fisse in `images/sito/`: `hero-cutout.webp` + `.png` (ritaglio hero), `profile.jpg` (Chi sono), `og-cover.jpg` (anteprima link 1200×630), `favicon.png`. `hero.jpg` non è più usata dalla pagina.
 
-Per aggiungere una galleria servono: la voce in `GALLERIE` dello script, la voce in `galleryConfig` + la sua `gallery-page`, e la card in home.
+Per aggiungere una galleria servono: la voce in `GALLERIE` dello script, la voce in `galleryConfig` (+ messaggio in `MSG`) e la card o riga in home.
 
-## Dettagli espressivi (oltre al colore piatto)
+## Accessibilità e prestazioni
 
-Per non risultare "minimal da software house" — il sito è di un fotografo, deve respirare più arte:
-
-- **Hero con velatura azzurro-profonda**: l'overlay sopra la foto hero non è più un nero piatto, ma una sfumatura che passa per `--color-accent-deep` prima di scurirsi verso il basso (dove serve leggibilità per titolo/CTA).
-- **Hover fotografico cromatico**: sia le card in home sia le miniature nelle gallerie, al passaggio del mouse, prendono una velatura azzurro-profonda diagonale invece del semplice scurimento piatto — lega il colore guida al gesto di esplorare le foto.
-- **Corsivo Fraunces come accento editoriale**: alcune parole chiave (le due voci "Business & Eventi" / "Motorsport" nel sottotitolo hero, "selezionati" in Lavori, "Progetto" nei Contatti) sono in corsivo del font display — classe `.accent-italic`, riusabile ovunque serva la stessa firma calligrafica.
-- **Numerazione laterale editoriale** (`.side-index`, solo da 1300px in su): un piccolo indice verticale ("01 — Portfolio", "02 — Metodo"...) sul bordo sinistro di ogni sezione principale, ispirato ai portfolio editoriali con indice a margine — rinforza l'idea di "contact sheet" già presente nella numerazione delle foto.
-- **Hero più dichiarativo**, ispirato a riferimenti visti insieme:
-  - `.hero-ticker`: barra con bordo bronzo che elenca i pilastri ("Business & Eventi · Catering · Motorsport") — usa il bronzo `--color-heritage` come le altre note di credibilità, estendendone l'uso anche qui.
-  - `.hero h1` ha un riempimento sfumato (bronzo chiaro → colore testo) via `background-clip: text`, invece del colore piatto.
-  - `.hero-frame`: cornice sottile bronzo che inquadra l'intero hero.
-  - `.hero-tagline`: piccola tagline corsiva in alto a destra ("Immagini che raccontano. Risultati che restano."), nascosta sotto i 900px.
-
-  **Nota aperta**: il riferimento con foto-ritratto integrata nella scritta gigante (tipo "CREATIVE" di Sultan Karimi) richiederebbe un vero ritratto da studio — le foto hero/profilo attuali sono scatti candidi all'aperto, non adatte a quella composizione. Non replicato per questo motivo.
-- **Filmstrip in "Lavori selezionati"** (`.filmstrip`): striscia di foto vere (prime 6 miniature di Business & Eventi e di Motorsport, alternate) che scorre da sola in loop continuo, si ferma al passaggio del mouse, rispetta `prefers-reduced-motion`. Serve a mostrare subito il lavoro senza obbligare l'utente a cliccare dentro una galleria — le card sotto restano per chi vuole approfondire, ma la prima impressione è "storytelling", non un click forzato.
-
-## Elementi identitari da preservare
-
-- Grana pellicola su tutta la pagina (SVG noise overlay, opacity 0.055)
-- Parentesi "mirino" (`.vf`) su hover di card e lightbox
-- Numerazione stile "provino a contatto" (`N°01`, `N°02`...) nelle gallerie
-- Kicker monospace maiuscolo con lettere spaziate come firma editoriale ricorrente
+- Focus visibile oro su tutto; foto ingrandibili con `<button>` (Invio/Spazio), foto ingrandita con frecce, Esc, swipe e ritorno del focus; menu mobile con `aria-expanded`.
+- `prefers-reduced-motion`: niente comparse, zoom o animazione dell'hero.
+- Miniature con `width`/`height` (niente salti), lazy loading, la foto grande della galleria in versione piena.
+- Lighthouse 10.2026 (locale): computer 97 prestazioni · 100 accessibilità · 100 SEO; telefono 80 · 100 · 100.

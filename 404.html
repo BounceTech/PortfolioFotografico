@@ -6,33 +6,33 @@
     <title>404 — Scatto non trovato | Mattia Buoli</title>
     <link rel="icon" type="image/png" href="/images/sito/favicon.png">
     <meta name="robots" content="noindex">
-    <meta name="theme-color" content="#0e0e0e">
+    <meta name="theme-color" content="#0E0C0A">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600&family=IBM+Plex+Mono&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
+        /* Design system "Bronzo & Pellicola" (vedi strumenti/sito/design-system.md) */
         :root {
-            --color-bg: #0e0e0e;
-            --color-text: #f2efe9;
-            --color-text-light: #9b968e;
-            --color-accent: #c9a97c;
-            --color-border: #262626;
+            --ink: #0E0C0A;
+            --bone: #EFE6D6;
+            --bone-2: #B8AE9C;
+            --line-strong: #5A4A33;
+            --gold: #C9A46A;
+            --gold-light: #E3CB9C;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--color-bg);
-            color: var(--color-text);
-            font-family: 'Space Mono', monospace;
+            background:
+                radial-gradient(ellipse 50% 50% at 50% 45%, rgba(201, 164, 106, 0.08), transparent 70%),
+                var(--ink);
+            color: var(--bone);
+            font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
             text-align: center;
             padding: 24px;
         }
@@ -42,96 +42,71 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            opacity: 0.055;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        .frame {
-            position: relative;
-            padding: 56px 64px;
-            display: inline-block;
-        }
-
-        .frame::before,
-        .frame::after {
+        /* mirino */
+        .frame { position: relative; padding: 56px clamp(28px, 8vw, 72px); }
+        .frame::before, .frame::after {
             content: '';
             position: absolute;
             width: 28px;
             height: 28px;
+            border: 0 solid var(--gold);
         }
+        .frame::before { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+        .frame::after { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
 
-        .frame::before {
-            top: 0;
-            left: 0;
-            border-top: 1px solid var(--color-accent);
-            border-left: 1px solid var(--color-accent);
-        }
-
-        .frame::after {
-            bottom: 0;
-            right: 0;
-            border-bottom: 1px solid var(--color-accent);
-            border-right: 1px solid var(--color-accent);
+        .kicker {
+            font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
         }
 
         h1 {
-            font-family: 'Fraunces', Georgia, serif;
-            font-size: clamp(5rem, 18vw, 10rem);
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: -0.02em;
+            font-family: 'Instrument Serif', 'Times New Roman', serif;
+            font-weight: 400;
+            font-size: clamp(56px, 11vw, 120px);
+            line-height: 0.95;
+            margin: 18px 0 22px;
         }
 
-        .label {
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-            margin-top: 20px;
-        }
+        h1 em { color: var(--gold); }
 
-        p {
-            font-size: 13px;
-            color: var(--color-text-light);
-            margin-top: 14px;
-            line-height: 1.7;
-        }
+        p { color: var(--bone-2); font-size: 16px; line-height: 1.65; }
 
         .btn {
-            display: inline-block;
-            margin-top: 32px;
-            padding: 14px 32px;
-            background: var(--color-text);
-            color: #0e0e0e;
+            display: inline-flex;
+            align-items: center;
+            min-height: 52px;
+            margin-top: 34px;
+            padding: 0 28px;
+            border: 1px solid var(--line-strong);
+            color: var(--bone);
             text-decoration: none;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            border-radius: 2px;
-            transition: background 300ms ease;
+            font-size: 15px;
+            font-weight: 500;
+            transition: border-color 250ms ease, color 250ms ease;
         }
 
-        .btn:hover {
-            background: var(--color-accent);
-        }
+        .btn:hover { border-color: var(--gold); color: var(--gold-light); }
 
-        a:focus-visible {
-            outline: 2px solid var(--color-accent);
-            outline-offset: 3px;
-        }
+        a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     </style>
 </head>
 <body>
     <main class="frame">
-        <h1>404</h1>
-        <div class="label">Scatto non trovato</div>
+        <p class="kicker">N°404 — Scatto non trovato</p>
+        <h1>Fuori <em>fuoco.</em></h1>
         <p>La pagina che cerchi non esiste o è stata spostata.<br>Il portfolio, però, è sempre a fuoco.</p>
         <a class="btn" href="/">Torna al portfolio</a>
     </main>
 
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f0d5e1649c69486798cca9db46cb2ec5"}'></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "f0d5e1649c69486798cca9db46cb2ec5"}'></script>
     <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
