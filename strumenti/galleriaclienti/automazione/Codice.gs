@@ -8,7 +8,7 @@
  *
  * Per ogni evento:
  *   1. Notion: nella pagina del DB "Lavori" con Nome servizio = job appende
- *        🔗 Link galleria: https://mattiabuoli.it/galleriaclienti/…   (una volta, sotto il titolo del log)
+ *        🔗 Link galleria: https://mattiabuoli.it/galleriaclienti/…   (una volta, sopra il titolo del log)
  *        🕐 30/09/2026 15:23 — 👀 Il cliente ha aperto la galleria
  *        🕐 30/09/2026 15:40 — ✅ Il cliente ha inviato la selezione (12 foto)
  *        Selezione:
@@ -97,11 +97,17 @@ function logNotion_(type, job, person, ora, n, testo, url) {
   var chi = person && person !== 'Cliente' ? ' (' + person + ')' : '';
   var stato = statoLog_(pagina), blocchi = [];
   if (!stato.titolo) {
-    blocchi.push({ object: 'block', type: 'heading_3', heading_3: { rich_text: rt_(TITOLO_LOG) } });
     if (url) blocchi.push(linkGalleria_(url));
+    blocchi.push(titoloLog_());
   } else if (url && !stato.link) {
-    // Log già iniziato senza link: lo inserisco subito sotto il titolo
-    notion_('patch', '/blocks/' + pagina + '/children', { children: [linkGalleria_(url)], after: stato.titolo });
+    // Log già iniziato senza link: lo inserisco subito sopra il titolo
+    if (stato.prima) {
+      notion_('patch', '/blocks/' + pagina + '/children', { children: [linkGalleria_(url)], after: stato.prima });
+    } else {
+      // Il titolo è il primo blocco e Notion inserisce solo "dopo": link + nuovo titolo dopo il vecchio, poi tolgo il vecchio
+      notion_('patch', '/blocks/' + pagina + '/children', { children: [linkGalleria_(url), titoloLog_()], after: stato.titolo });
+      notion_('delete', '/blocks/' + stato.titolo);
+    }
   }
   if (type === 'open') {
     blocchi.push(par_('🕐 ' + ora + ' — 👀 Il cliente ha aperto la galleria' + chi));
@@ -133,20 +139,26 @@ function creaPagina_(job) {
   return r.id;
 }
 
-// { titolo: id del blocco "📋 Log galleria" o null, link: true se il link galleria c'è già }
+// { titolo: id del blocco "📋 Log galleria" o null, prima: id del blocco sopra il titolo (null se è il primo),
+//   link: true se il link galleria c'è già }
 function statoLog_(pagina) {
-  var stato = { titolo: null, link: false }, cursor = null;
+  var stato = { titolo: null, prima: null, link: false }, cursor = null, ultimo = null;
   var testo = function (b) { return (b[b.type].rich_text || []).map(function (t) { return t.plain_text; }).join(''); };
   do {
     var r = notion_('get', '/blocks/' + pagina + '/children?page_size=100' + (cursor ? '&start_cursor=' + cursor : ''));
     for (var i = 0; i < r.results.length; i++) {
       var b = r.results[i];
-      if (b.type === 'heading_3' && testo(b) === TITOLO_LOG) stato.titolo = b.id;
+      if (!stato.titolo && b.type === 'heading_3' && testo(b) === TITOLO_LOG) { stato.titolo = b.id; stato.prima = ultimo; }
       if (b.type === 'paragraph' && testo(b).indexOf(PREFISSO_LINK) === 0) stato.link = true;
+      ultimo = b.id;
     }
     cursor = r.has_more ? r.next_cursor : null;
   } while (cursor);
   return stato;
+}
+
+function titoloLog_() {
+  return { object: 'block', type: 'heading_3', heading_3: { rich_text: rt_(TITOLO_LOG) } };
 }
 
 function linkGalleria_(url) {
