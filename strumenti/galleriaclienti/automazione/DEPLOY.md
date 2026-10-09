@@ -37,6 +37,7 @@ Nella pagina del lavoro (Nome servizio = nome della galleria, es. `260919_Domest
 
 ```
 📋 Log galleria
+🔗 Link galleria: https://mattiabuoli.it/galleriaclienti/260919_DomesticaCatering_CortePeron/
 🕐 30/09/2026 15:23 — 👀 Il cliente ha aperto la galleria (Wegloo)
 🕐 30/09/2026 15:40 — ✅ Il cliente ha inviato la selezione (Wegloo) — 12 foto
 Selezione:

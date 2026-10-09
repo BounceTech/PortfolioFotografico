@@ -1020,6 +1020,7 @@ function openWA() {
 // Se sendBeacon non c'è o rifiuta, fetch no-cors. Best-effort: non blocca mai la galleria.
 function _fireGas(payload) {
   if (!CONFIG.gasUrl) return;
+  payload.url = location.origin + location.pathname;   // link della galleria, in cima al log Notion
   var body = JSON.stringify(payload);
   try {
     if (navigator.sendBeacon && navigator.sendBeacon(CONFIG.gasUrl, new Blob([body], { type: 'text/plain;charset=utf-8' }))) return;

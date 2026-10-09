@@ -3,11 +3,12 @@
  * by Mattia Buoli
  *
  * La galleria invia qui gli eventi (doPost, JSON):
- *   { type: 'open',   job, person }                         → il cliente ha aperto la galleria
- *   { type: 'submit', job, person, names, selections, text } → il cliente ha inviato la selezione
+ *   { type: 'open',   job, person, url }                         → il cliente ha aperto la galleria
+ *   { type: 'submit', job, person, url, names, selections, text } → il cliente ha inviato la selezione
  *
  * Per ogni evento:
  *   1. Notion: nella pagina del DB "Lavori" con Nome servizio = job appende
+ *        🔗 Link galleria: https://mattiabuoli.it/galleriaclienti/…   (una volta, sotto il titolo del log)
  *        🕐 30/09/2026 15:23 — 👀 Il cliente ha aperto la galleria
  *        🕐 30/09/2026 15:40 — ✅ Il cliente ha inviato la selezione (12 foto)
  *        Selezione:
@@ -31,6 +32,9 @@ var STATUS_PROP      = 'Status';
 var STATUS_SCELTA    = 'Selezione fatta';
 var FUSO             = 'Europe/Rome';
 var SHEET_NAME       = 'Log';
+var TITOLO_LOG       = '📋 Log galleria';
+var PREFISSO_LINK    = '🔗 Link galleria: ';
+var SITO_GALLERIE    = 'https://mattiabuoli.it/galleriaclienti/';
 
 // Valori: Proprietà script, oppure il file Config.gs (solo su Google, mai nella repo pubblica)
 function conf_(k) {
@@ -49,6 +53,8 @@ function doPost(e) {
     var job    = String(d.job || '').trim().slice(0, 200);
     var person = String(d.person || 'Cliente').trim().slice(0, 80) || 'Cliente';
     if (!job) throw new Error('job mancante');
+    var url    = String(d.url || '').trim().slice(0, 300);
+    if (url.indexOf(SITO_GALLERIE) !== 0) url = '';   // solo link delle mie gallerie
 
     var sels = Array.isArray(d.selections) ? d.selections
              : (Array.isArray(d.names) ? d.names : []).map(function (n) { return { id: n, comment: '' }; });
@@ -60,7 +66,7 @@ function doPost(e) {
     try { archivia_(ora, type, job, person, sels.length, testo); } catch (err) {}
 
     try {
-      esito.notion = logNotion_(type, job, person, ora, sels.length, testo);
+      esito.notion = logNotion_(type, job, person, ora, sels.length, testo, url);
     } catch (err) {
       esito.ok = false;
       esito.notion = 'ERRORE: ' + err.message;
@@ -82,16 +88,20 @@ function testoSelezione_(job, sels) {
 
 // ===== NOTION =====
 
-function logNotion_(type, job, person, ora, n, testo) {
+function logNotion_(type, job, person, ora, n, testo, url) {
   if (!conf_('NOTION_TOKEN')) throw new Error('NOTION_TOKEN non impostato nelle proprietà script');
 
   var pagina = trovaPagina_(job), creata = false;
   if (!pagina) { pagina = creaPagina_(job); creata = true; }
 
   var chi = person && person !== 'Cliente' ? ' (' + person + ')' : '';
-  var blocchi = [];
-  if (!haIntestazioneLog_(pagina)) {
-    blocchi.push({ object: 'block', type: 'heading_3', heading_3: { rich_text: rt_('📋 Log galleria') } });
+  var stato = statoLog_(pagina), blocchi = [];
+  if (!stato.titolo) {
+    blocchi.push({ object: 'block', type: 'heading_3', heading_3: { rich_text: rt_(TITOLO_LOG) } });
+    if (url) blocchi.push(linkGalleria_(url));
+  } else if (url && !stato.link) {
+    // Log già iniziato senza link: lo inserisco subito sotto il titolo
+    notion_('patch', '/blocks/' + pagina + '/children', { children: [linkGalleria_(url)], after: stato.titolo });
   }
   if (type === 'open') {
     blocchi.push(par_('🕐 ' + ora + ' — 👀 Il cliente ha aperto la galleria' + chi));
@@ -123,17 +133,27 @@ function creaPagina_(job) {
   return r.id;
 }
 
-function haIntestazioneLog_(pagina) {
-  var cursor = null;
+// { titolo: id del blocco "📋 Log galleria" o null, link: true se il link galleria c'è già }
+function statoLog_(pagina) {
+  var stato = { titolo: null, link: false }, cursor = null;
+  var testo = function (b) { return (b[b.type].rich_text || []).map(function (t) { return t.plain_text; }).join(''); };
   do {
     var r = notion_('get', '/blocks/' + pagina + '/children?page_size=100' + (cursor ? '&start_cursor=' + cursor : ''));
     for (var i = 0; i < r.results.length; i++) {
       var b = r.results[i];
-      if (b.type === 'heading_3' && b.heading_3.rich_text.map(function (t) { return t.plain_text; }).join('') === '📋 Log galleria') return true;
+      if (b.type === 'heading_3' && testo(b) === TITOLO_LOG) stato.titolo = b.id;
+      if (b.type === 'paragraph' && testo(b).indexOf(PREFISSO_LINK) === 0) stato.link = true;
     }
     cursor = r.has_more ? r.next_cursor : null;
   } while (cursor);
-  return false;
+  return stato;
+}
+
+function linkGalleria_(url) {
+  return { object: 'block', type: 'paragraph', paragraph: { rich_text: [
+    { type: 'text', text: { content: PREFISSO_LINK } },
+    { type: 'text', text: { content: url, link: { url: url } } }
+  ] } };
 }
 
 // Notion accetta max 2000 caratteri per pezzo di testo: le selezioni lunghe vengono spezzate
