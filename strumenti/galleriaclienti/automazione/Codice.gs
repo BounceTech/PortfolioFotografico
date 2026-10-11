@@ -13,7 +13,8 @@
  *        🕐 30/09/2026 15:40 — ✅ Il cliente ha inviato la selezione (12 foto)
  *        Selezione:
  *        [blocco codice con il testo da copiare — pulsante "Copia" di Notion]
- *      Se la pagina non esiste la crea, così il log non si perde mai.
+ *      La pagina si trova per nome oppure, se su Notion il nome è diverso, dal link galleria scritto nella pagina.
+ *      Se non esiste la crea, così il log non si perde mai.
  *      Su submit porta lo Status a "Selezione fatta".
  *   2. Telegram: notifica di backup (e avviso se Notion fallisce).
  *   3. Foglio "Log": una riga per evento (archivio).
@@ -54,6 +55,7 @@ function doPost(e) {
     var person = String(d.person || 'Cliente').trim().slice(0, 80) || 'Cliente';
     if (!job) throw new Error('job mancante');
     var url    = String(d.url || '').trim().slice(0, 300);
+    url = url.replace(/index\.html$/, '');
     if (url.indexOf(SITO_GALLERIE) !== 0) url = '';   // solo link delle mie gallerie
 
     var sels = Array.isArray(d.selections) ? d.selections
@@ -91,7 +93,7 @@ function testoSelezione_(job, sels) {
 function logNotion_(type, job, person, ora, n, testo, url) {
   if (!conf_('NOTION_TOKEN')) throw new Error('NOTION_TOKEN non impostato nelle proprietà script');
 
-  var pagina = trovaPagina_(job), creata = false;
+  var pagina = trovaPagina_(job, url), creata = false;
   if (!pagina) { pagina = creaPagina_(job); creata = true; }
 
   var chi = person && person !== 'Cliente' ? ' (' + person + ')' : '';
@@ -126,10 +128,46 @@ function logNotion_(type, job, person, ora, n, testo, url) {
   return (creata ? 'pagina creata e ' : '') + 'log scritto';
 }
 
-function trovaPagina_(job) {
+// Pagina del lavoro: 1) già trovata prima per questo link (memoria dello script)
+// 2) Nome servizio = nome galleria  3) pagina che contiene "🔗 Link galleria: <url>"
+// (serve quando su Notion il lavoro ha un nome diverso dalla galleria)
+function trovaPagina_(job, url) {
+  var memoria = PropertiesService.getScriptProperties(), chiave = url ? 'pagina:' + url : '';
+  if (chiave) {
+    var nota = memoria.getProperty(chiave);
+    if (nota && paginaViva_(nota)) return nota;
+  }
   var filtro = { property: TITLE_PROP, title: { equals: job } };
   var r = notion_('post', '/databases/' + NOTION_DB_LAVORI + '/query', { filter: filtro, page_size: 1 });
-  return r.results && r.results.length ? r.results[0].id : null;
+  var id = r.results && r.results.length ? r.results[0].id : (url ? cercaPerLink_(url) : null);
+  if (id && chiave) memoria.setProperty(chiave, id);
+  return id;
+}
+
+function paginaViva_(id) {
+  try { var p = notion_('get', '/pages/' + id); return !p.archived && !p.in_trash; } catch (err) { return false; }
+}
+
+// Scorre i lavori modificati più di recente (max 200) e legge i primi blocchi di ognuno
+function cercaPerLink_(url) {
+  var cursor = null, visti = 0;
+  do {
+    var corpo = { page_size: 100, sorts: [{ timestamp: 'last_edited_time', direction: 'descending' }] };
+    if (cursor) corpo.start_cursor = cursor;
+    var r = notion_('post', '/databases/' + NOTION_DB_LAVORI + '/query', corpo);
+    for (var i = 0; i < r.results.length; i++) {
+      var figli = notion_('get', '/blocks/' + r.results[i].id + '/children?page_size=100').results;
+      for (var j = 0; j < figli.length; j++) {
+        var b = figli[j];
+        if (b.type !== 'paragraph') continue;
+        var t = b.paragraph.rich_text.map(function (x) { return x.plain_text; }).join('');
+        if (t.indexOf(PREFISSO_LINK) === 0 && t.slice(PREFISSO_LINK.length).trim() === url) return r.results[i].id;
+      }
+    }
+    visti += r.results.length;
+    cursor = r.has_more ? r.next_cursor : null;
+  } while (cursor && visti < 200);
+  return null;
 }
 
 function creaPagina_(job) {

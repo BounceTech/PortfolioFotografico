@@ -50,3 +50,12 @@ Selezione:
 
 Su invio della selezione lo Status passa a **Selezione fatta**. Se la pagina non esiste viene creata
 (e Telegram ti avvisa se qualcosa non va con Notion).
+
+## Pulizia attività (Pulizia.gs)
+Quando elimini un lavoro dal DB **Lavori**, entro 15 minuti le sue attività (DB **Attività clienti**,
+relazione *Servizio*) vanno anche loro nel cestino di Notion. Se ripristini il lavoro, tornano anche le attività.
+Le attività collegate anche a un altro lavoro ancora presente non vengono toccate.
+
+Serve un attivatore, da creare una volta: editor → **Attivatori** (sveglia a sinistra) → **Aggiungi attivatore** →
+funzione `pulisciAttivita`, origine **Basato sul tempo**, **Timer minuti**, **Ogni 15 minuti** → Salva.
+L'integrazione Notion deve essere collegata anche al DB Attività clienti.
