@@ -4,8 +4,8 @@ desktop.ini
 __pycache__/
 .fuse_hidden*
 
-# le tue foto: restano sul Mac, online vanno solo le versioni leggere in images/galleria/
-FOTO/
+# le tue foto originali: restano sul Mac
+/FOTO/
 
 # file di lavoro dello script foto
 strumenti/sito/automatico.log
